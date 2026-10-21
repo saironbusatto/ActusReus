@@ -1,0 +1,558 @@
+From 3397b18f1a2060d3a6d46f2e843cbbd2c9ede57b Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 14:06:38 -0300
+Subject: [PATCH 17/17] feat: arena gaps from the manual - non-combat opener
+ strategies (Sap on healer, Premeditation, Demonic Circle), Ambush in Shadow
+ Dance, Curse of Exhaustion on enemy melee, priest Mana Burn on healer and
+ Fear Ward vs warlock, kill window ignores fears on Undead with WotF ready
+
+---
+ src/Ai/Base/ArenaHelpers.h                    | 23 +++++++++++++++++++
+ src/Ai/Class/Priest/PriestActions.h           | 23 +++++++++++++++++++
+ src/Ai/Class/Priest/PriestAiObjectContext.cpp |  6 +++++
+ src/Ai/Class/Priest/PriestTriggers.cpp        | 14 +++++++++++
+ src/Ai/Class/Priest/PriestTriggers.h          |  8 +++++++
+ .../Priest/Strategy/ArenaPriestStrategy.cpp   |  5 +++-
+ src/Ai/Class/Rogue/Action/RogueActions.h      |  8 +++++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp   |  8 +++++++
+ src/Ai/Class/Rogue/RogueTriggers.cpp          | 22 ++++++++++++++++++
+ src/Ai/Class/Rogue/RogueTriggers.h            | 16 +++++++++++++
+ .../Rogue/Strategy/ArenaRogueStrategy.cpp     |  7 ++++++
+ .../Class/Rogue/Strategy/ArenaRogueStrategy.h |  9 ++++++++
+ .../Warlock/Strategy/ArenaWarlockStrategy.cpp |  6 +++++
+ .../Warlock/Strategy/ArenaWarlockStrategy.h   |  9 ++++++++
+ src/Ai/Class/Warlock/WarlockActions.h         |  8 +++++++
+ .../Class/Warlock/WarlockAiObjectContext.cpp  |  6 +++++
+ src/Ai/Class/Warlock/WarlockTriggers.cpp      | 17 ++++++++++++++
+ src/Ai/Class/Warlock/WarlockTriggers.h        |  8 +++++++
+ src/Bot/Factory/AiFactory.cpp                 |  4 ++++
+ 19 files changed, 206 insertions(+), 1 deletion(-)
+
+diff --git a/src/Ai/Base/ArenaHelpers.h b/src/Ai/Base/ArenaHelpers.h
+index 99350a7b..d773927d 100644
+--- a/src/Ai/Base/ArenaHelpers.h
++++ b/src/Ai/Base/ArenaHelpers.h
+@@ -107,6 +107,23 @@ namespace ai::arena
+         return count;
+     }
+ 
++    // Enemy healer among visible enemies, also before combat starts ("attackers" is empty then)
++    inline Unit* FindVisibleEnemyHealer(PlayerbotAI* botAI)
++    {
++        for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("possible targets")->Get())
++        {
++            Unit* u = botAI->GetUnit(guid);
++            Player* p = u ? u->ToPlayer() : nullptr;
++            if (!p || !p->IsAlive())
++                continue;
++
++            if (p->getClass() == CLASS_PRIEST ||
++                (p->getClass() == CLASS_DRUID && AiFactory::GetPlayerSpecTab(p) == DRUID_TAB_RESTORATION))
++                return p;
++        }
++        return nullptr;
++    }
++
+     // CC break still available (PvP trinket equipped and off cooldown, or Every Man for Himself)
+     inline bool HasCcBreakReady(Unit* u)
+     {
+@@ -154,8 +171,14 @@ namespace ai::arena
+         static char const* const ccSpells[] = {"blind", "fear", "cyclone", "psychic scream", "death coil", "gouge"};
+         Unit* partner = FindPartner(botAI);
+         PlayerbotAI* partnerAI = partner ? GET_PLAYERBOT_AI(partner->ToPlayer()) : nullptr;
++        // Will of the Forsaken ready breaks Fear/Psychic Scream: those do not hold an Undead
++        Player* ccPlayer = cc->ToPlayer();
++        bool const wotfReady = ccPlayer && ccPlayer->getRace() == RACE_UNDEAD_PLAYER && !ccPlayer->HasSpellCooldown(7744);
+         for (char const* spell : ccSpells)
+         {
++            if (wotfReady && (std::string(spell) == "fear" || std::string(spell) == "psychic scream"))
++                continue;
++
+             if (botAI->CanCastSpell(spell, cc) || (partnerAI && partnerAI->CanCastSpell(spell, cc)))
+                 return true;
+         }
+diff --git a/src/Ai/Class/Priest/PriestActions.h b/src/Ai/Class/Priest/PriestActions.h
+index fd7a1968..921e7976 100644
+--- a/src/Ai/Class/Priest/PriestActions.h
++++ b/src/Ai/Class/Priest/PriestActions.h
+@@ -7,6 +7,7 @@
+ #ifndef PLAYERBOTS_PRIESTACTIONS_H
+ #define PLAYERBOTS_PRIESTACTIONS_H
+ 
++#include "ArenaHelpers.h"
+ #include "GenericSpellActions.h"
+ #include "PlayerbotAIConfig.h"
+ #include "Playerbots.h"
+@@ -299,4 +300,26 @@ public:
+     }
+ };
+ 
++// Arena (Lamures plan, 2009): Mana Burn the enemy healer while the partner pressures the DPS
++class CastManaBurnOnEnemyHealerAction : public CastSpellAction
++{
++public:
++    CastManaBurnOnEnemyHealerAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "mana burn") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyHealer(botAI); }
++    bool isUseful() override
++    {
++        Unit* healer = GetTarget();
++        return healer && healer->getPowerType() == POWER_MANA && healer->GetPowerPct(POWER_MANA) > 10.0f &&
++               bot->GetPowerPct(POWER_MANA) > 40.0f;
++    }
++};
++
++// Manual §3.6: Fear Ward on self against a warlock
++class CastFearWardOnSelfAction : public CastBuffSpellAction
++{
++public:
++    CastFearWardOnSelfAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "fear ward") {}
++};
++
+ #endif
+diff --git a/src/Ai/Class/Priest/PriestAiObjectContext.cpp b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+index f5097241..70504f9a 100644
+--- a/src/Ai/Class/Priest/PriestAiObjectContext.cpp
++++ b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+@@ -109,10 +109,12 @@ public:
+         creators["silence"] = &PriestTriggerFactoryInternal::silence;
+         creators["silence on enemy healer"] = &PriestTriggerFactoryInternal::silence_on_enemy_healer;
+         creators["shadowfiend"] = &PriestTriggerFactoryInternal::shadowfiend;
++        creators["fear ward vs warlock"] = &PriestTriggerFactoryInternal::fear_ward_vs_warlock;
+         creators["mind sear channel check"] = &PriestTriggerFactoryInternal::mind_sear_channel_check;
+     }
+ 
+ private:
++    static Trigger* fear_ward_vs_warlock(PlayerbotAI* botAI) { return new FearWardVsWarlockTrigger(botAI); }
+     static Trigger* vampiric_embrace(PlayerbotAI* botAI) { return new VampiricEmbraceTrigger(botAI); }
+     static Trigger* shadowform(PlayerbotAI* botAI) { return new ShadowformTrigger(botAI); }
+     static Trigger* vampiric_touch(PlayerbotAI* botAI) { return new VampiricTouchTrigger(botAI); }
+@@ -214,6 +216,8 @@ public:
+         creators["silence"] = &PriestAiObjectContextInternal::silence;
+         creators["silence on enemy healer"] = &PriestAiObjectContextInternal::silence_on_enemy_healer;
+         creators["mana burn"] = &PriestAiObjectContextInternal::mana_burn;
++        creators["mana burn on enemy healer"] = &PriestAiObjectContextInternal::mana_burn_on_enemy_healer;
++        creators["fear ward on self"] = &PriestAiObjectContextInternal::fear_ward_on_self;
+         creators["levitate"] = &PriestAiObjectContextInternal::levitate;
+         creators["prayer of healing on party"] = &PriestAiObjectContextInternal::prayer_of_healing;
+         creators["lightwell"] = &PriestAiObjectContextInternal::lightwell;
+@@ -334,6 +338,8 @@ private:
+     static Action* pain_suppression(PlayerbotAI* botAI) { return new CastPainSuppressionAction(botAI); }
+     static Action* mass_dispel(PlayerbotAI* botAI) { return new CastMassDispelAction(botAI); }
+     static Action* shadowfiend(PlayerbotAI* botAI) { return new CastShadowfiendAction(botAI); }
++    static Action* mana_burn_on_enemy_healer(PlayerbotAI* botAI) { return new CastManaBurnOnEnemyHealerAction(botAI); }
++    static Action* fear_ward_on_self(PlayerbotAI* botAI) { return new CastFearWardOnSelfAction(botAI); }
+     static Action* shadow_word_death(PlayerbotAI* botAI) { return new CastShadowWordDeathAction(botAI); }
+     static Action* chastise(PlayerbotAI* botAI) { return new CastChastiseAction(botAI); }
+     static Action* consume_magic(PlayerbotAI* botAI) { return new CastConsumeMagicAction(botAI); }
+diff --git a/src/Ai/Class/Priest/PriestTriggers.cpp b/src/Ai/Class/Priest/PriestTriggers.cpp
+index 2c3c1cee..9ea9fb4d 100644
+--- a/src/Ai/Class/Priest/PriestTriggers.cpp
++++ b/src/Ai/Class/Priest/PriestTriggers.cpp
+@@ -79,3 +79,17 @@ bool MindSearChannelCheckTrigger::IsActive()
+     // Not channeling Mind Sear
+     return false;
+ }
++
++bool FearWardVsWarlockTrigger::IsActive()
++{
++    if (!bot->InArena() || botAI->HasAura("fear ward", bot))
++        return false;
++
++    for (ObjectGuid const guid : AI_VALUE(GuidVector, "possible targets"))
++    {
++        Unit* u = botAI->GetUnit(guid);
++        if (u && u->IsAlive() && u->IsPlayer() && u->ToPlayer()->getClass() == CLASS_WARLOCK)
++            return botAI->CanCastSpell("fear ward", bot);
++    }
++    return false;
++}
+diff --git a/src/Ai/Class/Priest/PriestTriggers.h b/src/Ai/Class/Priest/PriestTriggers.h
+index ced82284..1706f640 100644
+--- a/src/Ai/Class/Priest/PriestTriggers.h
++++ b/src/Ai/Class/Priest/PriestTriggers.h
+@@ -117,4 +117,12 @@ protected:
+     static const std::set<uint32> MIND_SEAR_SPELL_IDS;
+ };
+ 
++class FearWardVsWarlockTrigger : public Trigger
++{
++public:
++    FearWardVsWarlockTrigger(PlayerbotAI* botAI) : Trigger(botAI, "fear ward vs warlock") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
+index 28e4b721..e848d92d 100644
+--- a/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
++++ b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
+@@ -13,7 +13,7 @@ float ArenaPriestMultiplier::GetValue(Action* action)
+         return 1.0f;
+ 
+     // Manual §3.7: Wand only when there is nothing better to do (e.g. no healing needed)
+-    if (action->getName() == "shoot")
++    if (action->getName() == "shoot" || action->getName() == "mana burn")
+     {
+         if (AI_VALUE(Unit*, "party member to heal"))
+             return 0.0f;
+@@ -29,6 +29,7 @@ ArenaPriestStrategy::ArenaPriestStrategy(PlayerbotAI* botAI) : GenericPriestStra
+ std::vector<NextAction> ArenaPriestStrategy::getDefaultActions()
+ {
+     return {
++        NextAction("mana burn on enemy healer", ACTION_BG + 1),
+         NextAction("shoot", ACTION_BG)
+     };
+ }
+@@ -41,6 +42,8 @@ void ArenaPriestStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
+ 
+ void ArenaPriestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
++    triggers.push_back(new TriggerNode("fear ward vs warlock", { NextAction("fear ward on self", 40.0f) }));
++
+     GenericPriestStrategy::InitTriggers(triggers);
+ 
+     // Manual §3: Silence on enemy healer's cast
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index 7ca08696..212bbec0 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -148,6 +148,14 @@ public:
+     CastShadowDanceAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "shadow dance") {}
+ };
+ 
++class CastSapOnEnemyHealerAction : public CastSpellAction
++{
++public:
++    CastSapOnEnemyHealerAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "sap") {}
++
++    Unit* GetTarget() override { return ai::arena::FindVisibleEnemyHealer(botAI); }
++};
++
+ class CastPremeditationAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index 2b5f10da..362745d4 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -32,6 +32,7 @@ public:
+         creators["stealth"] = &RogueStrategyFactoryInternal::stealth;
+         creators["cc"] = &RogueStrategyFactoryInternal::cc;
+         creators["arena rogue"] = &RogueStrategyFactoryInternal::arena_rogue;
++        creators["arena rogue opener"] = &RogueStrategyFactoryInternal::arena_rogue_opener;
+     }
+ 
+ private:
+@@ -43,6 +44,7 @@ private:
+     static Strategy* stealth(PlayerbotAI* botAI) { return new StealthStrategy(botAI); }
+     static Strategy* cc(PlayerbotAI* botAI) { return new RogueCcStrategy(botAI); }
+     static Strategy* arena_rogue(PlayerbotAI* botAI) { return new ArenaRogueStrategy(botAI); }
++    static Strategy* arena_rogue_opener(PlayerbotAI* botAI) { return new ArenaRogueOpenerStrategy(botAI); }
+ };
+ 
+ class RogueCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+@@ -91,6 +93,8 @@ public:
+         creators["shadow dance opener"] = &RogueTriggerFactoryInternal::shadow_dance_opener;
+         creators["dance cheap shot"] = &RogueTriggerFactoryInternal::dance_cheap_shot;
+         creators["premeditation"] = &RogueTriggerFactoryInternal::premeditation;
++        creators["sap on enemy healer"] = &RogueTriggerFactoryInternal::sap_on_enemy_healer;
++        creators["dance ambush"] = &RogueTriggerFactoryInternal::dance_ambush;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -108,6 +112,8 @@ private:
+     static Trigger* shadow_dance_opener(PlayerbotAI* botAI) { return new ShadowDanceOpenerTrigger(botAI); }
+     static Trigger* dance_cheap_shot(PlayerbotAI* botAI) { return new DanceCheapShotTrigger(botAI); }
+     static Trigger* premeditation(PlayerbotAI* botAI) { return new PremeditationTrigger(botAI); }
++    static Trigger* sap_on_enemy_healer(PlayerbotAI* botAI) { return new SapEnemyHealerTrigger(botAI); }
++    static Trigger* dance_ambush(PlayerbotAI* botAI) { return new DanceAmbushTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+@@ -185,6 +191,7 @@ public:
+         creators["hemorrhage"] = &RogueAiObjectContextInternal::hemorrhage;
+         creators["preparation"] = &RogueAiObjectContextInternal::preparation;
+         creators["premeditation"] = &RogueAiObjectContextInternal::premeditation;
++        creators["sap on enemy healer"] = &RogueAiObjectContextInternal::sap_on_enemy_healer;
+         creators["blind on enemy healer"] = &RogueAiObjectContextInternal::blind_on_enemy_healer;
+     }
+ 
+@@ -257,6 +264,7 @@ private:
+     static Action* hemorrhage(PlayerbotAI* botAI) { return new CastHemorrhageAction(botAI); }
+     static Action* preparation(PlayerbotAI* botAI) { return new CastPreparationAction(botAI); }
+     static Action* premeditation(PlayerbotAI* botAI) { return new CastPremeditationAction(botAI); }
++    static Action* sap_on_enemy_healer(PlayerbotAI* botAI) { return new CastSapOnEnemyHealerAction(botAI); }
+     static Action* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new CastBlindOnEnemyHealerAction(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index b80a166e..06b4093d 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -225,3 +225,25 @@ bool PremeditationTrigger::IsActive()
+ 
+     return botAI->CanCastSpell("premeditation", target);
+ }
++
++// Arena opener: Sap the healer (the player who will sit in CC) before the fight starts
++bool SapEnemyHealerTrigger::IsActive()
++{
++    if (!bot->InArena() || !botAI->HasAura("stealth", bot))
++        return false;
++
++    Unit* healer = ai::arena::FindVisibleEnemyHealer(botAI);
++    if (!healer || healer->IsInCombat() || !bot->IsWithinDistInMap(healer, 10.0f) ||
++        healer->GetDiminishing(DIMINISHING_DISORIENT) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("sap", healer);
++}
++
++// Shadow Dance: after the Cheap Shot lands, Ambush (guaranteed crit with the talent) on the stunned target
++bool DanceAmbushTrigger::IsActive()
++{
++    Unit* target = AI_VALUE(Unit*, "current target");
++    return target && botAI->HasAura("shadow dance", bot) && target->HasUnitState(UNIT_STATE_STUNNED) &&
++           botAI->CanCastSpell("ambush", target);
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index 19ea47f2..4df7930e 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -168,6 +168,22 @@ public:
+     bool IsActive() override;
+ };
+ 
++class SapEnemyHealerTrigger : public Trigger
++{
++public:
++    SapEnemyHealerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "sap on enemy healer") {}
++
++    bool IsActive() override;
++};
++
++class DanceAmbushTrigger : public Trigger
++{
++public:
++    DanceAmbushTrigger(PlayerbotAI* botAI) : Trigger(botAI, "dance ambush") {}
++
++    bool IsActive() override;
++};
++
+ class PremeditationTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index 049e0cc1..c73d655e 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -79,6 +79,7 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     // Sub burst: Premeditation before the opener, Shadow Dance for a second Cheap Shot -> Kidney window
+     triggers.push_back(new TriggerNode("premeditation", { NextAction("premeditation", ACTION_HIGH + 8) }));
+     triggers.push_back(new TriggerNode("dance cheap shot", { NextAction("cheap shot", ACTION_HIGH + 7) }));
++    triggers.push_back(new TriggerNode("dance ambush", { NextAction("ambush", ACTION_HIGH + 7) }));
+     triggers.push_back(new TriggerNode("shadow dance opener", { NextAction("shadow dance", ACTION_HIGH + 6) }));
+ 
+     // Manual §2: Cheap Shot -> Kidney Shot combo
+@@ -121,3 +122,9 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+         )
+     );
+ }
++
++void ArenaRogueOpenerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    triggers.push_back(new TriggerNode("sap on enemy healer", { NextAction("sap on enemy healer", ACTION_HIGH + 9) }));
++    triggers.push_back(new TriggerNode("premeditation", { NextAction("premeditation", ACTION_HIGH + 8) }));
++}
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
+index 7f30e925..0bae5282 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
+@@ -24,4 +24,13 @@ public:
+     }
+ };
+ 
++// Out-of-combat part of the arena plan (stealth approach, gates opening): the combat engine never sees it
++class ArenaRogueOpenerStrategy : public Strategy
++{
++public:
++    ArenaRogueOpenerStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
++    std::string const getName() override { return "arena rogue opener"; }
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+index 2e81379f..ad133f82 100644
+--- a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
++++ b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+@@ -29,6 +29,7 @@ void ArenaWarlockStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     // Escape: Demonic Circle placed after the gates open, teleport out of a melee burst or root
+     triggers.push_back(new TriggerNode("demonic circle teleport", { NextAction("demonic circle: teleport", 80.0f) }));
+     triggers.push_back(new TriggerNode("demonic circle summon", { NextAction("demonic circle: summon", 30.0f) }));
++    triggers.push_back(new TriggerNode("curse of exhaustion on melee", { NextAction("curse of exhaustion on melee", 25.0f) }));
+ 
+     // CC & Interrupts
+     triggers.push_back(
+@@ -130,3 +131,8 @@ void ArenaWarlockStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+         )
+     );
+ }
++
++void ArenaWarlockOpenerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    triggers.push_back(new TriggerNode("demonic circle summon", { NextAction("demonic circle: summon", 30.0f) }));
++}
+diff --git a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
+index b6ca7a50..e72cf6ff 100644
+--- a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
++++ b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
+@@ -18,4 +18,13 @@ public:
+     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
+ };
+ 
++// Out-of-combat part of the arena plan (stealth approach, gates opening): the combat engine never sees it
++class ArenaWarlockOpenerStrategy : public Strategy
++{
++public:
++    ArenaWarlockOpenerStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
++    std::string const getName() override { return "arena warlock opener"; }
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index 66f14633..60b3c636 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -184,6 +184,14 @@ public:
+     bool isPossible() override;
+ };
+ 
++class CastCurseOfExhaustionOnMeleeAction : public CastSpellAction
++{
++public:
++    CastCurseOfExhaustionOnMeleeAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "curse of exhaustion") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyDps(botAI); }
++};
++
+ class CastDemonicCircleSummonAction : public CastBuffSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+index aa431233..d622816e 100644
+--- a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
++++ b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+@@ -34,6 +34,7 @@ public:
+         creators["tank"] = &WarlockStrategyFactoryInternal::tank;
+         creators["aoe"] = &WarlockStrategyFactoryInternal::aoe;
+         creators["arena warlock"] = &WarlockStrategyFactoryInternal::arena_warlock;
++        creators["arena warlock opener"] = &WarlockStrategyFactoryInternal::arena_warlock_opener;
+     }
+ 
+ private:
+@@ -46,6 +47,7 @@ private:
+     static Strategy* tank(PlayerbotAI* botAI) { return new TankWarlockStrategy(botAI); }
+     static Strategy* aoe(PlayerbotAI* botAI) { return new AoEWarlockStrategy(botAI); }
+     static Strategy* arena_warlock(PlayerbotAI* botAI) { return new ArenaWarlockStrategy(botAI); }
++    static Strategy* arena_warlock_opener(PlayerbotAI* botAI) { return new ArenaWarlockOpenerStrategy(botAI); }
+ };
+ 
+ class WarlockCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+@@ -193,6 +195,7 @@ public:
+         creators["death coil"] = &WarlockTriggerFactoryInternal::death_coil;
+         creators["curse of tongues on caster"] = &WarlockTriggerFactoryInternal::curse_of_tongues_on_caster;
+         creators["demonic circle summon"] = &WarlockTriggerFactoryInternal::demonic_circle_summon;
++        creators["curse of exhaustion on melee"] = &WarlockTriggerFactoryInternal::curse_of_exhaustion_on_melee;
+         creators["demonic circle teleport"] = &WarlockTriggerFactoryInternal::demonic_circle_teleport;
+     }
+ 
+@@ -246,6 +249,7 @@ private:
+     static Trigger* howl_of_terror(PlayerbotAI* botAI) { return new HowlOfTerrorTrigger(botAI); }
+     static Trigger* death_coil(PlayerbotAI* botAI) { return new DeathCoilTrigger(botAI); }
+     static Trigger* demonic_circle_summon(PlayerbotAI* botAI) { return new DemonicCircleSummonTrigger(botAI); }
++    static Trigger* curse_of_exhaustion_on_melee(PlayerbotAI* botAI) { return new CurseOfExhaustionOnMeleeTrigger(botAI); }
+     static Trigger* demonic_circle_teleport(PlayerbotAI* botAI) { return new DemonicCircleTeleportTrigger(botAI); }
+     static Trigger* curse_of_tongues_on_caster(PlayerbotAI* botAI) { return new CurseOfTonguesOnCasterTrigger(botAI); }
+ };
+@@ -291,6 +295,7 @@ public:
+         creators["fear on cc"] = &WarlockAiObjectContextInternal::fear_on_cc;
+         creators["death coil"] = &WarlockAiObjectContextInternal::death_coil;
+         creators["demonic circle: summon"] = &WarlockAiObjectContextInternal::demonic_circle_summon;
++        creators["curse of exhaustion on melee"] = &WarlockAiObjectContextInternal::curse_of_exhaustion_on_melee;
+         creators["demonic circle: teleport"] = &WarlockAiObjectContextInternal::demonic_circle_teleport;
+         creators["howl of terror"] = &WarlockAiObjectContextInternal::howl_of_terror;
+         creators["spell lock"] = &WarlockAiObjectContextInternal::spell_lock;
+@@ -371,6 +376,7 @@ private:
+     static Action* fear_on_enemy_healer(PlayerbotAI* botAI) { return new CastFearOnEnemyHealerAction(botAI); }
+     static Action* death_coil(PlayerbotAI* botAI) { return new CastWarlockDeathCoilAction(botAI); }
+     static Action* demonic_circle_summon(PlayerbotAI* botAI) { return new CastDemonicCircleSummonAction(botAI); }
++    static Action* curse_of_exhaustion_on_melee(PlayerbotAI* botAI) { return new CastCurseOfExhaustionOnMeleeAction(botAI); }
+     static Action* demonic_circle_teleport(PlayerbotAI* botAI) { return new CastDemonicCircleTeleportAction(botAI); }
+     static Action* howl_of_terror(PlayerbotAI* botAI) { return new CastHowlOfTerrorAction(botAI); }
+     static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.cpp b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+index dc30a8fe..610f5ee9 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.cpp
++++ b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+@@ -346,3 +346,20 @@ bool DemonicCircleTeleportTrigger::IsActive()
+ 
+     return botAI->CanCastSpell("demonic circle: teleport", bot);
+ }
++
++// Arena: slow the enemy melee so the warlock can kite and keep casting (manual §4.5)
++bool CurseOfExhaustionOnMeleeTrigger::IsActive()
++{
++    if (!bot->InArena())
++        return false;
++
++    Unit* dps = ai::arena::FindEnemyDps(botAI);
++    if (!dps || !dps->IsPlayer() || !bot->IsWithinDistInMap(dps, 30.0f))
++        return false;
++
++    uint8 const cls = dps->ToPlayer()->getClass();
++    if (cls != CLASS_ROGUE && cls != CLASS_WARRIOR && cls != CLASS_DEATH_KNIGHT && cls != CLASS_PALADIN)
++        return false;
++
++    return !botAI->HasAura("curse of exhaustion", dps) && botAI->CanCastSpell("curse of exhaustion", dps);
++}
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.h b/src/Ai/Class/Warlock/WarlockTriggers.h
+index 7c347930..50a0c29d 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.h
++++ b/src/Ai/Class/Warlock/WarlockTriggers.h
+@@ -399,6 +399,14 @@ private:
+     time_t lastFired = 0;  // a Druid decurses on sight; recasting every GCD only burns ours
+ };
+ 
++class CurseOfExhaustionOnMeleeTrigger : public Trigger
++{
++public:
++    CurseOfExhaustionOnMeleeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "curse of exhaustion on melee") {}
++
++    bool IsActive() override;
++};
++
+ class DemonicCircleSummonTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Bot/Factory/AiFactory.cpp b/src/Bot/Factory/AiFactory.cpp
+index 6fa33c5e..a5bd00f6 100644
+--- a/src/Bot/Factory/AiFactory.cpp
++++ b/src/Bot/Factory/AiFactory.cpp
+@@ -730,6 +730,10 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
+         {
+             nonCombatEngine->addStrategy("arena", false);
+             nonCombatEngine->removeStrategy("mount", false);
++            if (sPlayerbotAIConfig.ArenaPvpStrategies && player->getClass() == CLASS_ROGUE)
++                nonCombatEngine->addStrategy("arena rogue opener", false);
++            if (sPlayerbotAIConfig.ArenaPvpStrategies && player->getClass() == CLASS_WARLOCK)
++                nonCombatEngine->addStrategy("arena warlock opener", false);
+         }
+     }
+ }
+-- 
+2.55.0
+
