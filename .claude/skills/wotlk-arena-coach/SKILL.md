@@ -173,3 +173,20 @@ em stun/fear); Nature's Swiftness (CD 180); Swiftmend (CD 15); Wild Growth (CD 6
 - Sap na abertura é "quase obrigatório" (fórum, 3.3.5 Mutilate). Cheap Shot → Kidney libera Shadowstep → Kick no segundo alvo (Warcraft Tavern, openers).
 
 Fontes: warcrafttavern.com/wotlk/guides/pvp-subtlety-rogue-best-professions, warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-professions, engadget.com/2009-03-22-the-colosseum-gladiator-lamures.html, engadget.com/2008-10-25-the-colosseum-nostalgia.html, warcrafttavern.com/tbc/guides/rogue-subtlety-openers, wowhead.com/forums/topic/3-3-5-mutilate-pvp-164411
+
+## Validação do código contra este manual (21/10/2026)
+
+**De acordo com o manual** (entra no go-live):
+- Rogue mantém stealth até abrir; Premeditation → Cheap Shot → Kidney (§2.1, Nostalgia). Shadow Dance respeita o DR de stun de abertura (§1).
+- Druid não gasta GCD com Wrath/Moonfire; sai da árvore só para Cyclone/Roots, que não funcionam em Tree of Life `[SERVIDOR]` (§5.7).
+- Healer se esconde do caster mantendo visão do parceiro (§5.5, §5b, versão de "pilar" ainda sem kite em volta).
+- Warlock: Demonic Circle: Teleport para escapar do burst (§4, kit); Curse of Tongues relançado no máximo a cada 12 s = duração em PvP (§1).
+- Trinket PvP só quando decide a luta; burst só depois de o alvo do CC gastar a saída `[VOCÊ]`.
+
+**Lacunas que o manual aponta e o código ainda não cobre** `[LOG]` de 21/10:
+- Priest atirou de varinha 1.057× hoje (§3.7 continua). Fear Ward 0 (§3.6), Mana Burn 0 (plano Lamures).
+- Warlock: Curse of Exhaustion 0 (§4.5, deveria estar no Rogue em vez de CoT no Priest).
+- Shadow Dance sem Ambush (§2.4) enquanto os rogues usarem espadas; com as adagas do BiS falta pôr Ambush na janela.
+- Sap na abertura (§2.1, "quase obrigatório") ainda não existe na strategy de arena.
+- Undead com Will of the Forsaken pronto quebra Fear: a janela de kill não considera isso ao contar Fear/Psychic Scream/Blind como CC disponível.
+- §7 desatualizado: o Rogue recebe "assassin" + "arena rogue" (`AiFactory.cpp:381,494`); Shadowstep/Dance/Hemo/Prep/Death Coil/Howl/Psychic Horror já existem como ação.
