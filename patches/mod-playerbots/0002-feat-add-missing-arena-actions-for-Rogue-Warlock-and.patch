@@ -1,0 +1,166 @@
+From 972b60f3776d8ab3278e9c450a2609217537a17e Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 00:19:33 -0300
+Subject: [PATCH 2/2] feat: add missing arena actions for Rogue, Warlock and
+ Priest
+
+---
+ src/Ai/Class/Priest/PriestActions.h            |  1 +
+ src/Ai/Class/Priest/PriestAiObjectContext.cpp  |  2 ++
+ src/Ai/Class/Rogue/Action/RogueActions.h       | 18 ++++++++++++++++++
+ src/Ai/Class/Rogue/Action/RogueComboActions.h  |  6 ++++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp    |  8 ++++++++
+ src/Ai/Class/Warlock/WarlockActions.h          | 12 ++++++++++++
+ .../Class/Warlock/WarlockAiObjectContext.cpp   |  4 ++++
+ 7 files changed, 51 insertions(+)
+
+diff --git a/src/Ai/Class/Priest/PriestActions.h b/src/Ai/Class/Priest/PriestActions.h
+index 9a20a831..6eb88058 100644
+--- a/src/Ai/Class/Priest/PriestActions.h
++++ b/src/Ai/Class/Priest/PriestActions.h
+@@ -122,6 +122,7 @@ DEBUFF_CHECKISOWNER_ACTION(CastShadowWordPainAction, "shadow word: pain");
+ DEBUFF_ENEMY_ACTION(CastShadowWordPainOnAttackerAction, "shadow word: pain");
+ SPELL_ACTION(CastMindBlastAction, "mind blast");
+ SPELL_ACTION(CastPsychicScreamAction, "psychic scream");
++SPELL_ACTION(CastPsychicHorrorAction, "psychic horror");
+ DEBUFF_ACTION(CastMindSootheAction, "mind soothe");
+ class CastFadeAction : public CastBuffSpellAction
+ {
+diff --git a/src/Ai/Class/Priest/PriestAiObjectContext.cpp b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+index 1d06565d..0a18f8de 100644
+--- a/src/Ai/Class/Priest/PriestAiObjectContext.cpp
++++ b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+@@ -199,6 +199,7 @@ public:
+         creators["resurrection"] = &PriestAiObjectContextInternal::resurrection;
+         creators["circle of healing on party"] = &PriestAiObjectContextInternal::circle_of_healing;
+         creators["psychic scream"] = &PriestAiObjectContextInternal::psychic_scream;
++        creators["psychic horror"] = &PriestAiObjectContextInternal::psychic_horror;
+         creators["vampiric touch"] = &PriestAiObjectContextInternal::vampiric_touch;
+         creators["vampiric touch on attacker"] = &PriestAiObjectContextInternal::vampiric_touch_on_attacker;
+         creators["vampiric embrace"] = &PriestAiObjectContextInternal::vampiric_embrace;
+@@ -255,6 +256,7 @@ private:
+         return new CastVampiricTouchOnAttackerAction(botAI);
+     }
+     static Action* psychic_scream(PlayerbotAI* botAI) { return new CastPsychicScreamAction(botAI); }
++    static Action* psychic_horror(PlayerbotAI* botAI) { return new CastPsychicHorrorAction(botAI); }
+     static Action* circle_of_healing(PlayerbotAI* botAI) { return new CastCircleOfHealingAction(botAI); }
+     static Action* resurrection(PlayerbotAI* botAI) { return new CastResurrectionAction(botAI); }
+     static Action* shadow_word_pain(PlayerbotAI* botAI) { return new CastShadowWordPainAction(botAI); }
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index f7b67ec9..908b22a6 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -111,6 +111,24 @@ public:
+     CastBlindAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "blind") {}
+ };
+ 
++class CastShadowstepAction : public CastSpellAction
++{
++public:
++    CastShadowstepAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "shadowstep") {}
++};
++
++class CastShadowDanceAction : public CastBuffSpellAction
++{
++public:
++    CastShadowDanceAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "shadow dance") {}
++};
++
++class CastPreparationAction : public CastBuffSpellAction
++{
++public:
++    CastPreparationAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "preparation") {}
++};
++
+ class CastBladeFlurryAction : public CastBuffSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Action/RogueComboActions.h b/src/Ai/Class/Rogue/Action/RogueComboActions.h
+index 595b73f8..afc57f54 100644
+--- a/src/Ai/Class/Rogue/Action/RogueComboActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueComboActions.h
+@@ -49,4 +49,10 @@ public:
+     CastBackstabAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "backstab") {}
+ };
+ 
++class CastHemorrhageAction : public CastSpellAction
++{
++public:
++    CastHemorrhageAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "hemorrhage") {}
++};
++
+ #endif
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index aca6de86..2751d310 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -164,6 +164,10 @@ public:
+         creators["fan of knives"] = &RogueAiObjectContextInternal::fan_of_knives;
+         creators["killing spree"] = &RogueAiObjectContextInternal::killing_spree;
+         creators["cold blood"] = &RogueAiObjectContextInternal::cold_blood;
++        creators["shadowstep"] = &RogueAiObjectContextInternal::shadowstep;
++        creators["shadow dance"] = &RogueAiObjectContextInternal::shadow_dance;
++        creators["hemorrhage"] = &RogueAiObjectContextInternal::hemorrhage;
++        creators["preparation"] = &RogueAiObjectContextInternal::preparation;
+     }
+ 
+ private:
+@@ -230,6 +234,10 @@ private:
+     static Action* fan_of_knives(PlayerbotAI* botAI) { return new FanOfKnivesAction(botAI); }
+     static Action* killing_spree(PlayerbotAI* botAI) { return new CastKillingSpreeAction(botAI); }
+     static Action* cold_blood(PlayerbotAI* botAI) { return new CastColdBloodAction(botAI); }
++    static Action* shadowstep(PlayerbotAI* botAI) { return new CastShadowstepAction(botAI); }
++    static Action* shadow_dance(PlayerbotAI* botAI) { return new CastShadowDanceAction(botAI); }
++    static Action* hemorrhage(PlayerbotAI* botAI) { return new CastHemorrhageAction(botAI); }
++    static Action* preparation(PlayerbotAI* botAI) { return new CastPreparationAction(botAI); }
+ };
+ 
+ SharedNamedObjectContextList<Strategy> RogueAiObjectContext::sharedStrategyContexts;
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index b542f14f..7c855712 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -183,6 +183,18 @@ public:
+     bool isPossible() override;
+ };
+ 
++class CastDeathCoilAction : public CastSpellAction
++{
++public:
++    CastDeathCoilAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "death coil") {}
++};
++
++class CastHowlOfTerrorAction : public CastSpellAction
++{
++public:
++    CastHowlOfTerrorAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "howl of terror") {}
++};
++
+ class CastSpellLockAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+index ad7a90e0..83c5dfb3 100644
+--- a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
++++ b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+@@ -274,6 +274,8 @@ public:
+         creators["drain life"] = &WarlockAiObjectContextInternal::drain_life;
+         creators["banish on cc"] = &WarlockAiObjectContextInternal::banish_on_cc;
+         creators["fear on cc"] = &WarlockAiObjectContextInternal::fear_on_cc;
++        creators["death coil"] = &WarlockAiObjectContextInternal::death_coil;
++        creators["howl of terror"] = &WarlockAiObjectContextInternal::howl_of_terror;
+         creators["spell lock"] = &WarlockAiObjectContextInternal::spell_lock;
+         creators["devour magic purge"] = &WarlockAiObjectContextInternal::devour_magic_purge;
+         creators["devour magic cleanse"] = &WarlockAiObjectContextInternal::devour_magic_cleanse;
+@@ -347,6 +349,8 @@ private:
+     static Action* drain_life(PlayerbotAI* botAI) { return new CastDrainLifeAction(botAI); }
+     static Action* banish_on_cc(PlayerbotAI* botAI) { return new CastBanishOnCcAction(botAI); }
+     static Action* fear_on_cc(PlayerbotAI* botAI) { return new CastFearOnCcAction(botAI); }
++    static Action* death_coil(PlayerbotAI* botAI) { return new CastDeathCoilAction(botAI); }
++    static Action* howl_of_terror(PlayerbotAI* botAI) { return new CastHowlOfTerrorAction(botAI); }
+     static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
+     static Action* devour_magic_purge(PlayerbotAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
+     static Action* devour_magic_cleanse(PlayerbotAI* botAI) { return new CastDevourMagicCleanseAction(botAI); }
+-- 
+2.55.0
+
