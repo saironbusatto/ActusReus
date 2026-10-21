@@ -13,3 +13,6 @@ __pycache__/
 
 # Saída bruta do agente (transcrições grandes); o diário e os relatórios entram
 agente/logs/
+
+# cópia de hardlinks do core só para testar a compilação do mod-actus-reus
+.actus-build/
