@@ -20,5 +20,11 @@ grep -q 'Zebedeuxvi' "$CONF" || sed -i "s/^\(Playerbots.FixedRandomBots = \".*\)
 sed -i 's/^Playerbots.MinRandomBots = .*/Playerbots.MinRandomBots = 60/; s/^Playerbots.MaxRandomBots = .*/Playerbots.MaxRandomBots = 60/; s/^Playerbots.RandomBotAutoJoinBGRatedArena2v2Count = .*/Playerbots.RandomBotAutoJoinBGRatedArena2v2Count = 15/' "$CONF"
 grep -cE '^Playerbots\.(MinRandomBots|MaxRandomBots) = 60$' "$CONF"
 
+# Gravador de observações para o ML (MlArena.log), sem política ligada ainda
+WS=env/dist/etc/worldserver.conf
+grep -q '^Appender.MlArena=' "$WS" || sed -i '/^Appender.Playerbots=/a Appender.MlArena=2,5,1,MlArena.log,a' "$WS"
+grep -q '^Logger.playerbots.ml=' "$WS" || sed -i '/^Logger.playerbots=/a Logger.playerbots.ml=4,MlArena' "$WS"
+grep -q '^Playerbots.ArenaMlLog' "$CONF" || printf '\nPlayerbots.ArenaMlLog = 1\nPlayerbots.ArenaMlPolicyFile = ""\nPlayerbots.ArenaMlTeams = ""\n' >> "$CONF"
+
 docker compose up -d ac-worldserver
 echo "ligado; conferir: '60 fixed random bots' no log e 60 online"
