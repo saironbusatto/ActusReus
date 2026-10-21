@@ -166,6 +166,13 @@ O que vai precisar:
 | 5 | ONNX Runtime embutido no módulo, sidecar fora do caminho do jogo | servidor estável com 20 arenas simultâneas |
 | 6+ | Camada LLM (seção 8) e extensão para mobs (`CreatureAI` próprio usando o mesmo contrato) | — |
 
+**Escala (pedido do usuário, 2026-10-21):** quando as ações e strategies de arena passarem nos testes, clonar as
+duas duplas (Rogue/Disc e Warlock/Resto) com `.pdump` em contas RNDBOT, nomes em algarismos romanos
+(Zebedeuii, Zebedeuiii…; WoW não aceita dígitos, máx. 12 letras), times 2v2 próprios e entrada em
+`Playerbots.FixedRandomBots`. Subir em degraus (2, 4, 8, 12 arenas) com `MapUpdate.Threads` ajustado, até o
+limite da máquina **com folga de CPU/RAM para o treino de ML e o agente `agy` rodarem ao mesmo tempo**.
+Feito pelo auditor (Claude) com backup do banco, não pelo agente noturno: envolve escrita no banco.
+
 ---
 
 ## 10. Regras para quem implementa
