@@ -119,6 +119,7 @@ em stun/fear); Nature's Swiftness (CD 180); Swiftmend (CD 15); Wild Growth (CD 6
 3. Rejuvenation sempre ativo nos aliados; Swiftmend é o botão de pânico. `[GUIA:WT]`
 4. Mudar de forma remove root e lentidão; Travel Form é o principal jeito de quebrar linha de visão. `[GUIA:WT]`
 5. Ficar perto de pilar para não morrer no aberto. `[GUIA:WT]`
+5b. Rodar em volta do pilar contra caster: Rejuvenation/Lifebloom/Wild Growth/Swiftmend são instantâneos e curam andando, o Priest precisa parar para castar. Era a grande vantagem do Druid. `[VOCÊ]` `[SERVIDOR]` (o bot atual faz o oposto: `ArenaTactics` anda até o alvo quando o LoS está bloqueado) `[LOG]`
 6. Barkskin funciona durante stun e fear: usar no burst do Rogue. `[GUIA:WT]` `[SERVIDOR]`
 7. **Erro medido**: o bot nunca usou Cyclone nem Roots e gastou GCD com Wrath e Moonfire. `[LOG]`
 

@@ -15,3 +15,10 @@ para o `InitGlyphs` não re-sortear glifos a cada boot.
 6. **Bug de código**: `ApplyFixedBotSpec` → `InitGlyphs(false)` limpa e sorteia glifos quando um da lista premade não serve. Corrigir antes de voltar a usar `Nome:spec`.
 7. **Fornecedor automático** (pedido do usuário: "1 GM para prover componentes"): implementar como reposição no código (como o `CreateSoulShardAction`) para venenos/reagentes/healthstone dos bots fixos, em vez de `.additem` manual.
 8. A linha de base do agente noturno (lutas 1–7) era com 1 arena e equipamento não igualado; as lutas depois de ~00:50 são com 5 arenas e tudo igual.
+9. **LoS defensivo inexistente** (observado pelo usuário em todas as lutas). A única lógica de LoS em arena
+   (`BattleGroundTactics.cpp:4238`, `ArenaTactics::Execute`) faz o oposto: com LoS bloqueado, o bot anda até o
+   alvo para voltar a enxergá-lo. Plano: trigger barato (caster inimigo castando em mim / vida baixa sendo focado)
+   → amostrar ~12 pontos a 5–15 yd, escolher um alcançável (`PathGenerator`), sem LoS do caster inimigo e, para
+   healer, com LoS do parceiro (`IsWithinLOSInMap`); limitar a 1 vez a cada 1–2 s por bot. Para o ML: campos de
+   LoS por unidade + distância ao ponto de LoS na observação, e a ação discreta "quebrar LoS". Druid primeiro
+   (kit instantâneo cura andando; Priest precisa parar para castar).
