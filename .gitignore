@@ -1,0 +1,15 @@
+# Clones de terceiros e dados grandes — fora do ActusReus
+azerothcore-wotlk/
+wowee/
+Client/
+backups/
+clone.log
+
+# Python / ML
+ml/.venv/
+ml/dbc/*.dbc
+ml/runs/*.csv
+__pycache__/
+
+# Saída bruta do agente (transcrições grandes); o diário e os relatórios entram
+agente/logs/

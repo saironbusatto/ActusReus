@@ -1,0 +1,190 @@
+From e5ac28b89b5db00aeb72c53c7a050a3d5db650c0 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 00:01:35 -0300
+Subject: [PATCH] feat: add Playerbots.FixedRandomBots for always-online arena
+ bots
+
+Listed random bots stay logged in across restarts, are never re-randomized,
+and get a premade spec applied once per run. Only random-bot accounts are
+accepted, so player characters can never be logged in as bots.
+---
+ conf/playerbots.conf.dist      |  7 ++++
+ src/Bot/RandomPlayerbotMgr.cpp | 58 +++++++++++++++++++++++++++++++++-
+ src/Bot/RandomPlayerbotMgr.h   |  7 ++++
+ src/PlayerbotAIConfig.cpp      | 13 ++++++++
+ src/PlayerbotAIConfig.h        |  2 ++
+ 5 files changed, 86 insertions(+), 1 deletion(-)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 812c32e8..4db9dea0 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -1686,6 +1686,13 @@ Playerbots.RandomBotAutoJoinBGRatedArena2v2Count = 0
+ Playerbots.RandomBotAutoJoinBGRatedArena3v3Count = 0
+ Playerbots.RandomBotAutoJoinBGRatedArena5v5Count = 0
+ 
++# Fixed random bots: always online, never re-randomized, and given a premade spec once per server run.
++# Format: Name:spec name,Name:spec name  (spec names from Playerbots.PremadeSpecName.<class>.<n>; spec optional)
++# Only characters on random bot accounts are accepted; anything else is ignored with an error in the log.
++# Example: Playerbots.FixedRandomBots = Zebedeu:subtlety pvp,Amnesian:disc pvp
++# Default: "" (disabled)
++Playerbots.FixedRandomBots = ""
++
+ # Randombot arena team count
+ # Teams are created when bots are initialized on server restart.
+ # You may need to first delete all arena teams, then reinitialize bots.
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 4afebecf..85ae31a1 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -1437,6 +1437,8 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
+     if (!player->IsInWorld())
+         return false;
+ 
++    ApplyFixedBotSpec(player);
++
+     if (player->GetGroup() || player->HasUnitState(UNIT_STATE_IN_FLIGHT))
+         return false;
+ 
+@@ -1552,7 +1554,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* bot)
+     {
+         // randomize
+         uint32 randomize = GetEventValue(botId, "randomize");
+-        if (!randomize)
++        if (!randomize && !IsFixedBot(botId))
+         {
+             // bool randomiser = true;
+             // if (player->GetGuildId())
+@@ -1810,6 +1812,60 @@ void RandomPlayerbotMgr::Init()
+     PlayerbotsDatabasePreparedStatement* stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_RANDOM_BOTS_BY_EVENT);
+     stmt->SetData(0, std::string("add"));
+     PlayerbotsDatabase.DirectExecute(stmt);
++
++    LoadFixedBots();
++}
++
++void RandomPlayerbotMgr::LoadFixedBots()
++{
++    // Valid for a year: the "add" event is what keeps a random bot logged in.
++    static constexpr uint32 FIXED_BOT_ADD_VALIDITY = 365 * DAY;
++
++    _fixedBots.clear();
++    _fixedBotsSpecApplied.clear();
++    for (auto const& [name, spec] : sPlayerbotAIConfig.FixedRandomBots)
++    {
++        ObjectGuid const guid = sCharacterCache->GetCharacterGuidByName(name);
++        uint32 const accountId = guid ? sCharacterCache->GetCharacterAccountIdByGuid(guid) : 0;
++        // Only real random bot accounts: never log in a player's own character as a bot.
++        if (!accountId || !sPlayerbotAIConfig.IsInRandomAccountList(accountId) || IsAddClassAccount(accountId))
++        {
++            LOG_ERROR("playerbots", "Playerbots.FixedRandomBots: '{}' is not a random bot character, ignored", name);
++            continue;
++        }
++
++        _fixedBots[guid.GetCounter()] = spec;
++        SetEventValue(guid.GetCounter(), "add", 1, FIXED_BOT_ADD_VALIDITY);
++    }
++
++    if (!_fixedBots.empty())
++        LOG_INFO("playerbots", "Playerbots.FixedRandomBots: {} fixed random bots", _fixedBots.size());
++}
++
++void RandomPlayerbotMgr::ApplyFixedBotSpec(Player* player)
++{
++    uint32 const botId = player->GetGUID().GetCounter();
++    auto const itr = _fixedBots.find(botId);
++    if (itr == _fixedBots.end() || itr->second.empty() || !_fixedBotsSpecApplied.insert(botId).second)
++        return;
++
++    uint8 const cls = player->getClass();
++    for (int specNo = 0; specNo < MAX_SPECNO && !sPlayerbotAIConfig.PremadeSpecName[cls][specNo].empty(); ++specNo)
++    {
++        if (sPlayerbotAIConfig.PremadeSpecName[cls][specNo] != itr->second)
++            continue;
++
++        PlayerbotFactory::InitTalentsBySpecNo(player, specNo, true);
++        PlayerbotFactory factory(player, player->GetLevel());
++        factory.InitGlyphs(false);
++        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
++            botAI->ResetStrategies();
++
++        LOG_INFO("playerbots", "Playerbots.FixedRandomBots: {} -> spec '{}'", player->GetName(), itr->second);
++        return;
++    }
++
++    LOG_ERROR("playerbots", "Playerbots.FixedRandomBots: spec '{}' not found for {}", itr->second, player->GetName());
+ }
+ 
+ void RandomPlayerbotMgr::InitArenaTeams()
+diff --git a/src/Bot/RandomPlayerbotMgr.h b/src/Bot/RandomPlayerbotMgr.h
+index fca1d7c6..b0b2e158 100644
+--- a/src/Bot/RandomPlayerbotMgr.h
++++ b/src/Bot/RandomPlayerbotMgr.h
+@@ -175,6 +175,7 @@ public:
+     void AssignAccountTypes();
+     bool IsAccountType(uint32 accountId, uint8 accountType);
+     bool IsAddClassAccount(uint32 accountId) const;
++    bool IsFixedBot(uint32 bot) const { return _fixedBots.contains(bot); }
+ 
+ protected:
+     void OnBotLoginInternal(Player* const bot) override;
+@@ -254,6 +255,12 @@ private:
+     std::unordered_set<uint32> currentBots;
+     uint32 playersLevel;
+ 
++    // Playerbots.FixedRandomBots: always online, never randomized, premade spec applied once per run
++    void LoadFixedBots();
++    void ApplyFixedBotSpec(Player* player);
++    std::unordered_map<uint32, std::string> _fixedBots;  // guid -> premade spec name
++    std::unordered_set<uint32> _fixedBotsSpecApplied;
++
+     // Account lists
+     std::vector<uint32> rndBotTypeAccounts;             // Accounts marked as RNDbot (type 1)
+     std::vector<uint32> addClassTypeAccounts;           // Accounts marked as AddClass (type 2)
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index 5acf13c4..e5d19672 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -7,6 +7,7 @@
+ #include "PlayerbotAIConfig.h"
+ #include "BisListMgr.h"
+ #include "Config.h"
++#include "Helpers.h"
+ #include "NewRpgInfo.h"
+ #include "PlayerbotDungeonRepository.h"
+ #include "PlayerbotFactory.h"
+@@ -404,6 +405,18 @@ bool PlayerbotAIConfig::Initialize()
+         sConfigMgr->GetOption<int32>("Playerbots.RandomBotAutoJoinBGRatedArena3v3Count", 0);
+     RandomBotAutoJoinBGRatedArena5v5Count =
+         sConfigMgr->GetOption<int32>("Playerbots.RandomBotAutoJoinBGRatedArena5v5Count", 0);
++
++    FixedRandomBots.clear();
++    for (std::string const& entry : split(sConfigMgr->GetOption<std::string>("Playerbots.FixedRandomBots", ""), ','))
++    {
++        size_t const separator = entry.find(':');
++        std::string name = entry.substr(0, separator);
++        std::string spec = separator == std::string::npos ? "" : entry.substr(separator + 1);
++        trim(name);
++        trim(spec);
++        if (!name.empty())
++            FixedRandomBots[name] = spec;
++    }
+     LogInGroupOnly = sConfigMgr->GetOption<bool>("Playerbots.LogInGroupOnly", true);
+     LogValuesPerTick = sConfigMgr->GetOption<bool>("Playerbots.LogValuesPerTick", false);
+     SummonAtInnkeepersEnabled = sConfigMgr->GetOption<bool>("Playerbots.SummonAtInnkeepersEnabled", true);
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index d0f700d4..6471bde4 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -269,6 +269,8 @@ public:
+     uint32 RandomBotAutoJoinBGRatedArena3v3Count;
+     uint32 RandomBotAutoJoinBGRatedArena5v5Count;
+ 
++    std::unordered_map<std::string, std::string> FixedRandomBots;  // bot name -> premade spec name (may be empty)
++
+     uint32 RandomBotTeleLowerLevel, RandomBotTeleHigherLevel;
+     std::map<uint32, std::pair<uint32, uint32>> ZoneBrackets;
+     bool LogInGroupOnly, LogValuesPerTick;
+-- 
+2.55.0
+
