@@ -153,3 +153,23 @@ em stun/fear); Nature's Swiftness (CD 180); Swiftmend (CD 15); Wild Growth (CD 6
   [Warlocks PvP Guide](https://forum.warmane.com/showthread.php?t=285903).
 - [warcraft.wiki.gg — Diminishing returns](https://warcraft.wiki.gg/wiki/Diminishing_returns).
 - Não acessados (bloqueio 403 ou fora do ar): Icy Veins WotLK Classic, Arena Junkies.
+
+## Pesquisa 2009: profissões e planos de jogo (21/10/2026)
+
+**Profissões** [GUIA]
+- Engineering é a 1ª para PvP: Hyperspeed Accelerators (haste nas luvas, a cada ~48 s) e Hand-Mounted Pyro Rocket (dano à distância, 45 s). Nitro Boosts não funcionam em arena. (Warcraft Tavern, Disc e Sub)
+- Rogue Sub: Engineering + Tailoring (Swordguard Embroidery); Herbalism dá Lifeblood (cura). Um leitor discorda: Engineering vale pouco em arena, e JC/BS seriam melhores. (Warcraft Tavern)
+- Disc: Engineering > Jewelcrafting (Dragon's Eye, +resil) > Blacksmithing (2 encaixes extras). (Warcraft Tavern)
+- [HIPÓTESE] Os bots não têm profissões. Bônus de JC/BS dá para emular por gema/encaixe; Hyperspeed/Pyro exigem skill de Engineering na ficha e um bot que use o "on-use" das luvas/cinto, o que o playerbots não garante.
+
+**Planos de jogo de Disc/Rogue que venciam (Lamures, 2v2 Glad, mar/2009)** [GUIA]
+- Abertura: Sap no alvo de CC, abrir no outro, Power Word: Shield no rogue para ele gastar os CDs.
+- Três jeitos de vencer: Mana Burn no healer e matar o DPS; CC em cadeia num alvo enquanto desgasta o outro; Sap + Fear e burst com Tricks of the Trade antes da reação.
+- Quando o burst falha: jogar na defensiva, com stunlock, Gouge sempre que puder e kite curto sem energia.
+
+**Contra Warlock/Druid (Nostalgia, rogue 2v2, out/2008)** [GUIA]
+- "Warlock teams are easy until top-level Warlock/Druids". Precisa de CC no Druid; com o pet do Warlock morto, dá para "put massive pressure on the lock".
+- Fica em stealth na abertura (90% das vezes). Guarda Cloak of Shadows para quando está tomando dano, não para o burst. Anuncia os CCs com 5 a 10 s de antecedência.
+- Sap na abertura é "quase obrigatório" (fórum, 3.3.5 Mutilate). Cheap Shot → Kidney libera Shadowstep → Kick no segundo alvo (Warcraft Tavern, openers).
+
+Fontes: warcrafttavern.com/wotlk/guides/pvp-subtlety-rogue-best-professions, warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-professions, engadget.com/2009-03-22-the-colosseum-gladiator-lamures.html, engadget.com/2008-10-25-the-colosseum-nostalgia.html, warcrafttavern.com/tbc/guides/rogue-subtlety-openers, wowhead.com/forums/topic/3-3-5-mutilate-pvp-164411
