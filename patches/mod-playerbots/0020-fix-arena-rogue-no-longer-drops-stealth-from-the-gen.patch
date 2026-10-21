@@ -1,0 +1,46 @@
+From 3af6ec26575a34b4704f4ba512d0ccd9205bb2f0 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 19:35:03 -0300
+Subject: [PATCH 20/25] fix: arena rogue no longer drops stealth from the
+ generic out-of-combat unstealth; druid damage block matches action variants
+ (moonfire on attacker)
+
+---
+ src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp | 7 ++++---
+ src/Ai/Class/Rogue/Action/RogueActions.h           | 2 ++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+index 4b80cb55..632f571d 100644
+--- a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
++++ b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+@@ -53,9 +53,10 @@ float ArenaDruidMultiplier::GetValue(Action* action)
+ 
+     std::string const name = action->getName();
+     // Resto in arena stays a healer: leaving tree form to Wrath/Moonfire costs two GCDs and the Tree of Life bonus
+-    if (name == "wrath" || name == "moonfire" || name == "starfire" ||
+-        name == "insect swarm" || name == "cancel tree form")
+-        return 0.0f;
++    // Prefix match: the queue also holds variants such as "moonfire on attacker"
++    for (char const* blocked : {"wrath", "moonfire", "starfire", "insect swarm", "cancel tree form"})
++        if (name.rfind(blocked, 0) == 0)
++            return 0.0f;
+ 
+     return 1.0f;
+ }
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index 212bbec0..a962d9cb 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -57,6 +57,8 @@ public:
+     UnstealthAction(PlayerbotAI* botAI) : Action(botAI, "unstealth") {}
+ 
+     bool Execute(Event event) override;
++    // The generic out-of-combat "often" unstealth would ruin the arena opener (approach in stealth)
++    bool isUseful() override { return !bot->InArena(); }
+ };
+ 
+ class CheckStealthAction : public Action
+-- 
+2.55.0
+

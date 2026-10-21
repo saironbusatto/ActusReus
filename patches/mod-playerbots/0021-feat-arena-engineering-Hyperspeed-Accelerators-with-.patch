@@ -1,0 +1,382 @@
+From 30de230370f1a6c1804b5d90e4cae7c573f70567 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 19:51:49 -0300
+Subject: [PATCH 21/25] feat: arena engineering - Hyperspeed Accelerators with
+ the burst (healers when the partner drops), Cobalt Frag Bomb stun on the CC
+ target; fixed engineer bots keep a bomb stack
+
+---
+ src/Ai/Base/ActionContext.h                   |   5 +
+ src/Ai/Base/ArenaEngineering.h                | 123 ++++++++++++++++
+ src/Ai/Base/ArenaMlPolicy.h                   | 136 ++++++++++++++++++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |   2 +
+ src/Ai/Base/TriggerContext.h                  |   5 +
+ src/Bot/RandomPlayerbotMgr.cpp                |   8 ++
+ 6 files changed, 279 insertions(+)
+ create mode 100644 src/Ai/Base/ArenaEngineering.h
+ create mode 100644 src/Ai/Base/ArenaMlPolicy.h
+
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index 81ed52cc..d73e03c1 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -7,6 +7,7 @@
+ #ifndef PLAYERBOTS_ACTIONCONTEXT_H
+ #define PLAYERBOTS_ACTIONCONTEXT_H
+ 
++#include "ArenaEngineering.h"
+ #include "AddLootAction.h"
+ #include "AttackAction.h"
+ #include "AutoMaintenanceOnLevelupAction.h"
+@@ -178,6 +179,8 @@ public:
+         creators["escape artist"] = &ActionContext::escape_artist;
+         creators["use trinket"] = &ActionContext::use_trinket;
+         creators["pvp trinket"] = &ActionContext::pvp_trinket;
++        creators["hyperspeed accelerators"] = &ActionContext::hyperspeed_accelerators;
++        creators["cobalt frag bomb"] = &ActionContext::cobalt_frag_bomb;
+         creators["auto talents"] = &ActionContext::auto_talents;
+         creators["auto share quest"] = &ActionContext::auto_share_quest;
+         creators["auto maintenance on levelup"] = &ActionContext::auto_maintenance_on_levelup;
+@@ -383,6 +386,8 @@ private:
+     static Action* escape_artist(PlayerbotAI* botAI) { return new CastEscapeArtistAction(botAI); }
+     static Action* use_trinket(PlayerbotAI* botAI) { return new UseTrinketAction(botAI); }
+     static Action* pvp_trinket(PlayerbotAI* botAI) { return new UsePvpTrinketAction(botAI); }
++    static Action* hyperspeed_accelerators(PlayerbotAI* botAI) { return new UseHyperspeedAction(botAI); }
++    static Action* cobalt_frag_bomb(PlayerbotAI* botAI) { return new UseFragBombAction(botAI); }
+     static Action* auto_talents(PlayerbotAI* botAI) { return new AutoSetTalentsAction(botAI); }
+     static Action* auto_share_quest(PlayerbotAI* botAI) { return new AutoShareQuestAction(botAI); }
+     static Action* auto_maintenance_on_levelup(PlayerbotAI* botAI) { return new AutoMaintenanceOnLevelupAction(botAI); }
+diff --git a/src/Ai/Base/ArenaEngineering.h b/src/Ai/Base/ArenaEngineering.h
+new file mode 100644
+index 00000000..804d0e1b
+--- /dev/null
++++ b/src/Ai/Base/ArenaEngineering.h
+@@ -0,0 +1,123 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAENGINEERING_H
++#define PLAYERBOTS_ARENAENGINEERING_H
++
++#include "Action.h"
++#include "ArenaHelpers.h"
++#include "Trigger.h"
++
++// Engineering in arena (2009 PvP standard): Hyperspeed Accelerators on the gloves for the burst window,
++// Cobalt Frag Bomb (3 s AoE stun, usable in arena) on the player who must sit in CC while the other dies.
++namespace ai::arena
++{
++    constexpr uint32 ENCHANT_HYPERSPEED_ACCELERATORS = 3604;
++    constexpr uint32 SPELL_HYPERSPEED_ACCELERATION = 54758;
++    constexpr uint32 ITEM_COBALT_FRAG_BOMB = 40771;
++    constexpr uint32 SPELL_COBALT_FRAG_BOMB = 67769;
++
++    inline Item* HyperspeedGloves(Player* bot)
++    {
++        Item* gloves = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_HANDS);
++        return gloves && gloves->GetEnchantmentId(PERM_ENCHANTMENT_SLOT) == ENCHANT_HYPERSPEED_ACCELERATORS ? gloves
++                                                                                                           : nullptr;
++    }
++
++    // The enemy who is not the kill target: the one the bomb should lock down
++    inline Unit* CcTarget(PlayerbotAI* botAI)
++    {
++        Unit* kill = botAI->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
++        for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get())
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u != kill && u->IsAlive() && u->IsPlayer())
++                return u;
++        }
++        return nullptr;
++    }
++}
++
++class HyperspeedTrigger : public Trigger
++{
++public:
++    HyperspeedTrigger(PlayerbotAI* botAI) : Trigger(botAI, "hyperspeed accelerators") {}
++
++    bool IsActive() override
++    {
++        if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsInCombat() ||
++            !ai::arena::HyperspeedGloves(bot) || bot->HasSpellCooldown(ai::arena::SPELL_HYPERSPEED_ACCELERATION) ||
++            bot->HasAura(ai::arena::SPELL_HYPERSPEED_ACCELERATION))
++            return false;
++
++        if (PlayerbotAI::IsHeal(bot))  // healer: haste when the partner is going down
++        {
++            Unit* partner = ai::arena::FindPartner(botAI);
++            return partner && partner->GetHealthPct() < 50.0f;
++        }
++        return ai::arena::KillWindowOpen(botAI);  // DPS: haste goes with the burst
++    }
++};
++
++class UseHyperspeedAction : public Action
++{
++public:
++    UseHyperspeedAction(PlayerbotAI* botAI) : Action(botAI, "hyperspeed accelerators") {}
++
++    bool Execute(Event /*event*/) override
++    {
++        Item* gloves = ai::arena::HyperspeedGloves(bot);
++        if (!gloves)
++            return false;
++
++        SpellCastTargets targets;
++        targets.SetUnitTarget(bot);
++        bot->CastItemUseSpell(gloves, targets, 1, 0);
++        return true;
++    }
++};
++
++class FragBombTrigger : public Trigger
++{
++public:
++    FragBombTrigger(PlayerbotAI* botAI) : Trigger(botAI, "cobalt frag bomb") {}
++
++    bool IsActive() override
++    {
++        if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() ||
++            !bot->HasItemCount(ai::arena::ITEM_COBALT_FRAG_BOMB, 1) ||
++            bot->HasSpellCooldown(ai::arena::SPELL_COBALT_FRAG_BOMB))
++            return false;
++
++        Unit* cc = ai::arena::CcTarget(botAI);
++        if (!cc || !bot->IsWithinDistInMap(cc, 28.0f) || !bot->IsWithinLOSInMap(cc) ||
++            cc->HasUnitState(UNIT_STATE_STUNNED) || cc->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++            cc->HasAuraType(SPELL_AURA_MOD_CONFUSE))
++            return false;
++
++        // Lock the CC target only when the burst is on, or when it is casting a heal
++        return ai::arena::KillWindowOpen(botAI) || (PlayerbotAI::IsHeal(cc->ToPlayer()) && cc->IsNonMeleeSpellCast(false));
++    }
++};
++
++class UseFragBombAction : public Action
++{
++public:
++    UseFragBombAction(PlayerbotAI* botAI) : Action(botAI, "cobalt frag bomb") {}
++
++    bool Execute(Event /*event*/) override
++    {
++        Unit* cc = ai::arena::CcTarget(botAI);
++        Item* bomb = bot->GetItemByEntry(ai::arena::ITEM_COBALT_FRAG_BOMB);
++        if (!cc || !bomb)
++            return false;
++
++        return bot->CastSpell(cc->GetPositionX(), cc->GetPositionY(), cc->GetPositionZ(),
++                              ai::arena::SPELL_COBALT_FRAG_BOMB, false, bomb) == SPELL_CAST_OK;
++    }
++};
++
++#endif
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+new file mode 100644
+index 00000000..f5002073
+--- /dev/null
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -0,0 +1,136 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAMLPOLICY_H
++#define PLAYERBOTS_ARENAMLPOLICY_H
++
++#include <fstream>
++#include <sstream>
++#include <unordered_map>
++
++#include "ArenaObservation.h"
++#include "Multiplier.h"
++#include "PlayerbotAIConfig.h"
++
++// Learned arena policy (ml/policy/train.py): a 48 -> 64 -> 64 -> N MLP evaluated in plain C++.
++// It never adds actions; it rescales the relevance of the actions the rule strategies already queued,
++// so the rules stay as the fallback. Only bots whose 2v2 team is in Playerbots.ArenaMlTeams use it.
++namespace ai::arena
++{
++    struct PolicyNet
++    {
++        int nIn = 0, nHidden = 0, nOut = 0;
++        std::unordered_map<std::string, int> index;
++        std::vector<float> w1, b1, w2, b2, w3, b3;
++        bool ok = false;
++
++        static bool ReadFloats(std::ifstream& in, std::vector<float>& out, size_t n)
++        {
++            out.resize(n);
++            for (float& v : out)
++                if (!(in >> v))
++                    return false;
++            return true;
++        }
++
++        explicit PolicyNet(std::string const& path)
++        {
++            std::ifstream in(path);
++            std::string magic, version, names;
++            if (!(in >> magic >> version >> nIn >> nHidden >> nOut) || magic != "arena-policy" || version != "v1" ||
++                nIn != 48)
++            {
++                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or wrong format)", path);
++                return;
++            }
++            in >> std::ws;
++            std::getline(in, names);
++            std::stringstream ss(names);
++            std::string name;
++            for (int i = 0; std::getline(ss, name, '|'); ++i)
++                index[name] = i;
++
++            ok = int(index.size()) == nOut && ReadFloats(in, w1, size_t(nHidden) * nIn) &&
++                 ReadFloats(in, b1, nHidden) && ReadFloats(in, w2, size_t(nHidden) * nHidden) &&
++                 ReadFloats(in, b2, nHidden) && ReadFloats(in, w3, size_t(nOut) * nHidden) &&
++                 ReadFloats(in, b3, nOut);
++            LOG_INFO("playerbots", "ArenaMlPolicy: '{}' {} ({} actions)", path, ok ? "loaded" : "INVALID", nOut);
++        }
++
++        static std::vector<float> Dense(std::vector<float> const& x, std::vector<float> const& w,
++                                        std::vector<float> const& b, bool relu)
++        {
++            std::vector<float> y(b);
++            size_t const nIn = x.size();
++            for (size_t o = 0; o < y.size(); ++o)
++            {
++                for (size_t i = 0; i < nIn; ++i)
++                    y[o] += w[o * nIn + i] * x[i];
++                if (relu && y[o] < 0)
++                    y[o] = 0;
++            }
++            return y;
++        }
++
++        // Softmax probabilities over the action vocabulary
++        std::vector<float> Probabilities(std::vector<float> const& x) const
++        {
++            std::vector<float> logits = Dense(Dense(Dense(x, w1, b1, true), w2, b2, true), w3, b3, false);
++            float const top = *std::max_element(logits.begin(), logits.end());
++            float sum = 0;
++            for (float& v : logits)
++                sum += (v = std::exp(v - top));
++            for (float& v : logits)
++                v /= sum;
++            return logits;
++        }
++    };
++
++    inline PolicyNet const& Policy()
++    {
++        static PolicyNet const net(sPlayerbotAIConfig.ArenaMlPolicyFile);  // loaded once, first use
++        return net;
++    }
++
++    class ArenaMlMultiplier : public Multiplier
++    {
++    public:
++        ArenaMlMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "arena ml") {}
++
++        float GetValue(Action* action) override
++        {
++            Player* bot = botAI->GetBot();
++            if (sPlayerbotAIConfig.ArenaMlTeams.empty() || !bot->InArena() ||
++                !sPlayerbotAIConfig.ArenaMlTeams.count(bot->GetArenaTeamId(0)))
++                return 1.0f;
++
++            PolicyNet const& net = Policy();
++            if (!net.ok)
++                return 1.0f;
++
++            auto const it = net.index.find(action->getName());
++            if (it == net.index.end())
++                return 1.0f;  // action the policy never saw: leave it to the rules
++
++            uint64 const now = GameTime::GetGameTimeMS().count();
++            if (now != lastTick)  // one forward pass per engine tick, not per candidate action
++            {
++                probs = net.Probabilities(Features(CollectObservation(botAI)));
++                top = *std::max_element(probs.begin(), probs.end());
++                lastTick = now;
++            }
++            // Most likely action x1.75, unlikely ones down to x0.25; never 0, so the rules still decide edge cases
++            return 0.25f + 1.5f * probs[it->second] / top;
++        }
++
++    private:
++        uint64 lastTick = 0;
++        std::vector<float> probs;
++        float top = 1.0f;
++    };
++}
++
++#endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 59b862d8..922aba43 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -84,4 +84,6 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(
+         new TriggerNode("no possible targets", { NextAction("arena tactics", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
++    triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
++    triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+ }
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index a6d01436..f4610ed1 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -20,6 +20,7 @@
+ #include "NewRpgTriggers.h"
+ #include "PullTriggers.h"
+ #include "PvpTriggers.h"
++#include "ArenaEngineering.h"
+ #include "RangeTriggers.h"
+ #include "RpgTriggers.h"
+ #include "RtiTriggers.h"
+@@ -113,6 +114,8 @@ public:
+         creators["enemy out of spell"] = &TriggerContext::EnemyOutOfSpell;
+         creators["enemy too close for spell"] = &TriggerContext::enemy_too_close_for_spell;
+         creators["pvp trinket"] = &TriggerContext::pvp_trinket;
++        creators["hyperspeed accelerators"] = &TriggerContext::hyperspeed_accelerators;
++        creators["cobalt frag bomb"] = &TriggerContext::cobalt_frag_bomb;
+         creators["enemy too close for shoot"] = &TriggerContext::enemy_too_close_for_shoot;
+         creators["enemy too close for auto shot"] = &TriggerContext::enemy_too_close_for_auto_shot;
+         creators["enemy too close for melee"] = &TriggerContext::enemy_too_close_for_melee;
+@@ -350,6 +353,8 @@ private:
+     static Trigger* EnemyOutOfSpell(PlayerbotAI* botAI) { return new EnemyOutOfSpellRangeTrigger(botAI); }
+     static Trigger* enemy_too_close_for_spell(PlayerbotAI* botAI) { return new EnemyTooCloseForSpellTrigger(botAI); }
+     static Trigger* pvp_trinket(PlayerbotAI* botAI) { return new PvpTrinketTrigger(botAI); }
++    static Trigger* hyperspeed_accelerators(PlayerbotAI* botAI) { return new HyperspeedTrigger(botAI); }
++    static Trigger* cobalt_frag_bomb(PlayerbotAI* botAI) { return new FragBombTrigger(botAI); }
+     static Trigger* enemy_too_close_for_auto_shot(PlayerbotAI* botAI)
+     {
+         return new EnemyTooCloseForAutoShotTrigger(botAI);
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 11b68939..e9c81945 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -1441,6 +1441,14 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
+ 
+     ApplyFixedBotSpec(player);
+ 
++    // Fixed arena bots with Engineering keep a stack of Cobalt Frag Bombs (like reagents)
++    if (IsFixedBot(player->GetGUID().GetCounter()) && player->HasSkill(SKILL_ENGINEERING))
++    {
++        uint32 const bombs = player->GetItemCount(40771);
++        if (bombs < 5)
++            player->AddItem(40771, 20 - bombs);
++    }
++
+     if (player->GetGroup() || player->HasUnitState(UNIT_STATE_IN_FLIGHT))
+         return false;
+ 
+-- 
+2.55.0
+

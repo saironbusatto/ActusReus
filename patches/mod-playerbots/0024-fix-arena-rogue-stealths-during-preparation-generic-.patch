@@ -1,0 +1,105 @@
+From c2c5c65db44f736d99bb09dedbdc6d942adec3f9 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 20:33:49 -0300
+Subject: [PATCH 24/25] fix: arena rogue stealths during preparation (generic
+ stealth waits for a visible target); Ambush in Shadow Dance only from behind
+
+---
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp      |  2 ++
+ src/Ai/Class/Rogue/RogueTriggers.cpp             | 16 +++++++++++++++-
+ src/Ai/Class/Rogue/RogueTriggers.h               |  8 ++++++++
+ .../Class/Rogue/Strategy/ArenaRogueStrategy.cpp  |  1 +
+ 4 files changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index 87a5ae9b..b447fb4d 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -96,6 +96,7 @@ public:
+         creators["sap on enemy healer"] = &RogueTriggerFactoryInternal::sap_on_enemy_healer;
+         creators["dance ambush"] = &RogueTriggerFactoryInternal::dance_ambush;
+         creators["sap target far"] = &RogueTriggerFactoryInternal::sap_target_far;
++        creators["arena prep stealth"] = &RogueTriggerFactoryInternal::arena_prep_stealth;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -116,6 +117,7 @@ private:
+     static Trigger* sap_on_enemy_healer(PlayerbotAI* botAI) { return new SapEnemyHealerTrigger(botAI); }
+     static Trigger* dance_ambush(PlayerbotAI* botAI) { return new DanceAmbushTrigger(botAI); }
+     static Trigger* sap_target_far(PlayerbotAI* botAI) { return new SapTargetFarTrigger(botAI); }
++    static Trigger* arena_prep_stealth(PlayerbotAI* botAI) { return new ArenaPrepStealthTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 9ba2ab49..13209941 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include "RogueTriggers.h"
+ #include "ArenaHelpers.h"
++#include "Battleground.h"
+ #include "GenericTriggers.h"
+ #include "Playerbots.h"
+ #include "ServerFacade.h"
+@@ -244,8 +245,9 @@ bool SapEnemyHealerTrigger::IsActive()
+ bool DanceAmbushTrigger::IsActive()
+ {
+     Unit* target = AI_VALUE(Unit*, "current target");
++    // Ambush needs the rogue behind the target
+     return target && botAI->HasAura("shadow dance", bot) && target->HasUnitState(UNIT_STATE_STUNNED) &&
+-           botAI->CanCastSpell("ambush", target);
++           !target->HasInArc(float(M_PI), bot) && botAI->CanCastSpell("ambush", target);
+ }
+ 
+ // Arena opener: the healer is out of Sap range, so walk to it in stealth while it is still out of combat
+@@ -259,3 +261,15 @@ bool SapTargetFarTrigger::IsActive()
+            bot->IsWithinDistInMap(healer, 60.0f) &&
+            healer->GetDiminishing(DIMINISHING_DISORIENT) < DIMINISHING_LEVEL_IMMUNE;
+ }
++
++// Arena: stealth already in the starting room; the generic stealth trigger waits for a visible target,
++// which never happens behind the gates, so the Sap/Premeditation opener never started
++bool ArenaPrepStealthTrigger::IsActive()
++{
++    if (!bot->InArena() || botAI->HasAura("stealth", bot) || bot->IsInCombat())
++        return false;
++
++    Battleground* bg = bot->GetBattleground();
++    return bg && (bg->GetStatus() == STATUS_WAIT_JOIN || bg->GetStatus() == STATUS_IN_PROGRESS) &&
++           botAI->CanCastSpell("stealth", bot);
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index f0d0b138..7646ad5f 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -192,6 +192,14 @@ public:
+     bool IsActive() override;
+ };
+ 
++class ArenaPrepStealthTrigger : public Trigger
++{
++public:
++    ArenaPrepStealthTrigger(PlayerbotAI* botAI) : Trigger(botAI, "arena prep stealth") {}
++
++    bool IsActive() override;
++};
++
+ class PremeditationTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index 75a685ba..957f935e 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -127,5 +127,6 @@ void ArenaRogueOpenerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     triggers.push_back(new TriggerNode("sap on enemy healer", { NextAction("sap on enemy healer", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("sap target far", { NextAction("reach sap target", ACTION_HIGH + 7) }));
++    triggers.push_back(new TriggerNode("arena prep stealth", { NextAction("stealth", ACTION_HIGH + 10) }));
+     triggers.push_back(new TriggerNode("premeditation", { NextAction("premeditation", ACTION_HIGH + 8) }));
+ }
+-- 
+2.55.0
+

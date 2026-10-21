@@ -1,7 +1,7 @@
 From 30296f132b944f6030cf772c967e1833a7ed57dc Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 08:30:34 -0300
-Subject: [PATCH 11/17] feat: arena healers step behind cover from enemy
+Subject: [PATCH 11/25] feat: arena healers step behind cover from enemy
  casters while keeping LoS to partner
 
 Only with Playerbots.ArenaPvpStrategies. Triggers when an enemy caster is casting at the healer or the healer is under 50% HP; samples 3 rings x 12 points, keeps the nearest reachable one hidden from the caster and visible to the partner. Healers also no longer walk out of cover to see their damage target.

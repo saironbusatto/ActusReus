@@ -1,7 +1,7 @@
 From 8eb7c2958f53d638d43ad9167d40f9515fcaacf8 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 13:17:20 -0300
-Subject: [PATCH 14/17] fix: arena warlock waits 12s before recasting Curse of
+Subject: [PATCH 14/25] fix: arena warlock waits 12s before recasting Curse of
  Tongues (was every GCD against decursing druids)
 
 ---

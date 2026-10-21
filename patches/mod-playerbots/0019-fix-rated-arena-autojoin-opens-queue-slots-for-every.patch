@@ -1,0 +1,71 @@
+From 046b3ef6fdaa18c84c9974f9475d2c2b28ababfd Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 19:21:41 -0300
+Subject: [PATCH 19/25] fix: rated arena autojoin opens queue slots for every
+ missing arena instead of one at a time
+
+---
+ conf/playerbots.conf.dist      | 23 +++++++++++++++++++++++
+ src/Bot/RandomPlayerbotMgr.cpp | 10 ++++++----
+ 2 files changed, 29 insertions(+), 4 deletions(-)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 06dd9ad7..9a286717 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -496,6 +496,29 @@ Playerbots.AutoSaveMana = 1
+ 
+ Playerbots.ArenaPvpStrategies = 0
+ 
++#
++#    Playerbots.ArenaMlLog
++#        Write one CSV line per executed arena action (state seen + action chosen) to the
++#        "playerbots.ml" logger, as training data for an arena policy. Needs a logger/appender
++#        for playerbots.ml in worldserver.conf.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.ArenaMlLog = 0
++
++#
++#    Playerbots.ArenaMlPolicyFile
++#    Playerbots.ArenaMlTeams
++#        Learned arena policy (weights file written by ml/policy/train.py) and the comma-separated 2v2
++#        arena team ids that use it. The policy only rescales the actions the arena strategies queue;
++#        teams not listed keep the rules alone, which gives a mirror test (policy vs rules).
++#        Default: "" and "" - Disabled
++#
++
++Playerbots.ArenaMlPolicyFile = ""
++Playerbots.ArenaMlTeams = ""
++
+ # Healer bot save mana threshold
+ # Default: 60 (60%)
+ Playerbots.SaveManaThreshold = 60
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 1bb58897..11b68939 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -1181,12 +1181,14 @@ void RandomPlayerbotMgr::CheckBgQueue()
+ 
+         // Check both bgInstanceCount / bgInstances.size
+         // to help counter against potentional inconsistencies
++        // Open queue slots for every missing arena, not one at a time: with short fights a single slot
++        // never fills more than one or two instances
+         auto updateRatedArenaInstanceCount = [&](uint32 queueType, uint32 bracket, uint32 minCount)
+         {
+-            if (BattlegroundData[queueType][bracket].activeRatedArenaQueue == 0 &&
+-                BattlegroundData[queueType][bracket].ratedArenaInstanceCount < minCount &&
+-                BattlegroundData[queueType][bracket].ratedArenaInstances.size() < minCount)
+-                BattlegroundData[queueType][bracket].activeRatedArenaQueue = 1;
++            BattlegroundInfo& info = BattlegroundData[queueType][bracket];
++            uint32 const running = std::max<uint32>(info.ratedArenaInstanceCount, info.ratedArenaInstances.size());
++            if (running < minCount)
++                info.activeRatedArenaQueue = std::max<uint32>(info.activeRatedArenaQueue, minCount - running);
+         };
+ 
+         auto updateBGInstanceCount = [&](uint32 queueType, std::vector<uint32> brackets, uint32 minCount)
+-- 
+2.55.0
+

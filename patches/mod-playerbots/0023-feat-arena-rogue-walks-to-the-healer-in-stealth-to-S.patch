@@ -1,0 +1,324 @@
+From 5ce9b836013c00d1a2b6b5186f4be3b9e9355824 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 20:19:23 -0300
+Subject: [PATCH 23/25] feat: arena - rogue walks to the healer in stealth to
+ Sap it; partner locks the other enemy when the rogue commits the burst;
+ learned-policy multiplier wired (opt-in via
+ Playerbots.ArenaMlPolicyFile/ArenaMlTeams)
+
+---
+ src/Ai/Base/ActionContext.h                   |  2 +
+ src/Ai/Base/ArenaEngineering.h                | 50 +++++++++++++++++++
+ src/Ai/Base/ArenaMlPolicy.h                   | 23 +++++++--
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  7 +++
+ src/Ai/Base/Strategy/BattlegroundStrategy.h   |  1 +
+ src/Ai/Base/TriggerContext.h                  |  2 +
+ src/Ai/Class/Rogue/Action/RogueActions.h      | 13 +++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp   |  4 ++
+ src/Ai/Class/Rogue/RogueTriggers.cpp          | 12 +++++
+ src/Ai/Class/Rogue/RogueTriggers.h            |  8 +++
+ .../Rogue/Strategy/ArenaRogueStrategy.cpp     |  1 +
+ 11 files changed, 118 insertions(+), 5 deletions(-)
+
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index d73e03c1..76339efa 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -181,6 +181,7 @@ public:
+         creators["pvp trinket"] = &ActionContext::pvp_trinket;
+         creators["hyperspeed accelerators"] = &ActionContext::hyperspeed_accelerators;
+         creators["cobalt frag bomb"] = &ActionContext::cobalt_frag_bomb;
++        creators["cc on cc target"] = &ActionContext::cc_on_cc_target;
+         creators["auto talents"] = &ActionContext::auto_talents;
+         creators["auto share quest"] = &ActionContext::auto_share_quest;
+         creators["auto maintenance on levelup"] = &ActionContext::auto_maintenance_on_levelup;
+@@ -388,6 +389,7 @@ private:
+     static Action* pvp_trinket(PlayerbotAI* botAI) { return new UsePvpTrinketAction(botAI); }
+     static Action* hyperspeed_accelerators(PlayerbotAI* botAI) { return new UseHyperspeedAction(botAI); }
+     static Action* cobalt_frag_bomb(PlayerbotAI* botAI) { return new UseFragBombAction(botAI); }
++    static Action* cc_on_cc_target(PlayerbotAI* botAI) { return new CcOnCcTargetAction(botAI); }
+     static Action* auto_talents(PlayerbotAI* botAI) { return new AutoSetTalentsAction(botAI); }
+     static Action* auto_share_quest(PlayerbotAI* botAI) { return new AutoShareQuestAction(botAI); }
+     static Action* auto_maintenance_on_levelup(PlayerbotAI* botAI) { return new AutoMaintenanceOnLevelupAction(botAI); }
+diff --git a/src/Ai/Base/ArenaEngineering.h b/src/Ai/Base/ArenaEngineering.h
+index 804d0e1b..b63fbc0f 100644
+--- a/src/Ai/Base/ArenaEngineering.h
++++ b/src/Ai/Base/ArenaEngineering.h
+@@ -120,4 +120,54 @@ public:
+     }
+ };
+ 
++// Burst coordination: when the partner commits (Shadow Dance or Hyperspeed up), lock the other enemy now
++namespace ai::arena
++{
++    inline bool PartnerBursting(PlayerbotAI* botAI)
++    {
++        Unit* partner = FindPartner(botAI);
++        return partner && (partner->HasAura(51713) /*Shadow Dance*/ || partner->HasAura(SPELL_HYPERSPEED_ACCELERATION));
++    }
++
++    inline bool IsLockedDown(Unit* u)
++    {
++        return u->HasUnitState(UNIT_STATE_STUNNED) || u->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++               u->HasAuraType(SPELL_AURA_MOD_CONFUSE) || u->HasAura(33786) /*Cyclone*/;
++    }
++}
++
++class PartnerBurstingTrigger : public Trigger
++{
++public:
++    PartnerBurstingTrigger(PlayerbotAI* botAI) : Trigger(botAI, "partner bursting") {}
++
++    bool IsActive() override
++    {
++        if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !ai::arena::PartnerBursting(botAI))
++            return false;
++
++        Unit* cc = ai::arena::CcTarget(botAI);
++        return cc && !ai::arena::IsLockedDown(cc);
++    }
++};
++
++class CcOnCcTargetAction : public Action
++{
++public:
++    CcOnCcTargetAction(PlayerbotAI* botAI) : Action(botAI, "cc on cc target") {}
++
++    bool Execute(Event /*event*/) override
++    {
++        Unit* cc = ai::arena::CcTarget(botAI);
++        if (!cc)
++            return false;
++
++        // CC spells in preference order; the first one this bot can cast on the target wins
++        for (char const* spell : {"cyclone", "fear", "death coil", "psychic scream", "blind", "gouge", "silence"})
++            if (botAI->CanCastSpell(spell, cc))
++                return botAI->CastSpell(spell, cc);
++        return false;
++    }
++};
++
+ #endif
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index f5002073..30e44fd8 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -13,7 +13,8 @@
+ 
+ #include "ArenaObservation.h"
+ #include "Multiplier.h"
+-#include "PlayerbotAIConfig.h"
++#include "Config.h"
++#include "Helpers.h"
+ 
+ // Learned arena policy (ml/policy/train.py): a 48 -> 64 -> 64 -> N MLP evaluated in plain C++.
+ // It never adds actions; it rescales the relevance of the actions the rule strategies already queued,
+@@ -91,8 +92,21 @@ namespace ai::arena
+ 
+     inline PolicyNet const& Policy()
+     {
+-        static PolicyNet const net(sPlayerbotAIConfig.ArenaMlPolicyFile);  // loaded once, first use
+-        return net;
++        static PolicyNet const net(sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", ""));
++        return net;  // loaded once, first use
++    }
++
++    inline std::set<uint32> const& MlTeams()
++    {
++        static std::set<uint32> const teams = []
++        {
++            std::set<uint32> ids;
++            for (std::string id : split(sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlTeams", ""), ','))
++                if (!trim(id).empty())
++                    ids.insert(uint32(std::stoul(id)));
++            return ids;
++        }();
++        return teams;
+     }
+ 
+     class ArenaMlMultiplier : public Multiplier
+@@ -103,8 +117,7 @@ namespace ai::arena
+         float GetValue(Action* action) override
+         {
+             Player* bot = botAI->GetBot();
+-            if (sPlayerbotAIConfig.ArenaMlTeams.empty() || !bot->InArena() ||
+-                !sPlayerbotAIConfig.ArenaMlTeams.count(bot->GetArenaTeamId(0)))
++            if (MlTeams().empty() || !bot->InArena() || !MlTeams().count(bot->GetArenaTeamId(0)))
+                 return 1.0f;
+ 
+             PolicyNet const& net = Policy();
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 922aba43..894cb521 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "BattlegroundStrategy.h"
++#include "ArenaMlPolicy.h"
+ #include "Playerbots.h"
+ 
+ void BGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+@@ -86,4 +87,10 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
++    triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
++}
++
++void ArenaStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
++{
++    multipliers.push_back(new ai::arena::ArenaMlMultiplier(botAI));
+ }
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.h b/src/Ai/Base/Strategy/BattlegroundStrategy.h
+index 96867264..f30cdda2 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.h
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.h
+@@ -86,6 +86,7 @@ public:
+ 
+     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
+     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++    void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
+     std::string const getName() override { return "arena"; }
+ };
+ 
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index f4610ed1..5ba10ec6 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -116,6 +116,7 @@ public:
+         creators["pvp trinket"] = &TriggerContext::pvp_trinket;
+         creators["hyperspeed accelerators"] = &TriggerContext::hyperspeed_accelerators;
+         creators["cobalt frag bomb"] = &TriggerContext::cobalt_frag_bomb;
++        creators["partner bursting"] = &TriggerContext::partner_bursting;
+         creators["enemy too close for shoot"] = &TriggerContext::enemy_too_close_for_shoot;
+         creators["enemy too close for auto shot"] = &TriggerContext::enemy_too_close_for_auto_shot;
+         creators["enemy too close for melee"] = &TriggerContext::enemy_too_close_for_melee;
+@@ -355,6 +356,7 @@ private:
+     static Trigger* pvp_trinket(PlayerbotAI* botAI) { return new PvpTrinketTrigger(botAI); }
+     static Trigger* hyperspeed_accelerators(PlayerbotAI* botAI) { return new HyperspeedTrigger(botAI); }
+     static Trigger* cobalt_frag_bomb(PlayerbotAI* botAI) { return new FragBombTrigger(botAI); }
++    static Trigger* partner_bursting(PlayerbotAI* botAI) { return new PartnerBurstingTrigger(botAI); }
+     static Trigger* enemy_too_close_for_auto_shot(PlayerbotAI* botAI)
+     {
+         return new EnemyTooCloseForAutoShotTrigger(botAI);
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index a962d9cb..e8a442ed 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -9,6 +9,7 @@
+ 
+ #include "ArenaHelpers.h"
+ #include "GenericSpellActions.h"
++#include "MovementActions.h"
+ #include "UseItemAction.h"
+ 
+ class PlayerbotAI;
+@@ -158,6 +159,18 @@ public:
+     Unit* GetTarget() override { return ai::arena::FindVisibleEnemyHealer(botAI); }
+ };
+ 
++class ReachSapTargetAction : public MovementAction
++{
++public:
++    ReachSapTargetAction(PlayerbotAI* botAI) : MovementAction(botAI, "reach sap target") {}
++
++    bool Execute(Event /*event*/) override
++    {
++        Unit* healer = ai::arena::FindVisibleEnemyHealer(botAI);
++        return healer && MoveTo(healer, 6.0f);
++    }
++};
++
+ class CastPremeditationAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index 362745d4..87a5ae9b 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -95,6 +95,7 @@ public:
+         creators["premeditation"] = &RogueTriggerFactoryInternal::premeditation;
+         creators["sap on enemy healer"] = &RogueTriggerFactoryInternal::sap_on_enemy_healer;
+         creators["dance ambush"] = &RogueTriggerFactoryInternal::dance_ambush;
++        creators["sap target far"] = &RogueTriggerFactoryInternal::sap_target_far;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -114,6 +115,7 @@ private:
+     static Trigger* premeditation(PlayerbotAI* botAI) { return new PremeditationTrigger(botAI); }
+     static Trigger* sap_on_enemy_healer(PlayerbotAI* botAI) { return new SapEnemyHealerTrigger(botAI); }
+     static Trigger* dance_ambush(PlayerbotAI* botAI) { return new DanceAmbushTrigger(botAI); }
++    static Trigger* sap_target_far(PlayerbotAI* botAI) { return new SapTargetFarTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+@@ -192,6 +194,7 @@ public:
+         creators["preparation"] = &RogueAiObjectContextInternal::preparation;
+         creators["premeditation"] = &RogueAiObjectContextInternal::premeditation;
+         creators["sap on enemy healer"] = &RogueAiObjectContextInternal::sap_on_enemy_healer;
++        creators["reach sap target"] = &RogueAiObjectContextInternal::reach_sap_target;
+         creators["blind on enemy healer"] = &RogueAiObjectContextInternal::blind_on_enemy_healer;
+     }
+ 
+@@ -265,6 +268,7 @@ private:
+     static Action* preparation(PlayerbotAI* botAI) { return new CastPreparationAction(botAI); }
+     static Action* premeditation(PlayerbotAI* botAI) { return new CastPremeditationAction(botAI); }
+     static Action* sap_on_enemy_healer(PlayerbotAI* botAI) { return new CastSapOnEnemyHealerAction(botAI); }
++    static Action* reach_sap_target(PlayerbotAI* botAI) { return new ReachSapTargetAction(botAI); }
+     static Action* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new CastBlindOnEnemyHealerAction(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 06b4093d..9ba2ab49 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -247,3 +247,15 @@ bool DanceAmbushTrigger::IsActive()
+     return target && botAI->HasAura("shadow dance", bot) && target->HasUnitState(UNIT_STATE_STUNNED) &&
+            botAI->CanCastSpell("ambush", target);
+ }
++
++// Arena opener: the healer is out of Sap range, so walk to it in stealth while it is still out of combat
++bool SapTargetFarTrigger::IsActive()
++{
++    if (!bot->InArena() || !botAI->HasAura("stealth", bot) || bot->isMoving())
++        return false;
++
++    Unit* healer = ai::arena::FindVisibleEnemyHealer(botAI);
++    return healer && !healer->IsInCombat() && !bot->IsWithinDistInMap(healer, 9.0f) &&
++           bot->IsWithinDistInMap(healer, 60.0f) &&
++           healer->GetDiminishing(DIMINISHING_DISORIENT) < DIMINISHING_LEVEL_IMMUNE;
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index 4df7930e..f0d0b138 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -184,6 +184,14 @@ public:
+     bool IsActive() override;
+ };
+ 
++class SapTargetFarTrigger : public Trigger
++{
++public:
++    SapTargetFarTrigger(PlayerbotAI* botAI) : Trigger(botAI, "sap target far") {}
++
++    bool IsActive() override;
++};
++
+ class PremeditationTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index c73d655e..75a685ba 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -126,5 +126,6 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ void ArenaRogueOpenerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     triggers.push_back(new TriggerNode("sap on enemy healer", { NextAction("sap on enemy healer", ACTION_HIGH + 9) }));
++    triggers.push_back(new TriggerNode("sap target far", { NextAction("reach sap target", ACTION_HIGH + 7) }));
+     triggers.push_back(new TriggerNode("premeditation", { NextAction("premeditation", ACTION_HIGH + 8) }));
+ }
+-- 
+2.55.0
+

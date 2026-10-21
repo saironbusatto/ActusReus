@@ -1,0 +1,46 @@
+From fb220f34c5a3d6bf9359748b23cc7cc8fb310843 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 20:47:47 -0300
+Subject: [PATCH 25/25] fix: PvP trinket and partner-burst CC triggers only
+ fire when the action can run
+
+---
+ src/Ai/Base/ArenaEngineering.h      | 8 +++++++-
+ src/Ai/Base/Trigger/PvpTriggers.cpp | 2 +-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/src/Ai/Base/ArenaEngineering.h b/src/Ai/Base/ArenaEngineering.h
+index b63fbc0f..6fa2878a 100644
+--- a/src/Ai/Base/ArenaEngineering.h
++++ b/src/Ai/Base/ArenaEngineering.h
+@@ -147,7 +147,13 @@ public:
+             return false;
+ 
+         Unit* cc = ai::arena::CcTarget(botAI);
+-        return cc && !ai::arena::IsLockedDown(cc);
++        if (!cc || ai::arena::IsLockedDown(cc))
++            return false;
++
++        for (char const* spell : {"cyclone", "fear", "death coil", "psychic scream", "blind", "gouge", "silence"})
++            if (botAI->CanCastSpell(spell, cc))
++                return true;
++        return false;  // nothing ready: do not keep firing an action that cannot run
+     }
+ };
+ 
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 7845c9cf..4a579af2 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -324,7 +324,7 @@ bool InVehicleTrigger::IsActive() { return botAI->IsInVehicle(); }
+ 
+ bool PvpTrinketTrigger::IsActive()
+ {
+-    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive())
++    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive() || !ai::arena::HasCcBreakReady(bot))
+         return false;
+ 
+     bool const lostControl = bot->HasUnitState(UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_CONFUSED) ||
+-- 
+2.55.0
+

@@ -1,0 +1,210 @@
+From 23138782f0152107c3dbf4184f725cddabaf1fe8 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 19:19:49 -0300
+Subject: [PATCH 18/25] feat: Playerbots.ArenaMlLog writes one CSV observation
+ per executed arena action (training data)
+
+---
+ src/Ai/Base/ArenaObservation.h | 142 +++++++++++++++++++++++++++++++++
+ src/Bot/Engine/Engine.cpp      |   3 +
+ src/PlayerbotAIConfig.cpp      |   1 +
+ src/PlayerbotAIConfig.h        |   1 +
+ 4 files changed, 147 insertions(+)
+ create mode 100644 src/Ai/Base/ArenaObservation.h
+
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+new file mode 100644
+index 00000000..28ed1b77
+--- /dev/null
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -0,0 +1,142 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAOBSERVATION_H
++#define PLAYERBOTS_ARENAOBSERVATION_H
++
++#include "Action.h"
++#include "ArenaHelpers.h"
++#include "GameTime.h"
++#include "Log.h"
++
++// Arena state as the bot sees it: logged per executed action ("playerbots.ml", training data) and fed to the
++// learned policy (ArenaMlPolicy.h). Field order must match ml/policy/features.py.
++namespace ai::arena
++{
++    // bit 0 stun, 1 fear, 2 confuse/disorient, 3 silence, 4 root, 5 casting
++    inline uint32 CcFlags(Unit* u)
++    {
++        if (!u)
++            return 0;
++
++        uint32 f = 0;
++        if (u->HasAuraType(SPELL_AURA_MOD_STUN)) f |= 1;
++        if (u->HasAuraType(SPELL_AURA_MOD_FEAR)) f |= 2;
++        if (u->HasAuraType(SPELL_AURA_MOD_CONFUSE)) f |= 4;
++        if (u->HasAuraType(SPELL_AURA_MOD_SILENCE)) f |= 8;
++        if (u->HasAuraType(SPELL_AURA_MOD_ROOT)) f |= 16;
++        if (u->IsNonMeleeSpellCast(false)) f |= 32;
++        return f;
++    }
++
++    struct EnemyObs
++    {
++        uint32 guid = 0, cls = 0, cc = 0;
++        int hp = 0, mana = 0, trinket = 0;
++    };
++
++    struct ArenaObs
++    {
++        uint32 cls = 0, selfCc = 0, partnerGuid = 0, partnerCc = 0, target = 0;
++        int selfHp = 0, selfMana = 0, partnerHp = 0, dist = -1, los = -1, killWindow = 0;
++        EnemyObs enemy[2];
++    };
++
++    inline int ManaOrPower(Unit* u)
++    {
++        return u->getPowerType() == POWER_MANA ? int(u->GetPowerPct(POWER_MANA)) : int(u->GetPower(u->getPowerType()));
++    }
++
++    inline ArenaObs CollectObservation(PlayerbotAI* botAI)
++    {
++        Player* bot = botAI->GetBot();
++        AiObjectContext* context = botAI->GetAiObjectContext();
++        ArenaObs o;
++        o.cls = bot->getClass();
++        o.selfHp = int(bot->GetHealthPct());
++        o.selfMana = ManaOrPower(bot);
++        o.selfCc = CcFlags(bot);
++
++        if (Unit* partner = FindPartner(botAI))
++        {
++            o.partnerGuid = partner->GetGUID().GetCounter();
++            o.partnerHp = int(partner->GetHealthPct());
++            o.partnerCc = CcFlags(partner);
++        }
++
++        std::vector<Unit*> enemies;
++        for (ObjectGuid const guid : context->GetValue<GuidVector>("possible targets")->Get())
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u->IsPlayer() && u->IsAlive())
++                enemies.push_back(u);
++        }
++        std::sort(enemies.begin(), enemies.end(),
++                  [](Unit* a, Unit* b) { return a->GetGUID().GetCounter() < b->GetGUID().GetCounter(); });
++        for (size_t i = 0; i < enemies.size() && i < 2; ++i)
++        {
++            Unit* u = enemies[i];
++            o.enemy[i] = {u->GetGUID().GetCounter(), u->ToPlayer()->getClass(), CcFlags(u), int(u->GetHealthPct()),
++                          u->getPowerType() == POWER_MANA ? int(u->GetPowerPct(POWER_MANA)) : -1,
++                          HasCcBreakReady(u) ? 1 : 0};
++        }
++
++        if (Unit* target = context->GetValue<Unit*>("current target")->Get())
++        {
++            o.target = target->GetGUID().GetCounter();
++            o.dist = int(bot->GetDistance(target));
++            o.los = bot->IsWithinLOSInMap(target) ? 1 : 0;
++        }
++        o.killWindow = KillWindowOpen(botAI) ? 1 : 0;
++        return o;
++    }
++
++    // One CSV line per executed arena action: ms,instance,bot,class,action,relevance,self(hp,mana,cc),
++    // partner(guid,hp,cc),enemy1(guid,class,hp,mana,cc,trinket),enemy2(...),target,dist,los,killwindow
++    inline void LogObservation(PlayerbotAI* botAI, Action* action, float relevance)
++    {
++        Player* bot = botAI->GetBot();
++        ArenaObs const o = CollectObservation(botAI);
++        auto enemy = [](EnemyObs const& e)
++        { return fmt::format("{},{},{},{},{},{}", e.guid, e.cls, e.hp, e.mana, e.cc, e.trinket); };
++
++        LOG_INFO("playerbots.ml", "{},{},{},{},{},{:.1f},{},{},{},{},{},{},{},{},{},{},{},{}",
++                 GameTime::GetGameTimeMS().count(), bot->GetInstanceId(), bot->GetGUID().GetCounter(), o.cls,
++                 action->getName(), relevance, o.selfHp, o.selfMana, o.selfCc, o.partnerGuid, o.partnerHp,
++                 o.partnerCc, enemy(o.enemy[0]), enemy(o.enemy[1]), o.target, o.dist, o.los, o.killWindow);
++    }
++
++    // Same order and scaling as ml/policy/features.py (48 values)
++    inline std::vector<float> Features(ArenaObs const& o)
++    {
++        static uint32 const classes[] = {CLASS_ROGUE, CLASS_PRIEST, CLASS_WARLOCK, CLASS_DRUID};
++        std::vector<float> f;
++        f.reserve(48);
++        auto onehot = [&](uint32 c) { for (uint32 k : classes) f.push_back(c == k ? 1.0f : 0.0f); };
++        auto bits = [&](uint32 v) { for (int i = 0; i < 6; ++i) f.push_back(float((v >> i) & 1)); };
++
++        onehot(o.cls);
++        f.push_back(o.selfHp / 100.0f);
++        f.push_back(std::max(o.selfMana, 0) / 100.0f);
++        bits(o.selfCc);
++        f.push_back(o.partnerHp / 100.0f);
++        bits(o.partnerCc);
++        for (EnemyObs const& e : o.enemy)
++        {
++            onehot(e.cls);
++            f.push_back(e.hp / 100.0f);
++            f.push_back(std::max(e.mana, 0) / 100.0f);
++            bits(e.cc);
++            f.push_back(float(e.trinket));
++        }
++        f.push_back(std::min(std::max(o.dist, 0), 40) / 40.0f);
++        f.push_back(o.los == 1 ? 1.0f : 0.0f);
++        f.push_back(float(o.killWindow));
++        return f;
++    }
++}
++
++#endif
+diff --git a/src/Bot/Engine/Engine.cpp b/src/Bot/Engine/Engine.cpp
+index 368994d9..30e23d4d 100644
+--- a/src/Bot/Engine/Engine.cpp
++++ b/src/Bot/Engine/Engine.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include "Engine.h"
+ #include "Action.h"
++#include "ArenaObservation.h"
+ #include "Event.h"
+ #include "PerfMonitor.h"
+ #include "Playerbots.h"
+@@ -226,6 +227,8 @@ bool Engine::DoNextAction(Unit* /*unit*/, uint32 /*depth*/, bool minimal)
+                 if (actionExecuted)
+                 {
+                     LogAction("A:%s - OK", action->getName().c_str());
++                    if (sPlayerbotAIConfig.ArenaMlLog && botAI->GetBot()->InArena())
++                        ai::arena::LogObservation(botAI, action, relevance);
+                     MultiplyAndPush(actionNode->getContinuers(), relevance, false, event, "cont");
+                     lastRelevance = relevance;
+                     delete actionNode;  // Safe memory management
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index 8ff18639..c7ef4fa3 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -133,6 +133,7 @@ bool PlayerbotAIConfig::Initialize()
+     HighMana = sConfigMgr->GetOption<int32>("Playerbots.HighMana", 65);
+     AutoSaveMana = sConfigMgr->GetOption<bool>("Playerbots.AutoSaveMana", true);
+     ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
++    ArenaMlLog = sConfigMgr->GetOption<bool>("Playerbots.ArenaMlLog", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+     switch (sConfigMgr->GetOption<uint32>("Playerbots.AutoGreaterBlessings", 1))
+     {
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index d25ab283..3b6b5421 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -117,6 +117,7 @@ public:
+     uint32 LowMana, MediumMana, HighMana;
+     bool AutoSaveMana;
+     bool ArenaPvpStrategies;
++    bool ArenaMlLog;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+     AutoPartyBuffMode AutoPartyBuffs;
+-- 
+2.55.0
+
