@@ -1,7 +1,7 @@
 From 085f1e24c53b58e19de5ae7a2f030245a51c51dd Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 08:24:44 -0300
-Subject: [PATCH 08/10] fix: fixed bot spec no longer re-rolls glyphs
+Subject: [PATCH 08/13] fix: fixed bot spec no longer re-rolls glyphs
 
 ---
  src/Bot/RandomPlayerbotMgr.cpp | 3 +--

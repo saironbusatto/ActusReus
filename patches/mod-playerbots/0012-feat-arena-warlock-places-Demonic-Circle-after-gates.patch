@@ -1,0 +1,166 @@
+From 7044d69042d939960e07b30413ac3e60deabd863 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 09:56:52 -0300
+Subject: [PATCH 12/13] feat: arena warlock places Demonic Circle after gates
+ open and teleports out of melee burst or root
+
+---
+ .../Warlock/Strategy/ArenaWarlockStrategy.cpp |  4 +++
+ src/Ai/Class/Warlock/WarlockActions.h         | 14 +++++++++
+ .../Class/Warlock/WarlockAiObjectContext.cpp  |  8 +++++
+ src/Ai/Class/Warlock/WarlockTriggers.cpp      | 29 +++++++++++++++++++
+ src/Ai/Class/Warlock/WarlockTriggers.h        | 16 ++++++++++
+ 5 files changed, 71 insertions(+)
+
+diff --git a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+index c865ccb4..2e81379f 100644
+--- a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
++++ b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+@@ -26,6 +26,10 @@ void ArenaWarlockStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     GenericWarlockStrategy::InitTriggers(triggers);
+ 
++    // Escape: Demonic Circle placed after the gates open, teleport out of a melee burst or root
++    triggers.push_back(new TriggerNode("demonic circle teleport", { NextAction("demonic circle: teleport", 80.0f) }));
++    triggers.push_back(new TriggerNode("demonic circle summon", { NextAction("demonic circle: summon", 30.0f) }));
++
+     // CC & Interrupts
+     triggers.push_back(
+         new TriggerNode(
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index 6d9f14e6..66f14633 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -184,6 +184,20 @@ public:
+     bool isPossible() override;
+ };
+ 
++class CastDemonicCircleSummonAction : public CastBuffSpellAction
++{
++public:
++    CastDemonicCircleSummonAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "demonic circle: summon") {}
++};
++
++class CastDemonicCircleTeleportAction : public CastSpellAction
++{
++public:
++    CastDemonicCircleTeleportAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "demonic circle: teleport") {}
++
++    std::string const GetTargetName() override { return "self target"; }
++};
++
+ class CastWarlockDeathCoilAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+index 22d4a51b..aa431233 100644
+--- a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
++++ b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+@@ -192,6 +192,8 @@ public:
+         creators["howl of terror"] = &WarlockTriggerFactoryInternal::howl_of_terror;
+         creators["death coil"] = &WarlockTriggerFactoryInternal::death_coil;
+         creators["curse of tongues on caster"] = &WarlockTriggerFactoryInternal::curse_of_tongues_on_caster;
++        creators["demonic circle summon"] = &WarlockTriggerFactoryInternal::demonic_circle_summon;
++        creators["demonic circle teleport"] = &WarlockTriggerFactoryInternal::demonic_circle_teleport;
+     }
+ 
+ private:
+@@ -243,6 +245,8 @@ private:
+     static Trigger* fear_on_enemy_healer(PlayerbotAI* botAI) { return new FearEnemyHealerTrigger(botAI); }
+     static Trigger* howl_of_terror(PlayerbotAI* botAI) { return new HowlOfTerrorTrigger(botAI); }
+     static Trigger* death_coil(PlayerbotAI* botAI) { return new DeathCoilTrigger(botAI); }
++    static Trigger* demonic_circle_summon(PlayerbotAI* botAI) { return new DemonicCircleSummonTrigger(botAI); }
++    static Trigger* demonic_circle_teleport(PlayerbotAI* botAI) { return new DemonicCircleTeleportTrigger(botAI); }
+     static Trigger* curse_of_tongues_on_caster(PlayerbotAI* botAI) { return new CurseOfTonguesOnCasterTrigger(botAI); }
+ };
+ 
+@@ -286,6 +290,8 @@ public:
+         creators["banish on cc"] = &WarlockAiObjectContextInternal::banish_on_cc;
+         creators["fear on cc"] = &WarlockAiObjectContextInternal::fear_on_cc;
+         creators["death coil"] = &WarlockAiObjectContextInternal::death_coil;
++        creators["demonic circle: summon"] = &WarlockAiObjectContextInternal::demonic_circle_summon;
++        creators["demonic circle: teleport"] = &WarlockAiObjectContextInternal::demonic_circle_teleport;
+         creators["howl of terror"] = &WarlockAiObjectContextInternal::howl_of_terror;
+         creators["spell lock"] = &WarlockAiObjectContextInternal::spell_lock;
+         creators["devour magic purge"] = &WarlockAiObjectContextInternal::devour_magic_purge;
+@@ -364,6 +370,8 @@ private:
+     static Action* fear_on_cc(PlayerbotAI* botAI) { return new CastFearOnCcAction(botAI); }
+     static Action* fear_on_enemy_healer(PlayerbotAI* botAI) { return new CastFearOnEnemyHealerAction(botAI); }
+     static Action* death_coil(PlayerbotAI* botAI) { return new CastWarlockDeathCoilAction(botAI); }
++    static Action* demonic_circle_summon(PlayerbotAI* botAI) { return new CastDemonicCircleSummonAction(botAI); }
++    static Action* demonic_circle_teleport(PlayerbotAI* botAI) { return new CastDemonicCircleTeleportAction(botAI); }
+     static Action* howl_of_terror(PlayerbotAI* botAI) { return new CastHowlOfTerrorAction(botAI); }
+     static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
+     static Action* devour_magic_purge(PlayerbotAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.cpp b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+index efdba8bd..1c222fd7 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.cpp
++++ b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include "WarlockTriggers.h"
+ #include "ArenaHelpers.h"
++#include "Battleground.h"
+ #include "GenericTriggers.h"
+ #include "Player.h"
+ #include "PlayerbotAI.h"
+@@ -313,3 +314,31 @@ bool CurseOfTonguesOnCasterTrigger::IsActive()
+ 
+     return botAI->CanCastSpell("curse of tongues", caster);
+ }
++
++// Arena: drop the circle once the gates are open, while nobody is on top of the warlock yet
++bool DemonicCircleSummonTrigger::IsActive()
++{
++    if (!bot->InArena() || botAI->HasAura("demonic circle: summon", bot))
++        return false;
++
++    Battleground* bg = bot->GetBattleground();
++    if (!bg || bg->GetStatus() != STATUS_IN_PROGRESS || bg->GetStartDelayTime() > 0)
++        return false;
++
++    return !ai::arena::CountEnemiesNear(botAI, 15.0f) && botAI->CanCastSpell("demonic circle: summon", bot);
++}
++
++// Arena: burn the teleport to escape a melee burst (just out of the stun) or a root/snare
++bool DemonicCircleTeleportTrigger::IsActive()
++{
++    if (!bot->InArena() || !botAI->HasAura("demonic circle: summon", bot))
++        return false;
++
++    bool const meleeOnMe = ai::arena::CountEnemiesNear(botAI, 6.0f) > 0;
++    bool const underBurst = meleeOnMe && bot->GetHealthPct() < 60.0f;
++    bool const pinned = meleeOnMe && (bot->HasAuraType(SPELL_AURA_MOD_ROOT) || bot->HasAuraType(SPELL_AURA_MOD_DECREASE_SPEED));
++    if (!underBurst && !pinned)
++        return false;
++
++    return botAI->CanCastSpell("demonic circle: teleport", bot);
++}
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.h b/src/Ai/Class/Warlock/WarlockTriggers.h
+index 2365bbf9..f6f6f71c 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.h
++++ b/src/Ai/Class/Warlock/WarlockTriggers.h
+@@ -396,4 +396,20 @@ public:
+     bool IsActive() override;
+ };
+ 
++class DemonicCircleSummonTrigger : public Trigger
++{
++public:
++    DemonicCircleSummonTrigger(PlayerbotAI* botAI) : Trigger(botAI, "demonic circle summon") {}
++
++    bool IsActive() override;
++};
++
++class DemonicCircleTeleportTrigger : public Trigger
++{
++public:
++    DemonicCircleTeleportTrigger(PlayerbotAI* botAI) : Trigger(botAI, "demonic circle teleport") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+-- 
+2.55.0
+

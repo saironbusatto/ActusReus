@@ -1,0 +1,166 @@
+From f08863d6915d780375a52c5b7c827434c1af4181 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 09:59:54 -0300
+Subject: [PATCH 13/13] feat: arena sub rogue uses Premeditation and a Shadow
+ Dance Cheap Shot window
+
+---
+ src/Ai/Class/Rogue/Action/RogueActions.h      |  6 ++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp   |  8 +++++
+ src/Ai/Class/Rogue/RogueTriggers.cpp          | 35 +++++++++++++++++++
+ src/Ai/Class/Rogue/RogueTriggers.h            | 24 +++++++++++++
+ .../Rogue/Strategy/ArenaRogueStrategy.cpp     |  5 +++
+ 5 files changed, 78 insertions(+)
+
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index c3d18545..7ca08696 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -148,6 +148,12 @@ public:
+     CastShadowDanceAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "shadow dance") {}
+ };
+ 
++class CastPremeditationAction : public CastSpellAction
++{
++public:
++    CastPremeditationAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "premeditation") {}
++};
++
+ class CastPreparationAction : public CastBuffSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index f56fc930..2b5f10da 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -88,6 +88,9 @@ public:
+         creators["adrenaline rush"] = &RogueTriggerFactoryInternal::adrenaline_rush;
+         creators["blade flurry"] = &RogueTriggerFactoryInternal::blade_flurry;
+         creators["blind on enemy healer"] = &RogueTriggerFactoryInternal::blind_on_enemy_healer;
++        creators["shadow dance opener"] = &RogueTriggerFactoryInternal::shadow_dance_opener;
++        creators["dance cheap shot"] = &RogueTriggerFactoryInternal::dance_cheap_shot;
++        creators["premeditation"] = &RogueTriggerFactoryInternal::premeditation;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -102,6 +105,9 @@ private:
+     {
+         return new KickInterruptEnemyHealerSpellTrigger(botAI);
+     }
++    static Trigger* shadow_dance_opener(PlayerbotAI* botAI) { return new ShadowDanceOpenerTrigger(botAI); }
++    static Trigger* dance_cheap_shot(PlayerbotAI* botAI) { return new DanceCheapShotTrigger(botAI); }
++    static Trigger* premeditation(PlayerbotAI* botAI) { return new PremeditationTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+@@ -178,6 +184,7 @@ public:
+         creators["shadow dance"] = &RogueAiObjectContextInternal::shadow_dance;
+         creators["hemorrhage"] = &RogueAiObjectContextInternal::hemorrhage;
+         creators["preparation"] = &RogueAiObjectContextInternal::preparation;
++        creators["premeditation"] = &RogueAiObjectContextInternal::premeditation;
+         creators["blind on enemy healer"] = &RogueAiObjectContextInternal::blind_on_enemy_healer;
+     }
+ 
+@@ -249,6 +256,7 @@ private:
+     static Action* shadow_dance(PlayerbotAI* botAI) { return new CastShadowDanceAction(botAI); }
+     static Action* hemorrhage(PlayerbotAI* botAI) { return new CastHemorrhageAction(botAI); }
+     static Action* preparation(PlayerbotAI* botAI) { return new CastPreparationAction(botAI); }
++    static Action* premeditation(PlayerbotAI* botAI) { return new CastPremeditationAction(botAI); }
+     static Action* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new CastBlindOnEnemyHealerAction(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index dd76177b..4ae0f3fd 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -182,3 +182,38 @@ bool KidneyShotTrigger::IsActive()
+ 
+     return SpellCanBeCastTrigger::IsActive();
+ }
++
++// Shadow Dance opens a second stun window: in melee, enough energy for Cheap Shot + builders, target not stunned
++bool ShadowDanceOpenerTrigger::IsActive()
++{
++    Unit* target = AI_VALUE(Unit*, "current target");
++    if (!bot->InArena() || !target || !target->IsAlive() || !bot->IsWithinMeleeRange(target))
++        return false;
++
++    if (botAI->HasAura("stealth", bot) || target->HasUnitState(UNIT_STATE_STUNNED) ||
++        bot->GetPower(POWER_ENERGY) < 60 || target->GetDiminishing(DIMINISHING_OPENING_STUN) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("shadow dance", bot);
++}
++
++// Inside Shadow Dance, Cheap Shot works without stealth
++bool DanceCheapShotTrigger::IsActive()
++{
++    Unit* target = AI_VALUE(Unit*, "current target");
++    if (!target || !botAI->HasAura("shadow dance", bot) || target->HasUnitState(UNIT_STATE_STUNNED))
++        return false;
++
++    return target->GetDiminishing(DIMINISHING_OPENING_STUN) < DIMINISHING_LEVEL_IMMUNE &&
++           botAI->CanCastSpell("cheap shot", target);
++}
++
++// Premeditation: 2 free combo points from stealth before the opener, so Kidney Shot comes right after Cheap Shot
++bool PremeditationTrigger::IsActive()
++{
++    Unit* target = AI_VALUE(Unit*, "current target");
++    if (!target || !botAI->HasAura("stealth", bot) || !bot->IsWithinDistInMap(target, 20.0f))
++        return false;
++
++    return botAI->CanCastSpell("premeditation", target);
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index 5276f2c4..ec9d2f0d 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -149,4 +149,28 @@ public:
+     bool IsActive() override;
+ };
+ 
++class ShadowDanceOpenerTrigger : public Trigger
++{
++public:
++    ShadowDanceOpenerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "shadow dance opener") {}
++
++    bool IsActive() override;
++};
++
++class DanceCheapShotTrigger : public Trigger
++{
++public:
++    DanceCheapShotTrigger(PlayerbotAI* botAI) : Trigger(botAI, "dance cheap shot") {}
++
++    bool IsActive() override;
++};
++
++class PremeditationTrigger : public Trigger
++{
++public:
++    PremeditationTrigger(PlayerbotAI* botAI) : Trigger(botAI, "premeditation") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index e2ba6928..049e0cc1 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -76,6 +76,11 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+         )
+     );
+ 
++    // Sub burst: Premeditation before the opener, Shadow Dance for a second Cheap Shot -> Kidney window
++    triggers.push_back(new TriggerNode("premeditation", { NextAction("premeditation", ACTION_HIGH + 8) }));
++    triggers.push_back(new TriggerNode("dance cheap shot", { NextAction("cheap shot", ACTION_HIGH + 7) }));
++    triggers.push_back(new TriggerNode("shadow dance opener", { NextAction("shadow dance", ACTION_HIGH + 6) }));
++
+     // Manual §2: Cheap Shot -> Kidney Shot combo
+     triggers.push_back(
+         new TriggerNode(
+-- 
+2.55.0
+

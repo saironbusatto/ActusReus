@@ -1,0 +1,111 @@
+From 30296f132b944f6030cf772c967e1833a7ed57dc Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 08:30:34 -0300
+Subject: [PATCH 11/13] feat: arena healers step behind cover from enemy
+ casters while keeping LoS to partner
+
+Only with Playerbots.ArenaPvpStrategies. Triggers when an enemy caster is casting at the healer or the healer is under 50% HP; samples 3 rings x 12 points, keeps the nearest reachable one hidden from the caster and visible to the partner. Healers also no longer walk out of cover to see their damage target.
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 58 ++++++++++++++++++++-
+ src/Ai/Base/Actions/BattleGroundTactics.h   |  1 +
+ 2 files changed, 58 insertions(+), 1 deletion(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 06eb59b8..d8310f1e 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "BattleGroundTactics.h"
++#include "ArenaHelpers.h"
+ #include "ArenaTeam.h"
+ #include "ArenaTeamMgr.h"
+ #include "BattleGroundJoinAction.h"
+@@ -4232,8 +4233,12 @@ bool ArenaTactics::Execute(Event /*event*/)
+     if (botAI->HasStrategy("buff", BOT_STATE_NON_COMBAT))
+         botAI->ChangeStrategy("-buff", BOT_STATE_NON_COMBAT);
+ 
++    bool const healer = sPlayerbotAIConfig.ArenaPvpStrategies && PlayerbotAI::IsHeal(bot);
++    if (healer && hideFromCaster())
++        return true;
++
+     Unit* target = bot->GetVictim();
+-    if (target)
++    if (target && !healer)  // a healer never walks out of cover just to see its damage target
+     {
+         bool losBlocked = !bot->IsWithinLOSInMap(target) || fabs(bot->GetPositionZ() - target->GetPositionZ()) > 5.0f;
+ 
+@@ -4260,6 +4265,57 @@ bool ArenaTactics::Execute(Event /*event*/)
+     return true;
+ }
+ 
++// Healer under caster pressure steps behind the nearest cover (pillar, tomb, crate) that still
++// keeps line of sight to its partner. Points are sampled on rings around the bot.
++bool ArenaTactics::hideFromCaster()
++{
++    Unit* caster = ai::arena::FindEnemyCaster(botAI);
++    if (!caster || !caster->IsWithinLOSInMap(bot) || !bot->IsWithinDistInMap(caster, 40.0f))
++        return false;
++
++    Spell* spell = caster->GetCurrentSpell(CURRENT_GENERIC_SPELL);
++    bool const castAtMe = spell && spell->m_targets.GetUnitTarget() == bot;
++    if (!castAtMe && bot->GetHealthPct() > 50.0f)
++        return false;
++
++    Unit* partner = ai::arena::FindPartner(botAI);
++    Map* map = bot->GetMap();
++    uint32 const phase = bot->GetPhaseMask();
++    float const eye = 2.0f;
++
++    // ponytail: 3 rings x 12 angles with one PathGenerator per candidate; use a cached cover map per arena if CPU shows up
++    for (float radius : {5.0f, 9.0f, 13.0f})
++    {
++        for (int i = 0; i < 12; ++i)
++        {
++            float const angle = i * float(M_PI) / 6.0f;
++            float x = bot->GetPositionX() + radius * std::cos(angle);
++            float y = bot->GetPositionY() + radius * std::sin(angle);
++            float z = bot->GetPositionZ();
++            bot->UpdateAllowedPositionZ(x, y, z);
++
++            if (map->isInLineOfSight(caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ() + eye,
++                                     x, y, z + eye, phase, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing))
++                continue;
++
++            if (partner && !map->isInLineOfSight(partner->GetPositionX(), partner->GetPositionY(),
++                                                 partner->GetPositionZ() + eye, x, y, z + eye, phase,
++                                                 LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing))
++                continue;
++
++            PathGenerator path(bot);
++            path.CalculatePath(x, y, z, false);
++            if (!(path.GetPathType() & PATHFIND_NORMAL))
++                continue;
++
++            if (castAtMe)
++                bot->CastStop();
++            return MoveTo(bot->GetMapId(), x, y, z, false, true);
++        }
++    }
++    return false;
++}
++
+ bool ArenaTactics::moveToCenter(Battleground* bg)
+ {
+     // Sanity check
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 1e7638b0..0bd9f4c8 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -143,6 +143,7 @@ public:
+ 
+ private:
+     bool moveToCenter(Battleground* bg);
++    bool hideFromCaster();
+ };
+ 
+ #endif
+-- 
+2.55.0
+
