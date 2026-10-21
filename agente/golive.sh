@@ -9,8 +9,8 @@ mysql() { docker exec -i ac-database sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD
 
 docker compose stop ac-worldserver
 mysql < ../agente/golive-fixgems.sql
-[ "${ADAGAS:-0}" = 1 ] && mysql < ../agente/golive-daggers.sql | tail -4   # ADAGAS=1 ./golive.sh
-[ "${BIS:-0}" = 1 ] && mysql < ../agente/golive-bis-pvp.sql | head -6          # BIS=1: BiS PvP das 4 classes (inclui adagas)
+[ "${ADAGAS:-0}" = 1 ] && mysql < ../agente/golive-daggers.sql > /tmp/golive-daggers.out   # ADAGAS=1 ./golive.sh
+[ "${BIS:-0}" = 1 ] && mysql < ../agente/golive-bis-pvp.sql > /tmp/golive-bis.out          # BIS=1: BiS PvP das 4 classes (inclui adagas)
 out=$(mysql < ../agente/golive-clones.sql)
 echo "$out" | head -5
 grep -q 'OK: 40 clones encontrados' <<<"$out" || { echo "PARE: clones faltando, voltando com 20 bots"; docker compose up -d ac-worldserver; exit 1; }
