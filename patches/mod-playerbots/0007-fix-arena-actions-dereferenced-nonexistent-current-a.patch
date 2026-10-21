@@ -1,0 +1,46 @@
+From 014ac512afd11ec0b791a2a3a450f31271821cde Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 07:39:45 -0300
+Subject: [PATCH 07/10] fix: arena actions dereferenced nonexistent "current
+ attacker" value (segfault in arena)
+
+Death Coil falls back to "current target"; Entangling Roots on melee picks an alive attacker of the bot.
+Crashed worldserver 56 times between 04:19 and 10:36 UTC on 2026-10-21.
+---
+ src/Ai/Class/Druid/Action/DruidActions.h | 6 +++++-
+ src/Ai/Class/Warlock/WarlockActions.h    | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/Ai/Class/Druid/Action/DruidActions.h b/src/Ai/Class/Druid/Action/DruidActions.h
+index 0a085e45..1205b4ce 100644
+--- a/src/Ai/Class/Druid/Action/DruidActions.h
++++ b/src/Ai/Class/Druid/Action/DruidActions.h
+@@ -262,7 +262,11 @@ public:
+         if (dps && dps->IsAlive())
+             return dps;
+ 
+-        return AI_VALUE(Unit*, "current attacker");
++        for (Unit* attacker : botAI->GetBot()->getAttackers())
++            if (attacker->IsAlive())
++                return attacker;
++
++        return nullptr;
+     }
+ 
+     bool isUseful() override
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index c865eb5c..6d9f14e6 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -195,7 +195,7 @@ public:
+         if (dps && dps->IsAlive() && botAI->GetBot()->IsWithinDistInMap(dps, 10.0f))
+             return dps;
+ 
+-        Unit* attacker = AI_VALUE(Unit*, "current attacker");
++        Unit* attacker = AI_VALUE(Unit*, "current target");
+         if (attacker && attacker->IsAlive() && botAI->GetBot()->IsWithinDistInMap(attacker, 10.0f))
+             return attacker;
+ 
+-- 
+2.55.0
+

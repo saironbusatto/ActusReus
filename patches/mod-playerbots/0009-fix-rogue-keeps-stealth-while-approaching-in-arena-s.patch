@@ -1,0 +1,28 @@
+From 90143d65ddc0bcff16a8a052df4c90fa2a70e7bc Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 08:25:45 -0300
+Subject: [PATCH 09/10] fix: rogue keeps stealth while approaching in arena so
+ it can open
+
+---
+ src/Ai/Class/Rogue/RogueTriggers.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 3a5da7ff..dd76177b 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -26,6 +26,10 @@ bool UnstealthTrigger::IsActive()
+     if (!botAI->HasAura("stealth", bot))
+         return false;
+ 
++    // In arena the approach is the point of stealth: keep it for the opener (cheap shot/garrote)
++    if (bot->InArena())
++        return false;
++
+     if (!AI_VALUE2(bool, "moving", "self target"))
+         return false;
+ 
+-- 
+2.55.0
+

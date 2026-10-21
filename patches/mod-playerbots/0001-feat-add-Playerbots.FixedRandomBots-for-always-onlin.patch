@@ -1,7 +1,7 @@
 From e5ac28b89b5db00aeb72c53c7a050a3d5db650c0 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 00:01:35 -0300
-Subject: [PATCH 1/6] feat: add Playerbots.FixedRandomBots for always-online
+Subject: [PATCH 01/10] feat: add Playerbots.FixedRandomBots for always-online
  arena bots
 
 Listed random bots stay logged in across restarts, are never re-randomized,

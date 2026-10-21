@@ -1,0 +1,41 @@
+From 98e165b49e729740d6352d3373d01ed7ed5c9727 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 08:26:51 -0300
+Subject: [PATCH 10/10] fix: resto druid never leaves tree form to deal damage
+ in arena
+
+---
+ .../Class/Druid/Strategy/ArenaDruidStrategy.cpp   | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
+
+diff --git a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+index f3c6e003..4b80cb55 100644
+--- a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
++++ b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+@@ -52,21 +52,10 @@ float ArenaDruidMultiplier::GetValue(Action* action)
+         return 1.0f;
+ 
+     std::string const name = action->getName();
+-    // Do not waste GCD with Wrath/Moonfire/Starfire/Insect Swarm while ally needs healing
++    // Resto in arena stays a healer: leaving tree form to Wrath/Moonfire costs two GCDs and the Tree of Life bonus
+     if (name == "wrath" || name == "moonfire" || name == "starfire" ||
+         name == "insect swarm" || name == "cancel tree form")
+-    {
+-        Unit* toHeal = AI_VALUE(Unit*, "party member to heal");
+-        if (toHeal && toHeal->GetHealthPct() < 85.0f)
+-            return 0.0f;
+-
+-        Unit* partner = ai::arena::FindPartner(botAI);
+-        if (partner && partner->GetHealthPct() < 85.0f)
+-            return 0.0f;
+-
+-        if (botAI->GetBot()->GetHealthPct() < 85.0f)
+-            return 0.0f;
+-    }
++        return 0.0f;
+ 
+     return 1.0f;
+ }
+-- 
+2.55.0
+

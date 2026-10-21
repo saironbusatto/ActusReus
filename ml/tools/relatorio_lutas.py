@@ -39,13 +39,13 @@ def sql(query: str) -> list[list[str]]:
     return [line.split("\t") for line in out.splitlines() if line]
 
 
-def fights(since: str, until: str) -> list[dict]:
+def fights(since: str, until: str, min_dur: int) -> list[dict]:
     rows = sql(f"""
         SELECT f.fight_id, f.duration, f.winner, m.name, c.class, m.damage, m.heal, m.kblows, m.team
         FROM acore_characters.log_arena_fights f
         JOIN acore_characters.log_arena_memberstats m USING(fight_id)
         JOIN acore_characters.characters c ON c.guid=m.guid
-        WHERE f.type=2 AND f.time >= '{since}' AND f.time < '{until}' ORDER BY f.fight_id""")
+        WHERE f.type=2 AND f.time >= '{since}' AND f.time < '{until}' AND f.duration >= {min_dur} ORDER BY f.fight_id""")
     by_id: dict[str, dict] = {}
     for fid, dur, win, name, cls, dmg, heal, kb, team in rows:
         f = by_id.setdefault(fid, {"dur": int(dur), "win": win, "teams": {}})
@@ -76,10 +76,11 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--desde", required=True)
     p.add_argument("--ate", default="2100-01-01")
+    p.add_argument("--min-dur", type=int, default=0, help="ignora lutas mais curtas (W.O. dá 10 s)")
     p.add_argument("--log", nargs="*", type=Path, default=[DEFAULT_LOG])
     a = p.parse_args()
 
-    fs = fights(a.desde, a.ate)
+    fs = fights(a.desde, a.ate, a.min_dur)
     print(f"# Lutas 2v2 de {a.desde} a {a.ate} (horário do servidor)\n")
     print(f"Lutas: **{len(fs)}**, duração média {sum(f['dur'] for f in fs) / max(len(fs), 1):.0f} s\n")
 
@@ -116,7 +117,9 @@ def main() -> None:
         for bot, c in counts.items():
             if BOT_CLASS.get(SUFFIX.sub("", bot)) == cls or BOT_CLASS.get(bot) == cls:
                 total.update(c)
-        print(f"- **{cls}**: " + ", ".join(f"{act} {total[act]}" for act in actions))
+        # variantes do playerbots: "penance on party", "unstable affliction on attacker"...
+        variants = lambda act: sum(n for name, n in total.items() if name == act or name.startswith(act + " on "))
+        print(f"- **{cls}**: " + ", ".join(f"{act} {variants(act)}" for act in actions))
 
 
 if __name__ == "__main__":

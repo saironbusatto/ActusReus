@@ -1,0 +1,27 @@
+From 085f1e24c53b58e19de5ae7a2f030245a51c51dd Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 08:24:44 -0300
+Subject: [PATCH 08/10] fix: fixed bot spec no longer re-rolls glyphs
+
+---
+ src/Bot/RandomPlayerbotMgr.cpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 787b07c7..1bb58897 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -1855,9 +1855,8 @@ void RandomPlayerbotMgr::ApplyFixedBotSpec(Player* player)
+         if (sPlayerbotAIConfig.PremadeSpecName[cls][specNo] != itr->second)
+             continue;
+ 
++        // Glyphs stay as stored: InitGlyphs picks randomly and would break identical clones
+         PlayerbotFactory::InitTalentsBySpecNo(player, specNo, true);
+-        PlayerbotFactory factory(player, player->GetLevel());
+-        factory.InitGlyphs(false);
+         if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+             botAI->ResetStrategies();
+ 
+-- 
+2.55.0
+
