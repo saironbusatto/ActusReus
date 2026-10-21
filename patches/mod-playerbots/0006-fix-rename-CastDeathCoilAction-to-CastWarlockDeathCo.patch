@@ -1,0 +1,44 @@
+From 9a2a770d40263970e8e6cbcb75d4ca2716680261 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 01:15:06 -0300
+Subject: [PATCH 6/6] fix: rename CastDeathCoilAction to
+ CastWarlockDeathCoilAction to prevent collision with DK
+
+---
+ src/Ai/Class/Warlock/WarlockActions.h           | 4 ++--
+ src/Ai/Class/Warlock/WarlockAiObjectContext.cpp | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index cbe52e92..c865eb5c 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -184,10 +184,10 @@ public:
+     bool isPossible() override;
+ };
+ 
+-class CastDeathCoilAction : public CastSpellAction
++class CastWarlockDeathCoilAction : public CastSpellAction
+ {
+ public:
+-    CastDeathCoilAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "death coil") {}
++    CastWarlockDeathCoilAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "death coil") {}
+ 
+     Unit* GetTarget() override
+     {
+diff --git a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+index 2b08e7c4..22d4a51b 100644
+--- a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
++++ b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+@@ -363,7 +363,7 @@ private:
+     static Action* banish_on_cc(PlayerbotAI* botAI) { return new CastBanishOnCcAction(botAI); }
+     static Action* fear_on_cc(PlayerbotAI* botAI) { return new CastFearOnCcAction(botAI); }
+     static Action* fear_on_enemy_healer(PlayerbotAI* botAI) { return new CastFearOnEnemyHealerAction(botAI); }
+-    static Action* death_coil(PlayerbotAI* botAI) { return new CastDeathCoilAction(botAI); }
++    static Action* death_coil(PlayerbotAI* botAI) { return new CastWarlockDeathCoilAction(botAI); }
+     static Action* howl_of_terror(PlayerbotAI* botAI) { return new CastHowlOfTerrorAction(botAI); }
+     static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
+     static Action* devour_magic_purge(PlayerbotAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
+-- 
+2.55.0
+
