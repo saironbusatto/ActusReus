@@ -1,0 +1,1796 @@
+From 55abf10f02a1c5c6a04dab260cb8df0080b01a7f Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 00:57:46 -0300
+Subject: [PATCH 4/4] feat: add arena pvp strategies for rogue, priest, warlock
+ and druid
+
+---
+ conf/playerbots.conf.dist                     |   9 +
+ src/Ai/Base/ArenaHelpers.h                    | 111 ++++++++++
+ src/Ai/Class/Druid/Action/DruidActions.h      |  55 +++++
+ .../Druid/Action/DruidShapeshiftActions.cpp   |   2 +-
+ src/Ai/Class/Druid/DruidAiObjectContext.cpp   |  11 +
+ src/Ai/Class/Druid/DruidTriggers.cpp          |  36 ++++
+ src/Ai/Class/Druid/DruidTriggers.h            |  16 ++
+ .../Druid/Strategy/ArenaDruidStrategy.cpp     | 193 ++++++++++++++++++
+ .../Class/Druid/Strategy/ArenaDruidStrategy.h |  30 +++
+ src/Ai/Class/Priest/PriestActions.h           |  38 +++-
+ src/Ai/Class/Priest/PriestAiObjectContext.cpp |   3 +
+ .../Priest/Strategy/ArenaPriestStrategy.cpp   | 121 +++++++++++
+ .../Priest/Strategy/ArenaPriestStrategy.h     |  38 ++++
+ src/Ai/Class/Rogue/Action/RogueActions.h      |  25 +++
+ .../Rogue/Action/RogueFinishingActions.h      |  23 +++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp   |  15 ++
+ src/Ai/Class/Rogue/RogueTriggers.cpp          |  44 ++++
+ src/Ai/Class/Rogue/RogueTriggers.h            |  16 ++
+ .../Rogue/Strategy/ArenaRogueStrategy.cpp     | 118 +++++++++++
+ .../Class/Rogue/Strategy/ArenaRogueStrategy.h |  27 +++
+ .../Warlock/Strategy/ArenaWarlockStrategy.cpp | 128 ++++++++++++
+ .../Warlock/Strategy/ArenaWarlockStrategy.h   |  21 ++
+ src/Ai/Class/Warlock/WarlockActions.h         |  80 ++++++++
+ .../Class/Warlock/WarlockAiObjectContext.cpp  |  15 ++
+ src/Ai/Class/Warlock/WarlockTriggers.cpp      |  57 ++++++
+ src/Ai/Class/Warlock/WarlockTriggers.h        |  33 +++
+ src/Bot/Factory/AiFactory.cpp                 |  20 ++
+ src/PlayerbotAIConfig.cpp                     |   1 +
+ src/PlayerbotAIConfig.h                       |   1 +
+ 29 files changed, 1284 insertions(+), 3 deletions(-)
+ create mode 100644 src/Ai/Base/ArenaHelpers.h
+ create mode 100644 src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+ create mode 100644 src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.h
+ create mode 100644 src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
+ create mode 100644 src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.h
+ create mode 100644 src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+ create mode 100644 src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
+ create mode 100644 src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+ create mode 100644 src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 4db9dea0..06dd9ad7 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -487,6 +487,15 @@ Playerbots.AoeAvoidSpellWhitelist = 50759,57491,13810,29946
+ # Default: 1 (enabled)
+ Playerbots.AutoSaveMana = 1
+ 
++#
++#    Playerbots.ArenaPvpStrategies
++#        Enable specialized arena 2v2 PvP strategies for playerbots (Rogue, Priest, Warlock, Druid).
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.ArenaPvpStrategies = 0
++
+ # Healer bot save mana threshold
+ # Default: 60 (60%)
+ Playerbots.SaveManaThreshold = 60
+diff --git a/src/Ai/Base/ArenaHelpers.h b/src/Ai/Base/ArenaHelpers.h
+new file mode 100644
+index 00000000..11ab9a18
+--- /dev/null
++++ b/src/Ai/Base/ArenaHelpers.h
+@@ -0,0 +1,111 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAHELPERS_H
++#define PLAYERBOTS_ARENAHELPERS_H
++
++#include "AiFactory.h"
++#include "Group.h"
++#include "ObjectAccessor.h"
++#include "PlayerbotAI.h"
++#include "Playerbots.h"
++#include "SharedDefines.h"
++
++namespace ai::arena
++{
++    inline Unit* FindEnemyHealer(PlayerbotAI* botAI)
++    {
++        GuidVector attackers = botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get();
++        for (ObjectGuid const guid : attackers)
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (!u || !u->IsAlive() || !u->IsPlayer())
++                continue;
++
++            Player* p = u->ToPlayer();
++            uint8 cls = p->getClass();
++            if (cls == CLASS_PRIEST)
++                return u;
++            if (cls == CLASS_DRUID && AiFactory::GetPlayerSpecTab(p) == DRUID_TAB_RESTORATION)
++                return u;
++            if (cls == CLASS_PALADIN && AiFactory::GetPlayerSpecTab(p) == PALADIN_TAB_HOLY)
++                return u;
++            if (cls == CLASS_SHAMAN && AiFactory::GetPlayerSpecTab(p) == SHAMAN_TAB_RESTORATION)
++                return u;
++        }
++        return nullptr;
++    }
++
++    inline Unit* FindEnemyDps(PlayerbotAI* botAI)
++    {
++        GuidVector attackers = botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get();
++        Unit* healer = FindEnemyHealer(botAI);
++        for (ObjectGuid const guid : attackers)
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (!u || !u->IsAlive() || !u->IsPlayer())
++                continue;
++
++            if (u != healer)
++                return u;
++        }
++        return nullptr;
++    }
++
++    inline Unit* FindEnemyCaster(PlayerbotAI* botAI)
++    {
++        GuidVector attackers = botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get();
++        for (ObjectGuid const guid : attackers)
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (!u || !u->IsAlive() || !u->IsPlayer())
++                continue;
++
++            Player* p = u->ToPlayer();
++            uint8 cls = p->getClass();
++            if (cls == CLASS_PRIEST || cls == CLASS_MAGE || cls == CLASS_WARLOCK ||
++                cls == CLASS_DRUID || cls == CLASS_SHAMAN)
++                return u;
++        }
++        return nullptr;
++    }
++
++    inline Unit* FindPartner(PlayerbotAI* botAI)
++    {
++        Player* bot = botAI->GetBot();
++        Group* group = bot->GetGroup();
++        if (!group)
++            return nullptr;
++
++        Group::MemberSlotList const& members = group->GetMemberSlots();
++        for (auto const& slot : members)
++        {
++            if (slot.guid != bot->GetGUID())
++            {
++                Player* p = ObjectAccessor::FindPlayer(slot.guid);
++                if (p && p->IsAlive())
++                    return p;
++            }
++        }
++        return nullptr;
++    }
++
++    inline uint8 CountEnemiesNear(PlayerbotAI* botAI, float range)
++    {
++        GuidVector attackers = botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get();
++        Player* bot = botAI->GetBot();
++        uint8 count = 0;
++        for (ObjectGuid const guid : attackers)
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u->IsAlive() && bot->IsWithinDistInMap(u, range))
++                count++;
++        }
++        return count;
++    }
++}
++
++#endif
+diff --git a/src/Ai/Class/Druid/Action/DruidActions.h b/src/Ai/Class/Druid/Action/DruidActions.h
+index 406bedc3..dd79f2f7 100644
+--- a/src/Ai/Class/Druid/Action/DruidActions.h
++++ b/src/Ai/Class/Druid/Action/DruidActions.h
+@@ -7,6 +7,7 @@
+ #ifndef PLAYERBOTS_DRUIDACTIONS_H
+ #define PLAYERBOTS_DRUIDACTIONS_H
+ 
++#include "ArenaHelpers.h"
+ #include "GenericSpellActions.h"
+ #include "SharedDefines.h"
+ #include "Value.h"
+@@ -226,6 +227,60 @@ public:
+     Value<Unit*>* GetTargetValue() override;
+ };
+ 
++class CastCycloneOnEnemyDpsAction : public CastSpellAction
++{
++public:
++    CastCycloneOnEnemyDpsAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "cyclone") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyDps(botAI); }
++
++    bool isUseful() override
++    {
++        Unit* dps = GetTarget();
++        if (!dps || !dps->IsAlive())
++            return false;
++
++        if (dps->HasUnitState(UNIT_STATE_CYCLONED) || botAI->HasAura("cyclone", dps))
++            return false;
++
++        if (dps->GetDiminishing(DIMINISHING_CYCLONE) >= DIMINISHING_LEVEL_IMMUNE)
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
++};
++
++class CastEntanglingRootsOnMeleeAction : public CastSpellAction
++{
++public:
++    CastEntanglingRootsOnMeleeAction(PlayerbotAI* botAI)
++        : CastSpellAction(botAI, "entangling roots") {}
++
++    Unit* GetTarget() override
++    {
++        Unit* dps = ai::arena::FindEnemyDps(botAI);
++        if (dps && dps->IsAlive())
++            return dps;
++
++        return AI_VALUE(Unit*, "current attacker");
++    }
++
++    bool isUseful() override
++    {
++        Unit* target = GetTarget();
++        if (!target || !target->IsAlive())
++            return false;
++
++        if (target->HasUnitState(UNIT_STATE_ROOT) || botAI->HasAura("entangling roots", target))
++            return false;
++
++        if (target->GetDiminishing(DIMINISHING_CONTROLLED_ROOT) >= DIMINISHING_LEVEL_IMMUNE)
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
++};
++
+ class CastNaturesGraspAction : public CastBuffSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Druid/Action/DruidShapeshiftActions.cpp b/src/Ai/Class/Druid/Action/DruidShapeshiftActions.cpp
+index 65d4a697..36c98e45 100644
+--- a/src/Ai/Class/Druid/Action/DruidShapeshiftActions.cpp
++++ b/src/Ai/Class/Druid/Action/DruidShapeshiftActions.cpp
+@@ -40,7 +40,7 @@ bool CastCasterFormAction::Execute(Event /*event*/)
+ bool CastCasterFormAction::isUseful()
+ {
+     return botAI->HasAnyAuraOf(GetTarget(), "dire bear form", "bear form", "cat form", "travel form", "aquatic form",
+-                               "flight form", "swift flight form", "moonkin form", nullptr) &&
++                               "flight form", "swift flight form", "moonkin form", "tree of life", nullptr) &&
+            AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig.MediumHealth;
+ }
+ 
+diff --git a/src/Ai/Class/Druid/DruidAiObjectContext.cpp b/src/Ai/Class/Druid/DruidAiObjectContext.cpp
+index 449119a2..1001a584 100644
+--- a/src/Ai/Class/Druid/DruidAiObjectContext.cpp
++++ b/src/Ai/Class/Druid/DruidAiObjectContext.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "DruidAiObjectContext.h"
++#include "ArenaDruidStrategy.h"
+ #include "BalanceDruidStrategy.h"
+ #include "BearDruidStrategy.h"
+ #include "CatDruidStrategy.h"
+@@ -36,6 +37,7 @@ public:
+         creators["blanketing"] = &DruidStrategyFactoryInternal::blanketing;
+         creators["tranquility"] = &DruidStrategyFactoryInternal::tranquility;
+         creators["feral charge"] = &DruidStrategyFactoryInternal::feral_charge;
++        creators["arena druid"] = &DruidStrategyFactoryInternal::arena_druid;
+     }
+ 
+ private:
+@@ -51,6 +53,7 @@ private:
+     static Strategy* blanketing(PlayerbotAI* botAI) { return new DruidBlanketStrategy(botAI); }
+     static Strategy* tranquility(PlayerbotAI* botAI) { return new DruidTranquilityStrategy(botAI); }
+     static Strategy* feral_charge(PlayerbotAI* botAI) { return new FeralChargeDruidStrategy(botAI); }
++    static Strategy* arena_druid(PlayerbotAI* botAI) { return new ArenaDruidStrategy(botAI); }
+ };
+ 
+ class DruidDruidStrategyFactoryInternal : public NamedObjectContext<Strategy>
+@@ -134,6 +137,8 @@ public:
+         creators["healer should attack and not blanketing"] =
+             &DruidTriggerFactoryInternal::healer_should_attack_and_not_blanketing;
+         creators["aquatic form"] = &DruidTriggerFactoryInternal::aquatic_form;
++        creators["cyclone on enemy dps"] = &DruidTriggerFactoryInternal::cyclone_on_enemy_dps;
++        creators["roots on melee"] = &DruidTriggerFactoryInternal::roots_on_melee;
+     }
+ 
+ private:
+@@ -200,6 +205,8 @@ private:
+         return new HealerShouldAttackAndNotBlanketingTrigger(botAI);
+     }
+     static Trigger* aquatic_form(PlayerbotAI* botAI) { return new AquaticFormTrigger(botAI); }
++    static Trigger* cyclone_on_enemy_dps(PlayerbotAI* botAI) { return new CycloneEnemyDpsTrigger(botAI); }
++    static Trigger* roots_on_melee(PlayerbotAI* botAI) { return new RootsOnMeleeTrigger(botAI); }
+ };
+ 
+ class DruidAiObjectContextInternal : public NamedObjectContext<Action>
+@@ -300,6 +307,8 @@ public:
+         creators["typhoon"] = &DruidAiObjectContextInternal::typhoon;
+         creators["rejuvenation blanket"] = &DruidAiObjectContextInternal::rejuvenation_blanket;
+         creators["wild growth blanket"] = &DruidAiObjectContextInternal::wild_growth_blanket;
++        creators["cyclone on enemy dps"] = &DruidAiObjectContextInternal::cyclone_on_enemy_dps;
++        creators["entangling roots on melee"] = &DruidAiObjectContextInternal::entangling_roots_on_melee;
+     }
+ 
+ private:
+@@ -396,6 +405,8 @@ private:
+     static Action* typhoon(PlayerbotAI* botAI) { return new CastTyphoonAction(botAI); }
+     static Action* rejuvenation_blanket(PlayerbotAI* botAI) { return new CastRejuvenationBlanketAction(botAI); }
+     static Action* wild_growth_blanket(PlayerbotAI* botAI) { return new CastWildGrowthBlanketAction(botAI); }
++    static Action* cyclone_on_enemy_dps(PlayerbotAI* botAI) { return new CastCycloneOnEnemyDpsAction(botAI); }
++    static Action* entangling_roots_on_melee(PlayerbotAI* botAI) { return new CastEntanglingRootsOnMeleeAction(botAI); }
+ };
+ 
+ SharedNamedObjectContextList<Strategy> DruidAiObjectContext::sharedStrategyContexts;
+diff --git a/src/Ai/Class/Druid/DruidTriggers.cpp b/src/Ai/Class/Druid/DruidTriggers.cpp
+index da64cbf4..aea90bb0 100644
+--- a/src/Ai/Class/Druid/DruidTriggers.cpp
++++ b/src/Ai/Class/Druid/DruidTriggers.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "DruidTriggers.h"
++#include "ArenaHelpers.h"
+ #include "DynamicObject.h"
+ #include "Player.h"
+ #include "Playerbots.h"
+@@ -141,3 +142,38 @@ bool HurricaneChannelCheckTrigger::IsActive()
+ 
+     return false;
+ }
++
++bool CycloneEnemyDpsTrigger::IsActive()
++{
++    Unit* partner = ai::arena::FindPartner(botAI);
++    bool inDanger = (partner && partner->GetHealthPct() < 50.0f) || (bot->GetHealthPct() < 50.0f);
++    if (!inDanger)
++        return false;
++
++    Unit* dps = ai::arena::FindEnemyDps(botAI);
++    if (!dps || !dps->IsAlive() || !bot->IsWithinDistInMap(dps, 20.0f))
++        return false;
++
++    if (dps->HasUnitState(UNIT_STATE_CYCLONED) || botAI->HasAura("cyclone", dps))
++        return false;
++
++    if (dps->GetDiminishing(DIMINISHING_CYCLONE) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("cyclone", dps);
++}
++
++bool RootsOnMeleeTrigger::IsActive()
++{
++    Unit* dps = ai::arena::FindEnemyDps(botAI);
++    if (!dps || !dps->IsAlive() || !bot->IsWithinDistInMap(dps, 30.0f))
++        return false;
++
++    if (dps->HasUnitState(UNIT_STATE_ROOT) || botAI->HasAura("entangling roots", dps))
++        return false;
++
++    if (dps->GetDiminishing(DIMINISHING_CONTROLLED_ROOT) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("entangling roots", dps);
++}
+diff --git a/src/Ai/Class/Druid/DruidTriggers.h b/src/Ai/Class/Druid/DruidTriggers.h
+index 833e38b7..51ffdd0a 100644
+--- a/src/Ai/Class/Druid/DruidTriggers.h
++++ b/src/Ai/Class/Druid/DruidTriggers.h
+@@ -477,4 +477,20 @@ public:
+     bool IsActive() override;
+ };
+ 
++class CycloneEnemyDpsTrigger : public Trigger
++{
++public:
++    CycloneEnemyDpsTrigger(PlayerbotAI* botAI) : Trigger(botAI, "cyclone on enemy dps") {}
++
++    bool IsActive() override;
++};
++
++class RootsOnMeleeTrigger : public Trigger
++{
++public:
++    RootsOnMeleeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "roots on melee") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+new file mode 100644
+index 00000000..f3c6e003
+--- /dev/null
++++ b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+@@ -0,0 +1,193 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "ArenaDruidStrategy.h"
++#include "ArenaHelpers.h"
++#include "Playerbots.h"
++
++class ArenaDruidStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
++{
++public:
++    ArenaDruidStrategyActionNodeFactory()
++    {
++        creators["cyclone on enemy dps"] = &cyclone_on_enemy_dps;
++        creators["entangling roots on melee"] = &entangling_roots_on_melee;
++    }
++
++private:
++    static ActionNode* cyclone_on_enemy_dps([[maybe_unused]] PlayerbotAI* botAI)
++    {
++        return new ActionNode("cyclone on enemy dps",
++                              /*P*/ { NextAction("caster form") },
++                              /*A*/ {},
++                              /*C*/ {});
++    }
++
++    static ActionNode* entangling_roots_on_melee([[maybe_unused]] PlayerbotAI* botAI)
++    {
++        return new ActionNode("entangling roots on melee",
++                              /*P*/ { NextAction("caster form") },
++                              /*A*/ {},
++                              /*C*/ {});
++    }
++};
++
++ArenaDruidStrategy::ArenaDruidStrategy(PlayerbotAI* botAI) : GenericDruidStrategy(botAI)
++{
++    actionNodeFactories.Add(new ArenaDruidStrategyActionNodeFactory());
++}
++
++void ArenaDruidStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
++{
++    GenericDruidStrategy::InitMultipliers(multipliers);
++    multipliers.push_back(new ArenaDruidMultiplier(botAI));
++}
++
++float ArenaDruidMultiplier::GetValue(Action* action)
++{
++    if (!action)
++        return 1.0f;
++
++    std::string const name = action->getName();
++    // Do not waste GCD with Wrath/Moonfire/Starfire/Insect Swarm while ally needs healing
++    if (name == "wrath" || name == "moonfire" || name == "starfire" ||
++        name == "insect swarm" || name == "cancel tree form")
++    {
++        Unit* toHeal = AI_VALUE(Unit*, "party member to heal");
++        if (toHeal && toHeal->GetHealthPct() < 85.0f)
++            return 0.0f;
++
++        Unit* partner = ai::arena::FindPartner(botAI);
++        if (partner && partner->GetHealthPct() < 85.0f)
++            return 0.0f;
++
++        if (botAI->GetBot()->GetHealthPct() < 85.0f)
++            return 0.0f;
++    }
++
++    return 1.0f;
++}
++
++void ArenaDruidStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    GenericDruidStrategy::InitTriggers(triggers);
++
++    // Defensive: Barkskin below ~50% health
++    triggers.push_back(
++        new TriggerNode(
++            "low health",
++            {
++                NextAction("barkskin", 55.0f)
++            }
++        )
++    );
++
++    // CC: Cyclone on enemy DPS when partner/self in danger
++    triggers.push_back(
++        new TriggerNode(
++            "cyclone on enemy dps",
++            {
++                NextAction("cyclone on enemy dps", 52.0f)
++            }
++        )
++    );
++
++    // CC: Entangling Roots on melee enemy
++    triggers.push_back(
++        new TriggerNode(
++            "roots on melee",
++            {
++                NextAction("entangling roots on melee", 48.0f)
++            }
++        )
++    );
++
++    // Emergency Nature's Swiftness + Healing Touch
++    triggers.push_back(
++        new TriggerNode(
++            "party member critical health",
++            {
++                NextAction("nature's swiftness", 60.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "nature's swiftness active",
++            {
++                NextAction("healing touch on party", 58.0f)
++            }
++        )
++    );
++
++    // Reach party member to heal
++    triggers.push_back(
++        new TriggerNode(
++            "party member to heal out of spell range",
++            {
++                NextAction("reach party member to heal", 40.0f)
++            }
++        )
++    );
++
++    // Healing rotations
++    triggers.push_back(
++        new TriggerNode(
++            "party member critical health",
++            {
++                NextAction("swiftmend on party", 45.0f),
++                NextAction("nourish on party", 44.0f),
++                NextAction("regrowth on party", 43.0f),
++                NextAction("tree form", 42.0f)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "party member low health",
++            {
++                NextAction("swiftmend on party", 35.0f),
++                NextAction("wild growth on party", 34.0f),
++                NextAction("nourish on party", 33.0f),
++                NextAction("regrowth on party", 32.0f),
++                NextAction("tree form", 31.0f)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "party member medium health",
++            {
++                NextAction("swiftmend on party", 25.0f),
++                NextAction("wild growth on party", 24.0f),
++                NextAction("nourish on party", 23.0f),
++                NextAction("rejuvenation on party", 22.0f),
++                NextAction("regrowth on party", 21.0f)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "party member almost full health",
++            {
++                NextAction("rejuvenation on party", 15.0f),
++                NextAction("wild growth on party", 14.0f)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "medium mana",
++            {
++                NextAction("innervate", 29.0f)
++            }
++        )
++    );
++}
+diff --git a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.h b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.h
+new file mode 100644
+index 00000000..27177b51
+--- /dev/null
++++ b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.h
+@@ -0,0 +1,30 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENADRUIDSTRATEGY_H
++#define PLAYERBOTS_ARENADRUIDSTRATEGY_H
++
++#include "GenericDruidStrategy.h"
++#include "Multiplier.h"
++
++class ArenaDruidStrategy : public GenericDruidStrategy
++{
++public:
++    ArenaDruidStrategy(PlayerbotAI* botAI);
++    std::string const getName() override { return "arena druid"; }
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++    void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
++};
++
++class ArenaDruidMultiplier : public Multiplier
++{
++public:
++    ArenaDruidMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "arena druid") {}
++
++    float GetValue(Action* action) override;
++};
++
++#endif
+diff --git a/src/Ai/Class/Priest/PriestActions.h b/src/Ai/Class/Priest/PriestActions.h
+index 6eb88058..fd7a1968 100644
+--- a/src/Ai/Class/Priest/PriestActions.h
++++ b/src/Ai/Class/Priest/PriestActions.h
+@@ -30,8 +30,42 @@ public:
+ BUFF_ACTION(CastPowerWordShieldAction, "power word: shield");
+ 
+ BUFF_ACTION(CastInnerFireAction, "inner fire");
+-CURE_ACTION(CastDispelMagicAction, "dispel magic");
+-CURE_PARTY_ACTION(CastDispelMagicOnPartyAction, "dispel magic", DISPEL_MAGIC);
++class CastDispelMagicAction : public CastCureSpellAction
++{
++public:
++    CastDispelMagicAction(PlayerbotAI* botAI) : CastCureSpellAction(botAI, "dispel magic") {}
++
++    bool isUseful() override
++    {
++        if (!CastCureSpellAction::isUseful())
++            return false;
++
++        Unit* target = GetTarget();
++        if (target && botAI->HasAura("unstable affliction", target))
++            return false;
++
++        return true;
++    }
++};
++
++class CastDispelMagicOnPartyAction : public CurePartyMemberAction
++{
++public:
++    CastDispelMagicOnPartyAction(PlayerbotAI* botAI)
++        : CurePartyMemberAction(botAI, "dispel magic", DISPEL_MAGIC) {}
++
++    bool isUseful() override
++    {
++        if (!CurePartyMemberAction::isUseful())
++            return false;
++
++        Unit* target = GetTarget();
++        if (target && botAI->HasAura("unstable affliction", target))
++            return false;
++
++        return true;
++    }
++};
+ SPELL_ACTION(CastDispelMagicOnTargetAction, "dispel magic");
+ CC_ACTION(CastShackleUndeadAction, "shackle undead");
+ SPELL_ACTION_U(CastManaBurnAction, "mana burn",
+diff --git a/src/Ai/Class/Priest/PriestAiObjectContext.cpp b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+index 0a18f8de..f5097241 100644
+--- a/src/Ai/Class/Priest/PriestAiObjectContext.cpp
++++ b/src/Ai/Class/Priest/PriestAiObjectContext.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "PriestAiObjectContext.h"
++#include "ArenaPriestStrategy.h"
+ #include "DiscPriestStrategy.h"
+ #include "GenericPriestStrategy.h"
+ #include "HolyPriestStrategy.h"
+@@ -33,6 +34,7 @@ public:
+         creators["rshadow"] = &PriestStrategyFactoryInternal::rshadow;
+         creators["cc"] = &PriestStrategyFactoryInternal::cc;
+         creators["healer dps"] = &PriestStrategyFactoryInternal::healer_dps;
++        creators["arena priest"] = &PriestStrategyFactoryInternal::arena_priest;
+     }
+ 
+ private:
+@@ -46,6 +48,7 @@ private:
+     static Strategy* shadow_debuff(PlayerbotAI* botAI) { return new ShadowPriestDebuffStrategy(botAI); }
+     static Strategy* cure(PlayerbotAI* botAI) { return new PriestCureStrategy(botAI); }
+     static Strategy* healer_dps(PlayerbotAI* botAI) { return new PriestHealerDpsStrategy(botAI); }
++    static Strategy* arena_priest(PlayerbotAI* botAI) { return new ArenaPriestStrategy(botAI); }
+ };
+ 
+ class PriestCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+diff --git a/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
+new file mode 100644
+index 00000000..28e4b721
+--- /dev/null
++++ b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.cpp
+@@ -0,0 +1,121 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "ArenaPriestStrategy.h"
++#include "Playerbots.h"
++
++float ArenaPriestMultiplier::GetValue(Action* action)
++{
++    if (!action)
++        return 1.0f;
++
++    // Manual §3.7: Wand only when there is nothing better to do (e.g. no healing needed)
++    if (action->getName() == "shoot")
++    {
++        if (AI_VALUE(Unit*, "party member to heal"))
++            return 0.0f;
++    }
++
++    return 1.0f;
++}
++
++ArenaPriestStrategy::ArenaPriestStrategy(PlayerbotAI* botAI) : GenericPriestStrategy(botAI)
++{
++}
++
++std::vector<NextAction> ArenaPriestStrategy::getDefaultActions()
++{
++    return {
++        NextAction("shoot", ACTION_BG)
++    };
++}
++
++void ArenaPriestStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
++{
++    GenericPriestStrategy::InitMultipliers(multipliers);
++    multipliers.push_back(new ArenaPriestMultiplier(botAI));
++}
++
++void ArenaPriestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    GenericPriestStrategy::InitTriggers(triggers);
++
++    // Manual §3: Silence on enemy healer's cast
++    triggers.push_back(
++        new TriggerNode(
++            "silence on enemy healer",
++            {
++                NextAction("silence on enemy healer", ACTION_INTERRUPT + 2)
++            }
++        )
++    );
++
++    // Manual §3: Psychic Scream when melee enemies are close
++    triggers.push_back(
++        new TriggerNode(
++            "enemy within melee",
++            {
++                NextAction("psychic scream", ACTION_HIGH + 9),
++                NextAction("psychic horror", ACTION_HIGH + 8)
++            }
++        )
++    );
++
++    // Manual §3: Pain Suppression when partner (or self) is critically low (< ~35%)
++    triggers.push_back(
++        new TriggerNode(
++            "critical health",
++            {
++                NextAction("pain suppression", ACTION_EMERGENCY + 5),
++                NextAction("desperate prayer", ACTION_EMERGENCY + 4),
++                NextAction("power word: shield", ACTION_EMERGENCY + 3)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "party member critical health",
++            {
++                NextAction("pain suppression on party", ACTION_EMERGENCY + 5),
++                NextAction("power word: shield on party", ACTION_CRITICAL_HEAL + 5),
++                NextAction("penance on party", ACTION_CRITICAL_HEAL + 4),
++                NextAction("prayer of mending on party", ACTION_CRITICAL_HEAL + 3),
++                NextAction("flash heal on party", ACTION_CRITICAL_HEAL + 2)
++            }
++        )
++    );
++
++    // Healing rotation for partner
++    triggers.push_back(
++        new TriggerNode(
++            "party member low health",
++            {
++                NextAction("power word: shield on party", ACTION_MEDIUM_HEAL + 5),
++                NextAction("penance on party", ACTION_MEDIUM_HEAL + 4),
++                NextAction("flash heal on party", ACTION_MEDIUM_HEAL + 2)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "party member medium health",
++            {
++                NextAction("power word: shield on party", ACTION_LIGHT_HEAL + 6),
++                NextAction("renew on party", ACTION_LIGHT_HEAL + 5)
++            }
++        )
++    );
++
++    triggers.push_back(
++        new TriggerNode(
++            "party member almost full health",
++            {
++                NextAction("renew on party", ACTION_LIGHT_HEAL + 2)
++            }
++        )
++    );
++}
+diff --git a/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.h b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.h
+new file mode 100644
+index 00000000..8dcb3a37
+--- /dev/null
++++ b/src/Ai/Class/Priest/Strategy/ArenaPriestStrategy.h
+@@ -0,0 +1,38 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAPRIESTSTRATEGY_H
++#define PLAYERBOTS_ARENAPRIESTSTRATEGY_H
++
++#include "GenericPriestStrategy.h"
++#include "Multiplier.h"
++
++class PlayerbotAI;
++
++class ArenaPriestMultiplier : public Multiplier
++{
++public:
++    ArenaPriestMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "arena priest") {}
++
++    float GetValue(Action* action) override;
++};
++
++class ArenaPriestStrategy : public GenericPriestStrategy
++{
++public:
++    ArenaPriestStrategy(PlayerbotAI* botAI);
++
++    std::string const getName() override { return "arena priest"; }
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++    void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
++    std::vector<NextAction> getDefaultActions() override;
++    uint32 GetType() const override
++    {
++        return GenericPriestStrategy::GetType() | STRATEGY_TYPE_HEAL;
++    }
++};
++
++#endif
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index 908b22a6..c3d18545 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -7,6 +7,7 @@
+ #ifndef PLAYERBOTS_ROGUEACTIONS_H
+ #define PLAYERBOTS_ROGUEACTIONS_H
+ 
++#include "ArenaHelpers.h"
+ #include "GenericSpellActions.h"
+ #include "UseItemAction.h"
+ 
+@@ -111,6 +112,30 @@ public:
+     CastBlindAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "blind") {}
+ };
+ 
++class CastBlindOnEnemyHealerAction : public CastDebuffSpellAction
++{
++public:
++    CastBlindOnEnemyHealerAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "blind") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyHealer(botAI); }
++    bool isUseful() override
++    {
++        Unit* healer = GetTarget();
++        if (!healer)
++            return false;
++        if (healer->HasAuraType(SPELL_AURA_PERIODIC_DAMAGE) ||
++            healer->HasAuraType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT) ||
++            healer->HasAuraWithMechanic(1 << MECHANIC_BLEED))
++            return false;
++        Unit* partner = ai::arena::FindEnemyDps(botAI);
++        if (!partner || !partner->HasUnitState(UNIT_STATE_STUNNED))
++            return false;
++        if (healer->GetDiminishing(DIMINISHING_FEAR) >= DIMINISHING_LEVEL_IMMUNE)
++            return false;
++        return CastSpellAction::isUseful();
++    }
++};
++
+ class CastShadowstepAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Action/RogueFinishingActions.h b/src/Ai/Class/Rogue/Action/RogueFinishingActions.h
+index b0b790fc..8a59492d 100644
+--- a/src/Ai/Class/Rogue/Action/RogueFinishingActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueFinishingActions.h
+@@ -8,6 +8,7 @@
+ #define PLAYERBOTS_ROGUEFINISHINGACTIONS_H
+ 
+ #include "GenericSpellActions.h"
++#include "Playerbots.h"
+ 
+ class PlayerbotAI;
+ 
+@@ -39,6 +40,28 @@ class CastKidneyShotAction : public CastMeleeSpellAction
+ {
+ public:
+     CastKidneyShotAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "kidney shot") {}
++
++    bool isUseful() override
++    {
++        if (!CastMeleeSpellAction::isUseful())
++            return false;
++
++        Unit* target = GetTarget();
++        if (!target)
++            return false;
++
++        if (AI_VALUE2(uint8, "combo", "current target") < 2)
++            return false;
++
++        if (botAI->HasAura("kidney shot", target))
++            return false;
++
++        Aura* csAura = botAI->GetAura("cheap shot", target);
++        if (csAura && csAura->GetDuration() > 1000)
++            return false;
++
++        return true;
++    }
+ };
+ 
+ #endif
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index 2751d310..f56fc930 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include "RogueAiObjectContext.h"
+ #include "AiObjectContext.h"
++#include "ArenaRogueStrategy.h"
+ #include "AssassinationRogueStrategy.h"
+ #include "CombatRogueStrategy.h"
+ #include "GenericRogueNonCombatStrategy.h"
+@@ -30,6 +31,7 @@ public:
+         creators["stealthed"] = &RogueStrategyFactoryInternal::stealthed;
+         creators["stealth"] = &RogueStrategyFactoryInternal::stealth;
+         creators["cc"] = &RogueStrategyFactoryInternal::cc;
++        creators["arena rogue"] = &RogueStrategyFactoryInternal::arena_rogue;
+     }
+ 
+ private:
+@@ -40,6 +42,7 @@ private:
+     static Strategy* stealthed(PlayerbotAI* botAI) { return new StealthedRogueStrategy(botAI); }
+     static Strategy* stealth(PlayerbotAI* botAI) { return new StealthStrategy(botAI); }
+     static Strategy* cc(PlayerbotAI* botAI) { return new RogueCcStrategy(botAI); }
++    static Strategy* arena_rogue(PlayerbotAI* botAI) { return new ArenaRogueStrategy(botAI); }
+ };
+ 
+ class RogueCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+@@ -84,6 +87,8 @@ public:
+             &RogueTriggerFactoryInternal::tricks_of_the_trade_on_main_tank;
+         creators["adrenaline rush"] = &RogueTriggerFactoryInternal::adrenaline_rush;
+         creators["blade flurry"] = &RogueTriggerFactoryInternal::blade_flurry;
++        creators["blind on enemy healer"] = &RogueTriggerFactoryInternal::blind_on_enemy_healer;
++        creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+ private:
+@@ -97,6 +102,11 @@ private:
+     {
+         return new KickInterruptEnemyHealerSpellTrigger(botAI);
+     }
++    static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
++    {
++        return new BlindEnemyHealerTrigger(botAI);
++    }
++    static Trigger* kidney_shot(PlayerbotAI* botAI) { return new KidneyShotTrigger(botAI); }
+     static Trigger* unstealth(PlayerbotAI* botAI) { return new UnstealthTrigger(botAI); }
+     static Trigger* sap(PlayerbotAI* botAI) { return new SapTrigger(botAI); }
+     static Trigger* in_stealth(PlayerbotAI* botAI) { return new InStealthTrigger(botAI); }
+@@ -168,6 +178,7 @@ public:
+         creators["shadow dance"] = &RogueAiObjectContextInternal::shadow_dance;
+         creators["hemorrhage"] = &RogueAiObjectContextInternal::hemorrhage;
+         creators["preparation"] = &RogueAiObjectContextInternal::preparation;
++        creators["blind on enemy healer"] = &RogueAiObjectContextInternal::blind_on_enemy_healer;
+     }
+ 
+ private:
+@@ -238,6 +249,10 @@ private:
+     static Action* shadow_dance(PlayerbotAI* botAI) { return new CastShadowDanceAction(botAI); }
+     static Action* hemorrhage(PlayerbotAI* botAI) { return new CastHemorrhageAction(botAI); }
+     static Action* preparation(PlayerbotAI* botAI) { return new CastPreparationAction(botAI); }
++    static Action* blind_on_enemy_healer(PlayerbotAI* botAI)
++    {
++        return new CastBlindOnEnemyHealerAction(botAI);
++    }
+ };
+ 
+ SharedNamedObjectContextList<Strategy> RogueAiObjectContext::sharedStrategyContexts;
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index abf87f71..3a5da7ff 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "RogueTriggers.h"
++#include "ArenaHelpers.h"
+ #include "GenericTriggers.h"
+ #include "Playerbots.h"
+ #include "ServerFacade.h"
+@@ -134,3 +135,46 @@ bool OffHandWeaponNoEnchantTrigger::IsActive()
+         return false;
+     return true;
+ }
++
++bool BlindEnemyHealerTrigger::IsActive()
++{
++    Unit* healer = ai::arena::FindEnemyHealer(botAI);
++    if (!healer || !bot->IsWithinDistInMap(healer, 15.0f))
++        return false;
++
++    if (healer->HasAuraType(SPELL_AURA_PERIODIC_DAMAGE) ||
++        healer->HasAuraType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT) ||
++        healer->HasAuraWithMechanic(1 << MECHANIC_BLEED))
++        return false;
++
++    if (healer->HasAuraType(SPELL_AURA_MOD_CONFUSE) || healer->HasAuraType(SPELL_AURA_MOD_FEAR))
++        return false;
++
++    if (healer->GetDiminishing(DIMINISHING_FEAR) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    Unit* partner = ai::arena::FindEnemyDps(botAI);
++    if (!partner || !partner->HasUnitState(UNIT_STATE_STUNNED))
++        return false;
++
++    return botAI->CanCastSpell("blind", healer);
++}
++
++bool KidneyShotTrigger::IsActive()
++{
++    Unit* target = GetTarget();
++    if (!target || !bot->IsWithinMeleeRange(target))
++        return false;
++
++    if (AI_VALUE2(uint8, "combo", "current target") < 2)
++        return false;
++
++    if (botAI->HasAura("kidney shot", target))
++        return false;
++
++    Aura* csAura = botAI->GetAura("cheap shot", target);
++    if (csAura && csAura->GetDuration() > 1000)
++        return false;
++
++    return SpellCanBeCastTrigger::IsActive();
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index 623665fa..5276f2c4 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -133,4 +133,20 @@ public:
+     TricksOfTheTradeOnMainTankTrigger(PlayerbotAI* botAI) : BuffOnMainTankTrigger(botAI, "tricks of the trade", true) {}
+ };
+ 
++class BlindEnemyHealerTrigger : public Trigger
++{
++public:
++    BlindEnemyHealerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "blind on enemy healer") {}
++
++    bool IsActive() override;
++};
++
++class KidneyShotTrigger : public SpellCanBeCastTrigger
++{
++public:
++    KidneyShotTrigger(PlayerbotAI* botAI) : SpellCanBeCastTrigger(botAI, "kidney shot") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+new file mode 100644
+index 00000000..e2ba6928
+--- /dev/null
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -0,0 +1,118 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "ArenaRogueStrategy.h"
++#include "Playerbots.h"
++
++class ArenaRogueStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
++{
++public:
++    ArenaRogueStrategyActionNodeFactory()
++    {
++        creators["sinister strike"] = &sinister_strike;
++        creators["mutilate"] = &mutilate;
++    }
++
++private:
++    static ActionNode* sinister_strike([[maybe_unused]] PlayerbotAI* botAI)
++    {
++        return new ActionNode(
++            "sinister strike",
++            /*P*/ {},
++            /*A*/ { NextAction("hemorrhage") },
++            /*C*/ {}
++        );
++    }
++    static ActionNode* mutilate([[maybe_unused]] PlayerbotAI* botAI)
++    {
++        return new ActionNode(
++            "mutilate",
++            /*P*/ {},
++            /*A*/ { NextAction("hemorrhage") },
++            /*C*/ {}
++        );
++    }
++};
++
++ArenaRogueStrategy::ArenaRogueStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
++{
++    actionNodeFactories.Add(new ArenaRogueStrategyActionNodeFactory());
++}
++
++void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    CombatStrategy::InitTriggers(triggers);
++
++    // Manual §2: Kick on enemy healer's cast
++    triggers.push_back(
++        new TriggerNode(
++            "kick on enemy healer",
++            {
++                NextAction("kick on enemy healer", ACTION_INTERRUPT + 2)
++            }
++        )
++    );
++
++    // Manual §2.3: Blind on enemy healer when partner is stunned (never on target with DoT/bleed)
++    triggers.push_back(
++        new TriggerNode(
++            "blind on enemy healer",
++            {
++                NextAction("blind on enemy healer", ACTION_INTERRUPT + 1)
++            }
++        )
++    );
++
++    // Manual §2: Shadowstep to close distance when out of melee
++    triggers.push_back(
++        new TriggerNode(
++            "enemy out of melee",
++            {
++                NextAction("shadowstep", ACTION_MOVE + 10)
++            }
++        )
++    );
++
++    // Manual §2: Cheap Shot -> Kidney Shot combo
++    triggers.push_back(
++        new TriggerNode(
++            "kidney shot",
++            {
++                NextAction("kidney shot", ACTION_HIGH + 5)
++            }
++        )
++    );
++
++    // Manual §2.3: Finisher Eviscerate (does not leave bleeds, safe before Blind)
++    triggers.push_back(
++        new TriggerNode(
++            "combo points 5 available",
++            {
++                NextAction("eviscerate", ACTION_HIGH + 4)
++            }
++        )
++    );
++
++    // Manual §2: Hemorrhage instead of Sinister Strike to build combo points
++    triggers.push_back(
++        new TriggerNode(
++            "combo points not full",
++            {
++                NextAction("hemorrhage", ACTION_NORMAL + 4)
++            }
++        )
++    );
++
++    // Manual §2.6: Preparation when Vanish on CD
++    triggers.push_back(
++        new TriggerNode(
++            "vanish on cd",
++            {
++                NextAction("preparation", ACTION_EMERGENCY)
++            }
++        )
++    );
++}
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
+new file mode 100644
+index 00000000..7f30e925
+--- /dev/null
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.h
+@@ -0,0 +1,27 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAROGUESTRATEGY_H
++#define PLAYERBOTS_ARENAROGUESTRATEGY_H
++
++#include "CombatStrategy.h"
++
++class PlayerbotAI;
++
++class ArenaRogueStrategy : public CombatStrategy
++{
++public:
++    ArenaRogueStrategy(PlayerbotAI* botAI);
++
++    std::string const getName() override { return "arena rogue"; }
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++    uint32 GetType() const override
++    {
++        return CombatStrategy::GetType() | STRATEGY_TYPE_DPS | STRATEGY_TYPE_MELEE;
++    }
++};
++
++#endif
+diff --git a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+new file mode 100644
+index 00000000..c865ccb4
+--- /dev/null
++++ b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.cpp
+@@ -0,0 +1,128 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "ArenaWarlockStrategy.h"
++#include "Playerbots.h"
++
++ArenaWarlockStrategy::ArenaWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
++{
++}
++
++std::vector<NextAction> ArenaWarlockStrategy::getDefaultActions()
++{
++    return {
++        NextAction("corruption", 5.5f),
++        NextAction("unstable affliction", 5.4f),
++        NextAction("haunt", 5.3f),
++        NextAction("shadow bolt", 5.2f),
++        NextAction("shoot", 5.0f)
++    };
++}
++
++void ArenaWarlockStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
++{
++    GenericWarlockStrategy::InitTriggers(triggers);
++
++    // CC & Interrupts
++    triggers.push_back(
++        new TriggerNode(
++            "death coil",
++            {
++                NextAction("death coil", 70.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "howl of terror",
++            {
++                NextAction("howl of terror", 65.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "fear on enemy healer",
++            {
++                NextAction("fear on enemy healer", 60.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "curse of tongues on caster",
++            {
++                NextAction("curse of tongues on caster", 50.0f)
++            }
++        )
++    );
++
++    // Multi-dotting: attacker first, then primary target
++    triggers.push_back(
++        new TriggerNode(
++            "corruption on attacker",
++            {
++                NextAction("corruption on attacker", 40.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "unstable affliction on attacker",
++            {
++                NextAction("unstable affliction on attacker", 39.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "corruption",
++            {
++                NextAction("corruption", 35.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "unstable affliction",
++            {
++                NextAction("unstable affliction", 34.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "haunt",
++            {
++                NextAction("haunt", 33.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "shadow trance",
++            {
++                NextAction("shadow bolt", 32.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "target critical health",
++            {
++                NextAction("drain soul", 31.0f)
++            }
++        )
++    );
++    triggers.push_back(
++        new TriggerNode(
++            "life tap glyph buff",
++            {
++                NextAction("life tap", 28.0f)
++            }
++        )
++    );
++}
+diff --git a/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
+new file mode 100644
+index 00000000..b6ca7a50
+--- /dev/null
++++ b/src/Ai/Class/Warlock/Strategy/ArenaWarlockStrategy.h
+@@ -0,0 +1,21 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAWARLOCKSTRATEGY_H
++#define PLAYERBOTS_ARENAWARLOCKSTRATEGY_H
++
++#include "GenericWarlockStrategy.h"
++
++class ArenaWarlockStrategy : public GenericWarlockStrategy
++{
++public:
++    ArenaWarlockStrategy(PlayerbotAI* botAI);
++    std::string const getName() override { return "arena warlock"; }
++    std::vector<NextAction> getDefaultActions() override;
++    void InitTriggers(std::vector<TriggerNode*>& triggers) override;
++};
++
++#endif
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index 7c855712..36edd13c 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -8,6 +8,7 @@
+ #define PLAYERBOTS_WARLOCKACTIONS_H
+ 
+ #include "Action.h"
++#include "ArenaHelpers.h"
+ #include "GenericSpellActions.h"
+ #include "InventoryAction.h"
+ #include "UseItemAction.h"
+@@ -187,12 +188,91 @@ class CastDeathCoilAction : public CastSpellAction
+ {
+ public:
+     CastDeathCoilAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "death coil") {}
++
++    Unit* GetTarget() override
++    {
++        Unit* dps = ai::arena::FindEnemyDps(botAI);
++        if (dps && dps->IsAlive() && botAI->GetBot()->IsWithinDistInMap(dps, 10.0f))
++            return dps;
++
++        Unit* attacker = AI_VALUE(Unit*, "current attacker");
++        if (attacker && attacker->IsAlive() && botAI->GetBot()->IsWithinDistInMap(attacker, 10.0f))
++            return attacker;
++
++        return CastSpellAction::GetTarget();
++    }
++
++    bool isUseful() override
++    {
++        Unit* target = GetTarget();
++        if (!target || !target->IsAlive())
++            return false;
++
++        if (target->GetDiminishing(DIMINISHING_HORROR) >= DIMINISHING_LEVEL_IMMUNE)
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
+ };
+ 
+ class CastHowlOfTerrorAction : public CastSpellAction
+ {
+ public:
+     CastHowlOfTerrorAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "howl of terror") {}
++
++    bool isUseful() override
++    {
++        if (ai::arena::CountEnemiesNear(botAI, 10.0f) < 2)
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
++};
++
++class CastFearOnEnemyHealerAction : public CastSpellAction
++{
++public:
++    CastFearOnEnemyHealerAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "fear") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyHealer(botAI); }
++
++    bool isUseful() override
++    {
++        Unit* healer = GetTarget();
++        if (!healer || !healer->IsAlive())
++            return false;
++
++        if (healer->HasUnitState(UNIT_STATE_FEARED) ||
++            healer->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++            healer->HasAuraType(SPELL_AURA_MOD_CONFUSE))
++            return false;
++
++        if (healer->GetDiminishing(DIMINISHING_FEAR) >= DIMINISHING_LEVEL_IMMUNE)
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
++};
++
++class CastCurseOfTonguesOnCasterAction : public CastDebuffSpellAction
++{
++public:
++    CastCurseOfTonguesOnCasterAction(PlayerbotAI* botAI)
++        : CastDebuffSpellAction(botAI, "curse of tongues") {}
++
++    Unit* GetTarget() override { return ai::arena::FindEnemyCaster(botAI); }
++
++    bool isUseful() override
++    {
++        Unit* caster = GetTarget();
++        if (!caster || !caster->IsAlive())
++            return false;
++
++        if (botAI->HasAura("curse of tongues", caster))
++            return false;
++
++        return CastSpellAction::isUseful();
++    }
+ };
+ 
+ class CastSpellLockAction : public CastSpellAction
+diff --git a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+index 83c5dfb3..2b08e7c4 100644
+--- a/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
++++ b/src/Ai/Class/Warlock/WarlockAiObjectContext.cpp
+@@ -6,6 +6,7 @@
+ 
+ #include "WarlockAiObjectContext.h"
+ #include "AfflictionWarlockStrategy.h"
++#include "ArenaWarlockStrategy.h"
+ #include "DemonologyWarlockStrategy.h"
+ #include "DestructionWarlockStrategy.h"
+ #include "GenericTriggers.h"
+@@ -32,6 +33,7 @@ public:
+         creators["meta melee"] = &WarlockStrategyFactoryInternal::meta_melee_aoe;
+         creators["tank"] = &WarlockStrategyFactoryInternal::tank;
+         creators["aoe"] = &WarlockStrategyFactoryInternal::aoe;
++        creators["arena warlock"] = &WarlockStrategyFactoryInternal::arena_warlock;
+     }
+ 
+ private:
+@@ -43,6 +45,7 @@ private:
+     static Strategy* meta_melee_aoe(PlayerbotAI* botAI) { return new MetaMeleeAoeStrategy(botAI); }
+     static Strategy* tank(PlayerbotAI* botAI) { return new TankWarlockStrategy(botAI); }
+     static Strategy* aoe(PlayerbotAI* botAI) { return new AoEWarlockStrategy(botAI); }
++    static Strategy* arena_warlock(PlayerbotAI* botAI) { return new ArenaWarlockStrategy(botAI); }
+ };
+ 
+ class WarlockCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
+@@ -185,6 +188,10 @@ public:
+         creators["curse of weakness"] = &WarlockTriggerFactoryInternal::curse_of_weakness;
+         creators["wrong pet"] = &WarlockTriggerFactoryInternal::wrong_pet;
+         creators["rain of fire channel check"] = &WarlockTriggerFactoryInternal::rain_of_fire_channel_check;
++        creators["fear on enemy healer"] = &WarlockTriggerFactoryInternal::fear_on_enemy_healer;
++        creators["howl of terror"] = &WarlockTriggerFactoryInternal::howl_of_terror;
++        creators["death coil"] = &WarlockTriggerFactoryInternal::death_coil;
++        creators["curse of tongues on caster"] = &WarlockTriggerFactoryInternal::curse_of_tongues_on_caster;
+     }
+ 
+ private:
+@@ -233,6 +240,10 @@ private:
+     static Trigger* curse_of_weakness(PlayerbotAI* botAI) { return new CurseOfWeaknessTrigger(botAI); }
+     static Trigger* wrong_pet(PlayerbotAI* botAI) { return new WrongPetTrigger(botAI); }
+     static Trigger* rain_of_fire_channel_check(PlayerbotAI* botAI) { return new RainOfFireChannelCheckTrigger(botAI); }
++    static Trigger* fear_on_enemy_healer(PlayerbotAI* botAI) { return new FearEnemyHealerTrigger(botAI); }
++    static Trigger* howl_of_terror(PlayerbotAI* botAI) { return new HowlOfTerrorTrigger(botAI); }
++    static Trigger* death_coil(PlayerbotAI* botAI) { return new DeathCoilTrigger(botAI); }
++    static Trigger* curse_of_tongues_on_caster(PlayerbotAI* botAI) { return new CurseOfTonguesOnCasterTrigger(botAI); }
+ };
+ 
+ class WarlockAiObjectContextInternal : public NamedObjectContext<Action>
+@@ -310,6 +321,8 @@ public:
+         creators["curse of exhaustion"] = &WarlockAiObjectContextInternal::curse_of_exhaustion;
+         creators["curse of tongues"] = &WarlockAiObjectContextInternal::curse_of_tongues;
+         creators["curse of weakness"] = &WarlockAiObjectContextInternal::curse_of_weakness;
++        creators["fear on enemy healer"] = &WarlockAiObjectContextInternal::fear_on_enemy_healer;
++        creators["curse of tongues on caster"] = &WarlockAiObjectContextInternal::curse_of_tongues_on_caster;
+     }
+ 
+ private:
+@@ -349,11 +362,13 @@ private:
+     static Action* drain_life(PlayerbotAI* botAI) { return new CastDrainLifeAction(botAI); }
+     static Action* banish_on_cc(PlayerbotAI* botAI) { return new CastBanishOnCcAction(botAI); }
+     static Action* fear_on_cc(PlayerbotAI* botAI) { return new CastFearOnCcAction(botAI); }
++    static Action* fear_on_enemy_healer(PlayerbotAI* botAI) { return new CastFearOnEnemyHealerAction(botAI); }
+     static Action* death_coil(PlayerbotAI* botAI) { return new CastDeathCoilAction(botAI); }
+     static Action* howl_of_terror(PlayerbotAI* botAI) { return new CastHowlOfTerrorAction(botAI); }
+     static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
+     static Action* devour_magic_purge(PlayerbotAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
+     static Action* devour_magic_cleanse(PlayerbotAI* botAI) { return new CastDevourMagicCleanseAction(botAI); }
++    static Action* curse_of_tongues_on_caster(PlayerbotAI* botAI) { return new CastCurseOfTonguesOnCasterAction(botAI); }
+     static Action* seed_of_corruption(PlayerbotAI* botAI) { return new CastSeedOfCorruptionAction(botAI); }
+     static Action* seed_of_corruption_on_attacker(PlayerbotAI* botAI) { return new CastSeedOfCorruptionOnAttackerAction(botAI); }
+     static Action* rain_of_fire(PlayerbotAI* botAI) { return new CastRainOfFireAction(botAI); }
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.cpp b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+index 5578b157..ea916d09 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.cpp
++++ b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "WarlockTriggers.h"
++#include "ArenaHelpers.h"
+ #include "GenericTriggers.h"
+ #include "Player.h"
+ #include "PlayerbotAI.h"
+@@ -256,3 +257,59 @@ bool RainOfFireChannelCheckTrigger::IsActive()
+     // Not channeling Rain of Fire
+     return false;
+ }
++
++bool FearEnemyHealerTrigger::IsActive()
++{
++    Unit* healer = ai::arena::FindEnemyHealer(botAI);
++    if (!healer || !healer->IsAlive() || !bot->IsWithinDistInMap(healer, 30.0f))
++        return false;
++
++    if (healer->HasUnitState(UNIT_STATE_FEARED) ||
++        healer->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++        healer->HasAuraType(SPELL_AURA_MOD_CONFUSE))
++        return false;
++
++    if (healer->GetDiminishing(DIMINISHING_FEAR) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("fear", healer);
++}
++
++bool HowlOfTerrorTrigger::IsActive()
++{
++    if (ai::arena::CountEnemiesNear(botAI, 10.0f) < 2)
++        return false;
++
++    return botAI->CanCastSpell("howl of terror", bot);
++}
++
++bool DeathCoilTrigger::IsActive()
++{
++    Unit* dps = ai::arena::FindEnemyDps(botAI);
++    Unit* target = nullptr;
++
++    if (dps && dps->IsAlive() && bot->IsWithinDistInMap(dps, 10.0f))
++        target = dps;
++    else if (bot->GetHealthPct() < 60.0f)
++        target = AI_VALUE(Unit*, "current target");
++
++    if (!target || !target->IsAlive())
++        return false;
++
++    if (target->GetDiminishing(DIMINISHING_HORROR) >= DIMINISHING_LEVEL_IMMUNE)
++        return false;
++
++    return botAI->CanCastSpell("death coil", target);
++}
++
++bool CurseOfTonguesOnCasterTrigger::IsActive()
++{
++    Unit* caster = ai::arena::FindEnemyCaster(botAI);
++    if (!caster || !caster->IsAlive() || !bot->IsWithinDistInMap(caster, 30.0f))
++        return false;
++
++    if (botAI->HasAura("curse of tongues", caster))
++        return false;
++
++    return botAI->CanCastSpell("curse of tongues", caster);
++}
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.h b/src/Ai/Class/Warlock/WarlockTriggers.h
+index a15a8866..2365bbf9 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.h
++++ b/src/Ai/Class/Warlock/WarlockTriggers.h
+@@ -363,4 +363,37 @@ protected:
+     static const std::set<uint32> RAIN_OF_FIRE_SPELL_IDS;
+ };
+ 
++class FearEnemyHealerTrigger : public Trigger
++{
++public:
++    FearEnemyHealerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "fear on enemy healer") {}
++
++    bool IsActive() override;
++};
++
++class HowlOfTerrorTrigger : public Trigger
++{
++public:
++    HowlOfTerrorTrigger(PlayerbotAI* botAI) : Trigger(botAI, "howl of terror") {}
++
++    bool IsActive() override;
++};
++
++class DeathCoilTrigger : public Trigger
++{
++public:
++    DeathCoilTrigger(PlayerbotAI* botAI) : Trigger(botAI, "death coil") {}
++
++    bool IsActive() override;
++};
++
++class CurseOfTonguesOnCasterTrigger : public Trigger
++{
++public:
++    CurseOfTonguesOnCasterTrigger(PlayerbotAI* botAI)
++        : Trigger(botAI, "curse of tongues on caster") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Bot/Factory/AiFactory.cpp b/src/Bot/Factory/AiFactory.cpp
+index f9718aea..6fa33c5e 100644
+--- a/src/Bot/Factory/AiFactory.cpp
++++ b/src/Bot/Factory/AiFactory.cpp
+@@ -486,6 +486,26 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
+         if (player->InArena())
+         {
+             engine->addStrategy("arena", false);
++            if (sPlayerbotAIConfig.ArenaPvpStrategies)
++            {
++                switch (player->getClass())
++                {
++                    case CLASS_ROGUE:
++                        engine->addStrategy("arena rogue", false);
++                        break;
++                    case CLASS_PRIEST:
++                        engine->addStrategy("arena priest", false);
++                        break;
++                    case CLASS_WARLOCK:
++                        engine->addStrategy("arena warlock", false);
++                        break;
++                    case CLASS_DRUID:
++                        engine->addStrategy("arena druid", false);
++                        break;
++                    default:
++                        break;
++                }
++            }
+             engine->addStrategiesNoInit("boost", "racials", "chat", "default", "aoe", "cast time", "dps assist", nullptr);
+         }
+         else
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index e5d19672..8ff18639 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -132,6 +132,7 @@ bool PlayerbotAIConfig::Initialize()
+     MediumMana = sConfigMgr->GetOption<int32>("Playerbots.MediumMana", 40);
+     HighMana = sConfigMgr->GetOption<int32>("Playerbots.HighMana", 65);
+     AutoSaveMana = sConfigMgr->GetOption<bool>("Playerbots.AutoSaveMana", true);
++    ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+     switch (sConfigMgr->GetOption<uint32>("Playerbots.AutoGreaterBlessings", 1))
+     {
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index 6471bde4..d25ab283 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -116,6 +116,7 @@ public:
+     uint32 CriticalHealth, LowHealth, MediumHealth, AlmostFullHealth;
+     uint32 LowMana, MediumMana, HighMana;
+     bool AutoSaveMana;
++    bool ArenaPvpStrategies;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+     AutoPartyBuffMode AutoPartyBuffs;
+-- 
+2.55.0
+

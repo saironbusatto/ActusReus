@@ -1,0 +1,40 @@
+From d6269f243ea13b6bdf403f5a0e88a7aa6c1e7a63 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 00:53:38 -0300
+Subject: [PATCH 3/4] fix: keep fixed bots' gear, gems and pet stable on
+ refresh
+
+Refresh() re-applied enchants/gems with varying picks and re-created the pet
+on every periodic teleport or revive, so identical arena bots drifted apart
+overnight. Fixed bots now only get repaired and restocked (ammo, food,
+reagents, consumables, potions).
+---
+ src/Bot/RandomPlayerbotMgr.cpp | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 85ae31a1..787b07c7 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -2274,7 +2274,17 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
+     bot->SetFullHealth();
+     bot->SetPvP(sWorld->IsPvPRealm());
+     PlayerbotFactory factory(bot, bot->GetLevel());
+-    factory.Refresh();
++    if (IsFixedBot(bot->GetGUID().GetCounter()))
++    {
++        // Fixed bots keep their exact gear, gems, enchants, pet and talents; only restock what they consume.
++        factory.InitAmmo();
++        factory.InitFood();
++        factory.InitReagents();
++        factory.InitConsumables();
++        factory.InitPotions();
++    }
++    else
++        factory.Refresh();
+ 
+     if (bot->GetMaxPower(POWER_MANA) > 0)
+         bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
+-- 
+2.55.0
+
