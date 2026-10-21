@@ -1,0 +1,117 @@
+From 92bd144820cbb956a4bf9e4e2e99bf089a7c753f Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 13:50:11 -0300
+Subject: [PATCH 16/16] feat: arena kill window - rogue Shadow Dance waits
+ until the CC target has spent its CC break and the team holds a CC for it;
+ calls the burst in party chat
+
+---
+ src/Ai/Base/ArenaHelpers.h           | 55 ++++++++++++++++++++++++++++
+ src/Ai/Class/Rogue/RogueTriggers.cpp | 10 ++++-
+ src/Ai/Class/Rogue/RogueTriggers.h   |  3 ++
+ 3 files changed, 67 insertions(+), 1 deletion(-)
+
+diff --git a/src/Ai/Base/ArenaHelpers.h b/src/Ai/Base/ArenaHelpers.h
+index 11ab9a18..99350a7b 100644
+--- a/src/Ai/Base/ArenaHelpers.h
++++ b/src/Ai/Base/ArenaHelpers.h
+@@ -106,6 +106,61 @@ namespace ai::arena
+         }
+         return count;
+     }
++
++    // CC break still available (PvP trinket equipped and off cooldown, or Every Man for Himself)
++    inline bool HasCcBreakReady(Unit* u)
++    {
++        Player* p = u ? u->ToPlayer() : nullptr;
++        if (!p)
++            return false;
++
++        if (p->getRace() == RACE_HUMAN && !p->HasSpellCooldown(59752))
++            return true;
++
++        for (uint8 slot : {EQUIPMENT_SLOT_TRINKET1, EQUIPMENT_SLOT_TRINKET2})
++        {
++            Item* item = p->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
++            if (!item)
++                continue;
++
++            for (auto const& spell : item->GetTemplate()->Spells)
++                if (spell.SpellId == 42292 && !p->HasSpellCooldown(42292))
++                    return true;
++        }
++        return false;
++    }
++
++    // Kill window (2009 2v2): burst only after the player who will sit in CC has spent their way out,
++    // and while someone on the team can lock them down
++    inline bool KillWindowOpen(PlayerbotAI* botAI)
++    {
++        Unit* kill = botAI->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
++        if (!kill || !kill->IsAlive())
++            return false;
++
++        Unit* cc = nullptr;
++        for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get())
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u != kill && u->IsAlive() && u->IsPlayer())
++                cc = u;
++        }
++        if (!cc)
++            return true;  // nobody left to peel: everything goes on the kill target
++
++        if (HasCcBreakReady(cc))
++            return false;
++
++        static char const* const ccSpells[] = {"blind", "fear", "cyclone", "psychic scream", "death coil", "gouge"};
++        Unit* partner = FindPartner(botAI);
++        PlayerbotAI* partnerAI = partner ? GET_PLAYERBOT_AI(partner->ToPlayer()) : nullptr;
++        for (char const* spell : ccSpells)
++        {
++            if (botAI->CanCastSpell(spell, cc) || (partnerAI && partnerAI->CanCastSpell(spell, cc)))
++                return true;
++        }
++        return false;
++    }
+ }
+ 
+ #endif
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 4ae0f3fd..b80a166e 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -194,7 +194,15 @@ bool ShadowDanceOpenerTrigger::IsActive()
+         bot->GetPower(POWER_ENERGY) < 60 || target->GetDiminishing(DIMINISHING_OPENING_STUN) >= DIMINISHING_LEVEL_IMMUNE)
+         return false;
+ 
+-    return botAI->CanCastSpell("shadow dance", bot);
++    if (!ai::arena::KillWindowOpen(botAI) || !botAI->CanCastSpell("shadow dance", bot))
++        return false;
++
++    if (time(nullptr) - lastCall > 20)
++    {
++        botAI->SayToParty("Burst agora em " + target->GetName() + "!");
++        lastCall = time(nullptr);
++    }
++    return true;
+ }
+ 
+ // Inside Shadow Dance, Cheap Shot works without stealth
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index ec9d2f0d..19ea47f2 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -155,6 +155,9 @@ public:
+     ShadowDanceOpenerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "shadow dance opener") {}
+ 
+     bool IsActive() override;
++
++private:
++    time_t lastCall = 0;
+ };
+ 
+ class DanceCheapShotTrigger : public Trigger
+-- 
+2.55.0
+

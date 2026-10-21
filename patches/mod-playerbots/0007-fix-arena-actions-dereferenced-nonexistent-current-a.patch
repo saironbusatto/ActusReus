@@ -1,7 +1,7 @@
 From 014ac512afd11ec0b791a2a3a450f31271821cde Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 07:39:45 -0300
-Subject: [PATCH 07/13] fix: arena actions dereferenced nonexistent "current
+Subject: [PATCH 07/16] fix: arena actions dereferenced nonexistent "current
  attacker" value (segfault in arena)
 
 Death Coil falls back to "current target"; Entangling Roots on melee picks an alive attacker of the bot.

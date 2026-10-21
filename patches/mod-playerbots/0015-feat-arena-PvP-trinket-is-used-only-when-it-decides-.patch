@@ -1,0 +1,179 @@
+From adeb16200daeafe6f8c71285f8c32e6ccafd4f49 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 13:47:25 -0300
+Subject: [PATCH 15/16] feat: arena PvP trinket is used only when it decides
+ the fight (partner or self under 35%, or kill target under 20%); never spent
+ as a damage boost
+
+---
+ src/Ai/Base/ActionContext.h                   |  2 ++
+ src/Ai/Base/Actions/GenericSpellActions.cpp   |  4 +++
+ src/Ai/Base/Actions/GenericSpellActions.h     | 11 ++++++++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  1 +
+ src/Ai/Base/Trigger/PvpTriggers.cpp           | 25 +++++++++++++++++++
+ src/Ai/Base/Trigger/PvpTriggers.h             |  9 +++++++
+ src/Ai/Base/TriggerContext.h                  |  2 ++
+ 7 files changed, 54 insertions(+)
+
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index 26b56250..81ed52cc 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -177,6 +177,7 @@ public:
+         creators["stoneform"] = &ActionContext::stoneform;
+         creators["escape artist"] = &ActionContext::escape_artist;
+         creators["use trinket"] = &ActionContext::use_trinket;
++        creators["pvp trinket"] = &ActionContext::pvp_trinket;
+         creators["auto talents"] = &ActionContext::auto_talents;
+         creators["auto share quest"] = &ActionContext::auto_share_quest;
+         creators["auto maintenance on levelup"] = &ActionContext::auto_maintenance_on_levelup;
+@@ -381,6 +382,7 @@ private:
+     static Action* stoneform(PlayerbotAI* botAI) { return new CastStoneformAction(botAI); }
+     static Action* escape_artist(PlayerbotAI* botAI) { return new CastEscapeArtistAction(botAI); }
+     static Action* use_trinket(PlayerbotAI* botAI) { return new UseTrinketAction(botAI); }
++    static Action* pvp_trinket(PlayerbotAI* botAI) { return new UsePvpTrinketAction(botAI); }
+     static Action* auto_talents(PlayerbotAI* botAI) { return new AutoSetTalentsAction(botAI); }
+     static Action* auto_share_quest(PlayerbotAI* botAI) { return new AutoShareQuestAction(botAI); }
+     static Action* auto_maintenance_on_levelup(PlayerbotAI* botAI) { return new AutoMaintenanceOnLevelupAction(botAI); }
+diff --git a/src/Ai/Base/Actions/GenericSpellActions.cpp b/src/Ai/Base/Actions/GenericSpellActions.cpp
+index dc39a1e4..316cc421 100644
+--- a/src/Ai/Base/Actions/GenericSpellActions.cpp
++++ b/src/Ai/Base/Actions/GenericSpellActions.cpp
+@@ -506,6 +506,8 @@ bool CastWillOfTheForsakenAction::isPossible()
+     return spellId && !HasSpellOrCategoryCooldown(bot, spellId);
+ }
+ 
++static constexpr uint32 PVP_TRINKET_SPELL = 42292;
++
+ bool UseTrinketAction::Execute(Event /*event*/)
+ {
+     Item* trinket1 = bot->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_TRINKET1);
+@@ -543,6 +545,8 @@ bool UseTrinketAction::UseTrinket(Item* item)
+             item->GetTemplate()->Spells[i].SpellTrigger == ITEM_SPELLTRIGGER_ON_USE)
+         {
+             spellId = item->GetTemplate()->Spells[i].SpellId;
++            if ((spellId == PVP_TRINKET_SPELL) != ccBreak)
++                return false;
+             itemSpellCooldown = item->GetTemplate()->Spells[i].SpellCooldown;
+             itemSpellCategory = item->GetTemplate()->Spells[i].SpellCategory;
+             itemSpellCategoryCooldown = item->GetTemplate()->Spells[i].SpellCategoryCooldown;
+diff --git a/src/Ai/Base/Actions/GenericSpellActions.h b/src/Ai/Base/Actions/GenericSpellActions.h
+index ab48d902..979a4530 100644
+--- a/src/Ai/Base/Actions/GenericSpellActions.h
++++ b/src/Ai/Base/Actions/GenericSpellActions.h
+@@ -342,13 +342,24 @@ public:
+     bool Execute(Event event) override;
+ 
+ protected:
++    UseTrinketAction(PlayerbotAI* botAI, std::string const name, bool ccBreak)
++        : Action(botAI, name), ccBreak(ccBreak) {}
+     bool UseTrinket(Item* trinket);
+ 
++    // PvP trinket (spell 42292) is kept apart from damage trinkets: it is a CC break, not a boost
++    bool ccBreak = false;
++
+ private:
+     std::unordered_map<uint64, uint32> trinketItemCooldownExpiries;
+     std::unordered_map<uint32, uint32> trinketCategoryCooldownExpiries;
+ };
+ 
++class UsePvpTrinketAction : public UseTrinketAction
++{
++public:
++    UsePvpTrinketAction(PlayerbotAI* botAI) : UseTrinketAction(botAI, "pvp trinket", true) {}
++};
++
+ class CastSpellOnEnemyHealerAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 3c358699..59b862d8 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -83,4 +83,5 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     triggers.push_back(
+         new TriggerNode("no possible targets", { NextAction("arena tactics", ACTION_BG)}));
++    triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
+ }
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 13dc849a..7845c9cf 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "PvpTriggers.h"
++#include "ArenaHelpers.h"
+ #include "BattleGroundTactics.h"
+ #include "BattlegroundEY.h"
+ #include "BattlegroundMgr.h"
+@@ -320,3 +321,27 @@ bool VehicleNearTrigger::IsActive()
+ }
+ 
+ bool InVehicleTrigger::IsActive() { return botAI->IsInVehicle(); }
++
++bool PvpTrinketTrigger::IsActive()
++{
++    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive())
++        return false;
++
++    bool const lostControl = bot->HasUnitState(UNIT_STATE_STUNNED | UNIT_STATE_FLEEING | UNIT_STATE_CONFUSED) ||
++                             bot->HasAuraType(SPELL_AURA_MOD_STUN) || bot->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++                             bot->HasAuraType(SPELL_AURA_MOD_CONFUSE);
++    if (!lostControl)
++        return false;
++
++    // Partner about to die while we are locked, or we are the one being burst down under CC
++    Unit* partner = ai::arena::FindPartner(botAI);
++    if (partner && partner->GetHealthPct() < 35.0f)
++        return true;
++
++    if (bot->GetHealthPct() < 35.0f)
++        return true;
++
++    // A DPS locked out while the kill target is almost dead
++    Unit* target = AI_VALUE(Unit*, "current target");
++    return !PlayerbotAI::IsHeal(bot) && target && target->IsAlive() && target->GetHealthPct() < 20.0f;
++}
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.h b/src/Ai/Base/Trigger/PvpTriggers.h
+index d6e574cc..903ecada 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.h
++++ b/src/Ai/Base/Trigger/PvpTriggers.h
+@@ -141,4 +141,13 @@ public:
+     bool IsActive() override;
+ };
+ 
++// Arena: break CC with the PvP trinket only when it decides the fight, never on the first CC
++class PvpTrinketTrigger : public Trigger
++{
++public:
++    PvpTrinketTrigger(PlayerbotAI* botAI) : Trigger(botAI, "pvp trinket") {}
++
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index 32ad9aa8..a6d01436 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -112,6 +112,7 @@ public:
+         creators["enemy out of melee"] = &TriggerContext::EnemyOutOfMelee;
+         creators["enemy out of spell"] = &TriggerContext::EnemyOutOfSpell;
+         creators["enemy too close for spell"] = &TriggerContext::enemy_too_close_for_spell;
++        creators["pvp trinket"] = &TriggerContext::pvp_trinket;
+         creators["enemy too close for shoot"] = &TriggerContext::enemy_too_close_for_shoot;
+         creators["enemy too close for auto shot"] = &TriggerContext::enemy_too_close_for_auto_shot;
+         creators["enemy too close for melee"] = &TriggerContext::enemy_too_close_for_melee;
+@@ -348,6 +349,7 @@ private:
+     static Trigger* EnemyOutOfMelee(PlayerbotAI* botAI) { return new EnemyOutOfMeleeTrigger(botAI); }
+     static Trigger* EnemyOutOfSpell(PlayerbotAI* botAI) { return new EnemyOutOfSpellRangeTrigger(botAI); }
+     static Trigger* enemy_too_close_for_spell(PlayerbotAI* botAI) { return new EnemyTooCloseForSpellTrigger(botAI); }
++    static Trigger* pvp_trinket(PlayerbotAI* botAI) { return new PvpTrinketTrigger(botAI); }
+     static Trigger* enemy_too_close_for_auto_shot(PlayerbotAI* botAI)
+     {
+         return new EnemyTooCloseForAutoShotTrigger(botAI);
+-- 
+2.55.0
+

@@ -1,0 +1,49 @@
+From 8eb7c2958f53d638d43ad9167d40f9515fcaacf8 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 13:17:20 -0300
+Subject: [PATCH 14/16] fix: arena warlock waits 12s before recasting Curse of
+ Tongues (was every GCD against decursing druids)
+
+---
+ src/Ai/Class/Warlock/WarlockTriggers.cpp | 8 ++++++--
+ src/Ai/Class/Warlock/WarlockTriggers.h   | 3 +++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.cpp b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+index 1c222fd7..dc30a8fe 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.cpp
++++ b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+@@ -309,10 +309,14 @@ bool CurseOfTonguesOnCasterTrigger::IsActive()
+     if (!caster || !caster->IsAlive() || !bot->IsWithinDistInMap(caster, 30.0f))
+         return false;
+ 
+-    if (botAI->HasAura("curse of tongues", caster))
++    if (botAI->HasAura("curse of tongues", caster) || time(nullptr) - lastFired < 12)
+         return false;
+ 
+-    return botAI->CanCastSpell("curse of tongues", caster);
++    if (!botAI->CanCastSpell("curse of tongues", caster))
++        return false;
++
++    lastFired = time(nullptr);
++    return true;
+ }
+ 
+ // Arena: drop the circle once the gates are open, while nobody is on top of the warlock yet
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.h b/src/Ai/Class/Warlock/WarlockTriggers.h
+index f6f6f71c..7c347930 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.h
++++ b/src/Ai/Class/Warlock/WarlockTriggers.h
+@@ -394,6 +394,9 @@ public:
+         : Trigger(botAI, "curse of tongues on caster") {}
+ 
+     bool IsActive() override;
++
++private:
++    time_t lastFired = 0;  // a Druid decurses on sight; recasting every GCD only burns ours
+ };
+ 
+ class DemonicCircleSummonTrigger : public Trigger
+-- 
+2.55.0
+
