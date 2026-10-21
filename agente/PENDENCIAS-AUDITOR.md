@@ -22,3 +22,10 @@ para o `InitGlyphs` não re-sortear glifos a cada boot.
    healer, com LoS do parceiro (`IsWithinLOSInMap`); limitar a 1 vez a cada 1–2 s por bot. Para o ML: campos de
    LoS por unidade + distância ao ponto de LoS na observação, e a ação discreta "quebrar LoS". Druid primeiro
    (kit instantâneo cura andando; Priest precisa parar para castar).
+10. **Deriva de gemas (corrigida no código, falta aplicar):** `RandomPlayerbotMgr::Refresh` (teleporte periódico de
+    1–5 h e revive) reaplicava gemas/encantamentos com escolhas variáveis e recriava o pet. Commit `d6269f24` no
+    módulo: bots fixos só reparam e reabastecem. Entra no ar na próxima compilação do agente. Depois disso, **re-copiar
+    o equipamento do original** para os clones que derivaram (os 2 primeiros clones `.pdump` de cada classe e os 16
+    clones SQL) antes de ligar os 60 — senão a medição começa com gemas diferentes.
+11. **40 clones idênticos criados** (`.pdump copy`, raça/magias/talentos/glifos/pets iguais), offline, sem time.
+    Roteiro para ligar: `agente/golive-clones.md`. Manifesto: `agente/logs/clones-manifest.csv`.
