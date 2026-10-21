@@ -1,0 +1,68 @@
+From b6265197d668c55174f501e84534fde33cc61eb0 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 01:07:28 -0300
+Subject: [PATCH 5/5] fix: use UNIT_STATE_FLEEING and check cyclone aura
+ directly
+
+---
+ src/Ai/Class/Druid/Action/DruidActions.h | 2 +-
+ src/Ai/Class/Druid/DruidTriggers.cpp     | 2 +-
+ src/Ai/Class/Warlock/WarlockActions.h    | 2 +-
+ src/Ai/Class/Warlock/WarlockTriggers.cpp | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/Ai/Class/Druid/Action/DruidActions.h b/src/Ai/Class/Druid/Action/DruidActions.h
+index dd79f2f7..0a085e45 100644
+--- a/src/Ai/Class/Druid/Action/DruidActions.h
++++ b/src/Ai/Class/Druid/Action/DruidActions.h
+@@ -240,7 +240,7 @@ public:
+         if (!dps || !dps->IsAlive())
+             return false;
+ 
+-        if (dps->HasUnitState(UNIT_STATE_CYCLONED) || botAI->HasAura("cyclone", dps))
++        if (botAI->HasAura("cyclone", dps))
+             return false;
+ 
+         if (dps->GetDiminishing(DIMINISHING_CYCLONE) >= DIMINISHING_LEVEL_IMMUNE)
+diff --git a/src/Ai/Class/Druid/DruidTriggers.cpp b/src/Ai/Class/Druid/DruidTriggers.cpp
+index aea90bb0..cacf3359 100644
+--- a/src/Ai/Class/Druid/DruidTriggers.cpp
++++ b/src/Ai/Class/Druid/DruidTriggers.cpp
+@@ -154,7 +154,7 @@ bool CycloneEnemyDpsTrigger::IsActive()
+     if (!dps || !dps->IsAlive() || !bot->IsWithinDistInMap(dps, 20.0f))
+         return false;
+ 
+-    if (dps->HasUnitState(UNIT_STATE_CYCLONED) || botAI->HasAura("cyclone", dps))
++    if (botAI->HasAura("cyclone", dps))
+         return false;
+ 
+     if (dps->GetDiminishing(DIMINISHING_CYCLONE) >= DIMINISHING_LEVEL_IMMUNE)
+diff --git a/src/Ai/Class/Warlock/WarlockActions.h b/src/Ai/Class/Warlock/WarlockActions.h
+index 36edd13c..cbe52e92 100644
+--- a/src/Ai/Class/Warlock/WarlockActions.h
++++ b/src/Ai/Class/Warlock/WarlockActions.h
+@@ -242,7 +242,7 @@ public:
+         if (!healer || !healer->IsAlive())
+             return false;
+ 
+-        if (healer->HasUnitState(UNIT_STATE_FEARED) ||
++        if (healer->HasUnitState(UNIT_STATE_FLEEING) ||
+             healer->HasAuraType(SPELL_AURA_MOD_FEAR) ||
+             healer->HasAuraType(SPELL_AURA_MOD_CONFUSE))
+             return false;
+diff --git a/src/Ai/Class/Warlock/WarlockTriggers.cpp b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+index ea916d09..efdba8bd 100644
+--- a/src/Ai/Class/Warlock/WarlockTriggers.cpp
++++ b/src/Ai/Class/Warlock/WarlockTriggers.cpp
+@@ -264,7 +264,7 @@ bool FearEnemyHealerTrigger::IsActive()
+     if (!healer || !healer->IsAlive() || !bot->IsWithinDistInMap(healer, 30.0f))
+         return false;
+ 
+-    if (healer->HasUnitState(UNIT_STATE_FEARED) ||
++    if (healer->HasUnitState(UNIT_STATE_FLEEING) ||
+         healer->HasAuraType(SPELL_AURA_MOD_FEAR) ||
+         healer->HasAuraType(SPELL_AURA_MOD_CONFUSE))
+         return false;
+-- 
+2.55.0
+
