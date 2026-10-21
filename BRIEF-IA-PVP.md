@@ -182,3 +182,8 @@ Feito pelo auditor (Claude) com backup do banco, não pelo agente noturno: envol
 3. Nada bloqueante na thread do world.
 4. Medir antes de escolher (throughput de arenas decide RL vs. só imitação).
 5. Versionar contrato, dataset e modelo juntos.
+
+**Feito em 2026-10-21 00:30 (supervisionado):** 10 duplas fixas, 20 bots, 5 arenas 2v2 simultâneas,
+`MapUpdate.Threads = 4`. Clones por classe+spec+set (raça/armas diferem; clone idêntico via `.pdump` fica para
+depois): Vision II–IV (Rogue/Disc), Killalot II–V (Warlock/Resto), Hybrid I (Warlock/Disc, por falta de Rogue e
+Druid nível 80 livres). Times 26–33, rating/MMR 1500. Backups: `bkp_clones_*`, `bkp_clones2_*`.
