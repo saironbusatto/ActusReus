@@ -24,12 +24,19 @@ monta os 5 grupos de 3 no painel do raid e dá as ordens digitando ou falando.
 | Grupo | Quem | Papel | Abertura |
 | :--- | :--- | :--- | :--- |
 | **1** | Everie (Arms Warrior) · Matdis (Blood DK) · Aellen (Holy Paladin) | Linha de frente, aguenta o centro | **ferreiro** |
-| **2** | Alenaron (Affli Warlock) · Istok (MM Hunter) · Kwongwega (Resto Shaman) | Defesa de casa à distância | **fazenda** |
+| **2** | Alenaron (Affli Warlock) · Istok (MM Hunter) · Ominousv (Affli Warlock) | Defesa de casa à distância | **fazenda** |
 | **3** | Salis (Unholy DK) · Caemas (Frost Mage) · Amnesian (Disc Priest) | Toma e segura | **mina** |
-| **4** | Hesho (Fire Mage) · Pehdicoubal (Balance Druid) · Ominousv (Affli Warlock) | Dano à distância no alto | **serraria** |
+| **4** | Hesho (Fire Mage) · Pehdicoubal (Balance Druid) · Kwongwega (Resto Shaman) | Dano mágico no alto, com os totens | **serraria** |
 | **5** | **Reload (você)** · Everiedois (Arms Warrior) · Matdisdois (Unholy DK) | Ninja / roubo de base | **estábulo** ou livre |
 
-Os grupos 1–3 têm um healer cada; o 4 é só dano (fica no alto da serraria, perto do 1); o 5 é o seu.
+**Buffs que dependem do grupo:**
+- Não precisa formar raid antes: dentro da BG todo mundo já cai no raid da batalha; você só arrasta para os grupos.
+- **Bloodlust** pega o raid todo que estiver perto, em qualquer grupo.
+- **Totens** do Shaman só pegam no grupo dele. O bot Resto põe totens de caster (Wrath of Air, Flametongue,
+  Mana Spring), por isso ele fica com os dois casters do grupo 4.
+- **Auras** do Paladino pegam o raid; a Aellen pode ficar em qualquer grupo.
+
+Healers: grupos 1, 3 e 4. O grupo 2 defende a fazenda, perto do cemitério da Horda; o 5 é o seu.
 
 ## 3. Ordens
 
