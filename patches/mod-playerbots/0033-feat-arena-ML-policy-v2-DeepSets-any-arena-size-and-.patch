@@ -1,7 +1,7 @@
 From b89ee4e5ead3d510b9bbe46c05fd4773e30a15f3 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 08:53:14 -0300
-Subject: [PATCH 33/34] feat: arena ML policy v2 (DeepSets, any arena size) and
+Subject: [PATCH 33/35] feat: arena ML policy v2 (DeepSets, any arena size) and
  logged action probability
 
 ArenaMlNet.h evaluates the arena-policy v2 weights written by ml/policy/train_v2.py with the standard

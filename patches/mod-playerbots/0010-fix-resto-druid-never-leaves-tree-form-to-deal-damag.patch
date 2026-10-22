@@ -1,7 +1,7 @@
 From 98e165b49e729740d6352d3373d01ed7ed5c9727 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 08:26:51 -0300
-Subject: [PATCH 10/34] fix: resto druid never leaves tree form to deal damage
+Subject: [PATCH 10/35] fix: resto druid never leaves tree form to deal damage
  in arena
 
 ---

@@ -1,7 +1,7 @@
 From 5ce9b836013c00d1a2b6b5186f4be3b9e9355824 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 20:19:23 -0300
-Subject: [PATCH 23/34] feat: arena - rogue walks to the healer in stealth to
+Subject: [PATCH 23/35] feat: arena - rogue walks to the healer in stealth to
  Sap it; partner locks the other enemy when the rogue commits the burst;
  learned-policy multiplier wired (opt-in via
  Playerbots.ArenaMlPolicyFile/ArenaMlTeams)
