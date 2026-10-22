@@ -1,7 +1,7 @@
 From 3af6ec26575a34b4704f4ba512d0ccd9205bb2f0 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 19:35:03 -0300
-Subject: [PATCH 20/32] fix: arena rogue no longer drops stealth from the
+Subject: [PATCH 20/33] fix: arena rogue no longer drops stealth from the
  generic out-of-combat unstealth; druid damage block matches action variants
  (moonfire on attacker)
 

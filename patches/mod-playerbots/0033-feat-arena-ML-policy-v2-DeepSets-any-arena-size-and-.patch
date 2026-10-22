@@ -1,0 +1,474 @@
+From b89ee4e5ead3d510b9bbe46c05fd4773e30a15f3 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 08:53:14 -0300
+Subject: [PATCH 33/33] feat: arena ML policy v2 (DeepSets, any arena size) and
+ logged action probability
+
+ArenaMlNet.h evaluates the arena-policy v2 weights written by ml/policy/train_v2.py with the standard
+library only (checked against torch by train_v2.py --selftest). The multiplier now uses the v2
+observation and any arena team slot (2v2 or 3v3) listed in Playerbots.ArenaMlTeams. Each logged arena
+action carries the probability the policy gave it (1 when only the rules decide). The unused v1
+observation and 48-input network are removed.
+---
+ conf/playerbots.conf.dist      |   7 +-
+ src/Ai/Base/ArenaMlNet.h       | 109 +++++++++++++++++++++++++++
+ src/Ai/Base/ArenaMlPolicy.h    | 133 ++++++++++++---------------------
+ src/Ai/Base/ArenaObservation.h |  94 +----------------------
+ src/Bot/Engine/Engine.cpp      |   4 +-
+ 5 files changed, 164 insertions(+), 183 deletions(-)
+ create mode 100644 src/Ai/Base/ArenaMlNet.h
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 38a877f9..96f94291 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -520,9 +520,10 @@ Playerbots.ArenaMlLog = 0
+ #
+ #    Playerbots.ArenaMlPolicyFile
+ #    Playerbots.ArenaMlTeams
+-#        Learned arena policy (weights file written by ml/policy/train.py) and the comma-separated 2v2
+-#        arena team ids that use it. The policy only rescales the actions the arena strategies queue;
+-#        teams not listed keep the rules alone, which gives a mirror test (policy vs rules).
++#        Learned arena policy ("arena-policy v2" weights file written by ml/policy/train_v2.py) and the
++#        comma-separated arena team ids (2v2 or 3v3) that use it. The policy only rescales the actions
++#        the arena strategies queue; teams not listed keep the rules alone, which gives a mirror test
++#        (policy vs rules).
+ #        Default: "" and "" - Disabled
+ #
+ 
+diff --git a/src/Ai/Base/ArenaMlNet.h b/src/Ai/Base/ArenaMlNet.h
+new file mode 100644
+index 00000000..de01dda1
+--- /dev/null
++++ b/src/Ai/Base/ArenaMlNet.h
+@@ -0,0 +1,109 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ARENAMLNET_H
++#define PLAYERBOTS_ARENAMLNET_H
++
++#include <algorithm>
++#include <cmath>
++#include <fstream>
++#include <sstream>
++#include <string>
++#include <unordered_map>
++#include <vector>
++
++// Learned arena policy v2 (ml/policy/train_v2.py, DeepSets): the same encoder per unit slot (self, 2 allies,
++// 3 enemies); self + mean of present allies + mean of present enemies + kill window -> trunk -> action logits.
++// Standard library only, so ml/policy/paridade_v2.cpp can check it against torch outside the server.
++namespace ai::arena
++{
++    struct PolicyNetV2
++    {
++        int perSlot = 0, slots = 0, emb = 0, hidden = 0, nOut = 0;
++        std::unordered_map<std::string, int> index;
++        std::vector<float> encW, encB, trunkW, trunkB, piW, piB;
++        bool ok = false;
++
++        static bool ReadFloats(std::ifstream& in, std::vector<float>& out, size_t n)
++        {
++            out.resize(n);
++            for (float& v : out)
++                if (!(in >> v))
++                    return false;
++            return true;
++        }
++
++        // "arena-policy v2 <per_slot> <slots> <emb> <hidden> <n_out>", action names joined by '|',
++        // then enc, trunk, pi: weight rows (out x in), bias
++        explicit PolicyNetV2(std::string const& path)
++        {
++            std::ifstream in(path);
++            std::string magic, version, names;
++            if (!(in >> magic >> version >> perSlot >> slots >> emb >> hidden >> nOut) || magic != "arena-policy" ||
++                version != "v2" || slots != 6 || perSlot <= 0 || emb <= 0 || hidden <= 0 || nOut <= 0)
++                return;
++            in >> std::ws;
++            std::getline(in, names);
++            std::stringstream ss(names);
++            std::string name;
++            for (int i = 0; std::getline(ss, name, '|'); ++i)
++                index[name] = i;
++
++            ok = int(index.size()) == nOut && ReadFloats(in, encW, size_t(emb) * perSlot) && ReadFloats(in, encB, emb) &&
++                 ReadFloats(in, trunkW, size_t(hidden) * (3 * emb + 1)) && ReadFloats(in, trunkB, hidden) &&
++                 ReadFloats(in, piW, size_t(nOut) * hidden) && ReadFloats(in, piB, nOut);
++        }
++
++        size_t InputSize() const { return size_t(slots) * perSlot + 1; }
++
++        static void Dense(float const* x, size_t nIn, std::vector<float> const& w, std::vector<float> const& b,
++                          bool relu, float* y)
++        {
++            for (size_t o = 0; o < b.size(); ++o)
++            {
++                float v = b[o];
++                for (size_t i = 0; i < nIn; ++i)
++                    v += w[o * nIn + i] * x[i];
++                y[o] = relu && v < 0 ? 0 : v;
++            }
++        }
++
++        // Softmax over the action vocabulary; x = FeaturesV2 (slot fields, then kill window), size InputSize().
++        // Slot field 0 is "present": absent slots stay out of the means, as in PolicyV2.forward.
++        std::vector<float> Probabilities(std::vector<float> const& x) const
++        {
++            std::vector<float> e(emb), pooled(3 * emb + 1, 0.0f), h(hidden), logits(nOut);
++            float count[3] = {0, 0, 0};
++            for (int s = 0; s < slots; ++s)
++            {
++                float const* slot = &x[size_t(s) * perSlot];
++                if (slot[0] <= 0)
++                    continue;
++                int const group = s == 0 ? 0 : (s < 3 ? 1 : 2);
++                Dense(slot, perSlot, encW, encB, true, e.data());
++                for (int k = 0; k < emb; ++k)
++                    pooled[group * emb + k] += e[k];
++                ++count[group];
++            }
++            for (int g = 0; g < 3; ++g)
++                for (int k = 0; k < emb; ++k)
++                    pooled[g * emb + k] /= std::max(count[g], 1.0f);
++            pooled[3 * emb] = x.back();
++
++            Dense(pooled.data(), pooled.size(), trunkW, trunkB, true, h.data());
++            Dense(h.data(), h.size(), piW, piB, false, logits.data());
++            float const top = *std::max_element(logits.begin(), logits.end());
++            float sum = 0;
++            for (float& v : logits)
++                sum += (v = std::exp(v - top));
++            for (float& v : logits)
++                v /= sum;
++            return logits;
++        }
++    };
++}
++
++#endif
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index 30e44fd8..f25e5e65 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -7,92 +7,33 @@
+ #ifndef PLAYERBOTS_ARENAMLPOLICY_H
+ #define PLAYERBOTS_ARENAMLPOLICY_H
+ 
+-#include <fstream>
+-#include <sstream>
+-#include <unordered_map>
++#include <set>
+ 
++#include "ArenaMlNet.h"
+ #include "ArenaObservation.h"
+ #include "Multiplier.h"
+ #include "Config.h"
+ #include "Helpers.h"
+ 
+-// Learned arena policy (ml/policy/train.py): a 48 -> 64 -> 64 -> N MLP evaluated in plain C++.
+-// It never adds actions; it rescales the relevance of the actions the rule strategies already queued,
+-// so the rules stay as the fallback. Only bots whose 2v2 team is in Playerbots.ArenaMlTeams use it.
++// Learned arena policy (ArenaMlNet.h, any arena size). It never adds actions; it rescales the relevance of the
++// actions the rule strategies already queued, so the rules stay as the fallback. Only bots whose arena team
++// (2v2 or 3v3) is in Playerbots.ArenaMlTeams use it.
+ namespace ai::arena
+ {
+-    struct PolicyNet
++    inline PolicyNetV2 const& Policy()
+     {
+-        int nIn = 0, nHidden = 0, nOut = 0;
+-        std::unordered_map<std::string, int> index;
+-        std::vector<float> w1, b1, w2, b2, w3, b3;
+-        bool ok = false;
+-
+-        static bool ReadFloats(std::ifstream& in, std::vector<float>& out, size_t n)
+-        {
+-            out.resize(n);
+-            for (float& v : out)
+-                if (!(in >> v))
+-                    return false;
+-            return true;
+-        }
+-
+-        explicit PolicyNet(std::string const& path)
+-        {
+-            std::ifstream in(path);
+-            std::string magic, version, names;
+-            if (!(in >> magic >> version >> nIn >> nHidden >> nOut) || magic != "arena-policy" || version != "v1" ||
+-                nIn != 48)
+-            {
+-                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or wrong format)", path);
+-                return;
+-            }
+-            in >> std::ws;
+-            std::getline(in, names);
+-            std::stringstream ss(names);
+-            std::string name;
+-            for (int i = 0; std::getline(ss, name, '|'); ++i)
+-                index[name] = i;
+-
+-            ok = int(index.size()) == nOut && ReadFloats(in, w1, size_t(nHidden) * nIn) &&
+-                 ReadFloats(in, b1, nHidden) && ReadFloats(in, w2, size_t(nHidden) * nHidden) &&
+-                 ReadFloats(in, b2, nHidden) && ReadFloats(in, w3, size_t(nOut) * nHidden) &&
+-                 ReadFloats(in, b3, nOut);
+-            LOG_INFO("playerbots", "ArenaMlPolicy: '{}' {} ({} actions)", path, ok ? "loaded" : "INVALID", nOut);
+-        }
+-
+-        static std::vector<float> Dense(std::vector<float> const& x, std::vector<float> const& w,
+-                                        std::vector<float> const& b, bool relu)
+-        {
+-            std::vector<float> y(b);
+-            size_t const nIn = x.size();
+-            for (size_t o = 0; o < y.size(); ++o)
+-            {
+-                for (size_t i = 0; i < nIn; ++i)
+-                    y[o] += w[o * nIn + i] * x[i];
+-                if (relu && y[o] < 0)
+-                    y[o] = 0;
+-            }
+-            return y;
+-        }
+-
+-        // Softmax probabilities over the action vocabulary
+-        std::vector<float> Probabilities(std::vector<float> const& x) const
++        static PolicyNetV2 const net = []
+         {
+-            std::vector<float> logits = Dense(Dense(Dense(x, w1, b1, true), w2, b2, true), w3, b3, false);
+-            float const top = *std::max_element(logits.begin(), logits.end());
+-            float sum = 0;
+-            for (float& v : logits)
+-                sum += (v = std::exp(v - top));
+-            for (float& v : logits)
+-                v /= sum;
+-            return logits;
+-        }
+-    };
+-
+-    inline PolicyNet const& Policy()
+-    {
+-        static PolicyNet const net(sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", ""));
++            std::string const path = sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", "");
++            PolicyNetV2 n(path);
++            if (n.ok && n.InputSize() != 151)
++                n.ok = false;  // trained on another observation layout than FeaturesV2
++            if (n.ok)
++                LOG_INFO("playerbots", "ArenaMlPolicy: '{}' loaded ({} actions)", path, n.nOut);
++            else
++                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or not arena-policy v2)", path);
++            return n;
++        }();
+         return net;  // loaded once, first use
+     }
+ 
+@@ -109,6 +50,32 @@ namespace ai::arena
+         return teams;
+     }
+ 
++    // The policy to use for this bot right now, or nullptr when the rules decide alone
++    inline PolicyNetV2 const* ActivePolicy(Player* bot)
++    {
++        if (MlTeams().empty() || !bot->InArena())
++            return nullptr;
++        for (uint8 slot = 0; slot < 3; ++slot)  // 2v2, 3v3, 5v5 team slots
++            if (MlTeams().count(bot->GetArenaTeamId(slot)))
++                return Policy().ok ? &Policy() : nullptr;
++        return nullptr;
++    }
++
++    // Engine hook for each executed arena action: logs it with the probability the policy gave it
++    // (1 when only the rules decided, as LogObservation expects)
++    inline void LogDecision(PlayerbotAI* botAI, Action* action, float relevance)
++    {
++        ArenaObsV2 const o = CollectObservationV2(botAI);
++        float prob = 1.0f;
++        if (PolicyNetV2 const* net = ActivePolicy(botAI->GetBot()))
++        {
++            auto const it = net->index.find(action->getName());
++            if (it != net->index.end())
++                prob = net->Probabilities(FeaturesV2(o))[it->second];
++        }
++        LogObservation(botAI, o, action, relevance, prob);
++    }
++
+     class ArenaMlMultiplier : public Multiplier
+     {
+     public:
+@@ -116,22 +83,18 @@ namespace ai::arena
+ 
+         float GetValue(Action* action) override
+         {
+-            Player* bot = botAI->GetBot();
+-            if (MlTeams().empty() || !bot->InArena() || !MlTeams().count(bot->GetArenaTeamId(0)))
+-                return 1.0f;
+-
+-            PolicyNet const& net = Policy();
+-            if (!net.ok)
++            PolicyNetV2 const* net = ActivePolicy(botAI->GetBot());
++            if (!net)
+                 return 1.0f;
+ 
+-            auto const it = net.index.find(action->getName());
+-            if (it == net.index.end())
++            auto const it = net->index.find(action->getName());
++            if (it == net->index.end())
+                 return 1.0f;  // action the policy never saw: leave it to the rules
+ 
+             uint64 const now = GameTime::GetGameTimeMS().count();
+             if (now != lastTick)  // one forward pass per engine tick, not per candidate action
+             {
+-                probs = net.Probabilities(Features(CollectObservation(botAI)));
++                probs = net->Probabilities(FeaturesV2(CollectObservationV2(botAI)));
+                 top = *std::max_element(probs.begin(), probs.end());
+                 lastTick = now;
+             }
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+index 21c15106..c3f0f002 100644
+--- a/src/Ai/Base/ArenaObservation.h
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -33,68 +33,6 @@ namespace ai::arena
+         return f;
+     }
+ 
+-    struct EnemyObs
+-    {
+-        uint32 guid = 0, cls = 0, cc = 0;
+-        int hp = 0, mana = 0, trinket = 0;
+-    };
+-
+-    struct ArenaObs
+-    {
+-        uint32 cls = 0, selfCc = 0, partnerGuid = 0, partnerCc = 0, target = 0;
+-        int selfHp = 0, selfMana = 0, partnerHp = 0, dist = -1, los = -1, killWindow = 0;
+-        EnemyObs enemy[2];
+-    };
+-
+-    inline int ManaOrPower(Unit* u)
+-    {
+-        return u->getPowerType() == POWER_MANA ? int(u->GetPowerPct(POWER_MANA)) : int(u->GetPower(u->getPowerType()));
+-    }
+-
+-    inline ArenaObs CollectObservation(PlayerbotAI* botAI)
+-    {
+-        Player* bot = botAI->GetBot();
+-        AiObjectContext* context = botAI->GetAiObjectContext();
+-        ArenaObs o;
+-        o.cls = bot->getClass();
+-        o.selfHp = int(bot->GetHealthPct());
+-        o.selfMana = ManaOrPower(bot);
+-        o.selfCc = CcFlags(bot);
+-
+-        if (Unit* partner = FindPartner(botAI))
+-        {
+-            o.partnerGuid = partner->GetGUID().GetCounter();
+-            o.partnerHp = int(partner->GetHealthPct());
+-            o.partnerCc = CcFlags(partner);
+-        }
+-
+-        std::vector<Unit*> enemies;
+-        for (ObjectGuid const guid : context->GetValue<GuidVector>("possible targets")->Get())
+-        {
+-            Unit* u = botAI->GetUnit(guid);
+-            if (u && u->IsPlayer() && u->IsAlive())
+-                enemies.push_back(u);
+-        }
+-        std::sort(enemies.begin(), enemies.end(),
+-                  [](Unit* a, Unit* b) { return a->GetGUID().GetCounter() < b->GetGUID().GetCounter(); });
+-        for (size_t i = 0; i < enemies.size() && i < 2; ++i)
+-        {
+-            Unit* u = enemies[i];
+-            o.enemy[i] = {u->GetGUID().GetCounter(), u->ToPlayer()->getClass(), CcFlags(u), int(u->GetHealthPct()),
+-                          u->getPowerType() == POWER_MANA ? int(u->GetPowerPct(POWER_MANA)) : -1,
+-                          HasCcBreakReady(u) ? 1 : 0};
+-        }
+-
+-        if (Unit* target = context->GetValue<Unit*>("current target")->Get())
+-        {
+-            o.target = target->GetGUID().GetCounter();
+-            o.dist = int(bot->GetDistance(target));
+-            o.los = bot->IsWithinLOSInMap(target) ? 1 : 0;
+-        }
+-        o.killWindow = KillWindowOpen(botAI) ? 1 : 0;
+-        return o;
+-    }
+-
+     // ---- v2: any arena size. Six slots (self, 2 allies, 3 enemies), each the same fields, so 2v2 and 3v3 share
+     // one format and the model can pool allies and enemies as sets. Field order must match ml/policy/features.py.
+     struct UnitObs
+@@ -179,10 +117,9 @@ namespace ai::arena
+     // v2,ms,instance,bot,action,relevance,prob,killwindow, then 6 slots of
+     // present,visible,guid,class,hp,power,cc,trinket,defensive,dist,los,istarget
+     // prob = probability the learned policy gave this action (1 when only the rules decided).
+-    inline void LogObservation(PlayerbotAI* botAI, Action* action, float relevance, float prob = 1.0f)
++    inline void LogObservation(PlayerbotAI* botAI, ArenaObsV2 const& o, Action* action, float relevance, float prob)
+     {
+         Player* bot = botAI->GetBot();
+-        ArenaObsV2 const o = CollectObservationV2(botAI);
+         std::string line = fmt::format("v2,{},{},{},{},{:.1f},{:.3f},{}", GameTime::GetGameTimeMS().count(),
+                                        bot->GetInstanceId(), bot->GetGUID().GetCounter(), action->getName(),
+                                        relevance, prob, o.killWindow);
+@@ -218,35 +155,6 @@ namespace ai::arena
+         f.push_back(float(o.killWindow));
+         return f;
+     }
+-
+-    // Same order and scaling as ml/policy/features.py (48 values)
+-    inline std::vector<float> Features(ArenaObs const& o)
+-    {
+-        static uint32 const classes[] = {CLASS_ROGUE, CLASS_PRIEST, CLASS_WARLOCK, CLASS_DRUID};
+-        std::vector<float> f;
+-        f.reserve(48);
+-        auto onehot = [&](uint32 c) { for (uint32 k : classes) f.push_back(c == k ? 1.0f : 0.0f); };
+-        auto bits = [&](uint32 v) { for (int i = 0; i < 6; ++i) f.push_back(float((v >> i) & 1)); };
+-
+-        onehot(o.cls);
+-        f.push_back(o.selfHp / 100.0f);
+-        f.push_back(std::max(o.selfMana, 0) / 100.0f);
+-        bits(o.selfCc);
+-        f.push_back(o.partnerHp / 100.0f);
+-        bits(o.partnerCc);
+-        for (EnemyObs const& e : o.enemy)
+-        {
+-            onehot(e.cls);
+-            f.push_back(e.hp / 100.0f);
+-            f.push_back(std::max(e.mana, 0) / 100.0f);
+-            bits(e.cc);
+-            f.push_back(float(e.trinket));
+-        }
+-        f.push_back(std::min(std::max(o.dist, 0), 40) / 40.0f);
+-        f.push_back(o.los == 1 ? 1.0f : 0.0f);
+-        f.push_back(float(o.killWindow));
+-        return f;
+-    }
+ }
+ 
+ #endif
+diff --git a/src/Bot/Engine/Engine.cpp b/src/Bot/Engine/Engine.cpp
+index 30e23d4d..46f633db 100644
+--- a/src/Bot/Engine/Engine.cpp
++++ b/src/Bot/Engine/Engine.cpp
+@@ -6,7 +6,7 @@
+ 
+ #include "Engine.h"
+ #include "Action.h"
+-#include "ArenaObservation.h"
++#include "ArenaMlPolicy.h"
+ #include "Event.h"
+ #include "PerfMonitor.h"
+ #include "Playerbots.h"
+@@ -228,7 +228,7 @@ bool Engine::DoNextAction(Unit* /*unit*/, uint32 /*depth*/, bool minimal)
+                 {
+                     LogAction("A:%s - OK", action->getName().c_str());
+                     if (sPlayerbotAIConfig.ArenaMlLog && botAI->GetBot()->InArena())
+-                        ai::arena::LogObservation(botAI, action, relevance);
++                        ai::arena::LogDecision(botAI, action, relevance);
+                     MultiplyAndPush(actionNode->getContinuers(), relevance, false, event, "cont");
+                     lastRelevance = relevance;
+                     delete actionNode;  // Safe memory management
+-- 
+2.55.0
+

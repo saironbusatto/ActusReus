@@ -1,7 +1,7 @@
 From 7044d69042d939960e07b30413ac3e60deabd863 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 09:56:52 -0300
-Subject: [PATCH 12/32] feat: arena warlock places Demonic Circle after gates
+Subject: [PATCH 12/33] feat: arena warlock places Demonic Circle after gates
  open and teleports out of melee burst or root
 
 ---

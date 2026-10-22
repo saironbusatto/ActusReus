@@ -1,7 +1,7 @@
 From f2d58579b7a27b8759e2f2a0f73195f76b9bd205 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 22:03:43 -0300
-Subject: [PATCH 28/32] feat: fixed bots with a spec are geared once for it on
+Subject: [PATCH 28/33] feat: fixed bots with a spec are geared once for it on
  first login (PvP weights for pvp specs), enchanted, gemmed, glyphed, pet
 
 ---
