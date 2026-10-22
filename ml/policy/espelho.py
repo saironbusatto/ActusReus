@@ -1,7 +1,7 @@
 """Placar do espelho: times com a política ML contra times só com regras, mesma composição.
 
-Uso: uv run python -I policy/espelho.py --desde "2026-10-22 08:00" --times-ml 26,27,28
-Conta só lutas reais (>= 20 s) em que um time está na lista ML e o outro não, com a mesma dupla de classes.
+Uso: uv run python -I policy/espelho.py --desde "2026-10-22 08:00" --times-ml 26,27,28 [--tipo 3]
+Conta só lutas reais (>= 20 s) em que um time está na lista ML e o outro não, com a mesma composição de classes (dupla em 2v2, trio em 3v3).
 Portão para manter o ML ligado: >= 200 lutas e >= 55% de vitórias do ML (com intervalo de 95%).
 """
 import argparse
@@ -50,13 +50,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--desde", required=True)
     ap.add_argument("--times-ml", required=True)
+    ap.add_argument("--tipo", type=int, choices=(2, 3), default=2, help="2 = 2v2, 3 = 3v3")
     a = ap.parse_args()
     ml = {int(t) for t in a.times_ml.split(",") if t.strip()}
     rows = sql(f"""SELECT f.fight_id, f.winner, m.team, GROUP_CONCAT(c.class ORDER BY c.class)
                    FROM acore_characters.log_arena_fights f
                    JOIN acore_characters.log_arena_memberstats m USING(fight_id)
                    JOIN acore_characters.characters c ON c.guid = m.guid
-                   WHERE f.type = 2 AND f.duration >= 20 AND f.time >= '{a.desde}'
+                   WHERE f.type = {a.tipo} AND f.duration >= 20 AND f.time >= '{a.desde}'
                    GROUP BY f.fight_id, m.team""")
     n, wins = placar(rows, ml)
     lo, hi = wilson(wins, n)
