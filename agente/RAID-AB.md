@@ -27,7 +27,7 @@ monta os 5 grupos de 3 no painel do raid e dá as ordens digitando ou falando.
 | **2** | Alenaron (Affli Warlock) · Istok (MM Hunter) · Ominousv (Affli Warlock) | Defesa de casa à distância | **fazenda** |
 | **3** | Salis (Unholy DK) · Caemas (Frost Mage) · Amnesian (Disc Priest) | Toma e segura | **mina** |
 | **4** | Hesho (Fire Mage) · Pehdicoubal (Balance Druid) · Kwongwega (Resto Shaman) | Dano mágico no alto, com os totens | **serraria** |
-| **5** | **Reload (você)** · Everiedois (Arms Warrior) · Matdisdois (Unholy DK) | Ninja / roubo de base | **estábulo** ou livre |
+| **5** | **Reload (você)** · Everiedois (Arms Warrior) · Matdisdois (Unholy DK) | Combate no centro, junto do grupo 1 | **ferreiro** |
 
 **Buffs que dependem do grupo:**
 - Não precisa formar raid antes: dentro da BG todo mundo já cai no raid da batalha; você só arrasta para os grupos.
@@ -52,7 +52,10 @@ Digite no raid (`/ra`) ou fale. Só você (GM) é obedecido.
 Bases: **estabulo, ferreiro, fazenda, serraria, mina**. Grupo = número do grupo do raid (t1 a t8).
 
 Abertura sugerida (cole no `/ra` ao abrir os portões):
-`ab t1 ferreiro` · `ab t2 fazenda` · `ab t3 mina` · `ab t4 serraria` · `ab t5 estabulo`
+`ab t1 ferreiro` · `ab t2 fazenda` · `ab t3 mina` · `ab t4 serraria` · `ab t5 ferreiro`
+
+Abertura = 4 bases (fazenda, mina, serraria, ferreiro com 6 no centro). Estábulo fica para a Aliança; quando o
+centro estiver seguro, `ab t5 estabulo` manda o seu grupo roubar.
 
 ## 4. O que ainda não foi testado
 
