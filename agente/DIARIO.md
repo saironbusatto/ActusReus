@@ -215,3 +215,16 @@
   como reserva, alvo do modelo tem de estar na fala). 4/5 com voz sintética; falta a voz real.
 - Placar: `ml/tools/placar_trios.py`. Desenho da fase 2: `agente/FASE2-RL.md`.
 - Imagem de volta: `acore/ac-wotlk-worldserver:rollback-cachefix-bgleader` (antes das ordens de AB).
+
+## 2026-10-22 ~12:00 UTC — política v2 no C++ (fase 2, passo 2)
+- Primeiro treino v2: 13.893 decisões rotuladas (~1 h de v2), 283 ações. Validação nos últimos 20% (por tempo):
+  AWR beta 0.5 e imitação pura dão o mesmo (acerto 34% contra 16% de sempre chutar `arena tactics`). O AWR ainda
+  não separa: a prob média da ação tomada é maior nas derrotas (0,25) que nas vitórias (0,20) nas duas versões.
+  Pouco dado para RL; o espelho é que decide.
+- C++: `ArenaMlNet.h` (rede v2 só com std, paridade com o torch 6e-7 em `train_v2.py --selftest`),
+  `ArenaMlPolicy.h` usa a v2 e qualquer slot de time (2v2/3v3) de `Playerbots.ArenaMlTeams`; `LogDecision` grava
+  a prob da ação escolhida (1 = só regras). v1 removida (nenhum time usava). mod-playerbots `b89ee4e5`.
+- Imagem pronta, NÃO no ar: `acore/ac-wotlk-worldserver:policy-v2` (a `master` é a que roda).
+  Pesos: `env/dist/etc/arena-policy-v2.txt` (beta 0.5, todos os dados).
+- Espelho proposto (falta OK): times ML = I e II de cada composição (54,55,58,59,62,63,66,67,70,71),
+  regras = III e IV. `espelho.py --tipo 3`. Lutas de mesma composição são ~19% (~30/h) -> 200 em ~7 h.
