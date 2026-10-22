@@ -48,7 +48,7 @@ def valid(name: str) -> bool:
     return bool(VALID_NAME.match(name)) and not TRIPLE.search(name.lower())
 
 
-def victims(count: int) -> list[list[str]]:
+def victims(count: int, max_level: int = 60) -> list[list[str]]:
     """Um bot descartável por conta tipo 1, determinístico (menor nível, depois menor guid)."""
     return sql(f"""
         SELECT v.guid, v.name, a.username FROM (
@@ -56,7 +56,7 @@ def victims(count: int) -> list[list[str]]:
                  ROW_NUMBER() OVER (PARTITION BY c.account ORDER BY c.level, c.guid) rn
           FROM acore_characters.characters c
           JOIN acore_playerbots.playerbots_account_type t ON t.account_id=c.account AND t.account_type=1
-          WHERE c.online=0 AND c.level < 60
+          WHERE c.online=0 AND c.level < {max_level}
             AND c.guid NOT IN (SELECT guid FROM acore_characters.arena_team_member)
             AND c.guid NOT IN (SELECT captainGuid FROM acore_characters.arena_team)
             AND c.guid NOT IN (SELECT guid FROM acore_characters.guild_member)
@@ -78,6 +78,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--max-level", type=int, default=60, help="vítima só abaixo deste nível (nunca 80)")
     parser.add_argument("--src", action="append", default=[],
                         help="Original:nome1,nome2 (repetível); substitui as duplas fixas")
     args = parser.parse_args()
@@ -99,7 +100,7 @@ def main() -> int:
     if args.limit:
         plan = plan[:args.limit]
 
-    pool = victims(len(plan))
+    pool = victims(len(plan), min(args.max_level, 80))
     if len(pool) < len(plan):
         print(f"só {len(pool)} vítimas para {len(plan)} clones")
         return 1
