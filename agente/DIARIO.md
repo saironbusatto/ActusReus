@@ -228,3 +228,11 @@
   Pesos: `env/dist/etc/arena-policy-v2.txt` (beta 0.5, todos os dados).
 - Espelho proposto (falta OK): times ML = I e II de cada composição (54,55,58,59,62,63,66,67,70,71),
   regras = III e IV. `espelho.py --tipo 3`. Lutas de mesma composição são ~19% (~30/h) -> 200 em ~7 h.
+
+## 2026-10-22 ~12:47 UTC — deploy da política v2 e início do espelho (passo 4)
+- Treino final com 21.701 decisões v2 rotuladas (285 ações), pesos exportados para `arena-policy-v2.txt`.
+- Paridade C++/torch confirmada em 100 amostras reais com erro máx de 8.79e-07.
+- Deploy executado após OK do usuário: `.saveall`, imagem `policy-v2` promovida a `master`, `ac-worldserver` recriado.
+- `Playerbots.ArenaMlPolicyFile` e `Playerbots.ArenaMlTeams` (54,55,58,59,62,63,66,67,70,71) ativos.
+- `ArenaMlPolicy: '...arena-policy-v2.txt' loaded (285 actions)` confirmado no log.
+- Monitor de quedas: container estável, 0 restarts, sem crashes. A/B testing acumulando lutas.
