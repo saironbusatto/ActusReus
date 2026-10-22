@@ -25,6 +25,13 @@ from train import fight_wins  # noqa: E402
 PER_SLOT = (N_FEATURES_V2 - 1) // N_SLOTS_V2
 EMB, HIDDEN = 32, 64
 GAMMA_S, BETA, MAX_W, LOSS_WEIGHT = 0.98, 0.5, 20.0, 0.2
+# Movimento, alvo e manutenção ficam com as regras (o multiplicador do C++ devolve 1 para elas): são metade das
+# linhas e, imitadas, a rede as empurrava para cima e esvaziava "arena tactics". Igual a IsRuleOwned em ArenaMlPolicy.h.
+RULE_OWNED = {"arena tactics", "drop target", "dps assist", "attack enemy player", "melee", "reset botAI"}
+
+
+def rule_owned(action: str) -> bool:
+    return action in RULE_OWNED or action.startswith(("set ", "reach "))
 
 
 def parse_log(path: Path) -> list[tuple[dt.datetime, dict]]:
@@ -190,7 +197,7 @@ def main() -> int:
     if a.selftest:
         selftest()
         return 0
-    data = label(parse_log(a.log), fight_wins("2, 3"))
+    data = [d for d in label(parse_log(a.log), fight_wins("2, 3")) if not rule_owned(d[0]["action"])]
     if len(data) < 5000:
         print(f"só {len(data)} decisões v2 rotuladas; junte mais lutas antes de treinar")
         return 1
