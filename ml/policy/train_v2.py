@@ -146,6 +146,38 @@ def selftest() -> None:
     assert head[0] == f"arena-policy v2 {PER_SLOT} {N_SLOTS_V2} {EMB} {HIDDEN} 2"
     assert len(head) == 2 + EMB + 1 + HIDDEN + 1 + 2 + 1, len(head)
     print(f"selftest ok: imitação {acc:.3f}, RL prefere a ação vencedora ({probs.max():.2f}) -> {out}")
+    paridade_cpp(model, out)
+
+
+def paridade_cpp(model: PolicyV2, pesos: Path) -> None:
+    """Compila paridade_v2.cpp com o ArenaMlNet.h do servidor e compara as probabilidades com o torch."""
+    import os
+    import shutil
+    import subprocess
+    import tempfile
+    src = Path(os.environ.get("ARENA_ML_SRC", Path(__file__).resolve().parents[2]
+                              / "azerothcore-wotlk/modules/mod-playerbots/src/Ai/Base"))
+    if not shutil.which("g++") or not (src / "ArenaMlNet.h").exists():
+        print(f"paridade C++ PULADA (sem g++ ou sem {src}/ArenaMlNet.h; defina ARENA_ML_SRC)")
+        return
+    torch.manual_seed(1)
+    x = torch.rand(200, N_FEATURES_V2)
+    slots = x[:, :-1].view(-1, N_SLOTS_V2, PER_SLOT)
+    slots[:, :, 0] = (torch.rand(200, N_SLOTS_V2) < 0.7).float()  # posições ausentes, como em 2v2
+    slots[:, 0, 0] = 1
+    texto = [" ".join(f"{v:.6g}" for v in row) for row in x.tolist()]
+    with tempfile.TemporaryDirectory() as tmp:
+        exe = Path(tmp) / "paridade"
+        subprocess.run(["g++", "-std=c++17", "-O2", "-I", str(src), str(Path(__file__).with_name("paridade_v2.cpp")),
+                        "-o", str(exe)], check=True)
+        res = subprocess.run([str(exe), str(pesos)], input="\n".join(texto) + "\n", capture_output=True, text=True,
+                             check=True).stdout
+    cpp = torch.tensor([[float(v) for v in line.split()] for line in res.splitlines()])
+    with torch.no_grad():
+        ref = model(torch.tensor([[float(v) for v in t.split()] for t in texto]))[0].softmax(1)
+    diff = (cpp - ref).abs().max().item()
+    assert diff < 1e-4, diff
+    print(f"paridade C++/torch ok ({len(cpp)} vetores, diferença máx {diff:.1e})")
 
 
 def main() -> int:
