@@ -1,7 +1,7 @@
 From d6269f243ea13b6bdf403f5a0e88a7aa6c1e7a63 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 00:53:38 -0300
-Subject: [PATCH 03/33] fix: keep fixed bots' gear, gems and pet stable on
+Subject: [PATCH 03/34] fix: keep fixed bots' gear, gems and pet stable on
  refresh
 
 Refresh() re-applied enchants/gems with varying picks and re-created the pet
