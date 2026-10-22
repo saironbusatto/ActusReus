@@ -1,0 +1,325 @@
+From f5d637e2e5f7fab0f6cf7cecea1dbb8d21eea996 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 01:08:21 -0300
+Subject: [PATCH 31/31] feat: Arathi Basin orders per raid group and
+ .playerbots raid console command
+
+"ab <t1..t8|all> <node|free>" (Portuguese node names accepted) pins the
+objective of the bots in that raid subgroup until "free"; the order is keyed
+to the battleground instance. ".playerbots raid <player> <text>" says text in
+that player's raid chat on their behalf (voice bridge entry point).
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Base/Actions/AbOrderAction.cpp         | 67 +++++++++++++++++++
+ src/Ai/Base/Actions/AbOrderAction.h           | 29 ++++++++
+ src/Ai/Base/Actions/BattleGroundTactics.cpp   | 14 ++++
+ src/Ai/Base/ChatActionContext.h               |  3 +
+ src/Ai/Base/ChatTriggerContext.h              |  2 +
+ .../Strategy/ChatCommandHandlerStrategy.cpp   |  1 +
+ src/Ai/Base/Value/PvpValues.h                 |  7 ++
+ src/Ai/Base/ValueContext.h                    |  2 +
+ src/Script/PlayerbotCommandScript.cpp         | 37 ++++++++++
+ 9 files changed, 162 insertions(+)
+ create mode 100644 src/Ai/Base/Actions/AbOrderAction.cpp
+ create mode 100644 src/Ai/Base/Actions/AbOrderAction.h
+
+diff --git a/src/Ai/Base/Actions/AbOrderAction.cpp b/src/Ai/Base/Actions/AbOrderAction.cpp
+new file mode 100644
+index 00000000..cf3ba58f
+--- /dev/null
++++ b/src/Ai/Base/Actions/AbOrderAction.cpp
+@@ -0,0 +1,67 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "AbOrderAction.h"
++
++#include <algorithm>
++#include <sstream>
++#include <unordered_map>
++
++#include "Battleground.h"
++#include "Event.h"
++#include "Group.h"
++#include "Playerbots.h"
++#include "PositionValue.h"
++
++int AbOrderAction::ParseNode(std::string const& word)
++{
++    static std::unordered_map<std::string, int> const nodes = {
++        {"stables", 0},    {"estabulo", 0},  {"estábulo", 0}, {"st", 0},
++        {"blacksmith", 1}, {"ferreiro", 1},  {"bs", 1},
++        {"farm", 2},       {"fazenda", 2},
++        {"lumber", 3},     {"serraria", 3},  {"madeireira", 3}, {"lm", 3},
++        {"mine", 4},       {"mina", 4},      {"gm", 4},
++        {"free", -1},      {"livre", -1},    {"solto", -1},
++    };
++    auto const it = nodes.find(word);
++    return it == nodes.end() ? -2 : it->second;
++}
++
++int AbOrderAction::ParseTarget(std::string const& word)
++{
++    if (word == "all" || word == "todos")
++        return -1;
++    if (word.size() == 2 && (word[0] == 't' || word[0] == 'g') && word[1] >= '1' && word[1] <= '8')
++        return word[1] - '1';
++    return -2;
++}
++
++bool AbOrderAction::Execute(Event event)
++{
++    Battleground* bg = bot->GetBattleground();
++    if (!bg || bg->GetBgTypeID() != BATTLEGROUND_AB)
++        return false;
++
++    std::istringstream in(event.getParam());
++    std::string who, where;
++    in >> who >> where;
++    std::transform(who.begin(), who.end(), who.begin(), ::tolower);
++    std::transform(where.begin(), where.end(), where.begin(), ::tolower);
++
++    int const target = ParseTarget(who);
++    int const node = ParseNode(where);
++    if (target == -2 || node == -2)
++        return false;
++
++    Group* group = bot->GetGroup();
++    if (target >= 0 && (!group || group->GetMemberGroup(bot->GetGUID()) != target))
++        return false;
++
++    // Instance id in the high bits, so an order never leaks into the next battleground
++    context->GetValue<uint32>("ab order")->Set(node < 0 ? 0 : (bg->GetInstanceID() << 3) | uint32(node + 1));
++    context->GetValue<PositionMap&>("position")->Get()["bg objective"].Reset();
++    return true;
++}
+diff --git a/src/Ai/Base/Actions/AbOrderAction.h b/src/Ai/Base/Actions/AbOrderAction.h
+new file mode 100644
+index 00000000..336839d7
+--- /dev/null
++++ b/src/Ai/Base/Actions/AbOrderAction.h
+@@ -0,0 +1,29 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ABORDERACTION_H
++#define PLAYERBOTS_ABORDERACTION_H
++
++#include "Action.h"
++
++class PlayerbotAI;
++
++// Arathi Basin order from the raid: "ab <t1..t8|all> <stables|blacksmith|farm|lumber|mine|free>" (Portuguese node
++// names too). t<N> is raid subgroup N. The ordered bots keep that node as their objective until told "free".
++class AbOrderAction : public Action
++{
++public:
++    AbOrderAction(PlayerbotAI* botAI) : Action(botAI, "ab") {}
++
++    bool Execute(Event event) override;
++
++    // Node index (BG_AB_NODE_*) for a spoken/typed name, -1 for "free", -2 if unknown
++    static int ParseNode(std::string const& word);
++    // Raid subgroup (0..7) for "t<N>"/"g<N>", -1 for everyone, -2 if unknown
++    static int ParseTarget(std::string const& word);
++};
++
++#endif
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index d8310f1e..48c68aec 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -2314,6 +2314,20 @@ bool BGTactics::selectObjective(bool reset)
+ 
+             BgObjective = nullptr;
+ 
++            // --- PRIORITY 0: the raid leader's order for this bot ("ab t2 farm") overrides everything below
++            uint32 const order = context->GetValue<uint32>("ab order")->Get();
++            if (order && (order >> 3) == bg->GetInstanceID())
++            {
++                if (GameObject* go = bg->GetBGObject(((order & 7) - 1) * BG_AB_OBJECTS_PER_NODE))
++                {
++                    float rx, ry, rz;
++                    bot->GetRandomPoint(go->GetPosition(), frand(5.0f, 15.0f), rx, ry, rz);
++                    pos.Set(rx, ry, rz, go->GetMapId());
++                    posMap["bg objective"] = pos;
++                    return true;
++                }
++            }
++
+             // --- PRIORITY 1: Nearby enemy (rare aggressive impulse)
+             if (urand(0, 99) < 5)
+             {
+diff --git a/src/Ai/Base/ChatActionContext.h b/src/Ai/Base/ChatActionContext.h
+index 207532e9..1a88c3c8 100644
+--- a/src/Ai/Base/ChatActionContext.h
++++ b/src/Ai/Base/ChatActionContext.h
+@@ -57,6 +57,7 @@
+ #include "ReviveFromCorpseAction.h"
+ #include "RewardAction.h"
+ #include "RtiAction.h"
++#include "AbOrderAction.h"
+ #include "RtscAction.h"
+ #include "SaveManaAction.h"
+ #include "SellAction.h"
+@@ -167,6 +168,7 @@ public:
+         creators["invite"] = &ChatActionContext::invite;
+         creators["spell"] = &ChatActionContext::spell;
+         creators["rti"] = &ChatActionContext::rti;
++        creators["ab"] = &ChatActionContext::ab_order;
+         creators["spirit healer"] = &ChatActionContext::spirit_healer;
+         creators["position"] = &ChatActionContext::position;
+         creators["tell target"] = &ChatActionContext::tell_target;
+@@ -240,6 +242,7 @@ private:
+     static Action* position(PlayerbotAI* botAI) { return new PositionAction(botAI); }
+     static Action* spirit_healer(PlayerbotAI* botAI) { return new SpiritHealerAction(botAI); }
+     static Action* rti(PlayerbotAI* botAI) { return new RtiAction(botAI); }
++    static Action* ab_order(PlayerbotAI* botAI) { return new AbOrderAction(botAI); }
+     static Action* invite(PlayerbotAI* botAI) { return new InviteToGroupAction(botAI); }
+     static Action* lfg(PlayerbotAI* botAI) { return new LfgAction(botAI); }
+     static Action* spell(PlayerbotAI* botAI) { return new TellSpellAction(botAI); }
+diff --git a/src/Ai/Base/ChatTriggerContext.h b/src/Ai/Base/ChatTriggerContext.h
+index 6c5bb6d3..46c2ddf5 100644
+--- a/src/Ai/Base/ChatTriggerContext.h
++++ b/src/Ai/Base/ChatTriggerContext.h
+@@ -98,6 +98,7 @@ public:
+         creators["lfg"] = &ChatTriggerContext::lfg;
+         creators["spell"] = &ChatTriggerContext::spell;
+         creators["rti"] = &ChatTriggerContext::rti;
++        creators["ab"] = &ChatTriggerContext::ab_order;
+         creators["revive"] = &ChatTriggerContext::revive;
+         creators["runaway"] = &ChatTriggerContext::runaway;
+         creators["warning"] = &ChatTriggerContext::warning;
+@@ -195,6 +196,7 @@ private:
+     static Trigger* warning(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "warning"); }
+     static Trigger* revive(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "revive"); }
+     static Trigger* rti(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "rti"); }
++    static Trigger* ab_order(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ab"); }
+     static Trigger* invite(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "invite"); }
+     static Trigger* lfg(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "lfg"); }
+     static Trigger* cast(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "cast"); }
+diff --git a/src/Ai/Base/Strategy/ChatCommandHandlerStrategy.cpp b/src/Ai/Base/Strategy/ChatCommandHandlerStrategy.cpp
+index 85bab7ef..76a66fef 100644
+--- a/src/Ai/Base/Strategy/ChatCommandHandlerStrategy.cpp
++++ b/src/Ai/Base/Strategy/ChatCommandHandlerStrategy.cpp
+@@ -134,6 +134,7 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : Pas
+     supported.push_back("lfg");
+     supported.push_back("spell");
+     supported.push_back("rti");
++    supported.push_back("ab");
+     supported.push_back("position");
+     supported.push_back("summon");
+     supported.push_back("who");
+diff --git a/src/Ai/Base/Value/PvpValues.h b/src/Ai/Base/Value/PvpValues.h
+index 4354b9d0..ab7eb2da 100644
+--- a/src/Ai/Base/Value/PvpValues.h
++++ b/src/Ai/Base/Value/PvpValues.h
+@@ -32,6 +32,13 @@ public:
+     BgRoleValue(PlayerbotAI* botAI) : ManualSetValue<uint32>(botAI, 0, "bg role") {}
+ };
+ 
++// Arathi Basin order from the raid ("ab t2 farm"): (instance id << 3) | (node + 1), 0 = none
++class AbOrderValue : public ManualSetValue<uint32>
++{
++public:
++    AbOrderValue(PlayerbotAI* botAI) : ManualSetValue<uint32>(botAI, 0, "ab order") {}
++};
++
+ class BgMastersValue : public SingleCalculatedValue<std::vector<CreatureData const*>>, public Qualified
+ {
+ public:
+diff --git a/src/Ai/Base/ValueContext.h b/src/Ai/Base/ValueContext.h
+index 527622a3..6c05f13d 100644
+--- a/src/Ai/Base/ValueContext.h
++++ b/src/Ai/Base/ValueContext.h
+@@ -258,6 +258,7 @@ public:
+         creators["rpg bg type"] = &ValueContext::rpg_bg_type;
+         creators["arena type"] = &ValueContext::arena_type;
+         creators["bg role"] = &ValueContext::bg_role;
++        creators["ab order"] = &ValueContext::ab_order;
+         creators["bg master"] = &ValueContext::bg_master;
+         creators["enemy flag carrier"] = &ValueContext::enemy_fc;
+         creators["team flag carrier"] = &ValueContext::team_fc;
+@@ -506,6 +507,7 @@ private:
+ 
+     static UntypedValue* bg_master(PlayerbotAI* botAI) { return new BgMasterValue(botAI); }
+     static UntypedValue* bg_role(PlayerbotAI* botAI) { return new BgRoleValue(botAI); }
++    static UntypedValue* ab_order(PlayerbotAI* botAI) { return new AbOrderValue(botAI); }
+     static UntypedValue* arena_type(PlayerbotAI* botAI) { return new ArenaTypeValue(botAI); }
+     static UntypedValue* bg_type(PlayerbotAI* botAI) { return new BgTypeValue(botAI); }
+     static UntypedValue* rpg_bg_type(PlayerbotAI* botAI) { return new RpgBgTypeValue(botAI); }
+diff --git a/src/Script/PlayerbotCommandScript.cpp b/src/Script/PlayerbotCommandScript.cpp
+index 3c37f292..9a3251ec 100644
+--- a/src/Script/PlayerbotCommandScript.cpp
++++ b/src/Script/PlayerbotCommandScript.cpp
+@@ -6,9 +6,13 @@
+ 
+ #include "BattleGroundTactics.h"
+ #include "Chat.h"
++#include "Group.h"
++#include "GroupReference.h"
+ #include "GuildTaskMgr.h"
++#include "ObjectAccessor.h"
+ #include "PerfMonitor.h"
+ #include "PlayerbotMgr.h"
++#include "Playerbots.h"
+ #include "RandomPlayerbotMgr.h"
+ #include "ScriptMgr.h"
+ 
+@@ -37,6 +41,7 @@ public:
+             {"gtask", HandleGuildTaskCommand, SEC_GAMEMASTER, Console::Yes},
+             {"pmon", HandlePerfMonCommand, SEC_GAMEMASTER, Console::Yes},
+             {"rndbot", HandleRandomPlayerbotCommand, SEC_GAMEMASTER, Console::Yes},
++            {"raid", HandleRaidCommand, SEC_GAMEMASTER, Console::Yes},
+             {"debug", playerbotsDebugCommandTable},
+             {"account", playerbotsAccountCommandTable},
+         };
+@@ -58,6 +63,38 @@ public:
+         return RandomPlayerbotMgr::HandlePlayerbotConsoleCommand(handler, args);
+     }
+ 
++    // ".playerbots raid <player> <text>": say <text> in <player>'s raid chat on their behalf, so the bots take it as
++    // that player's command (used by the voice bridge, which has no game client of its own)
++    static bool HandleRaidCommand(ChatHandler* handler, char const* args)
++    {
++        std::string const line = args ? args : "";
++        size_t const space = line.find(' ');
++        Player* player = space == std::string::npos ? nullptr : ObjectAccessor::FindPlayerByName(line.substr(0, space));
++        Group* group = player ? player->GetGroup() : nullptr;
++        if (!group)
++        {
++            handler->PSendSysMessage("usage: .playerbots raid <online player in a group> <text>");
++            return false;
++        }
++
++        std::string const text = line.substr(space + 1);
++        WorldPacket data;
++        ChatHandler::BuildChatPacket(data, group->isRaidGroup() ? CHAT_MSG_RAID : CHAT_MSG_PARTY, LANG_UNIVERSAL,
++                                     player, nullptr, text);
++        group->BroadcastPacket(&data, false);
++
++        uint32 bots = 0;
++        for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++            if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(ref->GetSource()))
++            {
++                botAI->HandleCommand(CHAT_MSG_RAID, text, player);
++                ++bots;
++            }
++
++        handler->PSendSysMessage("raid: '{}' sent to {} bots", text, bots);
++        return true;
++    }
++
+     static bool HandleGuildTaskCommand(ChatHandler* handler, char const* args)
+     {
+         return GuildTaskMgr::HandleConsoleCommand(handler, args);
+-- 
+2.55.0
+

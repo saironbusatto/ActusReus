@@ -78,10 +78,20 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--src", action="append", default=[],
+                        help="Original:nome1,nome2 (repetível); substitui as duplas fixas")
     args = parser.parse_args()
+    if args.src:
+        SOURCES.clear()
+        for spec in args.src:
+            orig, names = spec.split(":")
+            SOURCES[int(sql(f"SELECT guid FROM acore_characters.characters WHERE name='{orig}'")[0][0])] = (
+                orig, names.split(","))
 
     taken = {r[0] for r in sql("SELECT name FROM acore_characters.characters")}
-    plan = [(src, names[i]) for i in range(10) for src, (_, names) in SOURCES.items() if names[i] not in taken]
+    width = max(len(names) for _, names in SOURCES.values())
+    plan = [(src, names[i]) for i in range(width) for src, (_, names) in SOURCES.items()
+            if i < len(names) and names[i] not in taken]
     bad = [n for _, n in plan if not valid(n)]
     if bad:
         print("nomes inválidos:", bad)
@@ -106,8 +116,12 @@ def main() -> int:
             if args.dry_run:
                 continue
             out = wsconsole.run([f".character erase {vname}", f".pdump copy {SOURCES[src][0]} {account} {name}"])
-            time.sleep(1)
-            got = snapshot(name)
+            got = None
+            for _ in range(10):  # a cópia pode levar alguns segundos para aparecer no banco
+                time.sleep(1)
+                got = snapshot(name)
+                if got:
+                    break
             # Warlock: o número do pet pode colidir com um pet recém-invocado; a tentativa consome o número,
             # então repetir só a cópia (o slot já está livre) resolve.
             for _ in range(3):

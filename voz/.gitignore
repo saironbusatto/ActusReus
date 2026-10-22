@@ -1,0 +1,5 @@
+.venv/
+modelos/
+testes/
+voz.log
+__pycache__/

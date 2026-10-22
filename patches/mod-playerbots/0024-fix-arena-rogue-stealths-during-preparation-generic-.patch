@@ -1,7 +1,7 @@
 From c2c5c65db44f736d99bb09dedbdc6d942adec3f9 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 20:33:49 -0300
-Subject: [PATCH 24/25] fix: arena rogue stealths during preparation (generic
+Subject: [PATCH 24/31] fix: arena rogue stealths during preparation (generic
  stealth waits for a visible target); Ambush in Shadow Dance only from behind
 
 ---

@@ -1,0 +1,300 @@
+From 79f8d05c961c55f74cb0d1c9453617b4e494fea4 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 21:17:49 -0300
+Subject: [PATCH 27/31] feat: arena kit coverage - rogue Vanish escape (unlocks
+ Preparation), druid Lifebloom on partner, Faerie Fire on enemy rogue, Night
+ Elf Shadowmeld vs Fear/Cyclone casts
+
+---
+ src/Ai/Class/Druid/Action/DruidActions.h      | 30 +++++++++++
+ src/Ai/Class/Druid/DruidAiObjectContext.cpp   | 12 +++++
+ src/Ai/Class/Druid/DruidTriggers.cpp          | 54 +++++++++++++++++++
+ src/Ai/Class/Druid/DruidTriggers.h            | 21 ++++++++
+ .../Druid/Strategy/ArenaDruidStrategy.cpp     | 13 +++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp   |  2 +
+ src/Ai/Class/Rogue/RogueTriggers.cpp          |  6 +++
+ src/Ai/Class/Rogue/RogueTriggers.h            |  8 +++
+ .../Rogue/Strategy/ArenaRogueStrategy.cpp     |  1 +
+ 9 files changed, 147 insertions(+)
+
+diff --git a/src/Ai/Class/Druid/Action/DruidActions.h b/src/Ai/Class/Druid/Action/DruidActions.h
+index 1205b4ce..37dfd452 100644
+--- a/src/Ai/Class/Druid/Action/DruidActions.h
++++ b/src/Ai/Class/Druid/Action/DruidActions.h
+@@ -476,4 +476,34 @@ public:
+     EclipseLunarProcTimeValue(PlayerbotAI* botAI) : ManualSetValue<time_t>(botAI, 0) {}
+ };
+ 
++class CastLifebloomOnPartnerAction : public CastSpellAction
++{
++public:
++    CastLifebloomOnPartnerAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "lifebloom") {}
++    Unit* GetTarget() override { return ai::arena::FindPartner(botAI); }
++};
++
++class CastFaerieFireOnEnemyRogueAction : public CastSpellAction
++{
++public:
++    CastFaerieFireOnEnemyRogueAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "faerie fire") {}
++    Unit* GetTarget() override
++    {
++        for (ObjectGuid const guid : AI_VALUE(GuidVector, "possible targets"))
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u->IsAlive() && u->IsPlayer() && u->ToPlayer()->getClass() == CLASS_ROGUE)
++                return u;
++        }
++        return nullptr;
++    }
++};
++
++class CastShadowmeldAction : public Action
++{
++public:
++    CastShadowmeldAction(PlayerbotAI* botAI) : Action(botAI, "shadowmeld") {}
++    bool Execute(Event /*event*/) override { return botAI->CastSpell(58984, bot); }
++};
++
+ #endif
+diff --git a/src/Ai/Class/Druid/DruidAiObjectContext.cpp b/src/Ai/Class/Druid/DruidAiObjectContext.cpp
+index 1001a584..6438c3a7 100644
+--- a/src/Ai/Class/Druid/DruidAiObjectContext.cpp
++++ b/src/Ai/Class/Druid/DruidAiObjectContext.cpp
+@@ -138,6 +138,9 @@ public:
+             &DruidTriggerFactoryInternal::healer_should_attack_and_not_blanketing;
+         creators["aquatic form"] = &DruidTriggerFactoryInternal::aquatic_form;
+         creators["cyclone on enemy dps"] = &DruidTriggerFactoryInternal::cyclone_on_enemy_dps;
++        creators["lifebloom on partner"] = &DruidTriggerFactoryInternal::lifebloom_on_partner;
++        creators["faerie fire on enemy rogue"] = &DruidTriggerFactoryInternal::faerie_fire_on_enemy_rogue;
++        creators["shadowmeld vs cast"] = &DruidTriggerFactoryInternal::shadowmeld_vs_cast;
+         creators["roots on melee"] = &DruidTriggerFactoryInternal::roots_on_melee;
+     }
+ 
+@@ -206,6 +209,9 @@ private:
+     }
+     static Trigger* aquatic_form(PlayerbotAI* botAI) { return new AquaticFormTrigger(botAI); }
+     static Trigger* cyclone_on_enemy_dps(PlayerbotAI* botAI) { return new CycloneEnemyDpsTrigger(botAI); }
++    static Trigger* lifebloom_on_partner(PlayerbotAI* botAI) { return new LifebloomOnPartnerTrigger(botAI); }
++    static Trigger* faerie_fire_on_enemy_rogue(PlayerbotAI* botAI) { return new FaerieFireOnEnemyRogueTrigger(botAI); }
++    static Trigger* shadowmeld_vs_cast(PlayerbotAI* botAI) { return new ShadowmeldVsCastTrigger(botAI); }
+     static Trigger* roots_on_melee(PlayerbotAI* botAI) { return new RootsOnMeleeTrigger(botAI); }
+ };
+ 
+@@ -308,6 +314,9 @@ public:
+         creators["rejuvenation blanket"] = &DruidAiObjectContextInternal::rejuvenation_blanket;
+         creators["wild growth blanket"] = &DruidAiObjectContextInternal::wild_growth_blanket;
+         creators["cyclone on enemy dps"] = &DruidAiObjectContextInternal::cyclone_on_enemy_dps;
++        creators["lifebloom on partner"] = &DruidAiObjectContextInternal::lifebloom_on_partner;
++        creators["faerie fire on enemy rogue"] = &DruidAiObjectContextInternal::faerie_fire_on_enemy_rogue;
++        creators["shadowmeld"] = &DruidAiObjectContextInternal::shadowmeld;
+         creators["entangling roots on melee"] = &DruidAiObjectContextInternal::entangling_roots_on_melee;
+     }
+ 
+@@ -406,6 +415,9 @@ private:
+     static Action* rejuvenation_blanket(PlayerbotAI* botAI) { return new CastRejuvenationBlanketAction(botAI); }
+     static Action* wild_growth_blanket(PlayerbotAI* botAI) { return new CastWildGrowthBlanketAction(botAI); }
+     static Action* cyclone_on_enemy_dps(PlayerbotAI* botAI) { return new CastCycloneOnEnemyDpsAction(botAI); }
++    static Action* lifebloom_on_partner(PlayerbotAI* botAI) { return new CastLifebloomOnPartnerAction(botAI); }
++    static Action* faerie_fire_on_enemy_rogue(PlayerbotAI* botAI) { return new CastFaerieFireOnEnemyRogueAction(botAI); }
++    static Action* shadowmeld(PlayerbotAI* botAI) { return new CastShadowmeldAction(botAI); }
+     static Action* entangling_roots_on_melee(PlayerbotAI* botAI) { return new CastEntanglingRootsOnMeleeAction(botAI); }
+ };
+ 
+diff --git a/src/Ai/Class/Druid/DruidTriggers.cpp b/src/Ai/Class/Druid/DruidTriggers.cpp
+index cacf3359..7cf2c877 100644
+--- a/src/Ai/Class/Druid/DruidTriggers.cpp
++++ b/src/Ai/Class/Druid/DruidTriggers.cpp
+@@ -177,3 +177,57 @@ bool RootsOnMeleeTrigger::IsActive()
+ 
+     return botAI->CanCastSpell("entangling roots", dps);
+ }
++
++// Arena: keep a Lifebloom rolling on the partner (the generic one only targets a dungeon main tank)
++bool LifebloomOnPartnerTrigger::IsActive()
++{
++    if (!bot->InArena())
++        return false;
++
++    Unit* partner = ai::arena::FindPartner(botAI);
++    return partner && partner->IsInCombat() && bot->IsWithinDistInMap(partner, 40.0f) &&
++           !botAI->HasAura("lifebloom", partner, false, true) && botAI->CanCastSpell("lifebloom", partner);
++}
++
++namespace
++{
++    Unit* VisibleEnemyRogue(PlayerbotAI* botAI)
++    {
++        for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("possible targets")->Get())
++        {
++            Unit* u = botAI->GetUnit(guid);
++            if (u && u->IsAlive() && u->IsPlayer() && u->ToPlayer()->getClass() == CLASS_ROGUE)
++                return u;
++        }
++        return nullptr;
++    }
++}
++
++// Arena: Faerie Fire on the enemy rogue so it cannot restealth or Vanish back into an opener
++bool FaerieFireOnEnemyRogueTrigger::IsActive()
++{
++    if (!bot->InArena())
++        return false;
++
++    Unit* rogue = VisibleEnemyRogue(botAI);
++    return rogue && bot->IsWithinDistInMap(rogue, 30.0f) && bot->IsWithinLOSInMap(rogue) &&
++           !botAI->HasAura("faerie fire", rogue);
++}
++
++// Night Elf: Shadowmeld drops the bot as a target and cancels the Fear/Cyclone/Polymorph being cast at it
++bool ShadowmeldVsCastTrigger::IsActive()
++{
++    if (!bot->InArena() || bot->HasSpellCooldown(58984) || bot->isMoving())
++        return false;
++
++    for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get())
++    {
++        Unit* u = botAI->GetUnit(guid);
++        Spell* spell = u ? u->GetCurrentSpell(CURRENT_GENERIC_SPELL) : nullptr;
++        if (spell && spell->m_targets.GetUnitTarget() == bot && spell->GetSpellInfo()->HasAura(SPELL_AURA_MOD_FEAR))
++            return botAI->CanCastSpell(58984, bot);
++        if (spell && spell->m_targets.GetUnitTarget() == bot && spell->GetSpellInfo()->Id == 33786)  // Cyclone
++            return botAI->CanCastSpell(58984, bot);
++    }
++    return false;
++}
+diff --git a/src/Ai/Class/Druid/DruidTriggers.h b/src/Ai/Class/Druid/DruidTriggers.h
+index 51ffdd0a..fabca53e 100644
+--- a/src/Ai/Class/Druid/DruidTriggers.h
++++ b/src/Ai/Class/Druid/DruidTriggers.h
+@@ -493,4 +493,25 @@ public:
+     bool IsActive() override;
+ };
+ 
++class LifebloomOnPartnerTrigger : public Trigger
++{
++public:
++    LifebloomOnPartnerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "lifebloom on partner") {}
++    bool IsActive() override;
++};
++
++class FaerieFireOnEnemyRogueTrigger : public Trigger
++{
++public:
++    FaerieFireOnEnemyRogueTrigger(PlayerbotAI* botAI) : Trigger(botAI, "faerie fire on enemy rogue") {}
++    bool IsActive() override;
++};
++
++class ShadowmeldVsCastTrigger : public Trigger
++{
++public:
++    ShadowmeldVsCastTrigger(PlayerbotAI* botAI) : Trigger(botAI, "shadowmeld vs cast") {}
++    bool IsActive() override;
++};
++
+ #endif
+diff --git a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+index 632f571d..15c2e881 100644
+--- a/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
++++ b/src/Ai/Class/Druid/Strategy/ArenaDruidStrategy.cpp
+@@ -15,6 +15,7 @@ public:
+     {
+         creators["cyclone on enemy dps"] = &cyclone_on_enemy_dps;
+         creators["entangling roots on melee"] = &entangling_roots_on_melee;
++        creators["faerie fire on enemy rogue"] = &faerie_fire_on_enemy_rogue;
+     }
+ 
+ private:
+@@ -26,6 +27,14 @@ private:
+                               /*C*/ {});
+     }
+ 
++    static ActionNode* faerie_fire_on_enemy_rogue([[maybe_unused]] PlayerbotAI* botAI)
++    {
++        return new ActionNode("faerie fire on enemy rogue",
++                              /*P*/ { NextAction("caster form") },
++                              /*A*/ {},
++                              /*C*/ {});
++    }
++
+     static ActionNode* entangling_roots_on_melee([[maybe_unused]] PlayerbotAI* botAI)
+     {
+         return new ActionNode("entangling roots on melee",
+@@ -63,6 +72,10 @@ float ArenaDruidMultiplier::GetValue(Action* action)
+ 
+ void ArenaDruidStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
++    triggers.push_back(new TriggerNode("shadowmeld vs cast", { NextAction("shadowmeld", 65.0f) }));
++    triggers.push_back(new TriggerNode("faerie fire on enemy rogue", { NextAction("faerie fire on enemy rogue", 26.0f) }));
++    triggers.push_back(new TriggerNode("lifebloom on partner", { NextAction("lifebloom on partner", 20.0f) }));
++
+     GenericDruidStrategy::InitTriggers(triggers);
+ 
+     // Defensive: Barkskin below ~50% health
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index 7364cb42..067b40e9 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -98,6 +98,7 @@ public:
+         creators["sap target far"] = &RogueTriggerFactoryInternal::sap_target_far;
+         creators["arena prep stealth"] = &RogueTriggerFactoryInternal::arena_prep_stealth;
+         creators["tricks on partner"] = &RogueTriggerFactoryInternal::tricks_on_partner;
++        creators["vanish escape"] = &RogueTriggerFactoryInternal::vanish_escape;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -120,6 +121,7 @@ private:
+     static Trigger* sap_target_far(PlayerbotAI* botAI) { return new SapTargetFarTrigger(botAI); }
+     static Trigger* arena_prep_stealth(PlayerbotAI* botAI) { return new ArenaPrepStealthTrigger(botAI); }
+     static Trigger* tricks_on_partner(PlayerbotAI* botAI) { return new TricksOnPartnerTrigger(botAI); }
++    static Trigger* vanish_escape(PlayerbotAI* botAI) { return new VanishEscapeTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 9a66f14c..152ae594 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -287,3 +287,9 @@ bool TricksOnPartnerTrigger::IsActive()
+     return partner && bot->IsWithinDistInMap(partner, 20.0f) && bot->IsWithinLOSInMap(partner) &&
+            botAI->CanCastSpell("tricks of the trade", partner);
+ }
++
++// Arena: Vanish out of a losing trade (low health) to reset with a stealth opener
++bool VanishEscapeTrigger::IsActive()
++{
++    return bot->InArena() && bot->IsInCombat() && bot->GetHealthPct() < 30.0f && botAI->CanCastSpell("vanish", bot);
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index a57506ae..4ad65bd7 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -208,6 +208,14 @@ public:
+     bool IsActive() override;
+ };
+ 
++class VanishEscapeTrigger : public Trigger
++{
++public:
++    VanishEscapeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "vanish escape") {}
++
++    bool IsActive() override;
++};
++
+ class PremeditationTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index 2eb34963..07bd1639 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -82,6 +82,7 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("dance ambush", { NextAction("ambush", ACTION_HIGH + 7) }));
+     triggers.push_back(new TriggerNode("shadow dance opener", { NextAction("shadow dance", ACTION_HIGH + 6) }));
+     triggers.push_back(new TriggerNode("tricks on partner", { NextAction("tricks on partner", ACTION_HIGH + 6) }));
++    triggers.push_back(new TriggerNode("vanish escape", { NextAction("vanish", ACTION_EMERGENCY + 2) }));
+ 
+     // Manual §2: Cheap Shot -> Kidney Shot combo
+     triggers.push_back(
+-- 
+2.55.0
+

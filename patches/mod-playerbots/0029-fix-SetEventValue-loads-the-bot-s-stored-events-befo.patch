@@ -1,0 +1,35 @@
+From a2066b588f3b6fdf4b60659ee4de02dbc84d1f5f Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 01:08:20 -0300
+Subject: [PATCH 29/31] fix: SetEventValue loads the bot's stored events before
+ caching
+
+Marking the cache loaded from SetEventValue hid every other event in the DB:
+the startup "add" write made GetEventValue("fixedgear") return 0, so fixed
+bots with a spec were re-geared on every server start.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Bot/RandomPlayerbotMgr.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index ceb034ca..4c239327 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -2553,9 +2553,10 @@ uint32 RandomPlayerbotMgr::SetEventValue(uint32 bot, std::string const& event, u
+ 
+     PlayerbotsDatabase.CommitTransaction(trans);
+ 
+-    // Update in-memory cache
++    // Update in-memory cache. Load the bot's stored events first: marking the cache loaded from here would hide
++    // every other event in the DB (e.g. "fixedgear" read right after the startup "add" write)
++    FindEvent(bot, event);
+     BotEventCache& cache = eventCache[bot];
+-    cache.loaded = true;
+ 
+     if (!value)
+     {
+-- 
+2.55.0
+

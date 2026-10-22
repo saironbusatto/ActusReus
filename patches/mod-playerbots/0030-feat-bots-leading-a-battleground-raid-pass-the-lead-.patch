@@ -1,0 +1,173 @@
+From 1b9fb17eb351a2f21317cb199db472ad0d5ef608 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 01:08:20 -0300
+Subject: [PATCH 30/31] feat: bots leading a battleground raid pass the lead to
+ a GM or guildmate
+
+Opt-in via Playerbots.BgGiveLeaderToPlayer (default 0), so a real player can
+set raid groups and give orders.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ conf/playerbots.conf.dist                     | 10 +++++++
+ src/Ai/Base/ActionContext.h                   |  3 ++
+ .../Actions/PassLeadershipToMasterAction.cpp  | 28 +++++++++++++++++++
+ .../Actions/PassLeadershipToMasterAction.h    | 10 +++++++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  1 +
+ src/PlayerbotAIConfig.cpp                     |  1 +
+ src/PlayerbotAIConfig.h                       |  1 +
+ 7 files changed, 54 insertions(+)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 9a286717..38a877f9 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -496,6 +496,16 @@ Playerbots.AutoSaveMana = 1
+ 
+ Playerbots.ArenaPvpStrategies = 0
+ 
++#
++#    Playerbots.BgGiveLeaderToPlayer
++#        In a battleground, a bot that leads the raid passes the lead to a real player in it who is a GM
++#        or in the bot's guild, so that player can set raid groups and marks.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.BgGiveLeaderToPlayer = 0
++
+ #
+ #    Playerbots.ArenaMlLog
+ #        Write one CSV line per executed arena action (state seen + action chosen) to the
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index 76339efa..e06aca12 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -13,6 +13,7 @@
+ #include "AutoMaintenanceOnLevelupAction.h"
+ #include "BattleGroundJoinAction.h"
+ #include "BattleGroundTactics.h"
++#include "PassLeadershipToMasterAction.h"
+ #include "BotStateActions.h"
+ #include "BuyAction.h"
+ #include "CancelChannelAction.h"
+@@ -225,6 +226,7 @@ public:
+         creators["bg move to objective"] = &ActionContext::bg_move_to_objective;
+         creators["bg select objective"] = &ActionContext::bg_select_objective;
+         creators["bg check objective"] = &ActionContext::bg_check_objective;
++        creators["bg give leader"] = &ActionContext::bg_give_leader;
+         creators["bg attack fc"] = &ActionContext::bg_attack_fc;
+         creators["bg protect fc"] = &ActionContext::bg_protect_fc;
+         creators["bg use buff"] = &ActionContext::bg_use_buff;
+@@ -433,6 +435,7 @@ private:
+     static Action* bg_move_to_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "move to objective"); }
+     static Action* bg_select_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "select objective"); }
+     static Action* bg_check_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "check objective"); }
++    static Action* bg_give_leader(PlayerbotAI* botAI) { return new BgGiveLeaderAction(botAI); }
+     static Action* bg_attack_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "attack fc"); }
+     static Action* bg_protect_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "protect fc"); }
+     static Action* attack_enemy_fc(PlayerbotAI* botAI) { return new AttackEnemyFlagCarrierAction(botAI); }
+diff --git a/src/Ai/Base/Actions/PassLeadershipToMasterAction.cpp b/src/Ai/Base/Actions/PassLeadershipToMasterAction.cpp
+index 9f6d7586..d5031930 100644
+--- a/src/Ai/Base/Actions/PassLeadershipToMasterAction.cpp
++++ b/src/Ai/Base/Actions/PassLeadershipToMasterAction.cpp
+@@ -6,6 +6,8 @@
+ 
+ #include "PassLeadershipToMasterAction.h"
+ #include "Event.h"
++#include "GroupReference.h"
++#include "PlayerbotAIConfig.h"
+ #include "PlayerbotOperations.h"
+ #include "PlayerbotWorldThreadProcessor.h"
+ 
+@@ -37,6 +39,32 @@ bool PassLeadershipToMasterAction::isUseful()
+     return botAI->IsAltBot() && bot->GetGroup() && bot->GetGroup()->IsLeader(bot->GetGUID());
+ }
+ 
++bool BgGiveLeaderAction::isUseful()
++{
++    return sPlayerbotAIConfig.BgGiveLeaderToPlayer && bot->InBattleground() && bot->GetGroup() &&
++           bot->GetGroup()->IsLeader(bot->GetGUID());
++}
++
++bool BgGiveLeaderAction::Execute(Event /*event*/)
++{
++    // Only the leading bot gets here, so this walk over at most 40 members runs for one bot per raid
++    for (GroupReference* ref = bot->GetGroup()->GetFirstMember(); ref; ref = ref->next())
++    {
++        Player* member = ref->GetSource();
++        if (!member || member == bot || !IsRealPlayer(member))
++            continue;
++
++        if (member->GetSession()->GetSecurity() < SEC_GAMEMASTER &&
++            (!bot->GetGuildId() || bot->GetGuildId() != member->GetGuildId()))
++            continue;
++
++        PlayerbotWorldThreadProcessor::instance().QueueOperation(
++            std::make_unique<GroupSetLeaderOperation>(bot->GetGUID(), member->GetGUID()));
++        return true;
++    }
++    return false;
++}
++
+ bool GiveLeaderAction::isUseful()
+ {
+     return (IsRealPlayer(botAI->GetMaster()) || IsSelfBot(botAI->GetMaster())) && bot->GetGroup() &&
+diff --git a/src/Ai/Base/Actions/PassLeadershipToMasterAction.h b/src/Ai/Base/Actions/PassLeadershipToMasterAction.h
+index 04372a8e..fecd012a 100644
+--- a/src/Ai/Base/Actions/PassLeadershipToMasterAction.h
++++ b/src/Ai/Base/Actions/PassLeadershipToMasterAction.h
+@@ -38,4 +38,14 @@ public:
+     bool isUseful() override;
+ };
+ 
++// Battleground raid led by a bot: hand the lead to a real player (GM or guildmate) so they can organize the raid
++class BgGiveLeaderAction : public Action
++{
++public:
++    BgGiveLeaderAction(PlayerbotAI* botAI) : Action(botAI, "bg give leader") {}
++
++    bool Execute(Event event) override;
++    bool isUseful() override;
++};
++
+ #endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 894cb521..22f23da9 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -22,6 +22,7 @@ void BattlegroundStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("bg waiting", { NextAction("bg move to start", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("bg active", { NextAction("bg move to objective", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("often", { NextAction("bg check objective", ACTION_BG + 1)}));
++    triggers.push_back(new TriggerNode("often", { NextAction("bg give leader", ACTION_BG + 2)}));
+     triggers.push_back(new TriggerNode("dead", { NextAction("bg reset objective force", ACTION_EMERGENCY)}));
+ }
+ 
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index c7ef4fa3..5f6a9ce7 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -133,6 +133,7 @@ bool PlayerbotAIConfig::Initialize()
+     HighMana = sConfigMgr->GetOption<int32>("Playerbots.HighMana", 65);
+     AutoSaveMana = sConfigMgr->GetOption<bool>("Playerbots.AutoSaveMana", true);
+     ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
++    BgGiveLeaderToPlayer = sConfigMgr->GetOption<bool>("Playerbots.BgGiveLeaderToPlayer", false);
+     ArenaMlLog = sConfigMgr->GetOption<bool>("Playerbots.ArenaMlLog", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+     switch (sConfigMgr->GetOption<uint32>("Playerbots.AutoGreaterBlessings", 1))
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index 3b6b5421..f4324909 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -118,6 +118,7 @@ public:
+     bool AutoSaveMana;
+     bool ArenaPvpStrategies;
+     bool ArenaMlLog;
++    bool BgGiveLeaderToPlayer;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+     AutoPartyBuffMode AutoPartyBuffs;
+-- 
+2.55.0
+

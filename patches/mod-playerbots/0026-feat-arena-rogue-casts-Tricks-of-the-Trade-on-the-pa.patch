@@ -1,0 +1,125 @@
+From 9529ab54902066b91ab0ed728694cd07d42ef7ff Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Wed, 21 Oct 2026 21:07:59 -0300
+Subject: [PATCH 26/31] feat: arena rogue casts Tricks of the Trade on the
+ partner with the burst
+
+---
+ src/Ai/Class/Rogue/Action/RogueActions.h           |  8 ++++++++
+ src/Ai/Class/Rogue/RogueAiObjectContext.cpp        |  4 ++++
+ src/Ai/Class/Rogue/RogueTriggers.cpp               | 14 ++++++++++++++
+ src/Ai/Class/Rogue/RogueTriggers.h                 |  8 ++++++++
+ src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp |  1 +
+ 5 files changed, 35 insertions(+)
+
+diff --git a/src/Ai/Class/Rogue/Action/RogueActions.h b/src/Ai/Class/Rogue/Action/RogueActions.h
+index e8a442ed..3a39ecde 100644
+--- a/src/Ai/Class/Rogue/Action/RogueActions.h
++++ b/src/Ai/Class/Rogue/Action/RogueActions.h
+@@ -171,6 +171,14 @@ public:
+     }
+ };
+ 
++class CastTricksOnPartnerAction : public CastSpellAction
++{
++public:
++    CastTricksOnPartnerAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "tricks of the trade") {}
++
++    Unit* GetTarget() override { return ai::arena::FindPartner(botAI); }
++};
++
+ class CastPremeditationAction : public CastSpellAction
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+index b447fb4d..7364cb42 100644
+--- a/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
++++ b/src/Ai/Class/Rogue/RogueAiObjectContext.cpp
+@@ -97,6 +97,7 @@ public:
+         creators["dance ambush"] = &RogueTriggerFactoryInternal::dance_ambush;
+         creators["sap target far"] = &RogueTriggerFactoryInternal::sap_target_far;
+         creators["arena prep stealth"] = &RogueTriggerFactoryInternal::arena_prep_stealth;
++        creators["tricks on partner"] = &RogueTriggerFactoryInternal::tricks_on_partner;
+         creators["kidney shot"] = &RogueTriggerFactoryInternal::kidney_shot;
+     }
+ 
+@@ -118,6 +119,7 @@ private:
+     static Trigger* dance_ambush(PlayerbotAI* botAI) { return new DanceAmbushTrigger(botAI); }
+     static Trigger* sap_target_far(PlayerbotAI* botAI) { return new SapTargetFarTrigger(botAI); }
+     static Trigger* arena_prep_stealth(PlayerbotAI* botAI) { return new ArenaPrepStealthTrigger(botAI); }
++    static Trigger* tricks_on_partner(PlayerbotAI* botAI) { return new TricksOnPartnerTrigger(botAI); }
+     static Trigger* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new BlindEnemyHealerTrigger(botAI);
+@@ -197,6 +199,7 @@ public:
+         creators["premeditation"] = &RogueAiObjectContextInternal::premeditation;
+         creators["sap on enemy healer"] = &RogueAiObjectContextInternal::sap_on_enemy_healer;
+         creators["reach sap target"] = &RogueAiObjectContextInternal::reach_sap_target;
++        creators["tricks on partner"] = &RogueAiObjectContextInternal::tricks_on_partner;
+         creators["blind on enemy healer"] = &RogueAiObjectContextInternal::blind_on_enemy_healer;
+     }
+ 
+@@ -271,6 +274,7 @@ private:
+     static Action* premeditation(PlayerbotAI* botAI) { return new CastPremeditationAction(botAI); }
+     static Action* sap_on_enemy_healer(PlayerbotAI* botAI) { return new CastSapOnEnemyHealerAction(botAI); }
+     static Action* reach_sap_target(PlayerbotAI* botAI) { return new ReachSapTargetAction(botAI); }
++    static Action* tricks_on_partner(PlayerbotAI* botAI) { return new CastTricksOnPartnerAction(botAI); }
+     static Action* blind_on_enemy_healer(PlayerbotAI* botAI)
+     {
+         return new CastBlindOnEnemyHealerAction(botAI);
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.cpp b/src/Ai/Class/Rogue/RogueTriggers.cpp
+index 13209941..9a66f14c 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.cpp
++++ b/src/Ai/Class/Rogue/RogueTriggers.cpp
+@@ -273,3 +273,17 @@ bool ArenaPrepStealthTrigger::IsActive()
+     return bg && (bg->GetStatus() == STATUS_WAIT_JOIN || bg->GetStatus() == STATUS_IN_PROGRESS) &&
+            botAI->CanCastSpell("stealth", bot);
+ }
++
++// Burst call: Tricks of the Trade on the partner (+15% damage for 6 s after the rogue's next hit)
++bool TricksOnPartnerTrigger::IsActive()
++{
++    if (!bot->InArena() || bot->HasSpellCooldown(57934) || botAI->HasAura("tricks of the trade", bot))
++        return false;
++
++    if (!botAI->HasAura("shadow dance", bot) && !ai::arena::KillWindowOpen(botAI))
++        return false;
++
++    Unit* partner = ai::arena::FindPartner(botAI);
++    return partner && bot->IsWithinDistInMap(partner, 20.0f) && bot->IsWithinLOSInMap(partner) &&
++           botAI->CanCastSpell("tricks of the trade", partner);
++}
+diff --git a/src/Ai/Class/Rogue/RogueTriggers.h b/src/Ai/Class/Rogue/RogueTriggers.h
+index 7646ad5f..a57506ae 100644
+--- a/src/Ai/Class/Rogue/RogueTriggers.h
++++ b/src/Ai/Class/Rogue/RogueTriggers.h
+@@ -200,6 +200,14 @@ public:
+     bool IsActive() override;
+ };
+ 
++class TricksOnPartnerTrigger : public Trigger
++{
++public:
++    TricksOnPartnerTrigger(PlayerbotAI* botAI) : Trigger(botAI, "tricks on partner") {}
++
++    bool IsActive() override;
++};
++
+ class PremeditationTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+index 957f935e..2eb34963 100644
+--- a/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
++++ b/src/Ai/Class/Rogue/Strategy/ArenaRogueStrategy.cpp
+@@ -81,6 +81,7 @@ void ArenaRogueStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("dance cheap shot", { NextAction("cheap shot", ACTION_HIGH + 7) }));
+     triggers.push_back(new TriggerNode("dance ambush", { NextAction("ambush", ACTION_HIGH + 7) }));
+     triggers.push_back(new TriggerNode("shadow dance opener", { NextAction("shadow dance", ACTION_HIGH + 6) }));
++    triggers.push_back(new TriggerNode("tricks on partner", { NextAction("tricks on partner", ACTION_HIGH + 6) }));
+ 
+     // Manual §2: Cheap Shot -> Kidney Shot combo
+     triggers.push_back(
+-- 
+2.55.0
+

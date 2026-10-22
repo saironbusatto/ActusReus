@@ -1,7 +1,7 @@
 From 30de230370f1a6c1804b5d90e4cae7c573f70567 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 19:51:49 -0300
-Subject: [PATCH 21/25] feat: arena engineering - Hyperspeed Accelerators with
+Subject: [PATCH 21/31] feat: arena engineering - Hyperspeed Accelerators with
  the burst (healers when the partner drops), Cobalt Frag Bomb stun on the CC
  target; fixed engineer bots keep a bomb stack
 

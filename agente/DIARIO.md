@@ -190,3 +190,28 @@
     - `Amnesian (Priest Disc)`: 23.590 cura média, 5.929 dano médio, 1 KB.
     - `Ominous (Warlock Affli)`: 49.335 dano médio, 11.047 cura média, 2 KBs.
     - `Pehdicouve (Druid Resto)`: 21.479 cura média, 2.641 dano médio.
+
+## 2026-10-22 ~03:15 UTC — Fase 1 dos trios no ar
+- 20 trios 3v3 (`agente/trios-times.sql`), uma facção por trio (pedido do usuário). Horda: RMP I–IV, RLS I–IV.
+  Aliança: Wild I–IV (Warlock/Hunter MM/Resto Druid), Shadowplay I–IV, TSG I–IV. `RatedArena3v3Count=10`, 2v2=0.
+- 35 clones novos (`clone_bots.py --src`): sementes Heshoii (frost), Kwongwegaii (resto), Beteranii (mm), Celianeyii
+  (arms), Omasconii (unholy), Heruii (holy), Amnesianxix (shadow) + 3 cópias cada (Heru: 7), Ominousv x3.
+- **Bug:** o evento `fixedgear` de `ApplyFixedBotSpec` não sobreviveu aos restarts e as sementes foram reequipadas a
+  cada subida. Contorno: `:spec` tirado das sementes na config; equipamento igualado por família em
+  `agente/trios-normaliza.sql`. Investigar antes de usar `:spec` de novo.
+- Medallion mandado por correio para o Reload (pedido do usuário). Backups: `backups/*_pretrios.sql.gz`.
+- Gravação ML: o formato 2v2 só registra 1 parceiro e 2 inimigos; observação 3v3 completa é fase 2.
+
+## 2026-10-22 ~04:10 UTC — noite (plano aprovado no chat: builds, até 3 restarts, push)
+- **Bug do `fixedgear` resolvido** (commit a2066b58): `SetEventValue` marcava o cache do bot como carregado sem ler o
+  banco, então o `add` gravado a cada subida escondia todos os outros eventos. Testado: Heruii com `:spec` de volta,
+  restart, sem "geared for" e equipamento com o mesmo hash.
+- **Raid leader na BG** (1b9fb17e, `Playerbots.BgGiveLeaderToPlayer=1` na nossa config): bot que lidera o raid passa
+  para GM ou guildmate presente.
+- **Ordens de AB** (f5d637e2): `ab <t1..t8|todos> <estabulo|ferreiro|fazenda|serraria|mina|livre>` no raid chat;
+  `.playerbots raid <personagem> <texto>` no console. Testado até o bot (trigger "ab" disparou); dentro da AB fica
+  para o teste com o usuário.
+- **Ponte de voz** em `voz/` (Whisper large-v3-turbo na GPU ~300 ms, parser + nemotron-3.5-lightning no OpenRouter
+  como reserva, alvo do modelo tem de estar na fala). 4/5 com voz sintética; falta a voz real.
+- Placar: `ml/tools/placar_trios.py`. Desenho da fase 2: `agente/FASE2-RL.md`.
+- Imagem de volta: `acore/ac-wotlk-worldserver:rollback-cachefix-bgleader` (antes das ordens de AB).
