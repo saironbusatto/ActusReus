@@ -1,7 +1,7 @@
 From 90143d65ddc0bcff16a8a052df4c90fa2a70e7bc Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 08:25:45 -0300
-Subject: [PATCH 09/31] fix: rogue keeps stealth while approaching in arena so
+Subject: [PATCH 09/32] fix: rogue keeps stealth while approaching in arena so
  it can open
 
 ---

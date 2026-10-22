@@ -1,7 +1,7 @@
 From 92bd144820cbb956a4bf9e4e2e99bf089a7c753f Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 13:50:11 -0300
-Subject: [PATCH 16/31] feat: arena kill window - rogue Shadow Dance waits
+Subject: [PATCH 16/32] feat: arena kill window - rogue Shadow Dance waits
  until the CC target has spent its CC break and the team holds a CC for it;
  calls the burst in party chat
 

@@ -1,0 +1,171 @@
+From 232d049a3a8d208f1e6bf832a4eb83148802d567 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 08:44:10 -0300
+Subject: [PATCH 32/32] feat: arena observation v2 (any arena size: self, 2
+ allies, 3 enemies)
+
+Six slots with the same fields (visible, class, hp, power, CC, PvP trinket ready,
+major defensive up, distance, LOS, is target) and the probability of the chosen
+action, so 3v3 is fully recorded and off-policy RL can reweight samples. The
+v1 struct and features stay for the current 2v2 policy.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Base/ArenaObservation.h | 132 ++++++++++++++++++++++++++++++---
+ 1 file changed, 121 insertions(+), 11 deletions(-)
+
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+index 28ed1b77..21c15106 100644
+--- a/src/Ai/Base/ArenaObservation.h
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -9,6 +9,7 @@
+ 
+ #include "Action.h"
+ #include "ArenaHelpers.h"
++#include "Battleground.h"
+ #include "GameTime.h"
+ #include "Log.h"
+ 
+@@ -94,19 +95,128 @@ namespace ai::arena
+         return o;
+     }
+ 
+-    // One CSV line per executed arena action: ms,instance,bot,class,action,relevance,self(hp,mana,cc),
+-    // partner(guid,hp,cc),enemy1(guid,class,hp,mana,cc,trinket),enemy2(...),target,dist,los,killwindow
+-    inline void LogObservation(PlayerbotAI* botAI, Action* action, float relevance)
++    // ---- v2: any arena size. Six slots (self, 2 allies, 3 enemies), each the same fields, so 2v2 and 3v3 share
++    // one format and the model can pool allies and enemies as sets. Field order must match ml/policy/features.py.
++    struct UnitObs
++    {
++        uint32 guid = 0, cls = 0, cc = 0;
++        int present = 0, visible = 0, hp = 0, power = 0, trinket = 0, defensive = 0, dist = -1, los = -1,
++            isTarget = 0;
++    };
++
++    struct ArenaObsV2
++    {
++        UnitObs slot[6];  // 0 self, 1-2 allies, 3-5 enemies (allies and enemies sorted by guid)
++        int killWindow = 0;
++    };
++
++    // Major defensive cooldowns a 2009 player watched for: while one is up, the burst waits or switches
++    inline bool HasMajorDefensive(Unit* u)
++    {
++        static uint32 const auras[] = {33206 /*Pain Suppression*/, 642 /*Divine Shield*/, 45438 /*Ice Block*/,
++                                       31224 /*Cloak of Shadows*/, 46924 /*Bladestorm*/, 22812 /*Barkskin*/,
++                                       10278 /*Hand of Protection*/, 48707 /*Anti-Magic Shell*/,
++                                       48792 /*Icebound Fortitude*/, 19263 /*Deterrence*/, 26669 /*Evasion*/,
++                                       47585 /*Dispersion*/, 871 /*Shield Wall*/};
++        for (uint32 aura : auras)
++            if (u->HasAura(aura))
++                return true;
++        return false;
++    }
++
++    inline UnitObs ObserveUnit(Player* bot, Player* u, Unit* target)
++    {
++        UnitObs s;
++        s.present = 1;
++        s.guid = u->GetGUID().GetCounter();
++        s.cls = u->getClass();
++        s.visible = (u == bot || bot->CanSeeOrDetect(u)) ? 1 : 0;
++        s.hp = u->IsAlive() ? int(u->GetHealthPct()) : 0;
++        s.power = int(u->GetPowerPct(u->getPowerType()));
++        s.cc = CcFlags(u);
++        s.trinket = HasCcBreakReady(u) ? 1 : 0;
++        s.defensive = HasMajorDefensive(u) ? 1 : 0;
++        s.isTarget = u == target ? 1 : 0;
++        if (u != bot && s.visible)
++        {
++            s.dist = int(bot->GetDistance(u));
++            s.los = bot->IsWithinLOSInMap(u) ? 1 : 0;
++        }
++        return s;
++    }
++
++    inline ArenaObsV2 CollectObservationV2(PlayerbotAI* botAI)
+     {
+         Player* bot = botAI->GetBot();
+-        ArenaObs const o = CollectObservation(botAI);
+-        auto enemy = [](EnemyObs const& e)
+-        { return fmt::format("{},{},{},{},{},{}", e.guid, e.cls, e.hp, e.mana, e.cc, e.trinket); };
+-
+-        LOG_INFO("playerbots.ml", "{},{},{},{},{},{:.1f},{},{},{},{},{},{},{},{},{},{},{},{}",
+-                 GameTime::GetGameTimeMS().count(), bot->GetInstanceId(), bot->GetGUID().GetCounter(), o.cls,
+-                 action->getName(), relevance, o.selfHp, o.selfMana, o.selfCc, o.partnerGuid, o.partnerHp,
+-                 o.partnerCc, enemy(o.enemy[0]), enemy(o.enemy[1]), o.target, o.dist, o.los, o.killWindow);
++        Unit* target = botAI->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
++        ArenaObsV2 o;
++        o.slot[0] = ObserveUnit(bot, bot, target);
++        o.killWindow = KillWindowOpen(botAI) ? 1 : 0;
++
++        Battleground* bg = bot->GetBattleground();
++        if (!bg)
++            return o;
++
++        // At most 10 players in an arena: one pass, no world search
++        std::vector<Player*> allies, enemies;
++        for (auto const& [guid, player] : bg->GetPlayers())
++        {
++            if (!player || player == bot || player->IsSpectator())
++                continue;
++            (player->GetBgTeamId() == bot->GetBgTeamId() ? allies : enemies).push_back(player);
++        }
++        auto byGuid = [](Player* a, Player* b) { return a->GetGUID().GetCounter() < b->GetGUID().GetCounter(); };
++        std::sort(allies.begin(), allies.end(), byGuid);
++        std::sort(enemies.begin(), enemies.end(), byGuid);
++        for (size_t i = 0; i < allies.size() && i < 2; ++i)
++            o.slot[1 + i] = ObserveUnit(bot, allies[i], target);
++        for (size_t i = 0; i < enemies.size() && i < 3; ++i)
++            o.slot[3 + i] = ObserveUnit(bot, enemies[i], target);
++        return o;
++    }
++
++    // One CSV line per executed arena action:
++    // v2,ms,instance,bot,action,relevance,prob,killwindow, then 6 slots of
++    // present,visible,guid,class,hp,power,cc,trinket,defensive,dist,los,istarget
++    // prob = probability the learned policy gave this action (1 when only the rules decided).
++    inline void LogObservation(PlayerbotAI* botAI, Action* action, float relevance, float prob = 1.0f)
++    {
++        Player* bot = botAI->GetBot();
++        ArenaObsV2 const o = CollectObservationV2(botAI);
++        std::string line = fmt::format("v2,{},{},{},{},{:.1f},{:.3f},{}", GameTime::GetGameTimeMS().count(),
++                                       bot->GetInstanceId(), bot->GetGUID().GetCounter(), action->getName(),
++                                       relevance, prob, o.killWindow);
++        for (UnitObs const& s : o.slot)
++            line += fmt::format(",{},{},{},{},{},{},{},{},{},{},{},{}", s.present, s.visible, s.guid, s.cls, s.hp,
++                                s.power, s.cc, s.trinket, s.defensive, s.dist, s.los, s.isTarget);
++        LOG_INFO("playerbots.ml", "{}", line);
++    }
++
++    // Same order and scaling as ml/policy/features.py features_v2 (6 slots x 25 + 1 = 151 values)
++    inline std::vector<float> FeaturesV2(ArenaObsV2 const& o)
++    {
++        static uint32 const classes[] = {CLASS_WARRIOR, CLASS_PALADIN, CLASS_HUNTER, CLASS_ROGUE, CLASS_PRIEST,
++                                         CLASS_DEATH_KNIGHT, CLASS_SHAMAN, CLASS_MAGE, CLASS_WARLOCK, CLASS_DRUID};
++        std::vector<float> f;
++        f.reserve(151);
++        for (UnitObs const& s : o.slot)
++        {
++            f.push_back(float(s.present));
++            f.push_back(float(s.visible));
++            for (uint32 k : classes)
++                f.push_back(s.cls == k ? 1.0f : 0.0f);
++            f.push_back(s.hp / 100.0f);
++            f.push_back(std::max(s.power, 0) / 100.0f);
++            for (int i = 0; i < 6; ++i)
++                f.push_back(float((s.cc >> i) & 1));
++            f.push_back(float(s.trinket));
++            f.push_back(float(s.defensive));
++            f.push_back(std::min(std::max(s.dist, 0), 40) / 40.0f);
++            f.push_back(s.los == 1 ? 1.0f : 0.0f);
++            f.push_back(float(s.isTarget));
++        }
++        f.push_back(float(o.killWindow));
++        return f;
+     }
+ 
+     // Same order and scaling as ml/policy/features.py (48 values)
+-- 
+2.55.0
+
