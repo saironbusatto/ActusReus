@@ -46,10 +46,10 @@ def parse_log(path: Path) -> list[tuple[dt.datetime, dict]]:
     return rows
 
 
-def fight_wins() -> list[tuple[dt.datetime, dt.datetime, int, bool]]:
-    """(início, fim, guid do bot, venceu) de cada participação em luta 2v2."""
+def fight_wins(types: str = "2") -> list[tuple[dt.datetime, dt.datetime, int, bool]]:
+    """(início, fim, guid do bot, venceu) de cada participação em luta dos tipos dados ("2", "2, 3")."""
     q = ("SELECT f.time, f.duration, m.guid, m.team = f.winner FROM acore_characters.log_arena_fights f "
-         "JOIN acore_characters.log_arena_memberstats m USING(fight_id) WHERE f.type = 2")
+         f"JOIN acore_characters.log_arena_memberstats m USING(fight_id) WHERE f.type IN ({types})")
     out = subprocess.run(["docker", "exec", "ac-database", "sh", "-c",
                           'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -N -e "$0" 2>/dev/null', q],
                          capture_output=True, text=True, check=True).stdout
