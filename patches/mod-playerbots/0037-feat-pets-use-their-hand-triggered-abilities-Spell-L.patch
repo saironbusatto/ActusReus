@@ -1,0 +1,415 @@
+From 379e66b0dfe81e7828cf2133b4fb9e762186080e Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 20:11:45 -0300
+Subject: [PATCH 37/43] feat: pets use their hand-triggered abilities (Spell
+ Lock, Seduction, Gnaw) and sane autocast
+
+Saved bot pets had Spell Lock and Devour Magic off on every Felhunter and
+Seduction/Lash of Pain off on most Succubi, and no bot code cast them. With
+Playerbots.SmartPetAbilities: autocast on for self-playing abilities, off for
+Cower/Phase Shift/invisibility; Felhunter Spell Lock on enemy casts (healer
+first), Succubus Seduction on the enemy healer or another non-target enemy
+(never one in CC or with a DoT), Ghoul Gnaw on casters in melee; DoTs "on
+attacker" skip enemies held by break-on-damage CC.
+---
+ conf/playerbots.conf.dist                     |  12 +
+ src/Ai/Base/ActionContext.h                   |   9 +
+ src/Ai/Base/PetAbilities.h                    | 216 ++++++++++++++++++
+ src/Ai/Base/Strategy/RacialsStrategy.cpp      |  10 +
+ src/Ai/Base/TriggerContext.h                  |   7 +
+ .../Value/AttackerWithoutAuraTargetValue.cpp  |   8 +
+ src/PlayerbotAIConfig.cpp                     |   1 +
+ src/PlayerbotAIConfig.h                       |   1 +
+ 8 files changed, 264 insertions(+)
+ create mode 100644 src/Ai/Base/PetAbilities.h
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index b6f5b8b9..abb1ec8f 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -516,6 +516,18 @@ Playerbots.BgGiveLeaderToPlayer = 0
+ 
+ Playerbots.AbDefenderCallouts = 0
+ 
++#
++#    Playerbots.SmartPetAbilities
++#        Pets use the abilities a player triggers by hand: Felhunter Spell Lock on enemy casts (healer first),
++#        Succubus Seduction on the enemy healer or another non-target enemy, Ghoul Gnaw on casters in melee; autocast
++#        on for the rest (Devour Magic, Lash of Pain, hunter pet utility), off for Cower/Phase Shift/invisibility.
++#        Damage-over-time spells "on attacker" also skip enemies held by CC that breaks on damage.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.SmartPetAbilities = 0
++
+ #
+ #    Playerbots.ArenaMlLog
+ #        Write one CSV line per executed arena action (state seen + action chosen) to the
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index 41006464..f749605c 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -15,6 +15,7 @@
+ #include "BattleGroundTactics.h"
+ #include "PassLeadershipToMasterAction.h"
+ #include "AbOrderAction.h"
++#include "PetAbilities.h"
+ #include "BotStateActions.h"
+ #include "BuyAction.h"
+ #include "CancelChannelAction.h"
+@@ -229,6 +230,10 @@ public:
+         creators["bg check objective"] = &ActionContext::bg_check_objective;
+         creators["bg give leader"] = &ActionContext::bg_give_leader;
+         creators["ab callout"] = &ActionContext::ab_callout;
++        creators["pet autocast setup"] = &ActionContext::pet_autocast_setup;
++        creators["pet spell lock"] = &ActionContext::pet_spell_lock;
++        creators["pet seduction"] = &ActionContext::pet_seduction;
++        creators["pet gnaw"] = &ActionContext::pet_gnaw;
+         creators["bg attack fc"] = &ActionContext::bg_attack_fc;
+         creators["bg protect fc"] = &ActionContext::bg_protect_fc;
+         creators["bg use buff"] = &ActionContext::bg_use_buff;
+@@ -439,6 +444,10 @@ private:
+     static Action* bg_check_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "check objective"); }
+     static Action* bg_give_leader(PlayerbotAI* botAI) { return new BgGiveLeaderAction(botAI); }
+     static Action* ab_callout(PlayerbotAI* botAI) { return new AbCalloutAction(botAI); }
++    static Action* pet_autocast_setup(PlayerbotAI* botAI) { return new PetAutocastAction(botAI); }
++    static Action* pet_spell_lock(PlayerbotAI* botAI) { return new PetSpellLockAction(botAI); }
++    static Action* pet_seduction(PlayerbotAI* botAI) { return new PetSeductionAction(botAI); }
++    static Action* pet_gnaw(PlayerbotAI* botAI) { return new PetGnawAction(botAI); }
+     static Action* bg_attack_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "attack fc"); }
+     static Action* bg_protect_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "protect fc"); }
+     static Action* attack_enemy_fc(PlayerbotAI* botAI) { return new AttackEnemyFlagCarrierAction(botAI); }
+diff --git a/src/Ai/Base/PetAbilities.h b/src/Ai/Base/PetAbilities.h
+new file mode 100644
+index 00000000..4e19c001
+--- /dev/null
++++ b/src/Ai/Base/PetAbilities.h
+@@ -0,0 +1,216 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_PETABILITIES_H
++#define PLAYERBOTS_PETABILITIES_H
++
++#include <cstring>
++#include <set>
++
++#include "Action.h"
++#include "Pet.h"
++#include "Playerbots.h"
++#include "SpellAuras.h"
++#include "SpellMgr.h"
++#include "Trigger.h"
++
++// Pet abilities a 2009 player used by hand (opt-in via Playerbots.SmartPetAbilities). The saved pets showed Spell
++// Lock and Devour Magic off on every Felhunter, Lash of Pain and Seduction off on most Succubi, and no bot code that
++// casts them, so Warlocks played without their interrupt and their CC.
++namespace ai::pet
++{
++    // Spell id of the pet ability with this (enUS) name, or 0
++    inline uint32 Spell(Pet* pet, char const* name)
++    {
++        if (!pet)
++            return 0;
++        for (auto const& [id, spell] : pet->m_spells)
++            if (spell.state != PETSPELL_REMOVED)
++                if (SpellInfo const* info = sSpellMgr->GetSpellInfo(id); info && !strcmp(info->SpellName[0], name))
++                    return id;
++        return 0;
++    }
++
++    inline uint32 ReadySpell(Pet* pet, char const* name)
++    {
++        uint32 const id = Spell(pet, name);
++        return id && pet->IsAlive() && !pet->HasSpellCooldown(id) && !pet->HasUnitState(UNIT_STATE_CASTING) ? id : 0;
++    }
++
++    // Seduction, Polymorph, Sap, Blind, Repentance, Hex...: damage on this unit would set it free
++    inline bool HasBreakOnDamageCc(Unit* unit)
++    {
++        for (auto const& [id, app] : unit->GetAppliedAuras())
++            if (!app->IsPositive() &&
++                (app->GetBase()->GetSpellInfo()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_TAKE_DAMAGE))
++                return true;
++        return false;
++    }
++
++    // Enemy players the bot can see, alive and within range of the pet with line of sight from it
++    inline std::vector<Player*> EnemiesNearPet(PlayerbotAI* botAI, Pet* pet, float range)
++    {
++        std::vector<Player*> out;
++        for (ObjectGuid const guid : botAI->GetAiObjectContext()->GetValue<GuidVector>("possible targets")->Get())
++        {
++            Unit* unit = botAI->GetUnit(guid);
++            Player* player = unit ? unit->ToPlayer() : nullptr;
++            if (player && player->IsAlive() && pet->IsWithinDistInMap(player, range) && pet->IsWithinLOSInMap(player))
++                out.push_back(player);
++        }
++        return out;
++    }
++
++    inline Player* CastingEnemy(PlayerbotAI* botAI, Pet* pet, float range)
++    {
++        Player* best = nullptr;
++        for (Player* enemy : EnemiesNearPet(botAI, pet, range))
++            if (enemy->IsNonMeleeSpellCast(false) && (!best || PlayerbotAI::IsHeal(enemy)))  // healer first
++                best = enemy;
++        return best;
++    }
++
++    // Seduction target: the enemy healer, else another enemy that is not the kill target; never one already in CC
++    // or carrying a damage over time (it would break at once). Only with two or more enemies around.
++    inline Player* SeductionTarget(PlayerbotAI* botAI, Pet* pet)
++    {
++        Unit* kill = botAI->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
++        std::vector<Player*> const enemies = EnemiesNearPet(botAI, pet, 30.0f);
++        if (enemies.size() < 2)
++            return nullptr;
++
++        Player* best = nullptr;
++        for (Player* enemy : enemies)
++        {
++            if (enemy == kill || enemy->HasUnitState(UNIT_STATE_STUNNED) || enemy->HasAuraType(SPELL_AURA_MOD_FEAR) ||
++                enemy->HasAuraType(SPELL_AURA_MOD_CONFUSE) || enemy->HasAuraType(SPELL_AURA_PERIODIC_DAMAGE) ||
++                HasBreakOnDamageCc(enemy))
++                continue;
++            if (!best || (PlayerbotAI::IsHeal(enemy) && !PlayerbotAI::IsHeal(best)))
++                best = enemy;
++        }
++        return best;
++    }
++}
++
++// Once per pet: autocast on for what plays itself, off for what needs judgment (cast below) or hurts in PvP
++class PetAutocastAction : public Action
++{
++public:
++    PetAutocastAction(PlayerbotAI* botAI) : Action(botAI, "pet autocast setup") {}
++
++    bool isUseful() override
++    {
++        Pet* pet = bot->GetPet();
++        return sPlayerbotAIConfig.SmartPetAbilities && pet && pet->GetGUID() != configured;
++    }
++
++    bool Execute(Event /*event*/) override
++    {
++        static std::set<std::string> const manual = {"Seduction", "Spell Lock", "Gnaw", "Cower", "Phase Shift",
++                                                     "Lesser Invisibility", "Prowl"};
++        Pet* pet = bot->GetPet();
++        for (auto const& [id, spell] : pet->m_spells)
++        {
++            SpellInfo const* info = sSpellMgr->GetSpellInfo(id);
++            if (spell.state == PETSPELL_REMOVED || !info || info->IsPassive() || !info->IsAutocastable())
++                continue;
++            pet->ToggleAutocast(info, !manual.count(info->SpellName[0]));
++        }
++        configured = pet->GetGUID();
++        return true;
++    }
++
++private:
++    ObjectGuid configured;
++};
++
++class PetSpellCastTrigger : public Trigger
++{
++public:
++    PetSpellCastTrigger(PlayerbotAI* botAI, std::string const name, char const* spell)
++        : Trigger(botAI, name), spell(spell)
++    {
++    }
++
++protected:
++    uint32 Ready() { return sPlayerbotAIConfig.SmartPetAbilities ? ai::pet::ReadySpell(bot->GetPet(), spell) : 0; }
++    char const* spell;
++};
++
++class PetSpellLockTrigger : public PetSpellCastTrigger
++{
++public:
++    PetSpellLockTrigger(PlayerbotAI* botAI) : PetSpellCastTrigger(botAI, "pet spell lock", "Spell Lock") {}
++    bool IsActive() override { return Ready() && ai::pet::CastingEnemy(botAI, bot->GetPet(), 30.0f); }
++};
++
++class PetGnawTrigger : public PetSpellCastTrigger
++{
++public:
++    PetGnawTrigger(PlayerbotAI* botAI) : PetSpellCastTrigger(botAI, "pet gnaw", "Gnaw") {}
++    bool IsActive() override { return Ready() && ai::pet::CastingEnemy(botAI, bot->GetPet(), 5.0f); }
++};
++
++class PetSeductionTrigger : public PetSpellCastTrigger
++{
++public:
++    PetSeductionTrigger(PlayerbotAI* botAI) : PetSpellCastTrigger(botAI, "pet seduction", "Seduction") {}
++    bool IsActive() override
++    {
++        return Ready() && bot->IsInCombat() && ai::pet::SeductionTarget(botAI, bot->GetPet());
++    }
++};
++
++class PetSpellCastAction : public Action
++{
++public:
++    PetSpellCastAction(PlayerbotAI* botAI, std::string const name, char const* spell)
++        : Action(botAI, name), spell(spell)
++    {
++    }
++
++    bool Execute(Event /*event*/) override
++    {
++        Pet* pet = bot->GetPet();
++        uint32 const id = ai::pet::ReadySpell(pet, spell);
++        Unit* target = id ? Target(pet) : nullptr;
++        return target && pet->CastSpell(target, id, false) == SPELL_CAST_OK;
++    }
++
++protected:
++    virtual Unit* Target(Pet* pet) = 0;
++    char const* spell;
++};
++
++class PetSpellLockAction : public PetSpellCastAction
++{
++public:
++    PetSpellLockAction(PlayerbotAI* botAI) : PetSpellCastAction(botAI, "pet spell lock", "Spell Lock") {}
++
++protected:
++    Unit* Target(Pet* pet) override { return ai::pet::CastingEnemy(botAI, pet, 30.0f); }
++};
++
++class PetGnawAction : public PetSpellCastAction
++{
++public:
++    PetGnawAction(PlayerbotAI* botAI) : PetSpellCastAction(botAI, "pet gnaw", "Gnaw") {}
++
++protected:
++    Unit* Target(Pet* pet) override { return ai::pet::CastingEnemy(botAI, pet, 5.0f); }
++};
++
++class PetSeductionAction : public PetSpellCastAction
++{
++public:
++    PetSeductionAction(PlayerbotAI* botAI) : PetSpellCastAction(botAI, "pet seduction", "Seduction") {}
++
++protected:
++    Unit* Target(Pet* pet) override { return ai::pet::SeductionTarget(botAI, pet); }
++};
++
++#endif
+diff --git a/src/Ai/Base/Strategy/RacialsStrategy.cpp b/src/Ai/Base/Strategy/RacialsStrategy.cpp
+index 1d45d78b..9ab29dad 100644
+--- a/src/Ai/Base/Strategy/RacialsStrategy.cpp
++++ b/src/Ai/Base/Strategy/RacialsStrategy.cpp
+@@ -105,4 +105,14 @@ void RacialsStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ 
+     triggers.push_back(new TriggerNode(
+         "generic boost", { NextAction("use trinket", ACTION_NORMAL + 4) }));
++
++    // Pet abilities ride on "racials" because every bot runs it in combat (PetAbilities.h, opt-in)
++    uint8 const cls = bot->getClass();
++    if (cls == CLASS_WARLOCK || cls == CLASS_HUNTER || cls == CLASS_DEATH_KNIGHT)
++    {
++        triggers.push_back(new TriggerNode("often", { NextAction("pet autocast setup", ACTION_NORMAL) }));
++        triggers.push_back(new TriggerNode("pet spell lock", { NextAction("pet spell lock", ACTION_INTERRUPT + 2) }));
++        triggers.push_back(new TriggerNode("pet gnaw", { NextAction("pet gnaw", ACTION_INTERRUPT + 2) }));
++        triggers.push_back(new TriggerNode("pet seduction", { NextAction("pet seduction", ACTION_INTERRUPT + 1) }));
++    }
+ }
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index 5ba10ec6..26338b8c 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -12,6 +12,7 @@
+ #include "FishingTriggers.h"
+ #include "GenericTriggers.h"
+ #include "GuildTriggers.h"
++#include "PetAbilities.h"
+ #include "HealthTriggers.h"
+ #include "LfgTriggers.h"
+ #include "LootTriggers.h"
+@@ -44,6 +45,9 @@ public:
+         creators["timer bg"] = &TriggerContext::TimerBG;
+         creators["random"] = &TriggerContext::Random;
+         creators["seldom"] = &TriggerContext::seldom;
++        creators["pet spell lock"] = &TriggerContext::pet_spell_lock;
++        creators["pet seduction"] = &TriggerContext::pet_seduction;
++        creators["pet gnaw"] = &TriggerContext::pet_gnaw;
+         creators["often"] = &TriggerContext::often;
+         creators["very often"] = &TriggerContext::very_often;
+ 
+@@ -469,6 +473,9 @@ private:
+     static Trigger* can_use_fishing_bobber(PlayerbotAI* botAI) { return new CanUseFishingBobberTrigger(botAI); }
+     static Trigger* new_pet(PlayerbotAI* botAI) { return new NewPetTrigger(botAI); }
+     static Trigger* wait_for_attack_safe_distance(PlayerbotAI* botAI) { return new WaitForAttackSafeDistanceTrigger(botAI); }
++    static Trigger* pet_spell_lock(PlayerbotAI* botAI) { return new PetSpellLockTrigger(botAI); }
++    static Trigger* pet_seduction(PlayerbotAI* botAI) { return new PetSeductionTrigger(botAI); }
++    static Trigger* pet_gnaw(PlayerbotAI* botAI) { return new PetGnawTrigger(botAI); }
+ };
+ 
+ #endif
+diff --git a/src/Ai/Base/Value/AttackerWithoutAuraTargetValue.cpp b/src/Ai/Base/Value/AttackerWithoutAuraTargetValue.cpp
+index 88492d22..4a6187c7 100644
+--- a/src/Ai/Base/Value/AttackerWithoutAuraTargetValue.cpp
++++ b/src/Ai/Base/Value/AttackerWithoutAuraTargetValue.cpp
+@@ -5,6 +5,8 @@
+  */
+ 
+ #include "AttackerWithoutAuraTargetValue.h"
++
++#include "PetAbilities.h"
+ #include "Playerbots.h"
+ #include "Strategy.h"
+ #include "TargetValue.h"
+@@ -22,6 +24,9 @@ Unit* AttackerWithoutAuraTargetValue::Calculate()
+         if (!unit || !unit->IsAlive() || dynamicExclusions.find(guid) != dynamicExclusions.end())
+             continue;
+ 
++        if (sPlayerbotAIConfig.SmartPetAbilities && ai::pet::HasBreakOnDamageCc(unit))
++            continue;  // a DoT would free the enemy our Seduction, Polymorph or Sap is holding
++
+         if (!bot->IsWithinCombatRange(unit, botAI->GetRange(range)))
+             continue;
+ 
+@@ -51,6 +56,9 @@ Unit* MeleeAttackerWithoutAuraTargetValue::Calculate()
+         if (!unit || !unit->IsAlive() || dynamicExclusions.find(guid) != dynamicExclusions.end())
+             continue;
+ 
++        if (sPlayerbotAIConfig.SmartPetAbilities && ai::pet::HasBreakOnDamageCc(unit))
++            continue;  // a DoT would free the enemy our Seduction, Polymorph or Sap is holding
++
+         if (!bot->IsWithinMeleeRange(unit))
+             continue;
+ 
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index 424e7d72..aa898dcb 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -135,6 +135,7 @@ bool PlayerbotAIConfig::Initialize()
+     ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
+     BgGiveLeaderToPlayer = sConfigMgr->GetOption<bool>("Playerbots.BgGiveLeaderToPlayer", false);
+     AbDefenderCallouts = sConfigMgr->GetOption<bool>("Playerbots.AbDefenderCallouts", false);
++    SmartPetAbilities = sConfigMgr->GetOption<bool>("Playerbots.SmartPetAbilities", false);
+     ArenaMlLog = sConfigMgr->GetOption<bool>("Playerbots.ArenaMlLog", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+     switch (sConfigMgr->GetOption<uint32>("Playerbots.AutoGreaterBlessings", 1))
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index dd79d2d6..66c2985e 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -120,6 +120,7 @@ public:
+     bool ArenaMlLog;
+     bool BgGiveLeaderToPlayer;
+     bool AbDefenderCallouts;
++    bool SmartPetAbilities;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+     AutoPartyBuffMode AutoPartyBuffs;
+-- 
+2.55.0
+

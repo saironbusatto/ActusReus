@@ -1,0 +1,161 @@
+From ea1f063b93ccd4de4170bdd1526abf8d0ac52ce7 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Fri, 23 Oct 2026 00:05:25 -0300
+Subject: [PATCH 42/43] fix: bots no longer camp in the Dalaran Sewers pipes
+
+The pipes flush only twice (5 s, 8 s); the 5347/5348 area triggers that
+re-arm the flush and strip Demonic Circle are sent only by real clients.
+Bots that walked or circled back into a pipe, or onto its roof, stayed out
+of melee reach all match. A new O(1) "in dalaran pipe" trigger runs arena
+tactics, which drops the bot at the pipe mouth and removes the circle.
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp   | 38 +++++++++++++++++++
+ src/Ai/Base/Actions/BattleGroundTactics.h     |  4 ++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  1 +
+ src/Ai/Base/Trigger/PvpTriggers.cpp           |  2 +
+ src/Ai/Base/Trigger/PvpTriggers.h             |  8 ++++
+ src/Ai/Base/TriggerContext.h                  |  2 +
+ 6 files changed, 55 insertions(+)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index b5ed2cdc..24fef4f3 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4213,6 +4213,41 @@ bool BGTactics::IsLockedInsideKeep()
+     return false;
+ }
+ 
++// Dalaran Sewers flushes the pipes only twice (5 s, 8 s) and re-arms the flush, plus strips Demonic Circle, from the
++// 5347/5348 area triggers, which only a real client sends. A bot that walked or circled back into a pipe, or onto
++// its roof, stayed there for the whole match out of melee reach; drop it at the pipe mouth like the flush would.
++bool ArenaTactics::InDalaranPipe(Player* bot)
++{
++    if (bot->GetMapId() != 617 || bot->GetPositionZ() < 9.0f)
++        return false;
++
++    Battleground* bg = bot->GetBattleground();
++    if (!bg || bg->GetStatus() != STATUS_IN_PROGRESS)
++        return false;
++
++    uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
++    if (bg->GetStartTime() < prep + 9000)  // the real flushes are still due
++        return false;
++
++    float const x = bot->GetPositionX();
++    float const y = bot->GetPositionY();
++    return (x > 1328.0f && fabs(y - 817.2f) < 8.0f) || (x < 1255.0f && fabs(y - 764.8f) < 8.0f);
++}
++
++bool ArenaTactics::leaveDalaranPipe(Battleground* bg)
++{
++    if (!InDalaranPipe(bot))
++        return false;
++
++    bot->RemoveAurasDueToSpell(48018);  // Demonic Circle: Summon
++    bot->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TELEPORTED | AURA_INTERRUPT_FLAG_CHANGE_MAP);
++    if (bot->GetPositionX() > 1290.0f)
++        bot->TeleportTo(bg->GetMapId(), 1330.96f, 816.75f, 3.2f, bot->GetOrientation());
++    else
++        bot->TeleportTo(bg->GetMapId(), 1252.19f, 765.41f, 3.2f, bot->GetOrientation());
++    return true;
++}
++
+ bool ArenaTactics::Execute(Event /*event*/)
+ {
+     if (!bot->InBattleground())
+@@ -4237,6 +4272,9 @@ bool ArenaTactics::Execute(Event /*event*/)
+     if (bot->isDead())
+         return false;
+ 
++    if (leaveDalaranPipe(bg))
++        return true;
++
+     if (bot->isMoving())
+         return false;
+ 
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 2a858770..9ab722d4 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -141,10 +141,14 @@ public:
+ 
+     bool Execute(Event event) override;
+ 
++    // Inside or on top of a Dalaran Sewers pipe once its two flushes are over; see leaveDalaranPipe.
++    static bool InDalaranPipe(Player* bot);
++
+ private:
+     bool moveToCenter(Battleground* bg);
+     bool hideFromCaster();
+     bool chaseNearestEnemy(Battleground* bg);
++    bool leaveDalaranPipe(Battleground* bg);
+ };
+ 
+ #endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 42aec60b..a61f8dab 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -88,6 +88,7 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(
+         new TriggerNode("no possible targets", { NextAction("arena tactics", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
++    triggers.push_back(new TriggerNode("in dalaran pipe", { NextAction("arena tactics", ACTION_EMERGENCY + 6) }));
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 4a579af2..7bb989cd 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -63,6 +63,8 @@ bool BgWaitingTrigger::IsActive()
+     return false;
+ }
+ 
++bool InDalaranPipeTrigger::IsActive() { return ArenaTactics::InDalaranPipe(bot); }
++
+ bool BgActiveTrigger::IsActive()
+ {
+     if (bot->InBattleground())
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.h b/src/Ai/Base/Trigger/PvpTriggers.h
+index 903ecada..ea5a28a9 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.h
++++ b/src/Ai/Base/Trigger/PvpTriggers.h
+@@ -94,6 +94,14 @@ public:
+     bool IsActive() override;
+ };
+ 
++class InDalaranPipeTrigger : public Trigger
++{
++public:
++    InDalaranPipeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "in dalaran pipe") {}
++
++    bool IsActive() override;
++};
++
+ class BgInviteActiveTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index 26338b8c..4fb8ff52 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -194,6 +194,7 @@ public:
+ 
+         creators["bg waiting"] = &TriggerContext::bg_waiting;
+         creators["bg active"] = &TriggerContext::bg_active;
++        creators["in dalaran pipe"] = &TriggerContext::in_dalaran_pipe;
+         creators["bg invite active"] = &TriggerContext::bg_invite_active;
+         creators["inside bg"] = &TriggerContext::inside_bg;
+         creators["player has no flag"] = &TriggerContext::player_has_no_flag;
+@@ -417,6 +418,7 @@ private:
+     static Trigger* new_player_nearby(PlayerbotAI* botAI) { return new NewPlayerNearbyTrigger(botAI); }
+     static Trigger* bg_waiting(PlayerbotAI* botAI) { return new BgWaitingTrigger(botAI); }
+     static Trigger* bg_active(PlayerbotAI* botAI) { return new BgActiveTrigger(botAI); }
++    static Trigger* in_dalaran_pipe(PlayerbotAI* botAI) { return new InDalaranPipeTrigger(botAI); }
+     static Trigger* bg_invite_active(PlayerbotAI* botAI) { return new BgInviteActiveTrigger(botAI); }
+     static Trigger* inside_bg(PlayerbotAI* botAI) { return new InsideBGTrigger(botAI); }
+     static Trigger* player_has_no_flag(PlayerbotAI* botAI) { return new PlayerHasNoFlag(botAI); }
+-- 
+2.55.0
+

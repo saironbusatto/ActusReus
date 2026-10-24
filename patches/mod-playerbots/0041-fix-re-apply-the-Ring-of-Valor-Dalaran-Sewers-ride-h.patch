@@ -1,0 +1,44 @@
+From 29061b35e862068f29ddad1bf5f21b52ab8256a2 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Fri, 23 Oct 2026 00:03:43 -0300
+Subject: [PATCH 41/43] fix: re-apply the Ring of Valor / Dalaran Sewers ride
+ hold
+
+The lag blamed on cab1a637 was the ~15 min startup warmup after every
+restart (Northrend loads ~37k creatures), not the CanMove hold.
+---
+ src/Bot/PlayerbotAI.cpp | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/src/Bot/PlayerbotAI.cpp b/src/Bot/PlayerbotAI.cpp
+index 7f51eca5..2697a3b0 100644
+--- a/src/Bot/PlayerbotAI.cpp
++++ b/src/Bot/PlayerbotAI.cpp
+@@ -6143,6 +6143,24 @@ bool PlayerbotAI::CanMove()
+     if (bot->HasUnitState(UNIT_STATE_LOST_CONTROL))
+         return false;
+ 
++    // Arena openings with a ride: in Ring of Valor the elevators rise for ~20 s after the gates open, in Dalaran
++    // Sewers the pipes flush everyone out at 5 s and 8 s. A bot walking meanwhile slid through the shaft or out of
++    // the pipe and was "already there" while real players were still riding.
++    if (bot->InArena())
++    {
++        Battleground* bg = bot->GetBattleground();
++        if (bg && bg->GetStatus() == STATUS_IN_PROGRESS)
++        {
++            uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
++            uint32 const sinceOpen = bg->GetStartTime() > prep ? bg->GetStartTime() - prep : 0;
++            uint32 const ride = bg->GetBgTypeID() == BATTLEGROUND_RV ? 21000
++                                : bg->GetBgTypeID() == BATTLEGROUND_DS ? 9000
++                                                                       : 0;
++            if (sinceOpen < ride)
++                return false;
++        }
++    }
++
+     // Death state (w/o spirit release) and Spirit of Redemption aura (priest)
+     if ((bot->isDead() && !bot->HasPlayerFlag(PLAYER_FLAGS_GHOST)) || bot->HasSpiritOfRedemptionAura())
+         return false;
+-- 
+2.55.0
+

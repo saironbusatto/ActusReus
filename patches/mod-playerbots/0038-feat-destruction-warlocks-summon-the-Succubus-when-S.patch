@@ -1,0 +1,31 @@
+From bb628e4d49702bbcf62434c165f11b6945c67c18 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 21:37:29 -0300
+Subject: [PATCH 38/43] feat: destruction warlocks summon the Succubus when
+ SmartPetAbilities is on
+
+The 2009 PvP destro ran Succubus for Seduction; with the Imp the new Seduction
+logic never had a pet to cast it (0 casts in the first hour).
+---
+ src/Bot/Factory/AiFactory.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/Bot/Factory/AiFactory.cpp b/src/Bot/Factory/AiFactory.cpp
+index a5bd00f6..aef722d3 100644
+--- a/src/Bot/Factory/AiFactory.cpp
++++ b/src/Bot/Factory/AiFactory.cpp
+@@ -586,8 +586,9 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
+                 nonCombatEngine->addStrategiesNoInit("felhunter", "spellstone", nullptr);
+             else if (tab == WARLOCK_TAB_DEMONOLOGY)
+                 nonCombatEngine->addStrategiesNoInit("felguard", "spellstone", nullptr);
+-            else if (tab == WARLOCK_TAB_DESTRUCTION)
+-                nonCombatEngine->addStrategiesNoInit("imp", "firestone", nullptr);
++            else if (tab == WARLOCK_TAB_DESTRUCTION)  // the 2009 PvP destro ran Succubus for Seduction (PetAbilities.h)
++                nonCombatEngine->addStrategiesNoInit(sPlayerbotAIConfig.SmartPetAbilities ? "succubus" : "imp",
++                                                     "firestone", nullptr);
+ 
+             nonCombatEngine->addStrategiesNoInit("dps assist", "ss self", nullptr);
+             break;
+-- 
+2.55.0
+

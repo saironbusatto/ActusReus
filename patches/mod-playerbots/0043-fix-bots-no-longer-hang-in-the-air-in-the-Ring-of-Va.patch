@@ -1,0 +1,180 @@
+From d454684f1712d55957d9fcd4330af25e70bb341a Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Fri, 23 Oct 2026 00:18:28 -0300
+Subject: [PATCH 43/43] fix: bots no longer hang in the air in the Ring of
+ Valor
+
+Bots never really ride the opening elevators: some are carried with a
+wrong offset and end ~7 yd above the floor, and the core only re-grounds
+players that are not falling, a flag a client-less bot can keep. The arena
+trigger is now "off arena floor" (Dalaran Sewers pipes or a Ring of Valor
+hang) and arena tactics drops a hanging bot onto the floor or pillar below.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp   | 44 ++++++++++++++++++-
+ src/Ai/Base/Actions/BattleGroundTactics.h     |  4 ++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  2 +-
+ src/Ai/Base/Trigger/PvpTriggers.cpp           |  2 +-
+ src/Ai/Base/Trigger/PvpTriggers.h             |  4 +-
+ src/Ai/Base/TriggerContext.h                  |  4 +-
+ 6 files changed, 53 insertions(+), 7 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 24fef4f3..e8ba5c55 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -28,6 +28,7 @@
+ #include "Event.h"
+ #include "GameObject.h"
+ #include "IVMapMgr.h"
++#include "MoveSpline.h"
+ #include "PathGenerator.h"
+ #include "Playerbots.h"
+ #include "PositionValue.h"
+@@ -4248,6 +4249,47 @@ bool ArenaTactics::leaveDalaranPipe(Battleground* bg)
+     return true;
+ }
+ 
++// Ring of Valor lifts the teams on elevators that bots never really ride: some are carried with the wrong offset and
++// end ~7 yd above the floor, others stay on the bottom. The core only re-grounds a player that is not falling, and a
++// bot without a client can keep the falling flag, so it hung there casting out of melee reach.
++bool ArenaTactics::FloatingInRingOfValor(Player* bot, float* groundZ)
++{
++    // floor is 28.28; a running spline is a knockback arc or a real move, not a hang
++    if (bot->GetMapId() != 618 || bot->GetPositionZ() < 30.5f || !bot->movespline->Finalized())
++        return false;
++
++    Battleground* bg = bot->GetBattleground();
++    if (!bg || bg->GetStatus() != STATUS_IN_PROGRESS)
++        return false;
++
++    uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
++    if (bg->GetStartTime() < prep + 21000)  // still riding
++        return false;
++
++    float const x = bot->GetPositionX();
++    float const y = bot->GetPositionY();
++    float const z = bot->GetPositionZ() + 0.5f;
++    float const ground = std::max(bot->GetMap()->GetHeight(x, y, z, true, 50.0f),
++                                  bot->GetMap()->GetDynamicMapTree().getHeight(x, y, z, 50.0f, bot->GetPhaseMask()));
++    if (ground < 28.0f || bot->GetPositionZ() <= ground + 3.5f)  // same slack as BattlegroundRV::CheckPositionForUnit
++        return false;
++
++    if (groundZ)
++        *groundZ = ground;
++    return true;
++}
++
++bool ArenaTactics::dropToRingFloor(Battleground* bg)
++{
++    float ground;
++    if (!FloatingInRingOfValor(bot, &ground))
++        return false;
++
++    bot->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TELEPORTED | AURA_INTERRUPT_FLAG_CHANGE_MAP);
++    bot->TeleportTo(bg->GetMapId(), bot->GetPositionX(), bot->GetPositionY(), ground + 0.5f, bot->GetOrientation());
++    return true;
++}
++
+ bool ArenaTactics::Execute(Event /*event*/)
+ {
+     if (!bot->InBattleground())
+@@ -4272,7 +4314,7 @@ bool ArenaTactics::Execute(Event /*event*/)
+     if (bot->isDead())
+         return false;
+ 
+-    if (leaveDalaranPipe(bg))
++    if (leaveDalaranPipe(bg) || dropToRingFloor(bg))
+         return true;
+ 
+     if (bot->isMoving())
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 9ab722d4..53d2e486 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -143,12 +143,16 @@ public:
+ 
+     // Inside or on top of a Dalaran Sewers pipe once its two flushes are over; see leaveDalaranPipe.
+     static bool InDalaranPipe(Player* bot);
++    // Hanging in the air over the Ring of Valor floor or a pillar once the elevators are up; see dropToRingFloor.
++    static bool FloatingInRingOfValor(Player* bot, float* groundZ = nullptr);
++    static bool OffArenaFloor(Player* bot) { return InDalaranPipe(bot) || FloatingInRingOfValor(bot); }
+ 
+ private:
+     bool moveToCenter(Battleground* bg);
+     bool hideFromCaster();
+     bool chaseNearestEnemy(Battleground* bg);
+     bool leaveDalaranPipe(Battleground* bg);
++    bool dropToRingFloor(Battleground* bg);
+ };
+ 
+ #endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index a61f8dab..736227dd 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -88,7 +88,7 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(
+         new TriggerNode("no possible targets", { NextAction("arena tactics", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
+-    triggers.push_back(new TriggerNode("in dalaran pipe", { NextAction("arena tactics", ACTION_EMERGENCY + 6) }));
++    triggers.push_back(new TriggerNode("off arena floor", { NextAction("arena tactics", ACTION_EMERGENCY + 6) }));
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 7bb989cd..577a72b2 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -63,7 +63,7 @@ bool BgWaitingTrigger::IsActive()
+     return false;
+ }
+ 
+-bool InDalaranPipeTrigger::IsActive() { return ArenaTactics::InDalaranPipe(bot); }
++bool OffArenaFloorTrigger::IsActive() { return ArenaTactics::OffArenaFloor(bot); }
+ 
+ bool BgActiveTrigger::IsActive()
+ {
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.h b/src/Ai/Base/Trigger/PvpTriggers.h
+index ea5a28a9..b59aec7d 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.h
++++ b/src/Ai/Base/Trigger/PvpTriggers.h
+@@ -94,10 +94,10 @@ public:
+     bool IsActive() override;
+ };
+ 
+-class InDalaranPipeTrigger : public Trigger
++class OffArenaFloorTrigger : public Trigger
+ {
+ public:
+-    InDalaranPipeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "in dalaran pipe") {}
++    OffArenaFloorTrigger(PlayerbotAI* botAI) : Trigger(botAI, "off arena floor") {}
+ 
+     bool IsActive() override;
+ };
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index 4fb8ff52..f3921df1 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -194,7 +194,7 @@ public:
+ 
+         creators["bg waiting"] = &TriggerContext::bg_waiting;
+         creators["bg active"] = &TriggerContext::bg_active;
+-        creators["in dalaran pipe"] = &TriggerContext::in_dalaran_pipe;
++        creators["off arena floor"] = &TriggerContext::off_arena_floor;
+         creators["bg invite active"] = &TriggerContext::bg_invite_active;
+         creators["inside bg"] = &TriggerContext::inside_bg;
+         creators["player has no flag"] = &TriggerContext::player_has_no_flag;
+@@ -418,7 +418,7 @@ private:
+     static Trigger* new_player_nearby(PlayerbotAI* botAI) { return new NewPlayerNearbyTrigger(botAI); }
+     static Trigger* bg_waiting(PlayerbotAI* botAI) { return new BgWaitingTrigger(botAI); }
+     static Trigger* bg_active(PlayerbotAI* botAI) { return new BgActiveTrigger(botAI); }
+-    static Trigger* in_dalaran_pipe(PlayerbotAI* botAI) { return new InDalaranPipeTrigger(botAI); }
++    static Trigger* off_arena_floor(PlayerbotAI* botAI) { return new OffArenaFloorTrigger(botAI); }
+     static Trigger* bg_invite_active(PlayerbotAI* botAI) { return new BgInviteActiveTrigger(botAI); }
+     static Trigger* inside_bg(PlayerbotAI* botAI) { return new InsideBGTrigger(botAI); }
+     static Trigger* player_has_no_flag(PlayerbotAI* botAI) { return new PlayerHasNoFlag(botAI); }
+-- 
+2.55.0
+

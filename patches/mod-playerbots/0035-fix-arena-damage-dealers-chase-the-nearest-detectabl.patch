@@ -1,0 +1,84 @@
+From 68c70b58159c41653628fd2580504985416e2769 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 17:46:46 -0300
+Subject: [PATCH 35/43] fix: arena damage dealers chase the nearest detectable
+ enemy when none is in sight
+
+In combat with no possible target (enemies behind a pillar or the bridge),
+ArenaTactics returned without moving, so two healers could outlast each other
+for up to 37 minutes. A non-healer now walks to the nearest alive enemy it can
+detect (stealth still hides). Gated by Playerbots.ArenaPvpStrategies.
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 33 +++++++++++++++++++++
+ src/Ai/Base/Actions/BattleGroundTactics.h   |  1 +
+ 2 files changed, 34 insertions(+)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 48c68aec..b5ed2cdc 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -5,6 +5,9 @@
+  */
+ 
+ #include "BattleGroundTactics.h"
++
++#include <limits>
++
+ #include "ArenaHelpers.h"
+ #include "ArenaTeam.h"
+ #include "ArenaTeamMgr.h"
+@@ -4276,9 +4279,39 @@ bool ArenaTactics::Execute(Event /*event*/)
+     if (!bot->IsInCombat())
+         return moveToCenter(bg);
+ 
++    // In combat with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
++    // other for up to 37 minutes, so a damage dealer walks to the nearest enemy it can detect
++    if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target)
++        return chaseNearestEnemy(bg);
++
+     return true;
+ }
+ 
++bool ArenaTactics::chaseNearestEnemy(Battleground* bg)
++{
++    Player* nearest = nullptr;
++    float best = std::numeric_limits<float>::max();
++    for (auto const& [guid, player] : bg->GetPlayers())  // at most 10 players in an arena
++    {
++        if (!player || !player->IsAlive() || player->IsSpectator() || player->GetBgTeamId() == bot->GetBgTeamId() ||
++            !bot->CanSeeOrDetect(player))  // a stealthed enemy stays hidden, as for a player
++            continue;
++
++        float const dist = bot->GetExactDist(player);
++        if (dist < best)
++        {
++            best = dist;
++            nearest = player;
++        }
++    }
++
++    if (!nearest)
++        return true;
++
++    return MoveTo(nearest->GetMapId(), nearest->GetPositionX(), nearest->GetPositionY(), nearest->GetPositionZ(),
++                  false, true);
++}
++
+ // Healer under caster pressure steps behind the nearest cover (pillar, tomb, crate) that still
+ // keeps line of sight to its partner. Points are sampled on rings around the bot.
+ bool ArenaTactics::hideFromCaster()
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 0bd9f4c8..2a858770 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -144,6 +144,7 @@ public:
+ private:
+     bool moveToCenter(Battleground* bg);
+     bool hideFromCaster();
++    bool chaseNearestEnemy(Battleground* bg);
+ };
+ 
+ #endif
+-- 
+2.55.0
+

@@ -1,7 +1,7 @@
 From 232d049a3a8d208f1e6bf832a4eb83148802d567 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 08:44:10 -0300
-Subject: [PATCH 32/33] feat: arena observation v2 (any arena size: self, 2
+Subject: [PATCH 32/43] feat: arena observation v2 (any arena size: self, 2
  allies, 3 enemies)
 
 Six slots with the same fields (visible, class, hp, power, CC, PvP trinket ready,

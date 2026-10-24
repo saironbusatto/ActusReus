@@ -1,0 +1,61 @@
+From 8010b9d5f5294b14e8dab83467bbcb45728314f7 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 17:03:07 -0300
+Subject: [PATCH 34/43] fix: arena ML policy leaves movement, targeting and
+ upkeep to the rules
+
+The v2 net imitated every executed action, so the frequent upkeep actions
+(set facing, reach melee...) were boosted and "arena tactics" (chasing a target
+out of LoS, healer hiding) was starved in almost every class: RLS fell to 38%
+against 52% for the same trios on rules. Those actions now keep multiplier 1,
+and the range for the rest narrows from x0.25..x1.75 to x0.8..x1.25 so the net
+only breaks ties inside a priority band.
+---
+ src/Ai/Base/ArenaMlPolicy.h | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index f25e5e65..fe1c8229 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -76,6 +76,16 @@ namespace ai::arena
+         LogObservation(botAI, o, action, relevance, prob);
+     }
+ 
++    // Movement, targeting and upkeep stay with the rules: they are most of the logged actions, so an imitating net
++    // learns to boost them and starved "arena tactics" (chasing out of LoS, healer hiding) in almost every class.
++    // Keep in sync with RULE_OWNED in ml/policy/train_v2.py.
++    inline bool IsRuleOwned(std::string const& name)
++    {
++        static std::set<std::string> const owned = {"arena tactics", "drop target", "dps assist",
++                                                     "attack enemy player", "melee", "reset botAI"};
++        return owned.count(name) || name.rfind("set ", 0) == 0 || name.rfind("reach ", 0) == 0;
++    }
++
+     class ArenaMlMultiplier : public Multiplier
+     {
+     public:
+@@ -84,7 +94,7 @@ namespace ai::arena
+         float GetValue(Action* action) override
+         {
+             PolicyNetV2 const* net = ActivePolicy(botAI->GetBot());
+-            if (!net)
++            if (!net || IsRuleOwned(action->getName()))
+                 return 1.0f;
+ 
+             auto const it = net->index.find(action->getName());
+@@ -98,8 +108,9 @@ namespace ai::arena
+                 top = *std::max_element(probs.begin(), probs.end());
+                 lastTick = now;
+             }
+-            // Most likely action x1.75, unlikely ones down to x0.25; never 0, so the rules still decide edge cases
+-            return 0.25f + 1.5f * probs[it->second] / top;
++            // Most likely action x1.25, unlikely ones x0.8: the net breaks ties inside a priority band but can no
++            // longer reorder the hand-written priorities (the old x0.25..x1.75 range did, and lost fights)
++            return 0.8f + 0.45f * probs[it->second] / top;
+         }
+ 
+     private:
+-- 
+2.55.0
+

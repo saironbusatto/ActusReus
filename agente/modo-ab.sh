@@ -22,5 +22,5 @@ case "${1:-}" in
 esac
 
 python3 -c "import sys; sys.path.insert(0, '../ml/tools'); import wsconsole; wsconsole.run(['.saveall'])"
-docker compose restart ac-worldserver
+docker compose up -d --force-recreate ac-worldserver  # recreate: also picks up a freshly built image
 echo "modo $1 aplicado; bots online em ~2 min (MinRandomBots = $(grep -oP '^Playerbots.MinRandomBots = \K\d+' "$CONF"))"

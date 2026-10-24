@@ -1,0 +1,233 @@
+From 0d280fc96e7c26c8062d8e0e7da4dabc4a341e7e Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 22 Oct 2026 19:34:58 -0300
+Subject: [PATCH 36/43] feat: Arathi Basin defenders call out enemies at their
+ node in raid chat
+
+A raid group holding a node by order says in raid chat how many enemies are
+at the node (and that it is under attack when someone is in combat), so the
+leader can send help; one speaker per group, at most every 20 s unless more
+enemies arrive, and "clear" when they are gone. Opt-in via
+Playerbots.AbDefenderCallouts.
+---
+ conf/playerbots.conf.dist                     | 10 +++
+ src/Ai/Base/ActionContext.h                   |  3 +
+ src/Ai/Base/Actions/AbOrderAction.cpp         | 77 +++++++++++++++++++
+ src/Ai/Base/Actions/AbOrderAction.h           | 15 ++++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  2 +
+ src/PlayerbotAIConfig.cpp                     |  1 +
+ src/PlayerbotAIConfig.h                       |  1 +
+ 7 files changed, 109 insertions(+)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 96f94291..b6f5b8b9 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -506,6 +506,16 @@ Playerbots.ArenaPvpStrategies = 0
+ 
+ Playerbots.BgGiveLeaderToPlayer = 0
+ 
++#
++#    Playerbots.AbDefenderCallouts
++#        In Arathi Basin, a raid group holding a node by order ("ab t2 farm") calls out in raid chat when enemies
++#        show up there (one speaker per group, at most every 20 s unless more enemies arrive).
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.AbDefenderCallouts = 0
++
+ #
+ #    Playerbots.ArenaMlLog
+ #        Write one CSV line per executed arena action (state seen + action chosen) to the
+diff --git a/src/Ai/Base/ActionContext.h b/src/Ai/Base/ActionContext.h
+index e06aca12..41006464 100644
+--- a/src/Ai/Base/ActionContext.h
++++ b/src/Ai/Base/ActionContext.h
+@@ -14,6 +14,7 @@
+ #include "BattleGroundJoinAction.h"
+ #include "BattleGroundTactics.h"
+ #include "PassLeadershipToMasterAction.h"
++#include "AbOrderAction.h"
+ #include "BotStateActions.h"
+ #include "BuyAction.h"
+ #include "CancelChannelAction.h"
+@@ -227,6 +228,7 @@ public:
+         creators["bg select objective"] = &ActionContext::bg_select_objective;
+         creators["bg check objective"] = &ActionContext::bg_check_objective;
+         creators["bg give leader"] = &ActionContext::bg_give_leader;
++        creators["ab callout"] = &ActionContext::ab_callout;
+         creators["bg attack fc"] = &ActionContext::bg_attack_fc;
+         creators["bg protect fc"] = &ActionContext::bg_protect_fc;
+         creators["bg use buff"] = &ActionContext::bg_use_buff;
+@@ -436,6 +438,7 @@ private:
+     static Action* bg_select_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "select objective"); }
+     static Action* bg_check_objective(PlayerbotAI* botAI) { return new BGTactics(botAI, "check objective"); }
+     static Action* bg_give_leader(PlayerbotAI* botAI) { return new BgGiveLeaderAction(botAI); }
++    static Action* ab_callout(PlayerbotAI* botAI) { return new AbCalloutAction(botAI); }
+     static Action* bg_attack_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "attack fc"); }
+     static Action* bg_protect_fc(PlayerbotAI* botAI) { return new BGTactics(botAI, "protect fc"); }
+     static Action* attack_enemy_fc(PlayerbotAI* botAI) { return new AttackEnemyFlagCarrierAction(botAI); }
+diff --git a/src/Ai/Base/Actions/AbOrderAction.cpp b/src/Ai/Base/Actions/AbOrderAction.cpp
+index cf3ba58f..69d80f88 100644
+--- a/src/Ai/Base/Actions/AbOrderAction.cpp
++++ b/src/Ai/Base/Actions/AbOrderAction.cpp
+@@ -7,13 +7,18 @@
+ #include "AbOrderAction.h"
+ 
+ #include <algorithm>
++#include <ctime>
+ #include <sstream>
+ #include <unordered_map>
+ 
+ #include "Battleground.h"
++#include "BattlegroundAB.h"
+ #include "Event.h"
+ #include "Group.h"
++#include "GroupReference.h"
+ #include "Playerbots.h"
++#include "PlayerbotAIConfig.h"
++#include "PlayerbotTextMgr.h"
+ #include "PositionValue.h"
+ 
+ int AbOrderAction::ParseNode(std::string const& word)
+@@ -65,3 +70,75 @@ bool AbOrderAction::Execute(Event event)
+     context->GetValue<PositionMap&>("position")->Get()["bg objective"].Reset();
+     return true;
+ }
++
++namespace
++{
++    // The node (BG_AB_NODE_*) this bot was ordered to, when the order belongs to this battleground; -1 otherwise
++    int OrderedNode(Battleground* bg, uint32 order)
++    {
++        return order && (order >> 3) == bg->GetInstanceID() ? int(order & 7) - 1 : -1;
++    }
++}
++
++bool AbCalloutAction::isUseful()
++{
++    if (!sPlayerbotAIConfig.AbDefenderCallouts || !bot->IsAlive())
++        return false;
++
++    Battleground* bg = bot->GetBattleground();
++    return bg && bg->GetBgTypeID() == BATTLEGROUND_AB && bg->GetStatus() == STATUS_IN_PROGRESS &&
++           OrderedNode(bg, context->GetValue<uint32>("ab order")->Get()) >= 0;
++}
++
++bool AbCalloutAction::Execute(Event /*event*/)
++{
++    static char const* const names[] = {"Estábulo", "Ferreiro", "Fazenda", "Serraria", "Mina"};
++    float constexpr watch = 50.0f;  // yards around the flag
++
++    Battleground* bg = bot->GetBattleground();
++    int const node = OrderedNode(bg, context->GetValue<uint32>("ab order")->Get());
++    GameObject* flag = bg->GetBGObject(node * BG_AB_OBJECTS_PER_NODE);
++    if (!flag || !bot->IsWithinDist(flag, watch))
++        return false;  // still on the way: only a group holding the node speaks
++
++    // One speaker per raid subgroup: the lowest guid alive at the node
++    bool inCombat = bot->IsInCombat();
++    if (Group* group = bot->GetGroup())
++    {
++        uint8 const sub = group->GetMemberGroup(bot->GetGUID());
++        for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++        {
++            Player* member = ref->GetSource();
++            if (!member || member == bot || !member->IsAlive() || group->GetMemberGroup(member->GetGUID()) != sub ||
++                !member->IsWithinDist(flag, watch))
++                continue;
++
++            if (member->GetGUID() < bot->GetGUID())
++                return false;
++            inCombat = inCombat || member->IsInCombat();
++        }
++    }
++
++    uint32 count = 0;
++    for (auto const& [guid, player] : bg->GetPlayers())  // at most 30 players in Arathi Basin
++        if (player && player->IsAlive() && player->GetBgTeamId() != bot->GetBgTeamId() &&
++            player->IsWithinDist(flag, watch) && bot->CanSeeOrDetect(player))  // stealth still hides
++            ++count;
++
++    time_t const now = time(nullptr);
++    std::string text;
++    if (count && (count > lastCount || now - lastCallout >= 20))
++        text = PlayerbotTextMgr::instance().GetBotTextOrDefault(
++            inCombat ? "ab_node_under_attack" : "ab_node_threat",
++            inCombat ? "%node SOB ATAQUE: %count inimigo(s)!" : "%node: %count inimigo(s) chegando",
++            {{"%node", names[node]}, {"%count", std::to_string(count)}});
++    else if (!count && lastCount)
++        text = PlayerbotTextMgr::instance().GetBotTextOrDefault("ab_node_clear", "%node limpo", {{"%node", names[node]}});
++
++    lastCount = count;
++    if (text.empty())
++        return false;
++
++    lastCallout = now;
++    return botAI->SayToRaid(text);
++}
+diff --git a/src/Ai/Base/Actions/AbOrderAction.h b/src/Ai/Base/Actions/AbOrderAction.h
+index 336839d7..fd227d38 100644
+--- a/src/Ai/Base/Actions/AbOrderAction.h
++++ b/src/Ai/Base/Actions/AbOrderAction.h
+@@ -26,4 +26,19 @@ public:
+     static int ParseTarget(std::string const& word);
+ };
+ 
++// A group holding a node by order calls out in raid chat when enemies show up there, so the leader can send help.
++// One speaker per raid subgroup (lowest guid alive at the node), at most every 20 s unless more enemies arrive.
++class AbCalloutAction : public Action
++{
++public:
++    AbCalloutAction(PlayerbotAI* botAI) : Action(botAI, "ab callout") {}
++
++    bool Execute(Event event) override;
++    bool isUseful() override;
++
++private:
++    time_t lastCallout = 0;
++    uint32 lastCount = 0;
++};
++
+ #endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 22f23da9..42aec60b 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -45,6 +45,8 @@ void AlteracStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ 
+ void ArathiStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
++    // Instant and silent unless enemies are at the held node, so it may sit above the combat rotation
++    triggers.push_back(new TriggerNode("often", { NextAction("ab callout", ACTION_EMERGENCY + 1)}));
+     triggers.push_back(new TriggerNode("bg active", { NextAction("bg check flag", ACTION_EMERGENCY)}));
+     triggers.push_back(new TriggerNode("often", { NextAction("bg use buff", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("low health", { NextAction("bg use buff", ACTION_MOVE)}));
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index 5f6a9ce7..424e7d72 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -134,6 +134,7 @@ bool PlayerbotAIConfig::Initialize()
+     AutoSaveMana = sConfigMgr->GetOption<bool>("Playerbots.AutoSaveMana", true);
+     ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
+     BgGiveLeaderToPlayer = sConfigMgr->GetOption<bool>("Playerbots.BgGiveLeaderToPlayer", false);
++    AbDefenderCallouts = sConfigMgr->GetOption<bool>("Playerbots.AbDefenderCallouts", false);
+     ArenaMlLog = sConfigMgr->GetOption<bool>("Playerbots.ArenaMlLog", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+     switch (sConfigMgr->GetOption<uint32>("Playerbots.AutoGreaterBlessings", 1))
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index f4324909..dd79d2d6 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -119,6 +119,7 @@ public:
+     bool ArenaPvpStrategies;
+     bool ArenaMlLog;
+     bool BgGiveLeaderToPlayer;
++    bool AbDefenderCallouts;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+     AutoPartyBuffMode AutoPartyBuffs;
+-- 
+2.55.0
+
