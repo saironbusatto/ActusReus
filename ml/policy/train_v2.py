@@ -31,7 +31,7 @@ def parse_log(path: Path) -> list[tuple[dt.datetime, dict]]:
     rows = []
     for line in path.open(errors="replace"):
         parts = line.rstrip("\n").split(" ", 2)
-        if len(parts) < 3 or not parts[2].startswith("v2,"):
+        if len(parts) < 3 or not parts[2].startswith(("v2,", "v3,")):
             continue
         r = parse_v2(parts[2])
         if r:

@@ -1,7 +1,7 @@
 From ea1f063b93ccd4de4170bdd1526abf8d0ac52ce7 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Fri, 23 Oct 2026 00:05:25 -0300
-Subject: [PATCH 42/43] fix: bots no longer camp in the Dalaran Sewers pipes
+Subject: [PATCH 42/44] fix: bots no longer camp in the Dalaran Sewers pipes
 
 The pipes flush only twice (5 s, 8 s); the 5347/5348 area triggers that
 re-arm the flush and strip Demonic Circle are sent only by real clients.

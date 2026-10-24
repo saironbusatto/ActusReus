@@ -1,7 +1,7 @@
 From fb220f34c5a3d6bf9359748b23cc7cc8fb310843 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 20:47:47 -0300
-Subject: [PATCH 25/43] fix: PvP trinket and partner-burst CC triggers only
+Subject: [PATCH 25/44] fix: PvP trinket and partner-burst CC triggers only
  fire when the action can run
 
 ---

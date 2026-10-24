@@ -1,7 +1,7 @@
 From cab1a6370f4865ded70339d6239e4be6c045a22e Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 22:46:34 -0300
-Subject: [PATCH 39/43] fix: bots ride the Ring of Valor elevators and the
+Subject: [PATCH 39/44] fix: bots ride the Ring of Valor elevators and the
  Dalaran Sewers pipes
 
 Bots moved as soon as the gates opened and slid through the elevator shaft

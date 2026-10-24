@@ -1,7 +1,7 @@
 From 9a2a770d40263970e8e6cbcb75d4ca2716680261 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 01:15:06 -0300
-Subject: [PATCH 06/43] fix: rename CastDeathCoilAction to
+Subject: [PATCH 06/44] fix: rename CastDeathCoilAction to
  CastWarlockDeathCoilAction to prevent collision with DK
 
 ---

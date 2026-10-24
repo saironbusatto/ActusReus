@@ -49,13 +49,21 @@ N_SLOTS_V2 = 6
 N_FEATURES_V2 = N_SLOTS_V2 * (2 + len(CLASSES_V2) + 2 + CC_BITS + 5) + 1
 
 
+# v3 = v2 + mode (1 = a rede escolheu, prob = chance que ela deu entre os candidatos), placar acumulado do bot na arena
+HEADER_V3 = HEADER_V2 + ["mode", "damage", "healing", "kills"]
+
+
 def parse_v2(csv: str) -> dict | None:
-    """Uma linha v2 (sem o prefixo de data) -> dict com 'slots' (lista de 6 dicts); None se não for v2."""
+    """Uma linha v2 ou v3 (sem o prefixo de data) -> dict com 'slots' (lista de 6 dicts); None se não for v2/v3.
+    Linhas v2 ganham mode 0 e placar ausente (None)."""
     v = csv.strip().split(",")
-    if len(v) != len(HEADER_V2) + N_SLOTS_V2 * len(SLOT_V2) or v[0] != "v2":
+    header = {"v2": HEADER_V2, "v3": HEADER_V3}.get(v[0])
+    if not header or len(v) != len(header) + N_SLOTS_V2 * len(SLOT_V2):
         return None
-    r = {k: (x if k in ("tag", "action") else float(x)) for k, x in zip(HEADER_V2, v)}
-    base = len(HEADER_V2)
+    r = {k: (x if k in ("tag", "action") else float(x)) for k, x in zip(header, v)}
+    if v[0] == "v2":
+        r.update(mode=0.0, damage=None, healing=None, kills=None)
+    base = len(header)
     r["slots"] = [{k: int(x) for k, x in zip(SLOT_V2, v[base + i * len(SLOT_V2):base + (i + 1) * len(SLOT_V2)])}
                   for i in range(N_SLOTS_V2)]
     return r
@@ -86,6 +94,9 @@ def _selftest_v2() -> None:
     assert v[2 * per] == 0.0 and v[3 * per + 1] == 0.0                         # posição vazia; inimigo invisível
     assert v[3 * per + 14 + 5] == 1.0 and v[-1] == 1.0                         # inimigo castando; kill window
     assert parse_v2("1,2,3") is None
+    r3 = parse_v2(",".join(["v3,123,7,1001,fear,40.0,0.420,1,1,5200,10,1", eu, aliado, vazio, inimigo, vazio, vazio]))
+    assert r3["mode"] == 1 and r3["prob"] == 0.42 and r3["damage"] == 5200 and features_v2(r3) == v
+    assert r["mode"] == 0 and r["damage"] is None
 
 
 if __name__ == "__main__":

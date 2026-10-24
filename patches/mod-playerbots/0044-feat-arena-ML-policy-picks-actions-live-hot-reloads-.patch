@@ -1,0 +1,467 @@
+From 26be3f0c6bc485a9777c5111c5a492444535dbc5 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sat, 24 Oct 2026 11:35:21 -0300
+Subject: [PATCH 44/44] feat: arena ML policy picks actions live, hot-reloads
+ weights, champion/challenger
+
+The ArenaMlMultiplier rescaled relevance after the queue had already chosen,
+so it never changed which action ran. Instead, on a Playerbots.ArenaMlControl
+share of ticks the net samples one of the combat actions the rules queued
+(never emergencies or rule-owned movement/targeting) and lifts it to the top.
+
+- Weight files and team lists are re-read every 10 s (no restart for a new
+  policy); a second policy (ArenaMlChallengerFile/Teams) plays beside the
+  champion for live A/B against the rules.
+- Decision log v3 adds who decided (rules or net, with the net's probability)
+  and the bot's running arena damage/healing/killing blows, so the live
+  trainer can grade every decision.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ conf/playerbots.conf.dist                     |  24 +-
+ src/Ai/Base/ArenaMlPolicy.h                   | 239 ++++++++++++------
+ src/Ai/Base/ArenaObservation.h                |  28 +-
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |   6 -
+ src/Ai/Base/Strategy/BattlegroundStrategy.h   |   1 -
+ src/Bot/Engine/Engine.cpp                     |   6 +-
+ src/Script/WorldThr/Queue.h                   |   5 +
+ 7 files changed, 215 insertions(+), 94 deletions(-)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index abb1ec8f..c1dfc297 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -542,15 +542,29 @@ Playerbots.ArenaMlLog = 0
+ #
+ #    Playerbots.ArenaMlPolicyFile
+ #    Playerbots.ArenaMlTeams
+-#        Learned arena policy ("arena-policy v2" weights file written by ml/policy/train_v2.py) and the
+-#        comma-separated arena team ids (2v2 or 3v3) that use it. The policy only rescales the actions
+-#        the arena strategies queue; teams not listed keep the rules alone, which gives a mirror test
+-#        (policy vs rules).
+-#        Default: "" and "" - Disabled
++#    Playerbots.ArenaMlChallengerFile
++#    Playerbots.ArenaMlChallengerTeams
++#        Learned arena policies ("arena-policy v2" weights files) and the comma-separated arena team ids
++#        (2v2 or 3v3) that play with each: the champion, and a challenger a live trainer keeps rewriting.
++#        Teams not listed keep the rules alone, which gives a mirror test (policy vs rules). Weight files
++#        and these lists are re-read every 10 s, so a new policy needs no restart.
++#        Default: "" - Disabled
+ #
+ 
+ Playerbots.ArenaMlPolicyFile = ""
+ Playerbots.ArenaMlTeams = ""
++Playerbots.ArenaMlChallengerFile = ""
++Playerbots.ArenaMlChallengerTeams = ""
++
++#
++#    Playerbots.ArenaMlControl
++#        Share of engine ticks (0.0 - 1.0) on which the learned policy of a listed team picks which
++#        queued combat action runs (sampled from its probabilities). Movement, targeting and actions at
++#        emergency priority always stay with the rules. Re-read every 10 s.
++#        Default: 0.0 - The policy never picks
++#
++
++Playerbots.ArenaMlControl = 0.0
+ 
+ # Healer bot save mana threshold
+ # Default: 60 (60%)
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index fe1c8229..ab52b4ba 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -7,73 +7,132 @@
+ #ifndef PLAYERBOTS_ARENAMLPOLICY_H
+ #define PLAYERBOTS_ARENAMLPOLICY_H
+ 
++#include <atomic>
++#include <filesystem>
++#include <memory>
++#include <mutex>
++#include <random>
+ #include <set>
+ 
+ #include "ArenaMlNet.h"
+ #include "ArenaObservation.h"
+-#include "Multiplier.h"
+ #include "Config.h"
+ #include "Helpers.h"
++#include "Queue.h"
++#include "Strategy.h"
+ 
+-// Learned arena policy (ArenaMlNet.h, any arena size). It never adds actions; it rescales the relevance of the
+-// actions the rule strategies already queued, so the rules stay as the fallback. Only bots whose arena team
+-// (2v2 or 3v3) is in Playerbots.ArenaMlTeams use it.
++// Learned arena policy (ArenaMlNet.h, any arena size) for the bots whose arena team is listed in
++// Playerbots.ArenaMlTeams (champion weights) or Playerbots.ArenaMlChallengerTeams (challenger weights).
++// On a share of the engine ticks (Playerbots.ArenaMlControl) the net picks, among the combat actions the rules
++// queued this tick, which one runs; the rest of the time, and for movement, targeting and emergencies, the rules
++// decide. Weight files are re-read when they change on disk (ml/policy/live.py rewrites them while bots play),
++// so a new policy needs no restart.
+ namespace ai::arena
+ {
+-    inline PolicyNetV2 const& Policy()
++    using PolicyPtr = std::shared_ptr<PolicyNetV2 const>;
++
++    struct MlSettings
+     {
+-        static PolicyNetV2 const net = []
+-        {
+-            std::string const path = sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", "");
+-            PolicyNetV2 n(path);
+-            if (n.ok && n.InputSize() != 151)
+-                n.ok = false;  // trained on another observation layout than FeaturesV2
+-            if (n.ok)
+-                LOG_INFO("playerbots", "ArenaMlPolicy: '{}' loaded ({} actions)", path, n.nOut);
+-            else
+-                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or not arena-policy v2)", path);
+-            return n;
+-        }();
+-        return net;  // loaded once, first use
+-    }
++        std::set<uint32> champion, challenger;
++        float control = 0.0f;
++    };
+ 
+-    inline std::set<uint32> const& MlTeams()
++    class MlPolicies
+     {
+-        static std::set<uint32> const teams = []
++    public:
++        static MlPolicies& Instance()
+         {
+-            std::set<uint32> ids;
+-            for (std::string id : split(sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlTeams", ""), ','))
+-                if (!trim(id).empty())
+-                    ids.insert(uint32(std::stoul(id)));
+-            return ids;
+-        }();
+-        return teams;
+-    }
++            static MlPolicies instance;
++            return instance;
++        }
++
++        // Cheap on every call; at most every 10 s one map thread re-reads the config and the changed weight files
++        void Refresh()
++        {
++            uint64 const now = GameTime::GetGameTimeMS().count();
++            uint64 last = lastCheck.load(std::memory_order_relaxed);
++            if (now - last < 10000 || !lastCheck.compare_exchange_strong(last, now))
++                return;
++
++            std::lock_guard<std::mutex> guard(lock);
++            auto teams = [](char const* key)
++            {
++                std::set<uint32> ids;
++                for (std::string id : split(sConfigMgr->GetOption<std::string>(key, ""), ','))
++                    if (!trim(id).empty())
++                        ids.insert(uint32(std::stoul(id)));
++                return ids;
++            };
++            auto s = std::make_shared<MlSettings>();
++            s->champion = teams("Playerbots.ArenaMlTeams");
++            s->challenger = teams("Playerbots.ArenaMlChallengerTeams");
++            s->control = std::clamp(sConfigMgr->GetOption<float>("Playerbots.ArenaMlControl", 0.0f), 0.0f, 1.0f);
++            std::atomic_store(&settings, std::shared_ptr<MlSettings const>(s));
++            Reload(championFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", ""));
++            Reload(challengerFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlChallengerFile", ""));
++        }
++
++        std::shared_ptr<MlSettings const> Settings() const { return std::atomic_load(&settings); }
++        PolicyPtr Champion() const { return std::atomic_load(&championFile.net); }
++        PolicyPtr Challenger() const { return std::atomic_load(&challengerFile.net); }
++
++    private:
++        struct WeightFile
++        {
++            std::string path;
++            std::filesystem::file_time_type mtime{};
++            PolicyPtr net;
++        };
++
++        static void Reload(WeightFile& file, std::string const& path)
++        {
++            std::error_code ec;
++            auto const mtime = path.empty() ? std::filesystem::file_time_type{}
++                                            : std::filesystem::last_write_time(path, ec);
++            if (ec || (path == file.path && mtime == file.mtime))
++                return;  // unchanged, or mid-rename: keep the weights in use
+ 
+-    // The policy to use for this bot right now, or nullptr when the rules decide alone
+-    inline PolicyNetV2 const* ActivePolicy(Player* bot)
++            file.path = path;
++            file.mtime = mtime;
++            if (path.empty())
++            {
++                std::atomic_store(&file.net, PolicyPtr());
++                return;
++            }
++            auto net = std::make_shared<PolicyNetV2>(path);
++            if (net->ok && net->InputSize() == 151)
++            {
++                std::atomic_store(&file.net, PolicyPtr(net));
++                LOG_INFO("playerbots", "ArenaMlPolicy: '{}' loaded ({} actions)", path, net->nOut);
++            }
++            else
++                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or not arena-policy v2), keeping "
++                                        "the previous weights", path);
++        }
++
++        std::atomic<uint64> lastCheck{0};
++        std::mutex lock;
++        std::shared_ptr<MlSettings const> settings = std::make_shared<MlSettings>();
++        WeightFile championFile, challengerFile;
++    };
++
++    // The policy this bot plays with right now, or nullptr when the rules decide alone
++    inline PolicyPtr ActivePolicy(Player* bot)
+     {
+-        if (MlTeams().empty() || !bot->InArena())
++        if (!bot->InArena())
+             return nullptr;
++        MlPolicies& p = MlPolicies::Instance();
++        p.Refresh();
++        auto const s = p.Settings();
+         for (uint8 slot = 0; slot < 3; ++slot)  // 2v2, 3v3, 5v5 team slots
+-            if (MlTeams().count(bot->GetArenaTeamId(slot)))
+-                return Policy().ok ? &Policy() : nullptr;
+-        return nullptr;
+-    }
+-
+-    // Engine hook for each executed arena action: logs it with the probability the policy gave it
+-    // (1 when only the rules decided, as LogObservation expects)
+-    inline void LogDecision(PlayerbotAI* botAI, Action* action, float relevance)
+-    {
+-        ArenaObsV2 const o = CollectObservationV2(botAI);
+-        float prob = 1.0f;
+-        if (PolicyNetV2 const* net = ActivePolicy(botAI->GetBot()))
+         {
+-            auto const it = net->index.find(action->getName());
+-            if (it != net->index.end())
+-                prob = net->Probabilities(FeaturesV2(o))[it->second];
++            uint32 const team = bot->GetArenaTeamId(slot);
++            if (s->challenger.count(team))
++                return p.Challenger();
++            if (s->champion.count(team))
++                return p.Champion();
+         }
+-        LogObservation(botAI, o, action, relevance, prob);
++        return nullptr;
+     }
+ 
+     // Movement, targeting and upkeep stay with the rules: they are most of the logged actions, so an imitating net
+@@ -86,38 +145,68 @@ namespace ai::arena
+         return owned.count(name) || name.rfind("set ", 0) == 0 || name.rfind("reach ", 0) == 0;
+     }
+ 
+-    class ArenaMlMultiplier : public Multiplier
++    // What the net decided this tick, for the decision log: the action it picked and the probability it gave it
++    // among the queued candidates (the behaviour probability the live trainer needs). Empty when the rules decided.
++    struct NetPickResult
+     {
+-    public:
+-        ArenaMlMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "arena ml") {}
+-
+-        float GetValue(Action* action) override
+-        {
+-            PolicyNetV2 const* net = ActivePolicy(botAI->GetBot());
+-            if (!net || IsRuleOwned(action->getName()))
+-                return 1.0f;
++        std::string action;
++        float prob = 1.0f;
++    };
+ 
+-            auto const it = net->index.find(action->getName());
+-            if (it == net->index.end())
+-                return 1.0f;  // action the policy never saw: leave it to the rules
++    // Before the engine pops its queue: on a Playerbots.ArenaMlControl share of ticks, sample one queued combat
++    // action from the net (only among non-emergency, non rule-owned actions the rules triggered this tick) and lift
++    // it just above the other candidates, so it runs unless it is impossible right now.
++    inline NetPickResult NetPick(PlayerbotAI* botAI, Queue& queue)
++    {
++        NetPickResult pick;
++        PolicyPtr const net = ActivePolicy(botAI->GetBot());
++        if (!net)
++            return pick;
++        float const control = MlPolicies::Instance().Settings()->control;
++        thread_local std::mt19937 rng{std::random_device{}()};
++        if (control <= 0.0f || std::uniform_real_distribution<float>(0.0f, 1.0f)(rng) >= control)
++            return pick;
+ 
+-            uint64 const now = GameTime::GetGameTimeMS().count();
+-            if (now != lastTick)  // one forward pass per engine tick, not per candidate action
+-            {
+-                probs = net->Probabilities(FeaturesV2(CollectObservationV2(botAI)));
+-                top = *std::max_element(probs.begin(), probs.end());
+-                lastTick = now;
+-            }
+-            // Most likely action x1.25, unlikely ones x0.8: the net breaks ties inside a priority band but can no
+-            // longer reorder the hand-written priorities (the old x0.25..x1.75 range did, and lost fights)
+-            return 0.8f + 0.45f * probs[it->second] / top;
++        std::vector<ActionBasket*> candidates;
++        std::vector<int> ids;
++        float top = 0.0f;
++        for (ActionBasket* basket : queue.Items())
++        {
++            if (!basket || !basket->getAction() || basket->getRelevance() >= ACTION_EMERGENCY)
++                continue;
++            std::string const& name = basket->getAction()->getName();
++            auto const it = net->index.find(name);
++            if (it == net->index.end() || IsRuleOwned(name))
++                continue;
++            candidates.push_back(basket);
++            ids.push_back(it->second);
++            top = std::max(top, basket->getRelevance());
+         }
++        if (candidates.size() < 2)
++            return pick;  // nothing to choose between
+ 
+-    private:
+-        uint64 lastTick = 0;
+-        std::vector<float> probs;
+-        float top = 1.0f;
+-    };
++        std::vector<float> const probs = net->Probabilities(FeaturesV2(CollectObservationV2(botAI)));
++        std::vector<float> w;
++        float sum = 0.0f;
++        for (int id : ids)
++            sum += w.emplace_back(probs[id]);
++        if (sum <= 0.0f)
++            return pick;
++        size_t const chosen = std::discrete_distribution<size_t>(w.begin(), w.end())(rng);
++        candidates[chosen]->setRelevance(top + 0.01f);
++        pick.action = candidates[chosen]->getAction()->getName();
++        pick.prob = w[chosen] / sum;
++        return pick;
++    }
++
++    // Engine hook for each executed arena action. mode 1 = the net picked it (prob = its share among the queued
++    // candidates), mode 0 = the rules did (prob 1).
++    inline void LogDecision(PlayerbotAI* botAI, Action* action, float relevance, NetPickResult const& pick)
++    {
++        bool const byNet = !pick.action.empty() && pick.action == action->getName();
++        LogObservation(botAI, CollectObservationV2(botAI), action, relevance, byNet ? pick.prob : 1.0f,
++                       byNet ? 1 : 0);
++    }
+ }
+ 
+ #endif
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+index c3f0f002..b0bea005 100644
+--- a/src/Ai/Base/ArenaObservation.h
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -114,15 +114,31 @@ namespace ai::arena
+     }
+ 
+     // One CSV line per executed arena action:
+-    // v2,ms,instance,bot,action,relevance,prob,killwindow, then 6 slots of
++    // v3,ms,instance,bot,action,relevance,prob,killwindow,mode,damage,healing,kills, then 6 slots of
+     // present,visible,guid,class,hp,power,cc,trinket,defensive,dist,los,istarget
+-    // prob = probability the learned policy gave this action (1 when only the rules decided).
+-    inline void LogObservation(PlayerbotAI* botAI, ArenaObsV2 const& o, Action* action, float relevance, float prob)
++    // mode 1 = the learned policy picked the action and prob is the probability it gave it among the queued
++    // candidates; mode 0 = the rules picked it (prob 1). damage/healing/kills are the bot's running arena scoreboard
++    // totals, so the trainer can credit each decision with what changed until the next one.
++    inline void LogObservation(PlayerbotAI* botAI, ArenaObsV2 const& o, Action* action, float relevance, float prob,
++                               int mode)
+     {
+         Player* bot = botAI->GetBot();
+-        std::string line = fmt::format("v2,{},{},{},{},{:.1f},{:.3f},{}", GameTime::GetGameTimeMS().count(),
+-                                       bot->GetInstanceId(), bot->GetGUID().GetCounter(), action->getName(),
+-                                       relevance, prob, o.killWindow);
++        uint32 damage = 0, healing = 0, kills = 0;
++        if (Battleground* bg = bot->GetBattleground())
++        {
++            auto const scores = bg->GetPlayerScores();
++            auto const it = scores->find(bot->GetGUID().GetCounter());
++            if (it != scores->end() && it->second)
++            {
++                damage = it->second->GetDamageDone();
++                healing = it->second->GetHealingDone();
++                kills = it->second->GetKillingBlows();
++            }
++        }
++        std::string line = fmt::format("v3,{},{},{},{},{:.1f},{:.3f},{},{},{},{},{}",
++                                       GameTime::GetGameTimeMS().count(), bot->GetInstanceId(),
++                                       bot->GetGUID().GetCounter(), action->getName(), relevance, prob, o.killWindow,
++                                       mode, damage, healing, kills);
+         for (UnitObs const& s : o.slot)
+             line += fmt::format(",{},{},{},{},{},{},{},{},{},{},{},{}", s.present, s.visible, s.guid, s.cls, s.hp,
+                                 s.power, s.cc, s.trinket, s.defensive, s.dist, s.los, s.isTarget);
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 736227dd..0b31203d 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -5,7 +5,6 @@
+  */
+ 
+ #include "BattlegroundStrategy.h"
+-#include "ArenaMlPolicy.h"
+ #include "Playerbots.h"
+ 
+ void BGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+@@ -93,8 +92,3 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
+ }
+-
+-void ArenaStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
+-{
+-    multipliers.push_back(new ai::arena::ArenaMlMultiplier(botAI));
+-}
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.h b/src/Ai/Base/Strategy/BattlegroundStrategy.h
+index f30cdda2..96867264 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.h
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.h
+@@ -86,7 +86,6 @@ public:
+ 
+     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
+     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
+-    void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
+     std::string const getName() override { return "arena"; }
+ };
+ 
+diff --git a/src/Bot/Engine/Engine.cpp b/src/Bot/Engine/Engine.cpp
+index 46f633db..81885100 100644
+--- a/src/Bot/Engine/Engine.cpp
++++ b/src/Bot/Engine/Engine.cpp
+@@ -159,6 +159,10 @@ bool Engine::DoNextAction(Unit* /*unit*/, uint32 /*depth*/, bool minimal)
+     ProcessTriggers(minimal);
+     PushDefaultActions();
+ 
++    // Arena teams with a learned policy: on part of the ticks the net picks which queued combat action runs
++    ai::arena::NetPickResult const mlPick =
++        botAI->GetBot()->InArena() ? ai::arena::NetPick(botAI, queue) : ai::arena::NetPickResult();
++
+     uint32 iterations = 0;
+     uint32 iterationsPerTick = queue.Size() * (minimal ? 2 : sPlayerbotAIConfig.IterationsPerTick);
+ 
+@@ -228,7 +232,7 @@ bool Engine::DoNextAction(Unit* /*unit*/, uint32 /*depth*/, bool minimal)
+                 {
+                     LogAction("A:%s - OK", action->getName().c_str());
+                     if (sPlayerbotAIConfig.ArenaMlLog && botAI->GetBot()->InArena())
+-                        ai::arena::LogDecision(botAI, action, relevance);
++                        ai::arena::LogDecision(botAI, action, relevance, mlPick);
+                     MultiplyAndPush(actionNode->getContinuers(), relevance, false, event, "cont");
+                     lastRelevance = relevance;
+                     delete actionNode;  // Safe memory management
+diff --git a/src/Script/WorldThr/Queue.h b/src/Script/WorldThr/Queue.h
+index e285baed..61c60983 100644
+--- a/src/Script/WorldThr/Queue.h
++++ b/src/Script/WorldThr/Queue.h
+@@ -54,6 +54,11 @@ public:
+      */
+     uint32 Size();
+ 
++    /**
++     * @brief Read access to the queued baskets (the arena policy re-ranks them before the engine pops)
++     */
++    std::list<ActionBasket*> const& Items() const { return actions; }
++
+     /**
+      * @brief Removes and deletes expired actions from the queue
+      *
+-- 
+2.55.0
+
