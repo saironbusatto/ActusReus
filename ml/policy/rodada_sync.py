@@ -108,6 +108,28 @@ def espera_aval(rid: str) -> bool:
     return False
 
 
+def atualiza_evolucao() -> list[dict]:
+    """evolucao.json: por rodada sincronizada, vitórias/derrotas de cada tipo de trio na rodada e no acumulado
+    (o gráfico do artefato). Seu trio fica fora."""
+    acum = {p: [0, 0] for p in ("campea", "desafiante", "regras")}
+    linhas = []
+    for f in sorted(RUNS.glob("R[0-9][0-9][0-9][0-9].json")):
+        d = json.loads(f.read_text())
+        if not d.get("total_lutas") or d["id"] == "R0000":  # R0000 foi a demonstração com uma luta só
+            continue
+        ronda = {p: [0, 0] for p in acum}
+        for t in d["trios"]:
+            if t["papel"] in ronda:
+                ronda[t["papel"]][0] += t["vitorias"]
+                ronda[t["papel"]][1] += t["vitorias"] + t["derrotas"]
+        for p, (v, n) in ronda.items():
+            acum[p][0] += v
+            acum[p][1] += n
+        linhas.append({"id": d["id"], "inicio": d["inicio"], "rodada": ronda, "acumulado": {p: list(x) for p, x in acum.items()}})
+    (RUNS / "evolucao.json").write_text(json.dumps(linhas, ensure_ascii=False))
+    return linhas
+
+
 def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     rid, t0 = f"R{n:04d}", agora()
     ARQ_RODADA.write_text(rid + "\n")
@@ -132,6 +154,7 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
         return rodada(n, pool)
     analises = {fid: f.result() for fid, f in futuros.items()}
     grava(rid, t0, lutas, analises)
+    atualiza_evolucao()
     espera_aval(rid)
     ok = sum(1 for a in analises.values() if "erro" not in a)
     print(f"{agora():%H:%M:%S} {rid} fechada: {len(lutas)} lutas, {ok} analisadas, faltaram {sorted(faltam)}",
