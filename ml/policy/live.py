@@ -288,7 +288,7 @@ class LogTail:
         end = chunk.rfind(b"\n") + 1  # linha incompleta fica para a próxima leitura
         for line in chunk[:end].decode(errors="replace").splitlines():
             parts = line.split(" ", 2)
-            if len(parts) == 3 and parts[2].startswith("v3,"):
+            if len(parts) == 3 and parts[2].startswith(("v3,", "v4,")):
                 r = parse_v2(parts[2])
                 if r:
                     out.append((dt.datetime.strptime(f"{parts[0]} {parts[1]}", "%Y-%m-%d %H:%M:%S"), r))

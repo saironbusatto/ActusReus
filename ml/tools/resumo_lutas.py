@@ -59,7 +59,7 @@ def read_lines(start: dt.datetime, end: dt.datetime, guids: set[int] | None) -> 
     rows = []
     for line in out.splitlines():
         parts = line.split(" ", 2)
-        if len(parts) < 3 or not parts[2].startswith("v3,"):
+        if len(parts) < 3 or not parts[2].startswith(("v3,", "v4,")):
             continue
         r = parse_v2(parts[2])
         if not r or (guids is not None and int(r["bot"]) not in guids):

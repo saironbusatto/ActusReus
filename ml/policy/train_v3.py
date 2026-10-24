@@ -52,7 +52,7 @@ def load_labeled_data(log_path: Path, since: dt.datetime | None = None) -> list[
             if not line.startswith("2026-10-"):
                 continue
             parts = line.rstrip("\n").split(" ", 2)
-            if len(parts) < 3 or not parts[2].startswith(("v2,", "v3,")):
+            if len(parts) < 3 or not parts[2].startswith(("v2,", "v3,", "v4,")):
                 continue
             when = parse_dt(parts[0], parts[1])
             if since and when < since:

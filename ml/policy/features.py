@@ -51,20 +51,25 @@ N_FEATURES_V2 = N_SLOTS_V2 * (2 + len(CLASSES_V2) + 2 + CC_BITS + 5) + 1
 
 # v3 = v2 + mode (1 = a rede escolheu, prob = chance que ela deu entre os candidatos), placar acumulado do bot na arena
 HEADER_V3 = HEADER_V2 + ["mode", "damage", "healing", "kills"]
+# v4 = cabeçalho v3; cada posição ganha DR (0-3) de stun/fear/incap/silence, CC restante (ms) e interrupt/CC/defensivo
+# prontos (ArenaObservation.h ObserveCooldowns)
+SLOT_V4 = SLOT_V2 + ["drstun", "drfear", "drincap", "drsilence", "ccleft", "kickready", "ccready", "defready"]
+N_FEATURES_V4 = N_SLOTS_V2 * (2 + len(CLASSES_V2) + 2 + CC_BITS + 5 + 8) + 1
 
 
 def parse_v2(csv: str) -> dict | None:
     """Uma linha v2 ou v3 (sem o prefixo de data) -> dict com 'slots' (lista de 6 dicts); None se não for v2/v3.
     Linhas v2 ganham mode 0 e placar ausente (None)."""
     v = csv.strip().split(",")
-    header = {"v2": HEADER_V2, "v3": HEADER_V3}.get(v[0])
-    if not header or len(v) != len(header) + N_SLOTS_V2 * len(SLOT_V2):
+    header = {"v2": HEADER_V2, "v3": HEADER_V3, "v4": HEADER_V3}.get(v[0])
+    slot_cols = SLOT_V4 if v[0] == "v4" else SLOT_V2
+    if not header or len(v) != len(header) + N_SLOTS_V2 * len(slot_cols):
         return None
     r = {k: (x if k in ("tag", "action") else float(x)) for k, x in zip(header, v)}
     if v[0] == "v2":
         r.update(mode=0.0, damage=None, healing=None, kills=None)
     base = len(header)
-    r["slots"] = [{k: int(x) for k, x in zip(SLOT_V2, v[base + i * len(SLOT_V2):base + (i + 1) * len(SLOT_V2)])}
+    r["slots"] = [{k: int(x) for k, x in zip(slot_cols, v[base + i * len(slot_cols):base + (i + 1) * len(slot_cols)])}
                   for i in range(N_SLOTS_V2)]
     return r
 
@@ -76,6 +81,19 @@ def features_v2(r: dict) -> list[float]:
         f += [s["hp"] / 100, max(s["power"], 0) / 100] + bits(s["cc"])
         f += [float(s["trinket"]), float(s["defensive"]), min(max(s["dist"], 0), 40) / 40, float(s["los"] == 1),
               float(s["istarget"])]
+    return f + [float(r["killwindow"])]
+
+
+def features_v4(r: dict) -> list[float]:
+    """199 valores: por posição os 25 da v2 + DR/3, CC restante/8 s, interrupt/CC/defensivo prontos; kill window no fim.
+    Mesma ordem de ArenaObservation.h FeaturesV4. Linhas sem os campos v4 ficam com zeros neles."""
+    base = features_v2(r)
+    per = (N_FEATURES_V2 - 1) // N_SLOTS_V2
+    f = []
+    for i, s in enumerate(r["slots"]):
+        f += base[i * per:(i + 1) * per]
+        f += [min(s.get(k, 0), 3) / 3 for k in ("drstun", "drfear", "drincap", "drsilence")]
+        f += [min(s.get("ccleft", 0), 8000) / 8000] + [float(s.get(k, 0)) for k in ("kickready", "ccready", "defready")]
     return f + [float(r["killwindow"])]
 
 
@@ -97,6 +115,12 @@ def _selftest_v2() -> None:
     r3 = parse_v2(",".join(["v3,123,7,1001,fear,40.0,0.420,1,1,5200,10,1", eu, aliado, vazio, inimigo, vazio, vazio]))
     assert r3["mode"] == 1 and r3["prob"] == 0.42 and r3["damage"] == 5200 and features_v2(r3) == v
     assert r["mode"] == 0 and r["damage"] is None
+    ext = ",2,0,1,0,4000,1,0,1"
+    r4 = parse_v2(",".join(["v4,123,7,1001,fear,40.0,1.000,1,0,5200,10,1", eu + ext, aliado + ext, vazio + ",0,0,0,0,0,0,0,0",
+                            inimigo + ext, vazio + ",0,0,0,0,0,0,0,0", vazio + ",0,0,0,0,0,0,0,0"]))
+    f4 = features_v4(r4)
+    assert features_v2(r4) == v and len(f4) == N_FEATURES_V4 == 199, len(f4)
+    assert f4[25] == 2 / 3 and f4[29] == 0.5 and f4[30:33] == [1.0, 0.0, 1.0] and f4[-1] == 1.0
 
 
 if __name__ == "__main__":
