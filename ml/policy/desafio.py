@@ -15,6 +15,7 @@ import re
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -59,6 +60,7 @@ def main() -> int:
     limite_rating(0)
     vistas: set[int] = set()
     extra = 0
+    pool = ThreadPoolExecutor(3)
     try:
         for i, alvo in enumerate(ordem, a.primeiro):
             rid, t0 = f"X{i:02d}", agora()
@@ -78,7 +80,8 @@ def main() -> int:
                     outro = next(t for t in luta["times"] if t != TIME_USUARIO)
                     extra += 0 if outro == alvo else 1
                     lid = rid if outro == alvo else f"{rid}e{extra}"  # luta contra um trio que sobrou na fila
-                    grava(lid, t0, {fid: luta}, {fid: analisa(luta)})
+                    # a análise (Sonnet leva minutos) roda em paralelo: o próximo trio é liberado na hora
+                    pool.submit(lambda l=lid, t=t0, f=fid, lu=luta: grava(l, t, {f: lu}, {f: analisa(lu)}))
                     res = "VITÓRIA" if luta["vencedor"] == TIME_USUARIO else "derrota"
                     print(f"{agora():%H:%M:%S} {lid}: {res} contra {luta['times'][outro]} em {luta['duracao']}s",
                           flush=True)
@@ -89,6 +92,7 @@ def main() -> int:
             if venceu_alvo is None:
                 print(f"{agora():%H:%M:%S} {rid}: {nome} não apareceu em {a.minutos} min, pulando", flush=True)
     finally:
+        pool.shutdown(wait=True)  # termina as análises que faltam antes de devolver as rodadas
         limite_rating(150)
         subprocess.run(SOBE_RODADAS)
         print("desafio encerrado: limite de rating 150 e rodadas sincronizadas de volta", flush=True)
