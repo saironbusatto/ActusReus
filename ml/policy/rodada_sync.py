@@ -8,7 +8,8 @@ Uso:
 Rodada R<n>: grava o id no arquivo da rodada -> os bots entram na fila uma vez -> cada luta que termina é
 remontada (resumo_lutas) e analisada na hora (agy Gemini 3.8 Flash; lutas do usuário com Claude Sonnet 4.6) ->
 fecha quando os 35 trios bot lutaram (ou 4 min sem luta nova, ou 20 min no total) e todas as análises saíram ->
-grava ml/runs/rodadas/R<n>.json + index.json (lidos pelo artefato "Rodadas da Arena") -> abre R<n+1>.
+grava ml/runs/rodadas/R<n>.json + index.json (lidos pelo artefato "Rodadas da Arena") -> espera o treinador ao vivo
+aplicar as notas do técnico e regravar a rede (aval em treinado.json) -> abre R<n+1>: todos voltam à fila juntos.
 """
 import argparse
 import datetime as dt
@@ -89,6 +90,24 @@ def grava(rid: str, inicio: dt.datetime, lutas: dict[int, dict], analises: dict[
     idx_path.write_text(json.dumps(sorted(idx, key=lambda r: r["id"]), ensure_ascii=False))
 
 
+AVAL = RUNS / "treinado.json"
+ESPERA_AVAL = 300  # s; se o treinador estiver parado, a rodada segue mesmo assim (e o log avisa)
+
+
+def espera_aval(rid: str) -> bool:
+    """Só vira o contador depois que o treinador ao vivo aplicou as notas desta rodada e regravou a rede."""
+    fim = time.time() + ESPERA_AVAL
+    while time.time() < fim:
+        try:
+            if rid in json.loads(AVAL.read_text()).get("rodadas", []):
+                return True
+        except (OSError, ValueError):
+            pass
+        time.sleep(5)
+    print(f"{agora():%H:%M:%S} {rid}: treinador não deu o aval em {ESPERA_AVAL}s, seguindo", flush=True)
+    return False
+
+
 def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     rid, t0 = f"R{n:04d}", agora()
     ARQ_RODADA.write_text(rid + "\n")
@@ -109,6 +128,7 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
         time.sleep(10)
     analises = {fid: f.result() for fid, f in futuros.items()}
     grava(rid, t0, lutas, analises)
+    espera_aval(rid)
     ok = sum(1 for a in analises.values() if "erro" not in a)
     print(f"{agora():%H:%M:%S} {rid} fechada: {len(lutas)} lutas, {ok} analisadas, faltaram {sorted(faltam)}",
           flush=True)

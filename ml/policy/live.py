@@ -245,8 +245,11 @@ def coach_notes(luta: dict) -> dict[tuple[int, int], float]:
     return notas
 
 
-def novas_analises(vistos: dict[str, float]) -> dict[tuple[int, int], float]:
-    """Notas das rodadas gravadas/atualizadas desde a última leitura."""
+AVAL = RODADAS / "treinado.json"  # o orquestrador (rodada_sync.py) só abre a próxima rodada depois deste aval
+
+
+def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int, int], float]:
+    """Notas das rodadas gravadas/atualizadas desde a última leitura; 'lidas' recebe os ids dessas rodadas."""
     notas: dict[tuple[int, int], float] = {}
     for f in sorted(RODADAS.glob("*.json")) if RODADAS.exists() else []:
         if f.name in ("index.json", "sync-estado.json") or vistos.get(f.name) == f.stat().st_mtime:
@@ -258,6 +261,7 @@ def novas_analises(vistos: dict[str, float]) -> dict[tuple[int, int], float]:
             continue
         for luta in lutas.values():
             notas.update(coach_notes(luta))
+        lidas.append(f.stem)
     return notas
 
 
@@ -453,7 +457,8 @@ def main() -> int:
         now = dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
         pending = {g: [s for s in v if s[0] > now - dt.timedelta(minutes=30)] for g, v in pending.items()}
 
-        pendentes.update(novas_analises(vistos))
+        lidas: list[str] = []
+        pendentes.update(novas_analises(vistos, lidas))
         if pendentes:
             totals["conselhos_aplicados"] += buf.coach(pendentes)
             pendentes = {k: v for k, v in pendentes.items() if k not in buf.where}
@@ -468,6 +473,9 @@ def main() -> int:
             totals["atualizacoes"] += 1
             torch.save({"model": model.state_dict(), "actions": actions,
                         "state": {**state, "desde": state["desde"].isoformat()}}, ckpt)
+        if lidas:  # notas da rodada aplicadas e (se havia dados) rede regravada: libera a próxima rodada
+            AVAL.write_text(json.dumps({"rodadas": lidas, "quando": f"{now:%Y-%m-%d %H:%M:%S}",
+                                        "conselhos_aplicados": totals["conselhos_aplicados"]}))
 
         if time.time() >= next_gate:
             next_gate = time.time() + a.portao
