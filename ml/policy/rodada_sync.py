@@ -123,9 +123,13 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
             feitos |= {w, lo}
             ultima = time.time()
         faltam = TIMES_BOT - feitos
-        if not faltam or time.time() - ultima > SEM_LUTA_NOVA or time.time() - t0.timestamp() > MAX_RODADA:
+        sem_novas = lutas and time.time() - ultima > SEM_LUTA_NOVA  # só conta depois da 1ª luta (bots logando)
+        if not faltam or sem_novas or time.time() - t0.timestamp() > MAX_RODADA:
             break
         time.sleep(10)
+    if not lutas:  # ninguém lutou (servidor reiniciando): reabre a mesma rodada em vez de gravar uma vazia
+        print(f"{agora():%H:%M:%S} {rid} sem lutas em {MAX_RODADA}s, reabrindo", flush=True)
+        return rodada(n, pool)
     analises = {fid: f.result() for fid, f in futuros.items()}
     grava(rid, t0, lutas, analises)
     espera_aval(rid)
