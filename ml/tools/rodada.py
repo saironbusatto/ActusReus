@@ -50,6 +50,10 @@ Manual do projeto:
 
 def agy(prompt: str, modelo: str, timeout: int = 420) -> dict:
     with tempfile.TemporaryDirectory() as d:  # agy é um agente: roda numa pasta vazia, em sandbox
+        if len(prompt.encode()) > 100_000:  # um argumento só passa de 128 KB: o texto vai num arquivo que ele lê
+            (Path(d) / "pedido.txt").write_text(prompt)
+            prompt = ("Leia o arquivo pedido.txt nesta pasta (é longo, leia inteiro) e faça exatamente o que ele pede. "
+                      "Responda só com o JSON pedido, sem usar outras ferramentas.")
         r = subprocess.run(["agy", "-p", prompt, "--model", modelo, "--disable-slash-commands", "--sandbox",
                             "--output-format", "text"], capture_output=True, text=True, timeout=timeout, cwd=d)
     out = r.stdout
