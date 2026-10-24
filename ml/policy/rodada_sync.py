@@ -62,13 +62,14 @@ def ficha_trio(tid: int, luta: dict, analise: dict) -> dict:
         a = {"erro": analise["erro"]}
     else:
         a = {"resumo": analise.get("resumo", ""),
-             "padroes_de_erro": [{"descricao": f"{e['fez']} → {e['devia']}. {e.get('porque', '')}", "vezes": 1,
-                                  "lutas": [luta["luta"]], "quem": e["quem"]}
-                                 for e in analise.get("erros", []) if e["quem"] in membros],
-             "o_que_funcionou": [{"descricao": f"{e['quem']}: {e['descricao']}", "lutas": [luta["luta"]]}
-                                 for e in analise.get("acertos", []) if e["quem"] in membros],
-             "sobre_a_rede": " ".join(f"{e['quem']} ({e['acao']}): {e['porque']}" for e in
-                                      analise.get("erros_da_rede", []) if e["quem"] in membros)
+             "padroes_de_erro": [{"descricao": f"{e.get('fez', '')} → {e.get('devia', '')}. {e.get('porque', '')}",
+                                  "vezes": 1, "lutas": [luta["luta"]], "quem": e["quem"]}
+                                 for e in analise.get("erros", []) if e.get("quem") in membros],
+             "o_que_funcionou": [{"descricao": f"{e['quem']}: {e.get('descricao') or e.get('fez', '')}",
+                                  "lutas": [luta["luta"]]}
+                                 for e in analise.get("acertos", []) if e.get("quem") in membros],
+             "sobre_a_rede": " ".join(f"{e['quem']} ({e.get('acao', '')}): {e.get('porque', '')}" for e in
+                                      analise.get("erros_da_rede", []) if e.get("quem") in membros)
              or "sem erros da rede apontados neste trio",
              "plano_proxima_rodada": [x for x in [analise.get("conselho_por_time", {}).get(nome)] if x]}
     return {"time": tid, "nome": nome, "composicao": composicao(nome), "papel": papel(tid),
@@ -133,6 +134,9 @@ def atualiza_evolucao() -> list[dict]:
 
 def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     rid, t0 = f"R{n:04d}", agora()
+    # o próximo número já fica gravado: se o serviço cair no meio, volta com um id novo (a trava do servidor lembra
+    # quem já entrou na fila com este id e não deixaria esses trios lutarem de novo)
+    ESTADO.write_text(json.dumps({"proxima": n + 1}))
     ARQ_RODADA.write_text(rid + "\n" + " ".join(map(str, sorted(RESERVA))) + "\n")  # id + times na reserva
     print(f"{t0:%H:%M:%S} {rid} aberta", flush=True)
     lutas, futuros, feitos, ultima = {}, {}, set(), time.time()
@@ -174,7 +178,6 @@ def main() -> int:
         while True:
             rodada(n, pool)
             n += 1
-            ESTADO.write_text(json.dumps({"proxima": n}))
 
 
 def selftest() -> None:
@@ -188,6 +191,8 @@ def selftest() -> None:
     assert f54["vitorias"] == 1 and f56["derrotas"] == 1 and f54["papel"] == "campea" and f56["papel"] == "reserva"
     assert len(f54["analise"]["padroes_de_erro"]) == 1 and f54["analise"]["plano_proxima_rodada"] == ["c1"]
     assert f56["analise"]["o_que_funcionou"][0]["descricao"] == "B: ok" and f56["analise"]["plano_proxima_rodada"] == []
+    sem_desc = ficha_trio(56, luta, {**analise, "acertos": [{"quem": "B", "fez": "kick"}]})
+    assert sem_desc["analise"]["o_que_funcionou"][0]["descricao"] == "B: kick"
     assert 60 not in TIMES_BOT and len(TIMES_BOT) == 27 and not TIMES_BOT & RESERVA
     print("ok rodada_sync")
 
