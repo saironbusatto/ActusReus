@@ -50,6 +50,17 @@ W_DAMAGE, W_HEALING = 0.15 / 200_000, 0.15 / 200_000
 W_KILL, W_ENEMY_DEAD, W_ALLY_DEAD, W_CC = 0.10, 0.10, -0.10, 0.02
 CC_MASK = 1 | 2 | 4 | 8  # stun, fear, confuse/disorient, silence (bits de ArenaObservation.h CcFlags)
 BUFFER, BATCH, STEPS = 300_000, 512, 40
+# Manutenção fora de combate (óleo, venenos, buffs longos, comida, invocar pet, fugir): a rede escolhia isso no meio
+# da luta. Ficam com as regras: logit -30 nos pesos exportados (o servidor nunca as sorteia).
+BANNED = {"Deadly Poison", "Instant Poison", "accept resurrect", "ancestral spirit", "apply oil", "apply stone",
+          "arcane intellect", "arcane intellect on party", "blood presence", "call pet", "caster form",
+          "cast greater blessing assignment", "concentration aura", "conjure mana gem", "create firestone",
+          "create healthstone", "create spellstone", "demon armor", "divine spirit on party", "drink", "feed pet",
+          "fel armor", "firestone", "flee", "food", "inner fire", "mage armor", "mark of the wild",
+          "mark of the wild on party", "molten armor", "pet autocast setup", "power word: fortitude on party",
+          "remove shadowform", "resurrection", "revive pet", "self resurrect", "shadow protection",
+          "shadow protection on party", "spellstone", "summon felhunter", "summon imp", "summon succubus",
+          "summon voidwalker", "thorns", "toggle pet spell", "trueshot aura"}
 GATE_MIN, PROMOTE, REVERT = 150, 0.05, -0.08
 
 
@@ -70,7 +81,16 @@ def load_policy(path: Path) -> tuple[PolicyV2, list[str]]:
     return model, actions
 
 
+def mask_banned(model: PolicyV2, actions: list[str]) -> None:
+    with torch.no_grad():
+        for i, name in enumerate(actions):
+            if name in BANNED:
+                model.pi.weight[i] = 0.0
+                model.pi.bias[i] = -30.0
+
+
 def write_atomic(model: PolicyV2, actions: list[str], out: Path) -> None:
+    mask_banned(model, actions)
     tmp = out.with_suffix(".tmp")
     export(model, actions, tmp)
     os.replace(tmp, out)  # o servidor nunca lê um arquivo pela metade
@@ -314,10 +334,11 @@ def main() -> int:
     now = dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
     state = {"versao": 0, "desde": now}
     if ckpt.exists():
-        saved = torch.load(ckpt, map_location="cpu")
+        with torch.serialization.safe_globals([dt.datetime]):  # checkpoints antigos guardavam datetime
+            saved = torch.load(ckpt, map_location="cpu")
         if saved["actions"] == actions:
             model.load_state_dict(saved["model"])
-            state = saved["state"]
+            state = {**saved["state"], "desde": dt.datetime.fromisoformat(str(saved["state"]["desde"]))}
     model.to(dev).eval()
     idx = {x: i for i, x in enumerate(actions)}
     opt = torch.optim.Adam(model.parameters(), lr=3e-4)
@@ -352,7 +373,8 @@ def main() -> int:
             write_atomic(model.cpu(), actions, a.desafiante)
             model.to(dev)
             totals["atualizacoes"] += 1
-            torch.save({"model": model.state_dict(), "actions": actions, "state": state}, ckpt)
+            torch.save({"model": model.state_dict(), "actions": actions,
+                        "state": {**state, "desde": state["desde"].isoformat()}}, ckpt)
 
         if time.time() >= next_gate:
             next_gate = time.time() + a.portao
