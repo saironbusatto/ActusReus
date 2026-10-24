@@ -252,7 +252,7 @@ def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int
     """Notas das rodadas gravadas/atualizadas desde a última leitura; 'lidas' recebe os ids dessas rodadas."""
     notas: dict[tuple[int, int], float] = {}
     for f in sorted(RODADAS.glob("*.json")) if RODADAS.exists() else []:
-        if f.name in ("index.json", "sync-estado.json") or vistos.get(f.name) == f.stat().st_mtime:
+        if f.name in ("index.json", "sync-estado.json", "treinado.json") or vistos.get(f.name) == f.stat().st_mtime:
             continue
         vistos[f.name] = f.stat().st_mtime
         try:
