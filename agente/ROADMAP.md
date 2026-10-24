@@ -1,6 +1,6 @@
 # Roadmap — IA PvP (WoW 3.3.5a, AzerothCore + mod-playerbots)
 
-Atualizado em 22/10/2026, ~22:00 UTC. Objetivo do projeto: bots de arena e de AB que jogam como humanos de 2009,
+Atualizado em 24/10/2026, ~14:20 UTC. Objetivo do projeto: bots de arena e de AB que jogam como humanos de 2009,
 com aprendizado de máquina (RL) por cima das regras; LLM só depois.
 
 Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relatório: Obsidian `Evolucao-IA-Arena-Fase2.md`.
@@ -9,10 +9,12 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 
 ## Onde estamos agora
 
-- **No ar desde 22/10 21:35 UTC:** 108 bots em 36 trios 3v3, cada trio de **uma facção só** (regra do usuário).
-  18 trios com a rede **v2b**, 18 só com regras (2 de cada composição em cada lado). 18 arenas simultâneas.
-- **Esperando:** 2–3 h de lutas a partir de 21:35 para avaliar a v2b (rede x regras no mesmo período).
-- **Servidor:** worldserver ~1 núcleo, 2,8 GB; update diff ~4 ms. Monitor de quedas sempre ligado.
+- **No ar desde 24/10 13:41 UTC:** 108 bots em 36 trios 3v3, cada trio de **uma facção só** (regra do usuário).
+  18 trios com a rede **v3** (AWR + Importance Sampling), 18 só com regras (2 de cada composição em cada lado).
+- **Esperando:** Coleta de lutas espelho (ML v3 vs Regras) a partir de 13:41 UTC para validar se atinge ≥ 55% de vitórias.
+- **Servidor:** update diff 1–5 ms (fora dos ~15 min de aquecimento após cada restart). Bots ociosos ficam nas
+  capitais, não em Northrend. Monitor de quedas sempre ligado.
+- **Usuário joga** com o Reload (Rogue) no RLS III (time 60, só regras) — o time 60 fica fora das avaliações.
 
 | Composição | Facção | Times | Rede | Regras |
 | --- | --- | --- | --- | --- |
@@ -44,11 +46,13 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
       habilidades de combate (289.809 decisões, 305 ações).
 - [x] Arenas travadas corrigidas (20:55): DPS anda até o inimigo detectável fora de vista (antes: lutas de até 37 min).
 - [x] Expansão para 108 bots / 36 trios (21:35).
-- [ ] **Avaliar a v2b** (≥ 2–3 h desde 21:35): `arena tactics` dos times com rede no nível dos de regras; RLS com rede
-      de volta a ~50%; nenhuma luta > 10 min. Sempre **rede x regras no mesmo período** (nunca antes x depois: o rating
-      empurra todos para 50%).
-- [ ] Critério do espelho para aprovar uma rede: ≥ 200 lutas e ≥ 55% (pergunta aberta ao usuário: manter ou baixar).
-- [ ] v3: RL online com a probabilidade real gravada (importance sampling), só depois da avaliação da v2b.
+- [x] **Avaliação da v2b** (22/10 21:50 → 24/10 13:38): **empate** no espelho, 640/1.282 (50%, IC 47–53%). Rede ajuda
+      TSG (58%) e RLS (76%, 41 lutas); atrapalha Shadowplay (39%) e Wild (43%). Detalhe: `Evolucao-IA-Arena-Fase2.md`.
+- [x] Fixes de mapa (23/10): bots não acampam no cano da Dalaran Sewers nem flutuam na Ring of Valor; esperam o elevador.
+- [x] **v3 no ar (24/10 13:41 UTC):** AWR + importance sampling sobre as decisões gravadas com a v2b (relatório do treino:
+      1.237.662 decisões, acurácia 46,86%, paridade C++/torch 2,2e-5); 355 ações.
+- [ ] **Avaliar a v3** (≥ 200 lutas no espelho, ~17:00 UTC de 24/10): `ml/tools/relatorio_v3.py` (tira time 60 e
+      aquecimento). Se não passar de 55%: ligar a rede só nas composições onde ela ganha (TSG, RLS).
 
 ### Fase 3 — AB com trios e ordens por voz 🧰 (pronto, falta testar com o usuário)
 - [x] Raid leader na BG passa para GM/guildmate (`Playerbots.BgGiveLeaderToPlayer = 1`).
@@ -58,7 +62,7 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 - [x] Guilda **Actus Reus** (Horda) com os 14 bots do time de AB, cargo Suspeito (22/10).
 - [ ] Teste do usuário: `voz/voz.sh servico` + atalho KDE "Voz raid"; numa AB com o Reload, montar grupos de 3 e
       mandar ordens.
-- [ ] Usuário joga de Rogue no RLS (ou RMP): avisar antes para tirar o bot do trio.
+- [x] Usuário joga de Rogue no RLS III (Reload no lugar do Zebedeux, capitão do time 60).
 
 ### Fase 4 — LLM 💤 (depois)
 - [ ] Por cima da rede: comandos em linguagem natural, explicação de decisões, coach.
@@ -93,10 +97,11 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 | O quê | Onde |
 | --- | --- |
 | C++ do playerbots | branch `ml-arena` em `azerothcore-wotlk/modules/mod-playerbots` (patches em `patches/mod-playerbots`) |
-| Treino v2 e patches mais novos | branch `ml-policy-v2` do repo ActusReus (worktree `.claude/worktrees/raiz-policy-v2`) |
-| Pesos no ar | `azerothcore-wotlk/env/dist/etc/arena-policy-v2b.txt` |
-| Placar / espelho | `ml/tools/placar_trios.py`, `ml/policy/espelho.py --tipo 3` |
+| Treino v3 | `ml/policy/train_v3.py` (main); treino v2 na branch `ml-policy-v2` |
+| Treino v2 (histórico) | branch `ml-policy-v2` do repo ActusReus (worktree `.claude/worktrees/raiz-policy-v2`) |
+| Pesos no ar | `azerothcore-wotlk/env/dist/etc/arena-policy-v3.txt` (v2b e v2 na mesma pasta para voltar) |
+| Placar / espelho | `ml/tools/relatorio_v3.py` (por composição), `ml/tools/placar_trios.py`, `ml/policy/espelho.py --tipo 3` |
 | Times e gear | `agente/trios-times.sql`, `agente/trios-normaliza.sql`, `agente/trios-expansao-108.sql`, `agente/trios-108-fixgear.sql` |
 | Clonagem | `ml/tools/clone_bots.py --src Original:nome1,nome2 [--max-level 80]` |
-| Imagens de volta | `rollback-pre-chase`, `rollback-pre-v2b`, `rollback-pre-obsv2` |
+| Imagens de volta | `rollback-pre-pipe` (antes dos fixes de mapa de 23/10), `rollback-pre-chase`, `rollback-pre-v2b` |
 | Backups | `backups/*_pre108.sql.gz`, `*_pretrios.sql.gz` |
