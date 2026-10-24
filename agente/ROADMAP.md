@@ -1,6 +1,6 @@
 # Roadmap — IA PvP (WoW 3.3.5a, AzerothCore + mod-playerbots)
 
-Atualizado em 24/10/2026, ~14:20 UTC. Objetivo do projeto: bots de arena e de AB que jogam como humanos de 2009,
+Atualizado em 24/10/2026, ~14:45 UTC. Objetivo do projeto: bots de arena e de AB que jogam como humanos de 2009,
 com aprendizado de máquina (RL) por cima das regras; LLM só depois.
 
 Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relatório: Obsidian `Evolucao-IA-Arena-Fase2.md`.
@@ -51,8 +51,15 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 - [x] Fixes de mapa (23/10): bots não acampam no cano da Dalaran Sewers nem flutuam na Ring of Valor; esperam o elevador.
 - [x] **v3 no ar (24/10 13:41 UTC):** AWR + importance sampling sobre as decisões gravadas com a v2b (relatório do treino:
       1.237.662 decisões, acurácia 46,86%, paridade C++/torch 2,2e-5); 355 ações.
-- [ ] **Avaliar a v3** (≥ 200 lutas no espelho, ~17:00 UTC de 24/10): `ml/tools/relatorio_v3.py` (tira time 60 e
-      aquecimento). Se não passar de 55%: ligar a rede só nas composições onde ela ganha (TSG, RLS).
+- [x] **Achado (24/10):** o multiplicador da rede era aplicado depois de a fila já ter escolhido a ação, então
+      v2b e v3 praticamente não mudavam o jogo (daí os 50%). Corrigido: a rede agora **escolhe** a ação.
+- [x] **IA ao vivo no ar (24/10 14:39 UTC):** em 25% dos ticks (`ArenaMlControl`) a rede escolhe qual habilidade de
+      combate roda, entre as que as regras acionaram (movimento, alvo e emergências seguem com as regras). Campeã v3
+      nos times 54,58,…,86; **desafiante treinada ao vivo** nos 55,59,…,87; pesos recarregados a quente (10 s).
+      Treinador `ml/policy/live.py` (serviço `ia-ao-vivo`): nota por decisão (dano, cura, golpe final, CC, mortes,
+      ±1 da vitória) + crítico V(s); treina a cada ~45 s; campeã x desafiante no espelho a cada 10 min.
+      Painel: `IA-Ao-Vivo.md`. Ligar/religar: `agente/ligar-ao-vivo.sh [treinador]`.
+- [ ] Acompanhar: desafiante passa a campeã? Subir `ArenaMlControl` (0,25 → 0,5 → 1) se a rede ganhar.
 
 ### Fase 3 — AB com trios e ordens por voz 🧰 (pronto, falta testar com o usuário)
 - [x] Raid leader na BG passa para GM/guildmate (`Playerbots.BgGiveLeaderToPlayer = 1`).
@@ -103,5 +110,5 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 | Placar / espelho | `ml/tools/relatorio_v3.py` (por composição), `ml/tools/placar_trios.py`, `ml/policy/espelho.py --tipo 3` |
 | Times e gear | `agente/trios-times.sql`, `agente/trios-normaliza.sql`, `agente/trios-expansao-108.sql`, `agente/trios-108-fixgear.sql` |
 | Clonagem | `ml/tools/clone_bots.py --src Original:nome1,nome2 [--max-level 80]` |
-| Imagens de volta | `rollback-pre-pipe` (antes dos fixes de mapa de 23/10), `rollback-pre-chase`, `rollback-pre-v2b` |
+| Imagens de volta | `rollback-pre-live` (antes da IA ao vivo; config `playerbots.conf.bak-pre-live`), `rollback-pre-pipe` (antes dos fixes de mapa de 23/10), `rollback-pre-chase`, `rollback-pre-v2b` |
 | Backups | `backups/*_pre108.sql.gz`, `*_pretrios.sql.gz` |
