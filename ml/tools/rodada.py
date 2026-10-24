@@ -26,8 +26,12 @@ from espelho import sql  # noqa: E402
 
 RUNS = Path(__file__).resolve().parents[2] / "ml" / "runs" / "rodadas"
 TIME_USUARIO = 60
+# Cada composição tem 4 cópias (I a IV, times 54-89): I campeã, II desafiante, IV só regras, III reserva (fora da fila;
+# a RLS III, time 60, é o trio do usuário). Assim os três papéis têm as mesmas 9 composições.
 CAMPEA = {54, 58, 62, 66, 70, 74, 78, 82, 86}
 DESAFIANTE = {55, 59, 63, 67, 71, 75, 79, 83, 87}
+REGRAS = {57, 61, 65, 69, 73, 77, 81, 85, 89}
+RESERVA = {56, 64, 68, 72, 76, 80, 84, 88}
 MOTOR_TRIO = ["agy:gemini-3.8-flash-medium", "openrouter:anthropic/claude-haiku-5.5"]
 MOTOR_LUTA = ["agy:claude-sonnet-4-6", "agy:gemini-3.8-flash-medium", "openrouter:anthropic/claude-haiku-5.5"]
 
@@ -83,7 +87,7 @@ def composicao(nome: str) -> str:
 
 def papel(team: int) -> str:
     return ("jogador" if team == TIME_USUARIO else "campea" if team in CAMPEA else
-            "desafiante" if team in DESAFIANTE else "regras")
+            "desafiante" if team in DESAFIANTE else "regras" if team in REGRAS else "reserva")
 
 
 def compacta(luta: dict) -> dict:
@@ -156,6 +160,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    assert papel(60) == "jogador" and papel(54) == "campea" and papel(55) == "desafiante" and papel(56) == "regras"
+    assert papel(60) == "jogador" and papel(54) == "campea" and papel(55) == "desafiante" and papel(57) == "regras"
+    assert papel(56) == "reserva" and len(CAMPEA | DESAFIANTE | REGRAS | RESERVA | {TIME_USUARIO}) == 36
     assert composicao("RLS III") == "RLS" and composicao("Thunder II") == "Thunder"
     sys.exit(main())

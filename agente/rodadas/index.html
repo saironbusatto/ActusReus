@@ -52,7 +52,7 @@ header.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; j
 .chip { display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; font-weight: 700; letter-spacing: .06em;
   text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; background: transparent }
 .chip.jogador { color: var(--gold) } .chip.campea { color: var(--net) } .chip.desafiante { color: var(--net); border-style: dashed }
-.chip.regras { color: var(--muted) }
+.chip.regras { color: var(--muted) } .chip.reserva { color: var(--muted); border-style: dotted }
 .fac-horde { --fac: var(--horde) } .fac-alliance { --fac: var(--alliance) }
 
 .destaque { margin-top: 20px; background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--gold);
@@ -174,6 +174,9 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
           decisão e os conselhos da IA técnica. Se ela passar a ganhar mais que a campeã, vira a nova campeã.</dd>
         <dt>Seu trio</dt><dd>O trio em que você joga de verdade (o Reload). Ele recebe análise como os outros, mas fica fora
           das contas que medem a rede, porque ali joga uma pessoa.</dd>
+        <dt>Reserva</dt><dd>Cada composição tem quatro cópias (I a IV). A cópia I joga com a rede campeã, a II com a
+          desafiante, a IV só com regras e a III fica na reserva, fora da fila. Assim os três grupos têm exatamente as mesmas
+          9 composições e o mesmo número de trios. O seu RLS III é a cópia III do RLS, mas você joga quando quiser.</dd>
       </dl>
       <p>A comparação que importa é campeã e desafiante contra "só regras" da <b>mesma composição</b>: se a rede ganhar mais
         de 55% dessas lutas, ela está jogando melhor que as regras.</p>
@@ -215,7 +218,7 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
 
 <script>
 const HORDA = new Set(["RMP", "RLS", "Fireplay", "RPS", "LSD"]);
-const PAPEL = { jogador: "Seu trio", campea: "Rede campeã", desafiante: "Rede desafiante", regras: "Só regras" };
+const PAPEL = { jogador: "Seu trio", campea: "Rede campeã", desafiante: "Rede desafiante", regras: "Só regras", reserva: "Reserva" };
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let indice = [], rodada = null, filtro = "todos", aberto = null;

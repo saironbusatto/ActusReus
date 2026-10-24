@@ -7,7 +7,7 @@ Uso:
 
 Rodada R<n>: grava o id no arquivo da rodada -> os bots entram na fila uma vez -> cada luta que termina é
 remontada (resumo_lutas) e analisada na hora (agy Gemini 3.8 Flash; lutas do usuário com Claude Sonnet 4.6) ->
-fecha quando os 35 trios bot lutaram (ou 4 min sem luta nova, ou 20 min no total) e todas as análises saíram ->
+fecha quando os 27 trios bot lutaram (ou 4 min sem luta nova, ou 20 min no total) e todas as análises saíram ->
 grava ml/runs/rodadas/R<n>.json + index.json (lidos pelo artefato "Rodadas da Arena") -> espera o treinador ao vivo
 aplicar as notas do técnico e regravar a rede (aval em treinado.json) -> abre R<n+1>: todos voltam à fila juntos.
 """
@@ -24,12 +24,13 @@ sys.path.insert(0, str(ROOT / "ml" / "tools"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from espelho import sql  # noqa: E402
 from resumo_lutas import build, texto  # noqa: E402
-from rodada import MOTOR_LUTA, RUNS, TIME_USUARIO, compacta, composicao, papel, pergunta_motores  # noqa: E402
+from rodada import (CAMPEA, DESAFIANTE, MOTOR_LUTA, REGRAS, RESERVA, RUNS, TIME_USUARIO, compacta,  # noqa: E402
+                    composicao, papel, pergunta_motores)
 from treinador_ia import SISTEMA, valida  # noqa: E402
 
 ARQ_RODADA = ROOT / "azerothcore-wotlk" / "env" / "dist" / "etc" / "arena-rodada.txt"
 ESTADO = RUNS / "sync-estado.json"
-TIMES_BOT = set(range(54, 90)) - {TIME_USUARIO}
+TIMES_BOT = CAMPEA | DESAFIANTE | REGRAS  # 27 trios: 1 por composição em cada papel; a reserva não entra na fila
 MOTOR_BOT = ["agy:gemini-3.8-flash-medium", "openrouter:anthropic/claude-haiku-5.5"]
 SEM_LUTA_NOVA, MAX_RODADA = 240, 1200  # s
 
@@ -132,7 +133,7 @@ def atualiza_evolucao() -> list[dict]:
 
 def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     rid, t0 = f"R{n:04d}", agora()
-    ARQ_RODADA.write_text(rid + "\n")
+    ARQ_RODADA.write_text(rid + "\n" + " ".join(map(str, sorted(RESERVA))) + "\n")  # id + times na reserva
     print(f"{t0:%H:%M:%S} {rid} aberta", flush=True)
     lutas, futuros, feitos, ultima = {}, {}, set(), time.time()
     while True:
@@ -184,10 +185,10 @@ def selftest() -> None:
                "acertos": [{"quem": "B", "descricao": "ok"}], "erros_da_rede": [],
                "conselho_por_time": {"RMP I": "c1"}, "_motor": "agy:x"}
     f54, f56 = ficha_trio(54, luta, analise), ficha_trio(56, luta, analise)
-    assert f54["vitorias"] == 1 and f56["derrotas"] == 1 and f54["papel"] == "campea" and f56["papel"] == "regras"
+    assert f54["vitorias"] == 1 and f56["derrotas"] == 1 and f54["papel"] == "campea" and f56["papel"] == "reserva"
     assert len(f54["analise"]["padroes_de_erro"]) == 1 and f54["analise"]["plano_proxima_rodada"] == ["c1"]
     assert f56["analise"]["o_que_funcionou"][0]["descricao"] == "B: ok" and f56["analise"]["plano_proxima_rodada"] == []
-    assert 60 not in TIMES_BOT and len(TIMES_BOT) == 35
+    assert 60 not in TIMES_BOT and len(TIMES_BOT) == 27 and not TIMES_BOT & RESERVA
     print("ok rodada_sync")
 
 
