@@ -4,9 +4,11 @@ Uso:
   uv run python -I tools/paridade_gear.py                 # plano: referência de cada grupo e o que muda (não escreve)
   uv run python -I tools/paridade_gear.py --sql saida.sql # também gera o SQL (aplicar só com o servidor parado)
 
-Grupo = composição + classe (as 4 cópias I-IV). Referência = a cópia com mais resiliência, slots encantados e gemas.
-As outras recebem os mesmos itens, encantos e gemas slot a slot (UPDATE em item_instance dos itens que já estão
-equipados). Camisa (slot 3) e tabardo (18) não contam.
+Grupo = classe + especialização (todas as cópias de todas as composições que usam o mesmo tipo de equipamento; Priest
+Disc x Shadow, Druid Resto x Balance e Shaman Resto x Elemental ficam separados). Referência = a cópia com mais
+resiliência, slots encantados e gemas. As outras recebem os mesmos itens, encantos e gemas slot a slot (UPDATE em
+item_instance dos itens já equipados); Medallion da Horda/Aliança é trocado pelo da facção do personagem; encaixes
+vazios dos Warriors recebem a gema de força dos DKs. Camisa (slot 3) e tabardo (18) não contam.
 """
 import argparse
 import sys
@@ -19,12 +21,21 @@ from espelho import sql  # noqa: E402
 CLS = {1: "Warrior", 2: "Paladin", 3: "Hunter", 4: "Rogue", 5: "Priest", 6: "DK", 7: "Shaman", 8: "Mage", 9: "Warlock",
        11: "Druid"}
 TIME_USUARIO = 60
+HORDA = {2, 5, 6, 8, 10}
+MEDALHAO = {"H": 42122, "A": 42123}  # Medallion of the Horde / of the Alliance
+GEMA_FORCA = 3518  # gema mais usada pelos DKs; vai nos encaixes vazios dos Warriors
+SPEC = {("RMP", "Priest"): "Priest Disc", ("Shadowplay", "Priest"): "Priest Shadow", ("RPS", "Priest"): "Priest Shadow",
+        ("Wild", "Druid"): "Druid Resto", ("LSD", "Druid"): "Druid Balance", ("Thunder", "Shaman"): "Shaman Elemental"}
+
+
+def spec(comp: str, cls: str) -> str:
+    return SPEC.get((comp, cls), f"{cls} Resto" if cls == "Shaman" else cls)
 IGNORA = {3, 18}  # camisa, tabardo
 ENCANTAVEL = {0, 2, 4, 6, 7, 8, 9, 14, 15}
 
 
 def carrega() -> tuple[dict, dict]:
-    membros = sql("SELECT m.arenaTeamId, t.name, c.guid, c.name, c.class FROM acore_characters.arena_team_member m "
+    membros = sql("SELECT m.arenaTeamId, t.name, c.guid, c.name, c.class, c.race FROM acore_characters.arena_team_member m "
                   "JOIN acore_characters.arena_team t ON t.arenaTeamId = m.arenaTeamId "
                   "JOIN acore_characters.characters c ON c.guid = m.guid "
                   f"WHERE m.arenaTeamId BETWEEN 54 AND 89 AND m.arenaTeamId <> {TIME_USUARIO}")
@@ -45,8 +56,10 @@ def carrega() -> tuple[dict, dict]:
                                          perm=int(e[0]) if e else 0, sockets=int(sockets),
                                          gemas=sum(1 for k in (6, 9, 12) if len(e) > k and e[k] != "0"))
     grupos = defaultdict(list)
-    for tid, tnome, guid, nome, cls in membros:
-        grupos[(tnome.rsplit(" ", 1)[0], CLS[int(cls)])].append(dict(time=int(tid), nome=nome, guid=int(guid)))
+    for tid, tnome, guid, nome, cls, race in membros:
+        comp = tnome.rsplit(" ", 1)[0]
+        grupos[spec(comp, CLS[int(cls)])].append(dict(time=int(tid), nome=nome, guid=int(guid), comp=comp,
+                                                       fac="H" if int(race) in HORDA else "A"))
     return grupos, eq
 
 
@@ -56,16 +69,27 @@ def nota(eq_p: dict) -> tuple:
             sum(i["gemas"] for i in eq_p.values()), len(eq_p))
 
 
+def gemas_cheias(ench: str, sockets: int) -> str:
+    """Encaixes vazios (posições 6, 9, 12 do campo enchantments) recebem a gema de força."""
+    e = ench.split()
+    e += ["0"] * (36 - len(e))
+    for k in (6, 9, 12)[:sockets]:
+        if e[k] == "0":
+            e[k] = str(GEMA_FORCA)
+    return " ".join(e) + " "
+
+
 def plano(grupos: dict, eq: dict) -> tuple[list[str], list[str]]:
     texto, comandos = [], []
-    for (comp, cls), ps in sorted(grupos.items()):
+    for grupo, ps in sorted(grupos.items()):
         ref = max(ps, key=lambda p: nota(eq[p["guid"]]))
-        r = eq[ref["guid"]]
-        texto.append(f"{comp} {cls}: referência {ref['nome']} (resil {nota(r)[0]}, encantados {nota(r)[1]}/9, "
-                     f"gemas {nota(r)[2]})")
+        r = {s: dict(it) for s, it in eq[ref["guid"]].items()}
+        if grupo == "Warrior":
+            for it in r.values():
+                it["ench"] = gemas_cheias(it["ench"], it["sockets"])
+        texto.append(f"{grupo}: referência {ref['nome']} ({ref['comp']}; resil {nota(r)[0]}, "
+                     f"encantados {nota(r)[1]}/9, gemas {nota(eq[ref['guid']])[2]}) — {len(ps)} personagens")
         for p in ps:
-            if p is ref:
-                continue
             alvo = eq[p["guid"]]
             muda = []
             for s, it in r.items():
@@ -73,11 +97,15 @@ def plano(grupos: dict, eq: dict) -> tuple[list[str], list[str]]:
                 if a is None:
                     muda.append(f"slot {s} VAZIO (não dá para copiar por UPDATE)")
                     continue
-                if (a["entry"], a["ench"]) != (it["entry"], it["ench"]):
-                    muda.append(f"{s}:{a['nome'][:28]}→{it['nome'][:28]}" if a["entry"] != it["entry"] else f"{s}:encanto/gema")
-                    comandos.append(f"UPDATE acore_characters.item_instance SET itemEntry = {it['entry']}, "
-                                    f"enchantments = '{it['ench']}' WHERE guid = {a['item']} AND owner_guid = {p['guid']};")
-            texto.append(f"   {p['nome']:14} resil {nota(alvo)[0]:4} → {nota(r)[0]:4}  " +
+                entry = MEDALHAO[p["fac"]] if it["entry"] in MEDALHAO.values() else it["entry"]
+                if (a["entry"], a["ench"].split()) != (entry, it["ench"].split()):
+                    muda.append(f"{s}:{a['nome'][:24]}→{it['nome'][:24]}" if a["entry"] != entry else f"{s}:encanto/gema")
+                    comandos.append(f"UPDATE acore_characters.item_instance SET itemEntry = {entry}, enchantments = "
+                                    f"'{it['ench']}', durability = (SELECT MaxDurability FROM acore_world.item_template "
+                                    f"WHERE entry = {entry}) WHERE guid = {a['item']} AND owner_guid = {p['guid']};")
+            if p is ref and not muda:
+                continue
+            texto.append(f"   {p['nome']:14} {p['comp']:10} resil {nota(alvo)[0]:4} → {nota(r)[0]:4}  " +
                          (f"{len(muda)} slots: " + "; ".join(muda) if muda else "já igual"))
     return texto, comandos
 
@@ -102,4 +130,6 @@ if __name__ == "__main__":
     a_ = {0: {"resil": 50, "perm": 1, "gemas": 1}, 1: {"resil": 0, "perm": 0, "gemas": 0}}
     b_ = {0: {"resil": 60, "perm": 0, "gemas": 0}}
     assert nota(a_) == (50, 1, 1, 2) and nota(b_) > nota(a_)
+    assert gemas_cheias("10 0 0 0 0 0 3518 0 0 0 0 0", 2).split()[6:10] == ["3518", "0", "0", str(GEMA_FORCA)]
+    assert spec("RMP", "Priest") == "Priest Disc" and spec("RLS", "Shaman") == "Shaman Resto" and spec("RLS", "Rogue") == "Rogue"
     sys.exit(main())
