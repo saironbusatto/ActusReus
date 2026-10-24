@@ -106,13 +106,29 @@ details.luta > summary::before { content: "▸"; color: var(--muted) } details.l
 .vazio { color: var(--muted); padding: 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px }
 .motor { font-size: .78rem; color: var(--muted) }
 @media (prefers-reduced-motion: no-preference) { .trio { transition: border-color .15s, box-shadow .15s } }
+.info { display: inline-grid; place-items: center; width: 1.35em; height: 1.35em; border-radius: 50%; border: 1px solid var(--gold);
+  color: var(--gold); background: transparent; font: italic 700 .8rem/1 Georgia, serif; padding: 0; vertical-align: middle; flex: none }
+.info:hover { background: var(--gold); color: var(--bg) }
+dialog#ajuda { border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 12px; background: var(--panel); color: var(--ink);
+  padding: 0; width: min(680px, calc(100vw - 32px)); max-height: min(80vh, 760px) }
+dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
+.ajuda-topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: var(--panel) }
+.ajuda-corpo { padding: 4px 18px 18px; overflow: auto }
+.ajuda-corpo section { padding-top: 14px; scroll-margin-top: 64px }
+.ajuda-corpo h3 { color: var(--gold); margin-bottom: 6px }
+.ajuda-corpo dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 0 }
+.ajuda-corpo dt { font-weight: 700 } .ajuda-corpo dd { margin: 0; color: var(--ink) }
+.ajuda-corpo p { margin: 6px 0; max-width: 70ch }
+@media (max-width: 520px) { .ajuda-corpo dl { grid-template-columns: 1fr } .ajuda-corpo dd { margin-bottom: 6px } }
+.fechar { background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px }
 </style>
 
 <div class="wrap">
   <header class="top">
     <div>
       <div class="lbl">IA de arena 3v3 · WotLK 3.3.5a</div>
-      <h1>Rodadas da Arena</h1>
+      <h1>Rodadas da Arena <button class="info" data-info="geral" aria-label="O que é esta página">i</button></h1>
     </div>
     <div class="nav">
       <button id="ant" aria-label="Rodada anterior">◂</button>
@@ -126,6 +142,67 @@ details.luta > summary::before { content: "▸"; color: var(--muted) } details.l
   <div class="grade" id="grade"><div class="vazio">Carregando a rodada…</div></div>
   <section id="detalhe"></section>
 </div>
+
+<dialog id="ajuda" aria-labelledby="ajuda-titulo">
+  <div class="ajuda-topo"><h2 id="ajuda-titulo">Como ler esta página</h2><button class="fechar" id="fecha-ajuda">Fechar</button></div>
+  <div class="ajuda-corpo">
+    <section id="aj-geral">
+      <h3>O que está acontecendo</h3>
+      <p>Num servidor de World of Warcraft (versão Wrath of the Lich King, 3.3.5a), 108 personagens controlados por computador
+        jogam arena 3 contra 3 sem parar. Cada grupo de três é um <b>trio</b>, sempre da mesma facção (Horda ou Aliança).</p>
+      <p>Uma <b>rodada</b> funciona assim: cada trio joga uma luta e espera. Quando a luta acaba, uma IA "técnica" lê o que
+        aconteceu e escreve a análise. Quando todos os trios já têm a análise, a rede neural aprende com elas e todos voltam
+        a jogar juntos.</p>
+    </section>
+    <section id="aj-papeis">
+      <h3>Os quatro tipos de trio</h3>
+      <dl>
+        <dt>Só regras</dt><dd>O personagem segue só regras escritas à mão por programadores ("se o inimigo estiver lançando
+          um feitiço, interrompa"). É o grupo de comparação: não aprende nada.</dd>
+        <dt>Rede campeã</dt><dd>Além das regras, uma <b>rede neural</b> (um programa que aprende com exemplos) escolhe parte
+          das ações. A campeã é a melhor versão da rede até agora e fica parada, sem mudar.</dd>
+        <dt>Rede desafiante</dt><dd>Uma cópia da rede que <b>continua aprendendo</b> a cada rodada, com as notas de cada
+          decisão e os conselhos da IA técnica. Se ela passar a ganhar mais que a campeã, vira a nova campeã.</dd>
+        <dt>Seu trio</dt><dd>O trio em que você joga de verdade (o Reload). Ele recebe análise como os outros, mas fica fora
+          das contas que medem a rede, porque ali joga uma pessoa.</dd>
+      </dl>
+      <p>A comparação que importa é campeã e desafiante contra "só regras" da <b>mesma composição</b>: se a rede ganhar mais
+        de 55% dessas lutas, ela está jogando melhor que as regras.</p>
+    </section>
+    <section id="aj-comps">
+      <h3>As siglas dos trios</h3>
+      <p>O nome do trio é a composição (as três classes) seguida de um número romano (I a IV, as quatro cópias de cada uma).</p>
+      <dl>
+        <dt>RMP</dt><dd>Rogue, Mage e Priest. Horda. Muito controle (atordoar, transformar em ovelha) e dano em rajada.</dd>
+        <dt>RLS</dt><dd>Rogue, Warlock e Shaman. Horda. É a composição do seu trio. Dano constante com controle.</dd>
+        <dt>Wild</dt><dd>"Wild Cleave": Warlock, Hunter e Druid. Aliança. Pressão de dano de longe.</dd>
+        <dt>Shadowplay</dt><dd>Shadow Priest, Warlock e Paladin. Aliança. Dois causadores de dano mágico e um curador.</dd>
+        <dt>TSG</dt><dd>Warrior, Death Knight e Paladin. Aliança. Corpo a corpo pesado, com dois personagens de armadura de placas.</dd>
+        <dt>Thunder</dt><dd>"Thunder Cleave": Warrior, Shaman de dano e Paladin. Aliança. Corpo a corpo com dano mágico.</dd>
+        <dt>Fireplay</dt><dd>Mage de fogo, Warlock e Shaman. Horda. Muito dano mágico.</dd>
+        <dt>RPS</dt><dd>Rogue, Shadow Priest e Shaman. Horda. Controle e dano de sombra.</dd>
+        <dt>LSD</dt><dd>Warlock, Shaman e Druid de dano (Balance). Horda. Dano mágico à distância.</dd>
+      </dl>
+      <p>A borda vermelha marca trios da Horda e a azul, da Aliança. As cores dos nomes são as cores de classe do jogo.</p>
+    </section>
+    <section id="aj-luta">
+      <h3>Dentro de uma luta</h3>
+      <dl>
+        <dt>Nota da rodada</dt><dd>De 0 a 10, dada pela IA técnica para a qualidade do jogo, não só para o placar.</dd>
+        <dt>Técnico de IA</dt><dd>Um modelo de linguagem (Gemini ou Claude) que lê a luta e aponta o momento decisivo, os
+          erros, os acertos e o que fazer na próxima.</dd>
+        <dt>[rede 82%]</dt><dd>Esta ação foi escolhida pela rede neural, que tinha 82% de confiança nela. Sem essa marca,
+          quem escolheu foi a regra escrita.</dd>
+        <dt>CC</dt><dd>"Crowd control": deixar o inimigo sem agir por alguns segundos (atordoado, com medo, transformado,
+          silenciado).</dd>
+        <dt>Trinket</dt><dd>O medalhão de PvP: livra o personagem de um CC, mas só pode ser usado a cada 2 minutos.</dd>
+        <dt>Defensivo</dt><dd>Uma habilidade que reduz muito o dano recebido por alguns segundos (por exemplo, Ice Block).</dd>
+        <dt>Gráfico de vida</dt><dd>A vida de cada personagem (0 a 100%) ao longo da luta, em segundos. Linha caindo a zero é
+          morte.</dd>
+      </dl>
+    </section>
+  </div>
+</dialog>
 
 <script>
 const HORDA = new Set(["RMP", "RLS", "Fireplay", "RPS", "LSD"]);
@@ -160,7 +237,7 @@ function taxa(v, d) { return v + d ? Math.round((100 * v) / (v + d)) + "%" : "�
 function desenha() {
   const porPapel = {};
   for (const t of rodada.trios) { const p = (porPapel[t.papel] ??= { v: 0, d: 0 }); p.v += t.vitorias; p.d += t.derrotas; }
-  $("#stats").innerHTML = `<div class="stat"><span class="lbl">Lutas</span><b>${rodada.total_lutas}</b></div>` +
+  $("#stats").innerHTML = `<div class="stat"><span class="lbl">Lutas <button class="info" data-info="papeis" aria-label="O que são campeã, desafiante e só regras">i</button></span><b>${rodada.total_lutas}</b></div>` +
     ["campea", "desafiante", "regras", "jogador"].filter((p) => porPapel[p]).map((p) =>
       `<div class="stat"><span class="lbl">${PAPEL[p]}</span><b>${taxa(porPapel[p].v, porPapel[p].d)}</b><span class="num">${porPapel[p].v}V ${porPapel[p].d}D</span></div>`).join("") +
     `<div class="stat"><span class="lbl">Gerada</span><b class="num" style="font-size:1rem">${esc(rodada.gerado)} UTC</b></div>`;
@@ -170,7 +247,7 @@ function desenha() {
     <div style="margin-top:14px"><button class="chip jogador" data-abre="${meu.time}">Ver as ${meu.lutas.length} lutas</button></div></div>` : "";
 
   const comps = [...new Set(rodada.trios.map((t) => t.composicao))].sort();
-  $("#filtros").innerHTML = '<span class="lbl">Filtrar</span>' + ["todos", "campea", "desafiante", "regras", ...comps].map((f) =>
+  $("#filtros").innerHTML = '<span class="lbl">Filtrar</span> <button class="info" data-info="comps" aria-label="O que significam as siglas dos trios">i</button>' + ["todos", "campea", "desafiante", "regras", ...comps].map((f) =>
     `<button data-f="${esc(f)}" aria-pressed="${f === filtro}">${esc(PAPEL[f] ?? (f === "todos" ? "Todos" : f))}</button>`).join("");
 
   const lista = rodada.trios.filter((t) => filtro === "todos" || t.papel === filtro || t.composicao === filtro);
@@ -214,7 +291,7 @@ function desenhaDetalhe() {
   if (!t) { $("#detalhe").innerHTML = ""; return; }
   const lutas = [...t.lutas].sort((a, b) => b - a).map((id) => rodada.lutas[id]).filter(Boolean);
   $("#detalhe").innerHTML = `<div class="det ${fac(t)}">${cabecaTrio(t)}${t.papel === "jogador" ? "" : analiseTrio(t)}
-    <div><span class="lbl">Lutas da rodada (${lutas.length})</span><div class="lutas" style="margin-top:8px">${lutas.map((l) => resumoLuta(l, t)).join("")}</div></div></div>`;
+    <div><span class="lbl">Lutas da rodada (${lutas.length}) <button class="info" data-info="luta" aria-label="Como ler uma luta">i</button></span><div class="lutas" style="margin-top:8px">${lutas.map((l) => resumoLuta(l, t)).join("")}</div></div></div>`;
 }
 
 function resumoLuta(l, t) {
@@ -273,6 +350,14 @@ function graficoVida(l, classe) {
 }
 
 document.addEventListener("click", (ev) => {
+  const info = ev.target.closest("[data-info]");
+  if (info) {
+    ev.stopPropagation();
+    const dlg = $("#ajuda");
+    if (!dlg.open) dlg.showModal();
+    document.getElementById("aj-" + info.dataset.info)?.scrollIntoView({ block: "start" });
+    return;
+  }
   const abre = ev.target.closest("[data-abre]");
   if (abre) { aberto = Number(abre.dataset.abre); desenha(); $("#detalhe").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
   const f = ev.target.closest("[data-f]");
@@ -282,6 +367,8 @@ document.addEventListener("toggle", (ev) => {
   const d = ev.target;
   if (d.matches?.("details.luta") && d.open && !d.querySelector(".corpo").innerHTML) d.querySelector(".corpo").innerHTML = corpoLuta(rodada.lutas[d.dataset.luta]);
 }, true);
+$("#fecha-ajuda").addEventListener("click", () => $("#ajuda").close());
+$("#ajuda").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 $("#sel").addEventListener("change", (e) => abreRodada(e.target.value));
 $("#ant").addEventListener("click", () => { const i = indice.findIndex((r) => r.id === rodada.id); if (i > 0) abreRodada(indice[i - 1].id); });
 $("#prox").addEventListener("click", () => { const i = indice.findIndex((r) => r.id === rodada.id); if (i < indice.length - 1) abreRodada(indice[i + 1].id); });
