@@ -50,17 +50,16 @@ W_DAMAGE, W_HEALING = 0.15 / 200_000, 0.15 / 200_000
 W_KILL, W_ENEMY_DEAD, W_ALLY_DEAD, W_CC = 0.10, 0.10, -0.10, 0.02
 CC_MASK = 1 | 2 | 4 | 8  # stun, fear, confuse/disorient, silence (bits de ArenaObservation.h CcFlags)
 BUFFER, BATCH, STEPS = 300_000, 512, 40
-# Manutenção fora de combate (óleo, venenos, buffs longos, comida, invocar pet, fugir): a rede escolhia isso no meio
-# da luta. Ficam com as regras: logit -30 nos pesos exportados (o servidor nunca as sorteia).
+# Ações que nunca servem no meio de uma arena (óleo/pedra/veneno na arma, comida, ressuscitar, conjurar, buffs de
+# 30 min): a rede não as sorteia (logit -30 nos pesos exportados); as regras continuam usando quando precisam.
+# Fugir, comandos de pet, invocar pet e trocar de forma NÃO estão aqui: a rede aprende quando valem a pena.
 BANNED = {"Deadly Poison", "Instant Poison", "accept resurrect", "ancestral spirit", "apply oil", "apply stone",
-          "arcane intellect", "arcane intellect on party", "blood presence", "call pet", "caster form",
-          "cast greater blessing assignment", "concentration aura", "conjure mana gem", "create firestone",
-          "create healthstone", "create spellstone", "demon armor", "divine spirit on party", "drink", "feed pet",
-          "fel armor", "firestone", "flee", "food", "inner fire", "mage armor", "mark of the wild",
-          "mark of the wild on party", "molten armor", "pet autocast setup", "power word: fortitude on party",
-          "remove shadowform", "resurrection", "revive pet", "self resurrect", "shadow protection",
-          "shadow protection on party", "spellstone", "summon felhunter", "summon imp", "summon succubus",
-          "summon voidwalker", "thorns", "toggle pet spell", "trueshot aura"}
+          "arcane intellect", "arcane intellect on party", "cast greater blessing assignment", "conjure mana gem",
+          "create firestone", "create healthstone", "create spellstone", "demon armor", "divine spirit on party",
+          "drink", "fel armor", "firestone", "food", "inner fire", "mage armor", "mark of the wild",
+          "mark of the wild on party", "molten armor", "power word: fortitude on party", "resurrection",
+          "self resurrect", "shadow protection", "shadow protection on party", "spellstone", "thorns",
+          "trueshot aura"}
 GATE_MIN, PROMOTE, REVERT = 150, 0.05, -0.08
 
 
@@ -339,6 +338,13 @@ def main() -> int:
         if saved["actions"] == actions:
             model.load_state_dict(saved["model"])
             state = {**saved["state"], "desde": dt.datetime.fromisoformat(str(saved["state"]["desde"]))}
+            # ações liberadas depois de bloqueadas: voltam com os pesos da campeã (bloqueio deixava logit -30)
+            champ, _ = load_policy(a.campea)
+            with torch.no_grad():
+                for i, name in enumerate(actions):
+                    if name not in BANNED and model.pi.bias[i] <= -29.9:
+                        model.pi.weight[i] = champ.pi.weight[i]
+                        model.pi.bias[i] = champ.pi.bias[i]
     model.to(dev).eval()
     idx = {x: i for i, x in enumerate(actions)}
     opt = torch.optim.Adam(model.parameters(), lr=3e-4)
