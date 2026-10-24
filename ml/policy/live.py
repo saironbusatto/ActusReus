@@ -256,9 +256,12 @@ def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int
             continue
         vistos[f.name] = f.stat().st_mtime
         try:
-            lutas = json.loads(f.read_text()).get("lutas", {})
+            dados = json.loads(f.read_text())
         except (OSError, ValueError):
             continue
+        if not isinstance(dados, dict) or "lutas" not in dados:  # evolucao.json, aval e outros que não são rodada
+            continue
+        lutas = dados["lutas"]
         for luta in lutas.values():
             notas.update(coach_notes(luta))
         lidas.append(f.stem)
