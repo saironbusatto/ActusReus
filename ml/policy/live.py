@@ -136,6 +136,18 @@ class Replay:
         self.disc = torch.zeros(cap)
         self.nxt = torch.zeros(cap, N_FEATURES_V2)
         self.done = torch.zeros(cap)
+        self.keys: list[tuple[int, int] | None] = [None] * cap
+        self.where: dict[tuple[int, int], int] = {}
+
+    def coach(self, notas: dict[tuple[int, int], float]) -> int:
+        """Soma a nota do técnico de IA às decisões (bot, ms) que ainda estão no buffer."""
+        n = 0
+        for k, v in notas.items():
+            p = self.where.get(k)
+            if p is not None and self.keys[p] == k:
+                self.r[p] += v
+                n += 1
+        return n
 
     def add_fight(self, steps: list[tuple[dt.datetime, dict]], won: bool, idx: dict[str, int]) -> int:
         rews = step_rewards([r for _, r in steps], won)
@@ -151,6 +163,13 @@ class Replay:
                 gap = max((steps[i + 1][0] - when).total_seconds(), 0.0)
                 self.disc[p] = GAMMA_S ** gap
                 self.nxt[p] = torch.tensor(features_v2(steps[i + 1][1]))
+            old = self.keys[p]
+            if old is not None and self.where.get(old) == p:
+                del self.where[old]
+            key = (int(r["bot"]), int(r["ms"])) if "ms" in r else None
+            self.keys[p] = key
+            if key is not None:
+                self.where[key] = p
             self.pos = (p + 1) % self.cap
             self.n = min(self.n + 1, self.cap)
         return len(steps)
@@ -182,6 +201,64 @@ def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str 
         stats["adv"] += adv.abs().mean().item() / steps
     model.eval()
     return stats
+
+
+# ---------------------------------------------------------------- técnico de IA -> notas por decisão
+RODADAS = RUNS / "rodadas"
+COACH_ERRO = {"alta": -0.3, "media": -0.15, "média": -0.15, "baixa": -0.05}
+COACH_ACERTO, COACH_REDE, COACH_MAX = 0.1, -0.3, 0.3
+
+
+def coach_notes(luta: dict) -> dict[tuple[int, int], float]:
+    """Casa cada erro/acerto da análise com a decisão do log (mesmo personagem, instante a até 1,5 s, de preferência
+    a mesma ação) e devolve a nota extra de cada decisão (bot, ms), limitada a ±COACH_MAX."""
+    analise = luta.get("analise") or {}
+    if "erro" in analise:
+        return {}
+    acoes = [e for e in luta.get("eventos", []) if e.get("tipo") == "acao" and "ms" in e]
+
+    def casa(item: dict, texto: str, so_rede: bool = False) -> dict | None:
+        try:
+            t = float(item.get("t"))
+        except (TypeError, ValueError):
+            return None
+        perto = [e for e in acoes if e["quem"] == item.get("quem") and abs(e["t"] - t) <= 1.5
+                 and (e["rede"] or not so_rede)]
+        if not perto:
+            return None
+        mesma = [e for e in perto if e["acao"].lower() in texto.lower()]
+        return min(mesma or perto, key=lambda e: abs(e["t"] - t))
+
+    notas: dict[tuple[int, int], float] = {}
+
+    def soma(e: dict | None, v: float) -> None:
+        if e:
+            k = (int(e["guid"]), int(e["ms"]))
+            notas[k] = max(-COACH_MAX, min(COACH_MAX, notas.get(k, 0.0) + v))
+
+    for x in analise.get("erros", []):
+        soma(casa(x, f"{x.get('fez', '')}"), COACH_ERRO.get(str(x.get("gravidade", "")).lower(), -0.15))
+    for x in analise.get("acertos", []):
+        soma(casa(x, f"{x.get('descricao', '')}"), COACH_ACERTO)
+    for x in analise.get("erros_da_rede", []):
+        soma(casa(x, f"{x.get('acao', '')}", so_rede=True), COACH_REDE)
+    return notas
+
+
+def novas_analises(vistos: dict[str, float]) -> dict[tuple[int, int], float]:
+    """Notas das rodadas gravadas/atualizadas desde a última leitura."""
+    notas: dict[tuple[int, int], float] = {}
+    for f in sorted(RODADAS.glob("*.json")) if RODADAS.exists() else []:
+        if f.name in ("index.json", "sync-estado.json") or vistos.get(f.name) == f.stat().st_mtime:
+            continue
+        vistos[f.name] = f.stat().st_mtime
+        try:
+            lutas = json.loads(f.read_text()).get("lutas", {})
+        except (OSError, ValueError):
+            continue
+        for luta in lutas.values():
+            notas.update(coach_notes(luta))
+    return notas
 
 
 # ---------------------------------------------------------------- servidor: log e lutas
@@ -291,7 +368,8 @@ atualizado: {st['quando']} UTC
 # IA de arena ao vivo (treino contínuo)
 
 **Agora:** desafiante na versão **{st['versao']}** · pesos regravados {st['atualizacoes']} vezes desde que o treinador
-ligou · {st['decisoes_total']:,} decisões com nota · {st['lutas_total']} lutas aprendidas · desafiante desde
+ligou · {st['decisoes_total']:,} decisões com nota · {st['lutas_total']} lutas aprendidas ·
+{st.get('conselhos_aplicados', 0)} conselhos do técnico de IA aplicados · desafiante desde
 {st['desafiante_desde']} UTC.
 
 | Espelho desde {st['desafiante_desde']} | Vitórias | Taxa | IC 95% |
@@ -355,7 +433,9 @@ def main() -> int:
     buf, tail = Replay(), LogTail(LOG, RUNS / "live.offset")
     pending: dict[int, list[tuple[dt.datetime, dict]]] = {}
     last_fight = now - dt.timedelta(minutes=5)
-    totals = {"decisoes_total": 0, "lutas_total": 0, "atualizacoes": 0}
+    totals = {"decisoes_total": 0, "lutas_total": 0, "atualizacoes": 0, "conselhos_aplicados": 0}
+    vistos: dict[str, float] = {}
+    pendentes: dict[tuple[int, int], float] = {}  # análises que chegaram antes do resultado da luta
     next_gate = time.time() + a.portao
     print(f"live: campeã {a.campea.name}, desafiante {a.desafiante.name}, {dev}", flush=True)
     while True:
@@ -372,6 +452,13 @@ def main() -> int:
             totals["lutas_total"] += 1
         now = dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
         pending = {g: [s for s in v if s[0] > now - dt.timedelta(minutes=30)] for g, v in pending.items()}
+
+        pendentes.update(novas_analises(vistos))
+        if pendentes:
+            totals["conselhos_aplicados"] += buf.coach(pendentes)
+            pendentes = {k: v for k, v in pendentes.items() if k not in buf.where}
+            if len(pendentes) > 50_000:
+                pendentes = {}
 
         stats = {}
         if buf.n >= BATCH:
@@ -454,7 +541,22 @@ def selftest() -> None:
     p = torch.softmax(model(x)[0], 1)[0]
     assert p[1] > 0.7, p
 
-    # 4) exportar e carregar devolve a mesma rede
+    # 4) técnico: erro alto na decisão certa (mesma pessoa, ~mesmo instante, mesma ação) e erro da rede só em
+    #    decisão da rede; a nota cai na posição do buffer daquela decisão
+    luta = {"analise": {"erros": [{"t": 10.2, "quem": "A", "fez": "Usou kick cedo", "gravidade": "alta"}],
+                        "acertos": [{"t": 20, "quem": "A", "descricao": "Blind no healer"}],
+                        "erros_da_rede": [{"t": 10, "quem": "A", "acao": "fear"}]},
+            "eventos": [{"tipo": "acao", "t": 10.0, "quem": "A", "acao": "kick", "rede": False, "guid": 1, "ms": 1000},
+                        {"tipo": "acao", "t": 10.5, "quem": "A", "acao": "fear", "rede": True, "guid": 1, "ms": 1500},
+                        {"tipo": "acao", "t": 20.1, "quem": "A", "acao": "blind", "rede": False, "guid": 1, "ms": 2000}]}
+    notas = coach_notes(luta)
+    assert notas == {(1, 1000): -0.3, (1, 1500): -0.3, (1, 2000): 0.1}, notas
+    b2 = Replay(cap=10)
+    b2.add_fight([(t0, {**row("kick", 0, 80), "ms": 1000}), (t0, {**row("melee", 0, 80), "ms": 1100})], True, idx)
+    antes = float(b2.r[0])
+    assert b2.coach({(1, 1000): -0.3, (9, 9): 1.0}) == 1 and abs(float(b2.r[0]) - antes + 0.3) < 1e-6
+
+    # 5) exportar e carregar devolve a mesma rede
     with tempfile.TemporaryDirectory() as d:
         out = Path(d) / "p.txt"
         write_atomic(model, actions, out)

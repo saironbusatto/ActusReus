@@ -1,0 +1,289 @@
+<title>Rodadas da Arena</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Alegreya+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: cabeçalho da rodada · cartão do trio do jogador em destaque · grade de 36 trios · painel de detalhe com lutas */
+:root {
+  --bg: #f3f1ec; --panel: #fbfaf7; --ink: #1f1c18; --muted: #6d665c; --line: #ddd7cc;
+  --gold: #9a6b16; --horde: #9b2c1f; --alliance: #1f4f94; --net: #7b3fb5;
+  --ok: #2f7a3b; --bad: #b3362b; --warn: #a86a00;
+  --c-warrior: #8a6331; --c-paladin: #b84a86; --c-hunter: #5d7f2a; --c-rogue: #9a8a00; --c-priest: #6b6b6b;
+  --c-dk: #b31b34; --c-shaman: #0057ad; --c-mage: #1f86a8; --c-warlock: #6250a8; --c-druid: #c25e00;
+  --display: "Cinzel", Georgia, serif; --body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15130f; --panel: #1d1a15; --ink: #ece6da; --muted: #a39a8b; --line: #363027;
+  --gold: #e0b354; --horde: #e0705f; --alliance: #7aa7ec; --net: #b88ae8;
+  --ok: #6cc47a; --bad: #ef7a6e; --warn: #e3a842;
+  --c-warrior: #c79c6e; --c-paladin: #f58cba; --c-hunter: #abd473; --c-rogue: #fff569; --c-priest: #f2f2f2;
+  --c-dk: #e0475f; --c-shaman: #4c9eff; --c-mage: #69ccf0; --c-warlock: #9482c9; --c-druid: #ff7d0a;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15130f; --panel: #1d1a15; --ink: #ece6da; --muted: #a39a8b; --line: #363027;
+  --gold: #e0b354; --horde: #e0705f; --alliance: #7aa7ec; --net: #b88ae8;
+  --ok: #6cc47a; --bad: #ef7a6e; --warn: #e3a842;
+  --c-warrior: #c79c6e; --c-paladin: #f58cba; --c-hunter: #abd473; --c-rogue: #fff569; --c-priest: #f2f2f2;
+  --c-dk: #e0475f; --c-shaman: #4c9eff; --c-mage: #69ccf0; --c-warlock: #9482c9; --c-druid: #ff7d0a;
+  color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--body); margin: 0 }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 24px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+h1, h2, h3 { font-family: var(--display); letter-spacing: .02em; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--gold) }
+h2 { font-size: 1.25rem } h3 { font-size: 1.02rem }
+.lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 700 }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums }
+button, select { font: inherit; color: inherit }
+button { cursor: pointer }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px }
+
+header.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between;
+  border-bottom: 1px solid var(--line); padding-bottom: 16px }
+.nav { display: flex; gap: 8px; align-items: center; min-width: 0 }
+.nav select { min-width: 0; max-width: 100% }
+.nav button, .nav select { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px }
+.nav button:disabled { opacity: .4; cursor: default }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 16px 0 8px }
+.stat b { display: block; font-family: var(--mono); font-size: 1.3rem }
+
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; background: transparent }
+.chip.jogador { color: var(--gold) } .chip.campea { color: var(--net) } .chip.desafiante { color: var(--net); border-style: dashed }
+.chip.regras { color: var(--muted) }
+.fac-horde { --fac: var(--horde) } .fac-alliance { --fac: var(--alliance) }
+
+.destaque { margin-top: 20px; background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--gold);
+  border-radius: 10px; padding: 18px }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 12px; align-items: center }
+.filtros button { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; font-size: .9rem }
+.filtros button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink) }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px }
+.trio { text-align: left; background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--fac);
+  border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0 }
+.trio:hover { border-color: var(--fac) }
+.trio[aria-current="true"] { box-shadow: 0 0 0 2px var(--fac) }
+.trio .linha1 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline }
+.trio .placar { font-family: var(--mono); font-weight: 600 }
+.trio p { margin: 0; color: var(--muted); font-size: .9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+.nota { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden }
+.nota i { display: block; height: 100%; background: var(--fac) }
+
+#detalhe { margin-top: 28px; scroll-margin-top: 16px }
+.det { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 18px; min-width: 0 }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px }
+.cols > div { min-width: 0 }
+ul.sem { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 8px }
+ul.sem li { padding-left: 12px; border-left: 2px solid var(--line) }
+ul.sem li.erro { border-left-color: var(--bad) } ul.sem li.bom { border-left-color: var(--ok) } ul.sem li.rede { border-left-color: var(--net) }
+.vezes { font-family: var(--mono); color: var(--muted); font-size: .85rem }
+ol.plano { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px }
+
+.lutas { display: grid; gap: 8px }
+details.luta { border: 1px solid var(--line); border-radius: 8px; background: var(--bg); min-width: 0 }
+details.luta > summary { cursor: pointer; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; list-style: none }
+details.luta > summary::-webkit-details-marker { display: none }
+details.luta > summary::before { content: "▸"; color: var(--muted) } details.luta[open] > summary::before { content: "▾" }
+.res-v { color: var(--ok); font-weight: 700 } .res-d { color: var(--bad); font-weight: 700 }
+.corpo { padding: 0 12px 14px; display: grid; gap: 14px; min-width: 0 }
+.equipes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px }
+.equipe { font-size: .9rem; min-width: 0 } .equipe .p { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap }
+.cl { font-weight: 700 }
+.cl-Warrior { color: var(--c-warrior) } .cl-Paladin { color: var(--c-paladin) } .cl-Hunter { color: var(--c-hunter) }
+.cl-Rogue { color: var(--c-rogue) } .cl-Priest { color: var(--c-priest) } .cl-DK { color: var(--c-dk) }
+.cl-Shaman { color: var(--c-shaman) } .cl-Mage { color: var(--c-mage) } .cl-Warlock { color: var(--c-warlock) } .cl-Druid { color: var(--c-druid) }
+.grafico { overflow-x: auto } .grafico svg { display: block; min-width: 520px; width: 100% }
+.tl { max-height: 360px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; font-family: var(--mono); font-size: .8rem }
+.tl div { display: grid; grid-template-columns: 4.2em 1fr; gap: 8px; padding: 2px 8px; border-bottom: 1px solid var(--line) }
+.tl div.cc { background: color-mix(in srgb, var(--warn) 12%, transparent) }
+.tl div.morte { background: color-mix(in srgb, var(--bad) 16%, transparent); font-weight: 600 }
+.tl div.trinket, .tl div.defensivo { background: color-mix(in srgb, var(--alliance) 10%, transparent) }
+.tl .rede { color: var(--net); font-weight: 600 }
+.tl .t { color: var(--muted); text-align: right }
+.coach { border-left: 3px solid var(--gold); padding: 4px 0 4px 12px }
+.vazio { color: var(--muted); padding: 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px }
+.motor { font-size: .78rem; color: var(--muted) }
+@media (prefers-reduced-motion: no-preference) { .trio { transition: border-color .15s, box-shadow .15s } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="lbl">IA de arena 3v3 · WotLK 3.3.5a</div>
+      <h1>Rodadas da Arena</h1>
+    </div>
+    <div class="nav">
+      <button id="ant" aria-label="Rodada anterior">◂</button>
+      <select id="sel" aria-label="Escolher rodada"></select>
+      <button id="prox" aria-label="Próxima rodada">▸</button>
+    </div>
+  </header>
+  <div class="stats" id="stats"></div>
+  <section id="destaque"></section>
+  <div class="filtros" id="filtros" role="group" aria-label="Filtrar trios"></div>
+  <div class="grade" id="grade"><div class="vazio">Carregando a rodada…</div></div>
+  <section id="detalhe"></section>
+</div>
+
+<script>
+const HORDA = new Set(["RMP", "RLS", "Fireplay", "RPS", "LSD"]);
+const PAPEL = { jogador: "Seu trio", campea: "Rede campeã", desafiante: "Rede desafiante", regras: "Só regras" };
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let indice = [], rodada = null, filtro = "todos", aberto = null;
+
+async function carregaIndice() {
+  try { indice = await (await fetch("dados/index.json")).json(); } catch { indice = []; }
+  const sel = $("#sel");
+  sel.innerHTML = indice.map((r) => `<option value="${r.id}">${esc(r.inicio)}–${esc(r.fim.slice(11))} UTC · ${r.total_lutas} lutas</option>`).join("");
+  if (!indice.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada publicada ainda. A primeira aparece depois da próxima hora cheia.</div>'; return; }
+  const pedida = location.hash.slice(1);
+  await abreRodada(indice.some((r) => r.id === pedida) ? pedida : indice[indice.length - 1].id);
+}
+
+async function abreRodada(id) {
+  $("#sel").value = id;
+  const i = indice.findIndex((r) => r.id === id);
+  $("#ant").disabled = i <= 0; $("#prox").disabled = i >= indice.length - 1;
+  $("#grade").innerHTML = '<div class="vazio">Carregando a rodada…</div>';
+  try { rodada = await (await fetch(`dados/${id}.json`)).json(); }
+  catch { $("#grade").innerHTML = '<div class="vazio">Não consegui abrir esta rodada. Escolha outra na lista.</div>'; return; }
+  aberto = rodada.trios.find((t) => t.papel === "jogador")?.time ?? null;
+  desenha();
+}
+
+function fac(t) { return HORDA.has(t.composicao) ? "fac-horde" : "fac-alliance"; }
+function taxa(v, d) { return v + d ? Math.round((100 * v) / (v + d)) + "%" : "—"; }
+
+function desenha() {
+  const porPapel = {};
+  for (const t of rodada.trios) { const p = (porPapel[t.papel] ??= { v: 0, d: 0 }); p.v += t.vitorias; p.d += t.derrotas; }
+  $("#stats").innerHTML = `<div class="stat"><span class="lbl">Lutas</span><b>${rodada.total_lutas}</b></div>` +
+    ["campea", "desafiante", "regras", "jogador"].filter((p) => porPapel[p]).map((p) =>
+      `<div class="stat"><span class="lbl">${PAPEL[p]}</span><b>${taxa(porPapel[p].v, porPapel[p].d)}</b><span class="num">${porPapel[p].v}V ${porPapel[p].d}D</span></div>`).join("") +
+    `<div class="stat"><span class="lbl">Gerada</span><b class="num" style="font-size:1rem">${esc(rodada.gerado)} UTC</b></div>`;
+
+  const meu = rodada.trios.find((t) => t.papel === "jogador");
+  $("#destaque").innerHTML = meu ? `<div class="destaque ${fac(meu)}">${cabecaTrio(meu)}${analiseTrio(meu)}
+    <div style="margin-top:14px"><button class="chip jogador" data-abre="${meu.time}">Ver as ${meu.lutas.length} lutas</button></div></div>` : "";
+
+  const comps = [...new Set(rodada.trios.map((t) => t.composicao))].sort();
+  $("#filtros").innerHTML = '<span class="lbl">Filtrar</span>' + ["todos", "campea", "desafiante", "regras", ...comps].map((f) =>
+    `<button data-f="${esc(f)}" aria-pressed="${f === filtro}">${esc(PAPEL[f] ?? (f === "todos" ? "Todos" : f))}</button>`).join("");
+
+  const lista = rodada.trios.filter((t) => filtro === "todos" || t.papel === filtro || t.composicao === filtro);
+  $("#grade").innerHTML = lista.map((t) => {
+    const a = t.analise || {}, nota = Number(a.nota_da_rodada) || 0;
+    return `<button class="trio ${fac(t)}" data-abre="${t.time}" aria-current="${t.time === aberto}">
+      <div class="linha1"><h3>${esc(t.nome)}</h3><span class="placar">${t.vitorias}–${t.derrotas}</span></div>
+      <div><span class="chip ${t.papel}">${PAPEL[t.papel]}</span></div>
+      <p>${esc(a.resumo || a.erro || "Sem análise")}</p>
+      <div class="nota" title="Nota da rodada ${nota}/10"><i style="width:${nota * 10}%"></i></div></button>`;
+  }).join("") || '<div class="vazio">Nenhum trio neste filtro.</div>';
+  desenhaDetalhe();
+}
+
+function cabecaTrio(t) {
+  const a = t.analise || {};
+  return `<div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between">
+    <div><span class="lbl">${HORDA.has(t.composicao) ? "Horda" : "Aliança"} · ${esc(t.composicao)}</span><h2>${esc(t.nome)}</h2></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="chip ${t.papel}">${PAPEL[t.papel]}</span>
+    <span class="num" style="font-size:1.2rem;font-weight:600">${t.vitorias}V ${t.derrotas}D</span>
+    ${a.nota_da_rodada != null ? `<span class="num">nota ${esc(a.nota_da_rodada)}/10</span>` : ""}</div></div>`;
+}
+
+function analiseTrio(t) {
+  const a = t.analise || {};
+  if (a.erro) return `<p class="motor">Análise indisponível nesta rodada: ${esc(a.erro)}</p>`;
+  const lutas = (xs) => (xs?.length ? ` <span class="vezes">lutas ${xs.map((x) => "#" + x).join(", ")}</span>` : "");
+  return `<p style="margin:10px 0 0;max-width:75ch">${esc(a.resumo)}</p>
+  <div class="cols" style="margin-top:12px">
+    <div><span class="lbl">Erros que se repetem</span><ul class="sem">${(a.padroes_de_erro || []).map((e) =>
+      `<li class="erro">${esc(e.descricao)} <span class="vezes">${e.vezes ? e.vezes + "×" : ""} ${esc(e.quem || "")}</span>${lutas(e.lutas)}</li>`).join("") || "<li>—</li>"}</ul></div>
+    <div><span class="lbl">O que funcionou</span><ul class="sem">${(a.o_que_funcionou || []).map((e) =>
+      `<li class="bom">${esc(e.descricao)}${lutas(e.lutas)}</li>`).join("") || "<li>—</li>"}</ul>
+      <span class="lbl" style="display:block;margin-top:12px">A rede neural</span><ul class="sem"><li class="rede">${esc(a.sobre_a_rede || "—")}</li></ul></div>
+    <div><span class="lbl">Plano para a próxima rodada</span><ol class="plano">${(a.plano_proxima_rodada || []).map((p) => `<li>${esc(p)}</li>`).join("")}</ol></div>
+  </div><div class="motor" style="margin-top:8px">Análise: ${esc(t.motor || "")}</div>`;
+}
+
+function desenhaDetalhe() {
+  const t = rodada.trios.find((x) => x.time === aberto);
+  if (!t) { $("#detalhe").innerHTML = ""; return; }
+  const lutas = [...t.lutas].sort((a, b) => b - a).map((id) => rodada.lutas[id]).filter(Boolean);
+  $("#detalhe").innerHTML = `<div class="det ${fac(t)}">${cabecaTrio(t)}${t.papel === "jogador" ? "" : analiseTrio(t)}
+    <div><span class="lbl">Lutas da rodada (${lutas.length})</span><div class="lutas" style="margin-top:8px">${lutas.map((l) => resumoLuta(l, t)).join("")}</div></div></div>`;
+}
+
+function resumoLuta(l, t) {
+  const venceu = l.vencedor === t.time;
+  const adv = Object.entries(l.times).find(([k]) => Number(k) !== t.time)?.[1] ?? "?";
+  return `<details class="luta" data-luta="${l.luta}"><summary>
+    <span class="${venceu ? "res-v" : "res-d"}">${venceu ? "Vitória" : "Derrota"}</span>
+    <span>contra <b>${esc(adv)}</b></span><span class="num">${l.duracao}s</span>
+    <span class="num" style="color:var(--muted)">#${l.luta} · ${esc(l.inicio.slice(11, 16))}</span>
+    ${l.decisoes_rede ? `<span class="chip campea">rede ${l.decisoes_rede}</span>` : ""}
+    ${l.analise && !l.analise.erro ? '<span class="chip jogador">análise</span>' : ""}</summary><div class="corpo"></div></details>`;
+}
+
+function corpoLuta(l) {
+  const equipes = Object.entries(l.times).map(([tid, nome]) => {
+    const ms = l.membros.filter((m) => String(m.time) === tid);
+    return `<div class="equipe"><div class="lbl">${esc(nome)} ${Number(tid) === l.vencedor ? "· venceu" : ""}</div>${ms.map((m) =>
+      `<div class="p"><span class="cl cl-${esc(m.classe)}">${esc(m.nome)}</span><span class="num">${(m.dano / 1000).toFixed(1)}k dano · ${(m.cura / 1000).toFixed(1)}k cura${m.kills ? " · " + m.kills + "☠" : ""}</span></div>`).join("")}</div>`;
+  }).join("");
+  const a = l.analise;
+  const coach = a && !a.erro ? `<div class="coach"><span class="lbl">Técnico de IA</span>
+    <p style="margin:4px 0">${esc(a.resumo)}</p>
+    ${a.momento_decisivo ? `<p style="margin:4px 0"><b>Momento decisivo (${esc(a.momento_decisivo.t)}s):</b> ${esc(a.momento_decisivo.descricao)}</p>` : ""}
+    <ul class="sem">${(a.erros || []).map((e) => `<li class="erro"><span class="num">${esc(e.t)}s</span> <b>${esc(e.quem)}</b>: ${esc(e.fez)} → <i>${esc(e.devia)}</i>. ${esc(e.porque)}</li>`).join("")}
+    ${(a.acertos || []).map((e) => `<li class="bom"><span class="num">${esc(e.t)}s</span> <b>${esc(e.quem)}</b>: ${esc(e.descricao)}</li>`).join("")}
+    ${(a.erros_da_rede || []).map((e) => `<li class="rede"><span class="num">${esc(e.t)}s</span> rede · <b>${esc(e.quem)}</b> ${esc(e.acao)}: ${esc(e.porque)}</li>`).join("")}</ul>
+    ${Object.entries(a.conselho_por_time || {}).map(([k, v]) => `<p style="margin:6px 0 0"><b>${esc(k)}:</b> ${esc(v)}</p>`).join("")}
+    <div class="motor">${esc(a._motor || "")}</div></div>` : "";
+  const classe = Object.fromEntries(l.membros.map((m) => [m.nome, m.classe]));
+  const tl = l.eventos.map((e) => {
+    if (e.tipo === "acao") return `<div><span class="t">${e.t}</span><span><span class="cl cl-${esc(classe[e.quem])}">${esc(e.quem)}</span> ${e.rede ? `<span class="rede">[rede ${Math.round(e.prob * 100)}%]</span> ` : ""}${esc(e.acao)}${e.alvo ? " → " + esc(e.alvo) : ""}</span></div>`;
+    const txt = { cc: `em ${esc(e.cc)} (${e.vida}%)`, trinket: `usou trinket (${e.vida}%)`, defensivo: `defensivo (${e.vida}%)`, morte: "MORREU" }[e.tipo];
+    return `<div class="${e.tipo}"><span class="t">${e.t}</span><span>✦ <span class="cl cl-${esc(classe[e.quem])}">${esc(e.quem)}</span> ${txt}</span></div>`;
+  }).join("");
+  return `<div class="equipes">${equipes}</div>${coach}<div><span class="lbl">Vida ao longo da luta (s)</span><div class="grafico">${graficoVida(l, classe)}</div></div>
+    <div><span class="lbl">Linha do tempo</span><div class="tl">${tl || "<div><span></span><span>Sem decisões gravadas.</span></div>"}</div></div>`;
+}
+
+function graficoVida(l, classe) {
+  const series = Object.entries(l.vida || {});
+  if (!series.length) return "";
+  const tmax = Math.max(5, ...series.flatMap(([, pts]) => pts.map((p) => p[0])));
+  const W = 640, H = 170, ml = 34, mr = 120, mt = 8, mb = 22;
+  const x = (t) => ml + ((W - ml - mr) * t) / tmax, y = (hp) => mt + ((H - mt - mb) * (100 - hp)) / 100;
+  const cor = (n) => `var(--c-${(classe[n] || "priest").toLowerCase()})`;
+  const grade = [0, 50, 100].map((v) => `<line x1="${ml}" x2="${W - mr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${ml - 6}" y="${y(v) + 4}" text-anchor="end" font-size="10" fill="var(--muted)">${v}%</text>`).join("");
+  const passo = tmax > 60 ? 20 : 10;
+  const ticks = Array.from({ length: Math.floor(tmax / passo) + 1 }, (_, i) => i * passo).map((t) => `<text x="${x(t)}" y="${H - 6}" text-anchor="middle" font-size="10" fill="var(--muted)">${t}</text>`).join("");
+  const linhas = series.map(([n, pts], i) => {
+    const d = pts.map((p, k) => `${k ? "L" : "M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+    const ult = pts[pts.length - 1];
+    return `<path d="${d}" fill="none" stroke="${cor(n)}" stroke-width="2"/><circle cx="${x(ult[0])}" cy="${y(ult[1])}" r="3" fill="${cor(n)}"/>
+      <text x="${W - mr + 8}" y="${mt + 12 + i * 17}" font-size="11" fill="${cor(n)}" font-weight="700">${esc(n)} ${ult[1]}%</text>`;
+  }).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Vida de cada personagem ao longo da luta">${grade}${ticks}${linhas}</svg>`;
+}
+
+document.addEventListener("click", (ev) => {
+  const abre = ev.target.closest("[data-abre]");
+  if (abre) { aberto = Number(abre.dataset.abre); desenha(); $("#detalhe").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
+  const f = ev.target.closest("[data-f]");
+  if (f) { filtro = f.dataset.f; desenha(); }
+});
+document.addEventListener("toggle", (ev) => {
+  const d = ev.target;
+  if (d.matches?.("details.luta") && d.open && !d.querySelector(".corpo").innerHTML) d.querySelector(".corpo").innerHTML = corpoLuta(rodada.lutas[d.dataset.luta]);
+}, true);
+$("#sel").addEventListener("change", (e) => abreRodada(e.target.value));
+$("#ant").addEventListener("click", () => { const i = indice.findIndex((r) => r.id === rodada.id); if (i > 0) abreRodada(indice[i - 1].id); });
+$("#prox").addEventListener("click", () => { const i = indice.findIndex((r) => r.id === rodada.id); if (i < indice.length - 1) abreRodada(indice[i + 1].id); });
+carregaIndice();
+</script>

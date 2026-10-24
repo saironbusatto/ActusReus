@@ -54,6 +54,8 @@ def pergunta(prompt: str, modelo: str = MODELO, timeout: float = 120) -> dict:
                                  {"Authorization": f"Bearer {CHAVE.read_text().strip()}",
                                   "Content-Type": "application/json"})
     resposta = json.load(urllib.request.urlopen(req, timeout=timeout))
+    if "choices" not in resposta:
+        raise RuntimeError(f"OpenRouter: {resposta.get('error', resposta)}")
     escolha = resposta["choices"][0]
     conteudo = escolha["message"]["content"] or ""
     if "{" not in conteudo:

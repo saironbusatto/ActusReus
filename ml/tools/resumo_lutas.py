@@ -47,7 +47,7 @@ def fight_meta(fight_id: int) -> dict:
                                  "classe": CLASSE.get(int(c), c)} for g, n, t, d, h, k, c in members}}
 
 
-def read_lines(start: dt.datetime, end: dt.datetime, guids: set[int]) -> list[tuple[dt.datetime, dict]]:
+def read_lines(start: dt.datetime, end: dt.datetime, guids: set[int] | None) -> list[tuple[dt.datetime, dict]]:
     """Linhas v3 dos participantes entre start e end. Lê só o trecho do log daquele intervalo (grep por minuto)."""
     minutos = set()
     t = start.replace(second=0)
@@ -62,7 +62,7 @@ def read_lines(start: dt.datetime, end: dt.datetime, guids: set[int]) -> list[tu
         if len(parts) < 3 or not parts[2].startswith("v3,"):
             continue
         r = parse_v2(parts[2])
-        if not r or int(r["bot"]) not in guids:
+        if not r or (guids is not None and int(r["bot"]) not in guids):
             continue
         when = dt.datetime.strptime(f"{parts[0]} {parts[1]}", "%Y-%m-%d %H:%M:%S")
         if start <= when <= end:
@@ -71,10 +71,16 @@ def read_lines(start: dt.datetime, end: dt.datetime, guids: set[int]) -> list[tu
     return rows
 
 
-def build(fight_id: int) -> dict:
+def build(fight_id: int, linhas: list[tuple[dt.datetime, dict]] | None = None) -> dict:
+    """linhas: o log v3 já lido de um intervalo maior (rodada); sem ele, lê só o trecho desta luta."""
     f = fight_meta(fight_id)
     start = f["fim"] - dt.timedelta(seconds=f["duracao"])
-    rows = read_lines(start - dt.timedelta(seconds=2), f["fim"] + dt.timedelta(seconds=1), set(f["membros"]))
+    ini, fim, guids = start - dt.timedelta(seconds=2), f["fim"] + dt.timedelta(seconds=1), set(f["membros"])
+    if linhas is None:
+        rows = read_lines(ini, fim, guids)
+    else:
+        rows = sorted(((w, r) for w, r in linhas if ini <= w <= fim and int(r["bot"]) in guids),
+                      key=lambda x: x[1]["ms"])
     nome = {g: m["nome"] for g, m in f["membros"].items()}
     t0 = rows[0][1]["ms"] if rows else 0
     eventos, vida = [], defaultdict(list)
@@ -91,7 +97,8 @@ def build(fight_id: int) -> dict:
         acao = r["action"]
         if not ruido(acao) and not (ult_acao.get(bot, ("", -9))[0] == acao and r["ms"] - ult_acao[bot][1] < 1500):
             eventos.append({"t": seg(r), "tipo": "acao", "quem": nome.get(bot, bot), "acao": acao, "alvo": alvo,
-                            "rede": bool(r["mode"]), "prob": r["prob"] if r["mode"] else None})
+                            "rede": bool(r["mode"]), "prob": r["prob"] if r["mode"] else None,
+                            "guid": bot, "ms": int(r["ms"])})
         ult_acao[bot] = (acao, r["ms"])
         # o que este bot viu dos 6: mudanças de CC, trinket, defensivo, morte
         for s in r["slots"]:
