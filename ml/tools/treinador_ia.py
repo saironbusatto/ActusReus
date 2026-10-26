@@ -46,9 +46,11 @@ def pergunta(prompt: str, modelo: str = MODELO, timeout: float = 120) -> dict:
     pedido = {"model": modelo, "max_tokens": 6000, "reasoning": {"enabled": False}, "temperature": 0.2,
               "messages": [{"role": "system", "content": SISTEMA + SKILL.read_text()},
                            {"role": "user", "content": prompt}]}
-    if not modelo.startswith("anthropic/claude-haiku"):  # Sonnet/Opus: raciocínio obrigatório; limitado para sobrar resposta
+    if modelo.startswith("anthropic/") and "haiku" not in modelo:  # Sonnet/Opus: raciocínio obrigatório, limitado
         pedido.update(max_tokens=12000, reasoning={"max_tokens": 3000})
         del pedido["temperature"]
+    elif not modelo.startswith("anthropic/"):  # DeepSeek, Gemma, Nemotron: sem raciocínio, JSON estrito
+        pedido["response_format"] = {"type": "json_object"}
     corpo = json.dumps(pedido)
     req = urllib.request.Request("https://openrouter.ai/api/v1/chat/completions", corpo.encode(),
                                  {"Authorization": f"Bearer {CHAVE.read_text().strip()}",
