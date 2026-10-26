@@ -28,6 +28,7 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import caderno  # noqa: E402
 from espelho import sql, wilson  # noqa: E402
 from features import N_FEATURES_V2, features_v2, parse_v2  # noqa: E402
 from train_v2 import EMB, HIDDEN, PER_SLOT, PolicyV2, export  # noqa: E402
@@ -207,11 +208,14 @@ def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str 
 RODADAS = RUNS / "rodadas"
 COACH_ERRO = {"alta": -0.3, "media": -0.15, "média": -0.15, "baixa": -0.05}
 COACH_ACERTO, COACH_REDE, COACH_MAX = 0.1, -0.3, 0.3
+COACH_PADRAO = -0.25  # x taxa do padrão (caderno.py): o erro que se repete entre lutas pesa em toda decisão igual
 
 
-def coach_notes(luta: dict) -> dict[tuple[int, int], float]:
+def coach_notes(luta: dict, padroes: dict | None = None) -> dict[tuple[int, int], float]:
     """Casa cada erro/acerto da análise com a decisão do log (mesmo personagem, instante a até 1,5 s, de preferência
-    a mesma ação) e devolve a nota extra de cada decisão (bot, ms), limitada a ±COACH_MAX."""
+    a mesma ação) e devolve a nota extra de cada decisão (bot, ms), limitada a ±COACH_MAX. Com 'padroes' (situação ->
+    taxa de erro, de caderno.padroes), toda decisão da luta numa situação que virou padrão também leva
+    COACH_PADRAO x taxa, mesmo sem o técnico ter apontado esta vez."""
     analise = luta.get("analise") or {}
     if "erro" in analise:
         return {}
@@ -242,6 +246,10 @@ def coach_notes(luta: dict) -> dict[tuple[int, int], float]:
         soma(casa(x, f"{x.get('descricao', '')}"), COACH_ACERTO)
     for x in analise.get("erros_da_rede", []):
         soma(casa(x, f"{x.get('acao', '')}", so_rede=True), COACH_REDE)
+    for e in acoes if padroes else []:
+        tx = padroes.get(caderno.situacao(luta, e))
+        if tx:
+            soma(e, COACH_PADRAO * tx)
     return notas
 
 
@@ -251,8 +259,10 @@ AVAL = RODADAS / "treinado.json"  # o orquestrador (rodada_sync.py) só abre a p
 def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int, int], float]:
     """Notas das rodadas gravadas/atualizadas desde a última leitura; 'lidas' recebe os ids dessas rodadas."""
     notas: dict[tuple[int, int], float] = {}
+    padroes = None  # o caderno é recontado (todas as rodadas, ~4 s) só quando chega rodada nova
     for f in sorted(RODADAS.glob("*.json")) if RODADAS.exists() else []:
-        if f.name in ("index.json", "sync-estado.json", "treinado.json") or vistos.get(f.name) == f.stat().st_mtime:
+        if f.name in ("index.json", "sync-estado.json", "treinado.json", "caderno.json") or \
+                vistos.get(f.name) == f.stat().st_mtime:
             continue
         vistos[f.name] = f.stat().st_mtime
         try:
@@ -261,9 +271,13 @@ def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int
             continue
         if not isinstance(dados, dict) or "lutas" not in dados:  # evolucao.json, aval e outros que não são rodada
             continue
+        if padroes is None:
+            tab = caderno.conta(caderno.lutas_das_rodadas(RODADAS))
+            caderno.grava(tab, RODADAS / "caderno.json")
+            padroes = caderno.padroes(tab)
         lutas = dados["lutas"]
         for luta in lutas.values():
-            notas.update(coach_notes(luta))
+            notas.update(coach_notes(luta, padroes))
         lidas.append(f.stem)
     return notas
 
@@ -562,6 +576,12 @@ def selftest() -> None:
                         {"tipo": "acao", "t": 20.1, "quem": "A", "acao": "blind", "rede": False, "guid": 1, "ms": 2000}]}
     notas = coach_notes(luta)
     assert notas == {(1, 1000): -0.3, (1, 1500): -0.3, (1, 2000): 0.1}, notas
+    # padrão do caderno: blind com vida baixa erra 80% das vezes -> o blind desta luta (vida baixa) leva -0,25 x 0,8
+    # mesmo sem o técnico apontar; com vida alta o padrão não vale e a nota fica só o acerto
+    padrao = {("Rogue", "blind", "baixa"): 0.8}
+    luta = {**luta, "membros": [{"nome": "A", "classe": "Rogue", "time": 55}], "vida": {"A": [[0, 20]]}}
+    assert abs(coach_notes(luta, padrao)[(1, 2000)] - (0.1 - 0.2)) < 1e-9
+    assert coach_notes({**luta, "vida": {"A": [[0, 90]]}}, padrao)[(1, 2000)] == 0.1
     b2 = Replay(cap=10)
     b2.add_fight([(t0, {**row("kick", 0, 80), "ms": 1000}), (t0, {**row("melee", 0, 80), "ms": 1100})], True, idx)
     antes = float(b2.r[0])

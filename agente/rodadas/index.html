@@ -130,6 +130,17 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
 .leg-campea { color: var(--net) } .leg-desafiante { color: var(--gold) } .leg-regras { color: var(--muted) }
 .leg-desafiante i { border-top-style: dashed }
 .evol .grafico svg { min-width: 480px }
+.cad { margin-top: 18px; background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--bad); border-radius: 10px; padding: 14px 16px; min-width: 0 }
+.cad-lista { display: grid; gap: 6px; margin-top: 10px }
+.cad-linha { display: grid; grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr)); gap: 4px 12px; align-items: baseline;
+  padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .92rem }
+.cad-linha.cab { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; border-bottom-width: 2px }
+.cad-linha .acao { font-weight: 700; min-width: 0; overflow-wrap: anywhere }
+.cad-linha .acao small { display: block; font-weight: 400; color: var(--muted) }
+.cad-linha .chip { margin-left: 6px; font-size: .62rem }
+.chip.padrao { color: var(--bad) }
+.melhor { color: var(--ok); font-weight: 700 } .pior { color: var(--bad); font-weight: 700 }
+@media (max-width: 560px) { .cad-linha { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) } .cad-linha .acao { grid-column: 1 / -1 } .cad-linha.cab .acao { display: none } }
 </style>
 
 <div class="wrap">
@@ -146,6 +157,7 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
   </header>
   <div class="stats" id="stats"></div>
   <section id="evolucao"></section>
+  <section id="caderno"></section>
   <section id="destaque"></section>
   <div class="filtros" id="filtros" role="group" aria-label="Filtrar trios"></div>
   <div class="grade" id="grade"><div class="vazio">Carregando a rodada…</div></div>
@@ -166,11 +178,11 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
     <section id="aj-papeis">
       <h3>Os quatro tipos de trio</h3>
       <dl>
-        <dt>Só regras</dt><dd>O personagem segue só regras escritas à mão por programadores ("se o inimigo estiver lançando
+        <dt>Bots/sem-rede</dt><dd>O personagem segue só regras escritas à mão por programadores ("se o inimigo estiver lançando
           um feitiço, interrompa"). É o grupo de comparação: não aprende nada.</dd>
-        <dt>Rede campeã</dt><dd>Além das regras, uma <b>rede neural</b> (um programa que aprende com exemplos) escolhe parte
+        <dt>Campeã/estática</dt><dd>Além das regras, uma <b>rede neural</b> (um programa que aprende com exemplos) escolhe parte
           das ações. A campeã é a melhor versão da rede até agora e fica parada, sem mudar.</dd>
-        <dt>Rede desafiante</dt><dd>Uma cópia da rede que <b>continua aprendendo</b> a cada rodada, com as notas de cada
+        <dt>Desafiante/treino</dt><dd>Uma cópia da rede que <b>continua aprendendo</b> a cada rodada, com as notas de cada
           decisão e os conselhos da IA técnica. Se ela passar a ganhar mais que a campeã, vira a nova campeã.</dd>
         <dt>Seu trio</dt><dd>O trio em que você joga de verdade (o Reload). Ele recebe análise como os outros, mas fica fora
           das contas que medem a rede, porque ali joga uma pessoa.</dd>
@@ -178,7 +190,7 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
           desafiante, a IV só com regras e a III fica na reserva, fora da fila. Assim os três grupos têm exatamente as mesmas
           9 composições e o mesmo número de trios. O seu RLS III é a cópia III do RLS, mas você joga quando quiser.</dd>
       </dl>
-      <p>A comparação que importa é campeã e desafiante contra "só regras" da <b>mesma composição</b>: se a rede ganhar mais
+      <p>A comparação que importa é Campeã/estática e Desafiante/treino contra Bots/sem-rede da <b>mesma composição</b>: se a rede ganhar mais
         de 55% dessas lutas, ela está jogando melhor que as regras.</p>
     </section>
     <section id="aj-comps">
@@ -218,13 +230,13 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
 
 <script>
 const HORDA = new Set(["RMP", "RLS", "Fireplay", "RPS", "LSD"]);
-const PAPEL = { jogador: "Seu trio", campea: "Rede campeã", desafiante: "Rede desafiante", regras: "Só regras", reserva: "Reserva" };
+const PAPEL = { jogador: "Seu trio", campea: "Campeã/estática", desafiante: "Desafiante/treino", regras: "Bots/sem-rede", reserva: "Reserva" };
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let indice = [], rodada = null, filtro = "todos", aberto = null;
 
-const SERIE = [["regras", "Só regras", "var(--muted)", ""], ["campea", "Rede campeã", "var(--net)", ""],
-  ["desafiante", "Rede desafiante", "var(--gold)", "6 4"]];
+const SERIE = [["regras", "Bots/sem-rede", "var(--muted)", ""], ["campea", "Campeã/estática", "var(--net)", ""],
+  ["desafiante", "Desafiante/treino", "var(--gold)", "6 4"]];
 
 async function carregaEvolucao() {
   let ev = [];
@@ -254,13 +266,38 @@ async function carregaEvolucao() {
         return `<span class="leg-${k}"><i></i>${nome} <b class="num">${p == null ? "—" : Math.round(p) + "%"}</b> <span class="num" style="color:var(--muted)">(${a[0]}/${a[1]})</span></span>`;
       }).join("")}</div></div>
     <div class="lbl" style="margin-top:6px">Vitórias acumuladas desde a 1ª rodada sincronizada · linha pontilhada = 50%</div>
-    <div class="grafico"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Taxa de vitória acumulada por rodada de só regras, rede campeã e rede desafiante">${grade}${rotulos}${linhas}</svg></div>
+    <div class="grafico"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Taxa de vitória acumulada por rodada de Bots/sem-rede, Campeã/estática e Desafiante/treino">${grade}${rotulos}${linhas}</svg></div>
     <div class="motor">Poucas rodadas ainda: cada ponto tem poucas lutas, então as linhas oscilam muito no começo.</div></div>`;
+}
+
+async function carregaCaderno() {
+  let c = null;
+  try { c = await (await fetch("dados/caderno.json")).json(); } catch { c = null; }
+  if (!c?.padroes?.length) { $("#caderno").innerHTML = ""; return; }
+  const tx = (g) => (g[0] ? Math.max(g[1] - g[2], 0) / g[0] : null);
+  const pc = (v) => (v == null ? "—" : Math.round(100 * v) + "%");
+  const VIDA = { alta: "vida alta", media: "vida média", baixa: "vida baixa", "?": "vida ?" };
+  const linhas = c.padroes.slice(0, 15).map((p) => {
+    const d = p.grupos.desafiante, a = tx(d.antes), n = tx(d.agora);
+    const seta = a == null || n == null ? "" : n < a - 0.02 ? `<span class="melhor">↓ caiu</span>` : n > a + 0.02 ? `<span class="pior">↑ subiu</span>` : "≈ igual";
+    return `<div class="cad-linha"><div class="acao"><span class="cl cl-${esc(p.classe)}">${esc(p.classe)}</span> · ${esc(p.acao)}${p.padrao ? '<span class="chip padrao">padrão</span>' : ""}
+        <small>${VIDA[p.vida] || esc(p.vida)} · em ${p.lutas} lutas</small></div>
+      <div class="num">${p.erros}/${p.usos}<br><small style="color:var(--muted)">${pc(p.taxa)} erro</small></div>
+      <div class="num">${pc(a)} → ${pc(n)}</div><div>${seta}</div></div>`;
+  }).join("");
+  $("#caderno").innerHTML = `<div class="cad"><h2 style="font-size:1.05rem">Erros que se repetem entre lutas</h2>
+    <div class="motor" style="margin-top:4px;max-width:80ch">Cada linha é uma situação: classe, ação e a faixa de vida de quem agiu, somando todas as rodadas.
+      Vira <b>padrão</b> quando o técnico apontou em ${c.min_lutas}+ lutas e mais de ${Math.round(100 * c.min_taxa)}% dos usos foram erro
+      (acertos descontam). O treinador pune só essas situações, então a mesma ação em outra situação continua livre.
+      A coluna da Desafiante/treino compara a taxa de erro antes com a das últimas ${c.recentes} rodadas: ↓ é ela parando de repetir.</div>
+    <div class="cad-lista"><div class="cad-linha cab"><div class="acao">Situação</div><div>Erros / usos</div><div>Desafiante: antes → agora</div><div></div></div>${linhas}</div></div>`;
 }
 
 async function carregaIndice() {
   carregaEvolucao();
+  carregaCaderno();
   try { indice = await (await fetch("dados/index.json")).json(); } catch { indice = []; }
+  indice.sort((a, b) => (a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : a.id < b.id ? -1 : 1));  // por horário
   const sel = $("#sel");
   sel.innerHTML = indice.map((r) => `<option value="${r.id}">${esc(r.inicio)}–${esc(r.fim.slice(11))} UTC · ${r.total_lutas} lutas</option>`).join("");
   if (!indice.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada publicada ainda. A primeira aparece depois da próxima hora cheia.</div>'; return; }
@@ -325,7 +362,7 @@ function analiseTrio(t) {
   const lutas = (xs) => (xs?.length ? ` <span class="vezes">lutas ${xs.map((x) => "#" + x).join(", ")}</span>` : "");
   return `<p style="margin:10px 0 0;max-width:75ch">${esc(a.resumo)}</p>
   <div class="cols" style="margin-top:12px">
-    <div><span class="lbl">Erros que se repetem</span><ul class="sem">${(a.padroes_de_erro || []).map((e) =>
+    <div><span class="lbl">Erros desta luta</span><ul class="sem">${(a.padroes_de_erro || []).map((e) =>
       `<li class="erro">${esc(e.descricao)} <span class="vezes">${e.vezes ? e.vezes + "×" : ""} ${esc(e.quem || "")}</span>${lutas(e.lutas)}</li>`).join("") || "<li>—</li>"}</ul></div>
     <div><span class="lbl">O que funcionou</span><ul class="sem">${(a.o_que_funcionou || []).map((e) =>
       `<li class="bom">${esc(e.descricao)}${lutas(e.lutas)}</li>`).join("") || "<li>—</li>"}</ul>
