@@ -44,7 +44,11 @@ CHAMPION_TEAMS = {54, 58, 62, 66, 70, 74, 78, 82, 86}
 CHALLENGER_TEAMS = {55, 59, 63, 67, 71, 75, 79, 83, 87}
 IGNORE_TEAMS = {60}  # o usuário joga no RLS III
 
-GAMMA_S, BETA, MAX_W = 0.98, 0.5, 20.0
+# BETA age sobre a vantagem normalizada no lote (média 0, desvio 1): com a vantagem crua (~0,035) e BETA 0,5 todo
+# peso ficava ~1,07 e a rede só imitava o que os bots faziam, bom ou ruim
+GAMMA_S, BETA, MAX_W = 0.98, 1.0, 20.0
+VAL_FRACAO, VAL_CAP, VAL_MIN, VAL_TOL = 10, 40_000, 30, 0.05  # 1 luta em 10 vai para a validação
+CKPTS, CKPT_KEEP = RUNS / "checkpoints", 20
 # Notas por decisão: pequenas perto do ±1 da vitória, para o bot não aprender a "farmar" dano e perder a luta.
 # Uma luta típica (~200 mil de dano por jogador) soma no máximo ~0,15 de dano.
 W_DAMAGE, W_HEALING = 0.15 / 200_000, 0.15 / 200_000
@@ -137,6 +141,7 @@ class Replay:
         self.disc = torch.zeros(cap)
         self.nxt = torch.zeros(cap, N_FEATURES_V2)
         self.done = torch.zeros(cap)
+        self.nota = torch.zeros(cap)  # só a parte do técnico de IA (e do caderno) na nota de cada decisão
         self.keys: list[tuple[int, int] | None] = [None] * cap
         self.where: dict[tuple[int, int], int] = {}
 
@@ -147,6 +152,7 @@ class Replay:
             p = self.where.get(k)
             if p is not None and self.keys[p] == k:
                 self.r[p] += v
+                self.nota[p] += v
                 n += 1
         return n
 
@@ -159,6 +165,7 @@ class Replay:
             act = r["action"]
             self.a[p] = -1 if rule_owned(act) else idx.get(act, -1)
             self.r[p] = rews[i]
+            self.nota[p] = 0.0
             self.done[p] = float(last)
             if not last:
                 gap = max((steps[i + 1][0] - when).total_seconds(), 0.0)
@@ -188,7 +195,8 @@ def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str 
             _, v_next = model(nxt)
             target = r + disc * v_next * (1 - done)
             adv = target - v
-            w = torch.exp(adv / BETA).clamp(max=MAX_W)
+            adv_n = (adv - adv.mean()) / (adv.std() + 1e-6)
+            w = torch.exp(adv_n / BETA).clamp(max=MAX_W)
         loss_v = ((v - target) ** 2).mean()
         has_a = a >= 0
         logp = torch.log_softmax(logits[has_a], 1).gather(1, a[has_a].unsqueeze(1)).squeeze(1)
@@ -202,6 +210,31 @@ def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str 
         stats["adv"] += adv.abs().mean().item() / steps
     model.eval()
     return stats
+
+
+def avalia(model: PolicyV2, val: Replay, dev: str = "cpu") -> float | None:
+    """Nota da rede nas lutas de validação (nunca treinadas): log-prob média que ela dá às decisões que o técnico
+    elogiou menos a das que ele apontou como erro. Sobe = a rede passou a preferir o acerto ao erro. None enquanto
+    não há VAL_MIN decisões de cada lado."""
+    i = torch.arange(val.n)
+    a, nota = val.a[i], val.nota[i]
+    pos, neg = (a >= 0) & (nota > 0), (a >= 0) & (nota < 0)
+    if pos.sum() < VAL_MIN or neg.sum() < VAL_MIN:
+        return None
+    with torch.no_grad():
+        logits, _ = model(val.x[i].to(dev))
+        logp = torch.log_softmax(logits, 1).gather(1, a.clamp(min=0).to(dev).unsqueeze(1)).squeeze(1).cpu()
+    return float(logp[pos].mean() - logp[neg].mean())
+
+
+def guarda_ckpt(model: PolicyV2, actions: list[str], n: int, nota: float | None, pasta: Path = CKPTS) -> Path:
+    """Uma versão por atualização com a nota da validação; ficam só as CKPT_KEEP mais novas (e melhor.pt à parte)."""
+    pasta.mkdir(parents=True, exist_ok=True)
+    out = pasta / f"desafiante-{n:05d}.pt"
+    torch.save({"model": model.state_dict(), "actions": actions, "nota_val": nota}, out)
+    for velho in sorted(pasta.glob("desafiante-*.pt"))[:-CKPT_KEEP]:
+        velho.unlink()
+    return out
 
 
 # ---------------------------------------------------------------- técnico de IA -> notas por decisão
@@ -451,7 +484,8 @@ def main() -> int:
         write_atomic(model.cpu(), actions, a.desafiante)
         model.to(dev)
 
-    buf, tail = Replay(), LogTail(LOG, RUNS / "live.offset")
+    buf, val, tail = Replay(), Replay(cap=VAL_CAP), LogTail(LOG, RUNS / "live.offset")
+    melhor: float | None = None  # nota de validação da versão que está no servidor
     pending: dict[int, list[tuple[dt.datetime, dict]]] = {}
     last_fight = now - dt.timedelta(minutes=5)
     totals = {"decisoes_total": 0, "lutas_total": 0, "atualizacoes": 0, "conselhos_aplicados": 0}
@@ -469,7 +503,8 @@ def main() -> int:
             if team in IGNORE_TEAMS or len(steps) < 2:
                 continue
             pending[guid] = [s for s in pending[guid] if s[0] > end]
-            totals["decisoes_total"] += buf.add_fight(steps, won, idx)
+            alvo = val if hash((guid, start)) % VAL_FRACAO == 0 else buf  # a luta inteira vai para um lado só
+            totals["decisoes_total"] += alvo.add_fight(steps, won, idx)
             totals["lutas_total"] += 1
         now = dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
         pending = {g: [s for s in v if s[0] > now - dt.timedelta(minutes=30)] for g, v in pending.items()}
@@ -477,17 +512,33 @@ def main() -> int:
         lidas: list[str] = []
         pendentes.update(novas_analises(vistos, lidas))
         if pendentes:
-            totals["conselhos_aplicados"] += buf.coach(pendentes)
-            pendentes = {k: v for k, v in pendentes.items() if k not in buf.where}
+            totals["conselhos_aplicados"] += buf.coach(pendentes) + val.coach(pendentes)
+            pendentes = {k: v for k, v in pendentes.items() if k not in buf.where and k not in val.where}
             if len(pendentes) > 50_000:
                 pendentes = {}
 
         stats = {}
         if buf.n >= BATCH:
             stats = train_steps(model, opt, buf, dev=dev)
-            write_atomic(model.cpu(), actions, a.desafiante)
-            model.to(dev)
             totals["atualizacoes"] += 1
+            nota = avalia(model, val, dev)
+            stats["nota_val"] = nota
+            guarda_ckpt(model.cpu(), actions, totals["atualizacoes"], nota)
+            model.to(dev)
+            # parada antecipada: só vai para o servidor se a validação não piorou; se piorou, volta à melhor versão
+            if nota is None or melhor is None or nota >= melhor - VAL_TOL:
+                write_atomic(model.cpu(), actions, a.desafiante)
+                model.to(dev)
+                if nota is not None:
+                    if melhor is None or nota > melhor:
+                        torch.save({"model": model.state_dict(), "actions": actions, "nota_val": nota},
+                                   CKPTS / "melhor.pt")
+                    melhor = nota if melhor is None else max(melhor, nota)
+                stats["publicada"] = True
+            else:
+                model.load_state_dict(torch.load(CKPTS / "melhor.pt", map_location=dev)["model"])
+                opt = torch.optim.Adam(model.parameters(), lr=3e-4)
+                stats["publicada"] = False
             torch.save({"model": model.state_dict(), "actions": actions,
                         "state": {**state, "desde": state["desde"].isoformat()}}, ckpt)
         if lidas:  # notas da rodada aplicadas e (se havia dados) rede regravada: libera a próxima rodada
@@ -504,6 +555,7 @@ def main() -> int:
                     shutil.copyfile(a.desafiante, a.campea.with_suffix(".tmp"))
                     os.replace(a.campea.with_suffix(".tmp"), a.campea)
                     state = {"versao": state["versao"] + 1, "desde": now}
+                    melhor = None
                     evento = f"desafiante virou campeã ({rate(ch):.0%} x {rate(cp):.0%})"
                 elif rate(ch) - rate(cp) <= REVERT:
                     champ, _ = load_policy(a.campea)
@@ -513,6 +565,7 @@ def main() -> int:
                     write_atomic(model.cpu(), actions, a.desafiante)
                     model.to(dev)
                     state = {"versao": state["versao"], "desde": now}
+                    melhor = None
                     evento = f"desafiante pior ({rate(ch):.0%} x {rate(cp):.0%}): voltou à campeã"
             write_status({"quando": f"{now:%Y-%m-%d %H:%M}", "versao": state["versao"],
                           "desafiante_desde": f"{state['desde']:%Y-%m-%d %H:%M}", "espelho": m, "treino": stats,
@@ -586,6 +639,21 @@ def selftest() -> None:
     b2.add_fight([(t0, {**row("kick", 0, 80), "ms": 1000}), (t0, {**row("melee", 0, 80), "ms": 1100})], True, idx)
     antes = float(b2.r[0])
     assert b2.coach({(1, 1000): -0.3, (9, 9): 1.0}) == 1 and abs(float(b2.r[0]) - antes + 0.3) < 1e-6
+
+    # 6) validação: a rede que prefere o acerto (kick) ao erro (fear) tira nota positiva; sem rótulos suficientes, None
+    val = Replay(cap=200)
+    for k in range(80):
+        act = "kick" if k % 2 else "fear"
+        val.add_fight([(t0, {**row(act, 0, 80, enemy_cc=32), "ms": k}), (t0, {**row("melee", 0, 80), "ms": 10_000 + k})],
+                      True, idx)
+    assert avalia(model, val) is None
+    val.coach({(1, k): (0.2 if k % 2 else -0.2) for k in range(80)})
+    assert val.nota[0] == -0.2 and val.nota[1] == 0 and abs(float(val.nota[2]) - 0.2) < 1e-6
+    assert avalia(model, val) > 0
+    with tempfile.TemporaryDirectory() as d:
+        for n in range(CKPT_KEEP + 3):
+            guarda_ckpt(model, actions, n, 0.1, Path(d))
+        assert len(list(Path(d).glob("desafiante-*.pt"))) == CKPT_KEEP
 
     # 5) exportar e carregar devolve a mesma rede
     with tempfile.TemporaryDirectory() as d:
