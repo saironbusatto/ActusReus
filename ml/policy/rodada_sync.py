@@ -45,6 +45,14 @@ def lutas_desde(t0: dt.datetime) -> list[tuple[int, dt.datetime, int, int]]:
     return [(int(f), dt.datetime.strptime(t, "%Y-%m-%d %H:%M:%S"), int(w), int(lo)) for f, t, w, lo in rows]
 
 
+# o técnico só lê lutas que ensinam a rede treinada (ou as do usuário): as outras entram no placar sem análise
+SEM_TECNICO = {"erro": "sem análise: luta sem a Desafiante/treino"}
+
+
+def precisa_tecnico(luta: dict) -> bool:
+    return bool((DESAFIANTE | {TIME_USUARIO}) & set(luta["times"]))
+
+
 def analisa(luta: dict) -> dict:
     usuario = TIME_USUARIO in luta["times"]
     try:
@@ -146,7 +154,7 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
                 continue
             time.sleep(5)  # deixa o log da luta chegar ao disco
             lutas[fid] = build(fid)
-            futuros[fid] = pool.submit(analisa, lutas[fid])
+            futuros[fid] = pool.submit(analisa, lutas[fid]) if precisa_tecnico(lutas[fid]) else None
             feitos |= {w, lo}
             ultima = time.time()
         faltam = TIMES_BOT - feitos
@@ -157,12 +165,13 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     if not lutas:  # ninguém lutou (servidor reiniciando): reabre a mesma rodada em vez de gravar uma vazia
         print(f"{agora():%H:%M:%S} {rid} sem lutas em {MAX_RODADA}s, reabrindo", flush=True)
         return rodada(n, pool)
-    analises = {fid: f.result() for fid, f in futuros.items()}
+    analises = {fid: f.result() if f else SEM_TECNICO for fid, f in futuros.items()}
     grava(rid, t0, lutas, analises)
     atualiza_evolucao()
     espera_aval(rid)
     ok = sum(1 for a in analises.values() if "erro" not in a)
-    print(f"{agora():%H:%M:%S} {rid} fechada: {len(lutas)} lutas, {ok} analisadas, faltaram {sorted(faltam)}",
+    puladas = sum(1 for f in futuros.values() if f is None)
+    print(f"{agora():%H:%M:%S} {rid} fechada: {len(lutas)} lutas, {ok} analisadas, {puladas} sem técnico, faltaram {sorted(faltam)}",
           flush=True)
 
 
@@ -194,6 +203,8 @@ def selftest() -> None:
     sem_desc = ficha_trio(56, luta, {**analise, "acertos": [{"quem": "B", "fez": "kick"}]})
     assert sem_desc["analise"]["o_que_funcionou"][0]["descricao"] == "B: kick"
     assert 60 not in TIMES_BOT and len(TIMES_BOT) == 27 and not TIMES_BOT & RESERVA
+    assert precisa_tecnico({"times": {54: "a", 55: "b"}}) and precisa_tecnico({"times": {60: "a", 56: "b"}})
+    assert not precisa_tecnico({"times": {54: "a", 56: "b"}})
     print("ok rodada_sync")
 
 
