@@ -48,6 +48,9 @@ IGNORE_TEAMS = {60}  # o usuário joga no RLS III
 # peso ficava ~1,07 e a rede só imitava o que os bots faziam, bom ou ruim
 GAMMA_S, BETA, MAX_W = 0.98, 1.0, 20.0
 VAL_FRACAO, VAL_CAP, VAL_MIN, VAL_TOL = 10, 40_000, 30, 0.05  # 1 luta em 10 vai para a validação
+# a validação é pequena e a nota oscila (0,95-1,18): cada recusa baixa a régua um pouco, para um recorde de sorte não
+# travar a publicação para sempre; uma piora de verdade continua barrada
+VAL_DECAI = 0.02
 CKPTS, CKPT_KEEP = RUNS / "checkpoints", 20
 # Notas por decisão: pequenas perto do ±1 da vitória, para o bot não aprender a "farmar" dano e perder a luta.
 # Uma luta típica (~200 mil de dano por jogador) soma no máximo ~0,15 de dano.
@@ -538,6 +541,7 @@ def main() -> int:
             else:
                 model.load_state_dict(torch.load(CKPTS / "melhor.pt", map_location=dev)["model"])
                 opt = torch.optim.Adam(model.parameters(), lr=3e-4)
+                melhor -= VAL_DECAI
                 stats["publicada"] = False
             torch.save({"model": model.state_dict(), "actions": actions,
                         "state": {**state, "desde": state["desde"].isoformat()}}, ckpt)
