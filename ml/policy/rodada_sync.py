@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT / "ml" / "tools"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from espelho import sql  # noqa: E402
 from resumo_lutas import build, texto  # noqa: E402
+import tecnico_grafo  # noqa: E402
 from rodada import (CAMPEA, DESAFIANTE, MOTOR_LUTA, REGRAS, RESERVA, RUNS, TIME_USUARIO, compacta,  # noqa: E402
                     composicao, papel, pergunta_motores)
 from treinador_ia import SISTEMA, valida  # noqa: E402
@@ -58,9 +59,12 @@ def precisa_tecnico(luta: dict) -> bool:
 
 
 def analisa(luta: dict) -> dict:
+    """Técnico com memória (tecnico_grafo, LangGraph): luta + caderno + lutas anteriores -> análise conferida."""
     usuario = TIME_USUARIO in luta["times"]
+    motores = MOTOR_LUTA if usuario else MOTOR_BOT
     try:
-        analise, motor = pergunta_motores(SISTEMA, texto(luta), MOTOR_LUTA if usuario else MOTOR_BOT)
+        grafo = tecnico_grafo.montar(lambda t: pergunta_motores(SISTEMA, t, motores), texto, tecnico_grafo.tabela_caderno)
+        analise, motor = tecnico_grafo.analisa_com_grafo(grafo, luta)
         return {**valida(analise, luta), "_motor": motor}
     except Exception as e:
         return {"erro": str(e)[:300]}
