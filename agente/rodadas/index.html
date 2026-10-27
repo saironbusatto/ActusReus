@@ -122,6 +122,14 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
 .ajuda-corpo p { margin: 6px 0; max-width: 70ch }
 @media (max-width: 520px) { .ajuda-corpo dl { grid-template-columns: 1fr } .ajuda-corpo dd { margin-bottom: 6px } }
 .fechar { background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px }
+.versoes { margin-top: 18px }
+.abas { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line) }
+.abas button { background: transparent; border: 1px solid transparent; border-bottom: none; border-radius: 8px 8px 0 0; padding: 6px 12px; margin-bottom: -1px; font: inherit; color: var(--muted); cursor: pointer }
+.abas button small { display: block; font-size: .7rem }
+.abas button[aria-selected="true"] { background: var(--panel); border-color: var(--line); color: var(--ink); font-weight: 700 }
+.abas button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px }
+.versao-info { background: var(--panel); border: 1px solid var(--line); border-top: none; border-radius: 0 0 10px 10px; padding: 10px 16px }
+.versao-info ul { margin: 6px 0 0; padding-left: 18px } .versao-info li { margin: 2px 0 }
 .evol { margin-top: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0 }
 .evol-topo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: baseline }
 .legenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .9rem }
@@ -156,6 +164,7 @@ dialog#ajuda::backdrop { background: color-mix(in srgb, #000 45%, transparent) }
     </div>
   </header>
   <div class="stats" id="stats"></div>
+  <section id="versoes" class="versoes"></section>
   <section id="evolucao"></section>
   <section id="caderno"></section>
   <section id="destaque"></section>
@@ -233,7 +242,10 @@ const HORDA = new Set(["RMP", "RLS", "Fireplay", "RPS", "LSD"]);
 const PAPEL = { jogador: "Seu trio", campea: "Campeã/estática", desafiante: "Desafiante/treino", regras: "Bots/sem-rede", reserva: "Reserva" };
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-let indice = [], rodada = null, filtro = "todos", aberto = null;
+let indice = [], indiceTodo = [], rodada = null, filtro = "todos", aberto = null;
+let versoes = [], versao = null, evTodas = [];  // versoes.json: {id, nome, desde (UTC), mudancas}; cada aba mostra só as rodadas dela
+const faixa = (v) => { const i = versoes.indexOf(v); return [i ? v.desde : "0000", versoes[i + 1]?.desde ?? "9999"]; };  // a 1ª versão também leva o que veio antes
+const naVersao = (inicio, v = versao) => { if (!v) return true; const [a, b] = faixa(v); return inicio >= a && inicio < b; };
 // os dados vêm em UTC ("2026-10-26 18:37[:00]"); a página mostra no fuso da máquina de quem abre
 const emSP = (s, campos) => { const d = new Date(String(s).replace(" ", "T") + "Z");
   return isNaN(d) ? String(s ?? "") : d.toLocaleString("pt-BR", campos); };
@@ -243,10 +255,32 @@ const SPh = (s) => emSP(s, { hour: "2-digit", minute: "2-digit" });
 const SERIE = [["regras", "Bots/sem-rede", "var(--muted)", ""], ["campea", "Campeã/estática", "var(--net)", ""],
   ["desafiante", "Desafiante/treino", "var(--gold)", "6 4"]];
 
-async function carregaEvolucao() {
-  let ev = [];
-  try { ev = await (await fetch("dados/evolucao.json")).json(); } catch { ev = []; }
-  if (!ev.length) { $("#evolucao").innerHTML = ""; return; }
+function desenhaVersoes() {
+  if (!versoes.length) { $("#versoes").innerHTML = ""; return; }
+  $("#versoes").innerHTML = `<div class="abas" role="tablist" aria-label="Versões do sistema">${versoes.map((v) =>
+    `<button role="tab" data-versao="${esc(v.id)}" aria-selected="${v === versao}" aria-controls="evolucao">${esc(v.id)} · ${esc(v.nome)}<small>desde ${esc(SP(v.desde))}</small></button>`).join("")}</div>
+    <div class="versao-info" role="tabpanel"><span class="lbl">O que mudou na ${esc(versao.id)}</span>
+    <ul>${versao.mudancas.map((m) => `<li>${esc(m)}</li>`).join("")}</ul></div>`;
+}
+
+async function trocaVersao(id) {
+  versao = versoes.find((v) => v.id === id) ?? versoes[versoes.length - 1];
+  desenhaVersoes();
+  carregaEvolucao();
+  indice = indiceTodo.filter((r) => naVersao(r.inicio));
+  $("#sel").innerHTML = indice.map((r) => `<option value="${r.id}">${esc(SP(r.inicio))}–${esc(SPh(r.fim))} · ${r.total_lutas} lutas</option>`).join("");
+  if (!indice.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada nesta versão ainda.</div>'; $("#stats").innerHTML = ""; $("#destaque").innerHTML = ""; $("#detalhe").innerHTML = ""; return; }
+  const pedida = location.hash.slice(1);
+  await abreRodada(indice.some((r) => r.id === pedida) ? pedida : indice[indice.length - 1].id);
+}
+
+function carregaEvolucao() {
+  const acum = { campea: [0, 0], desafiante: [0, 0], regras: [0, 0] };
+  const ev = evTodas.filter((r) => naVersao(r.inicio)).map((r) => {  // acumulado recomeça do zero em cada versão
+    for (const k in acum) { acum[k][0] += r.rodada[k]?.[0] ?? 0; acum[k][1] += r.rodada[k]?.[1] ?? 0; }
+    return { ...r, acumulado: Object.fromEntries(Object.entries(acum).map(([k, x]) => [k, [...x]])) };
+  });
+  if (!ev.length) { $("#evolucao").innerHTML = versao ? `<div class="evol"><div class="motor">A ${esc(versao.id)} começou em ${esc(SP(versao.desde))}: o gráfico aparece quando a primeira rodada dela fechar.</div></div>` : ""; return; }
   const ult = ev[ev.length - 1].acumulado;
   const pct = (x) => (x[1] ? (100 * x[0]) / x[1] : null);
   const W = 720, H = 220, ml = 40, mr = 16, mt = 12, mb = 34;
@@ -270,9 +304,9 @@ async function carregaEvolucao() {
         const a = ult[k], p = pct(a);
         return `<span class="leg-${k}"><i></i>${nome} <b class="num">${p == null ? "—" : Math.round(p) + "%"}</b> <span class="num" style="color:var(--muted)">(${a[0]}/${a[1]})</span></span>`;
       }).join("")}</div></div>
-    <div class="lbl" style="margin-top:6px">Vitórias acumuladas desde a 1ª rodada sincronizada · linha pontilhada = 50%</div>
+    <div class="lbl" style="margin-top:6px">Vitórias acumuladas desde o início da ${esc(versao?.id ?? "")} · ${n} rodadas · linha pontilhada = 50%</div>
     <div class="grafico"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Taxa de vitória acumulada por rodada de Bots/sem-rede, Campeã/estática e Desafiante/treino">${grade}${rotulos}${linhas}</svg></div>
-    <div class="motor">Poucas rodadas ainda: cada ponto tem poucas lutas, então as linhas oscilam muito no começo.</div></div>`;
+    ${n < 20 ? '<div class="motor">Poucas rodadas ainda: cada ponto tem poucas lutas, então as linhas oscilam muito no começo.</div>' : ""}</div>`;
 }
 
 async function carregaCaderno() {
@@ -299,15 +333,13 @@ async function carregaCaderno() {
 }
 
 async function carregaIndice() {
-  carregaEvolucao();
   carregaCaderno();
-  try { indice = await (await fetch("dados/index.json")).json(); } catch { indice = []; }
-  indice.sort((a, b) => (a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : a.id < b.id ? -1 : 1));  // por horário
-  const sel = $("#sel");
-  sel.innerHTML = indice.map((r) => `<option value="${r.id}">${esc(SP(r.inicio))}–${esc(SPh(r.fim))} · ${r.total_lutas} lutas</option>`).join("");
-  if (!indice.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada publicada ainda. A primeira aparece depois da próxima hora cheia.</div>'; return; }
-  const pedida = location.hash.slice(1);
-  await abreRodada(indice.some((r) => r.id === pedida) ? pedida : indice[indice.length - 1].id);
+  const pega = async (f) => { try { return await (await fetch(`dados/${f}`)).json(); } catch { return []; } };
+  [versoes, evTodas, indiceTodo] = await Promise.all([pega("versoes.json"), pega("evolucao.json"), pega("index.json")]);
+  indiceTodo.sort((a, b) => (a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : a.id < b.id ? -1 : 1));  // por horário
+  if (!indiceTodo.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada publicada ainda. A primeira aparece depois da próxima hora cheia.</div>'; return; }
+  const pedida = location.hash.slice(1), dela = indiceTodo.find((r) => r.id === pedida);
+  await trocaVersao((dela && versoes.find((v) => naVersao(dela.inicio, v)))?.id);
 }
 
 async function abreRodada(id) {
@@ -450,6 +482,8 @@ document.addEventListener("click", (ev) => {
   }
   const abre = ev.target.closest("[data-abre]");
   if (abre) { aberto = Number(abre.dataset.abre); desenha(); $("#detalhe").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
+  const aba = ev.target.closest("[data-versao]");
+  if (aba) { history.replaceState(null, "", location.pathname + location.search); trocaVersao(aba.dataset.versao); return; }
   const f = ev.target.closest("[data-f]");
   if (f) { filtro = f.dataset.f; desenha(); }
 });

@@ -21,6 +21,10 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
 - **Técnico de IA:** só modelos gratuitos — Gemini 3.8 Flash pelo Antigravity e, de reserva, Nemotron 3 Ultra e
   Gemma 4 pelo OpenRouter (`:free`). Só analisa lutas em que a Desafiante/treino (ou o usuário) jogou. Se todos
   recusarem, a luta fica sem análise e nada trava.
+- **Técnico com memória em LangGraph** (`ml/policy/tecnico_grafo.py`): `carregar → memória → analisar → conferir`. A
+  memória é o caderno de erros + as últimas lutas entre as mesmas composições; o `conferir` (sem LLM) marca `padrao` no
+  erro que confirma um padrão e **contesta** (gravidade "baixa") o erro numa situação usada 200+ vezes, errada em < 5% e
+  mais elogiada que errada — pouco erro sozinho pode ser só o técnico não ter reparado.
 - **Treinador** (`ml/policy/live.py`, RL ao vivo — um fine-tuning contínuo da desafiante):
   - aprende com as decisões de todos os bots; cada decisão vale o que mudou depois (dano, cura, CC, mortes, vitória);
   - vantagem normalizada por lote, para a decisão boa pesar mais que a ruim;
@@ -32,6 +36,19 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
   - a desafiante vira campeã com 150+ lutas de cada lado e 5 pontos acima dela; 8 abaixo, volta a ser a campeã.
 - **Cobertura (pilares):** caster, healer e melee saem da visão dos casters inimigos sem sair da visão do próprio
   healer; a cobertura enfraquece depois de 90 s e some aos 150 s, e um bot fora de combate volta para a luta.
+
+## Versões
+
+Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas/versoes.json`](agente/rodadas/versoes.json)
+(início em UTC); o artefato Rodadas da Arena mostra uma aba por versão, com os gráficos recomeçando do zero.
+
+| Versão | Desde (SP) | O que mudou |
+|---|---|---|
+| V1 | 24/10 14:28 | rodadas sincronizadas; desafiante treinando ao vivo contra a v3 original |
+| V2 | 25/10 07:56 | desafiante promovida a campeã (52% × 45%); desafiante nova copiada dela |
+| V3 | 26/10 18:15 | cobertura nos pilares (LOS); treinador com vantagem normalizada, validação e checkpoints; caderno de erros; técnico só nas lutas da desafiante e só gratuito |
+| V4 | 26/10 22:54 | técnico com memória em LangGraph |
+| V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy |
 
 ## Pastas
 
@@ -58,6 +75,14 @@ systemctl --user is-active ia-ao-vivo rodada-sync
 journalctl --user -u ia-ao-vivo -f                                  # o que o treinador está fazendo
 uv run python -I policy/caderno.py                                  # (em ml/) os maiores padrões de erro
 ```
+
+**agy (técnico):** cada chamada usa o login guardado no chaveiro do sistema. Uma sessão `agy` interativa que fique aberta
+renova o login dela e sobrescreve esse chaveiro — com duas contas, o técnico alterna entre elas e cai na que não tem
+cota ("Individual quota reached"). Deixe aberta só a sessão da conta que deve pagar as análises e confira a conta em
+`grep -h email= ~/.gemini/antigravity-cli/log/cli-*.log | tail`.
+
+**Promoção:** a janela de comparação fica no checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); para
+recomeçar a contagem, pare o `ia-ao-vivo`, troque o `desde` e suba de novo (o buffer em memória se perde).
 
 Compilar e subir uma mudança do módulo:
 
