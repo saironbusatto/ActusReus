@@ -31,11 +31,11 @@ from treinador_ia import SISTEMA, valida  # noqa: E402
 ARQ_RODADA = ROOT / "azerothcore-wotlk" / "env" / "dist" / "etc" / "arena-rodada.txt"
 ESTADO = RUNS / "sync-estado.json"
 TIMES_BOT = CAMPEA | DESAFIANTE | REGRAS  # 27 trios: 1 por composição em cada papel; a reserva não entra na fila
-# fila de reserva: o primeiro que responder. Gemini do Antigravity (grátis, cota semanal), depois os gratuitos do
-# OpenRouter, depois os pagos do mais barato ao mais caro (DeepSeek ~US$ 0,003 por análise, Haiku ~US$ 0,008)
-MOTOR_BOT = ["agy:gemini-3.8-flash-medium", "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
-             "openrouter:google/gemma-4-31b-it:free", "openrouter:deepseek/deepseek-v4.1-flash",
-             "openrouter:anthropic/claude-haiku-5.5"]
+# fila de reserva, SÓ modelos gratuitos (pedido do usuário): o primeiro que responder. Se todos recusarem, a luta fica
+# sem análise e o treinador segue só com o resultado dela
+GRATIS = ["openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "openrouter:google/gemma-4-31b-it:free",
+          "openrouter:google/gemma-4-26b-a4b-it:free"]
+MOTOR_BOT = ["agy:gemini-3.8-flash-medium", *GRATIS]
 SEM_LUTA_NOVA, MAX_RODADA = 240, 1200  # s
 
 

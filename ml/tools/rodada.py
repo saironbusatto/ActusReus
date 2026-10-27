@@ -32,8 +32,9 @@ CAMPEA = {54, 58, 62, 66, 70, 74, 78, 82, 86}
 DESAFIANTE = {55, 59, 63, 67, 71, 75, 79, 83, 87}
 REGRAS = {57, 61, 65, 69, 73, 77, 81, 85, 89}
 RESERVA = {56, 64, 68, 72, 76, 80, 84, 88}
-MOTOR_TRIO = ["agy:gemini-3.8-flash-medium", "openrouter:anthropic/claude-haiku-5.5"]
-MOTOR_LUTA = ["agy:claude-sonnet-4-6", "agy:gemini-3.8-flash-medium", "openrouter:anthropic/claude-haiku-5.5"]
+MOTOR_TRIO = ["agy:gemini-3.8-flash-medium"]  # só gratuitos (o OpenRouter não faz a análise de trio)
+MOTOR_LUTA = ["agy:claude-sonnet-4-6", "agy:gemini-3.8-flash-medium", "openrouter:nvidia/nemotron-3-ultra-550b-a55b:free",
+              "openrouter:google/gemma-4-31b-it:free"]  # só gratuitos
 
 SISTEMA_TRIO = """Você é o técnico de arena 3v3 de WotLK 3.3.5a de um projeto de bots. Abaixo estão TODAS as lutas de
 um trio numa rodada (1 hora), cada uma com a linha do tempo. Leia como um técnico revendo a semana do time:
