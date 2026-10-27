@@ -1,23 +1,65 @@
 [
-  {"id": "V1", "nome": "Rodadas sincronizadas", "desde": "2026-10-24 17:28",
-   "mudancas": ["Cada trio joga uma luta, o técnico de IA analisa e todos voltam à fila juntos.",
-                "Campeã/estática = rede v3 original; Desafiante/treino começa como cópia dela e treina ao vivo."]},
-  {"id": "V2", "nome": "Desafiante promovida", "desde": "2026-10-25 10:56",
-   "mudancas": ["A desafiante passou a campeã (52% × 45%) e foi congelada como a nova v3.",
-                "Uma desafiante nova começa como cópia dela.",
-                "Técnico de IA com Gemini e Claude pelo Antigravity (agy)."]},
-  {"id": "V3", "nome": "Cobertura (LOS) e treinador novo", "desde": "2026-10-26 21:15",
-   "mudancas": ["Cobertura nos pilares: caster, healer e melee saem da visão dos casters inimigos sem sair da do próprio healer; enfraquece depois de 90 s e some aos 150 s.",
-                "Bot fora de combate volta para a luta.",
-                "Treinador: vantagem normalizada por lote, validação com 1 luta em 10, checkpoints, rede só publicada se não piorar.",
-                "Caderno de erros entre lutas: situação (classe + ação + faixa de vida) que erra em 3+ lutas vira padrão e é punida.",
-                "Técnico só analisa lutas da Desafiante/treino (ou do seu trio) e só com modelos gratuitos."]},
-  {"id": "V4", "nome": "Técnico com memória (LangGraph)", "desde": "2026-10-27 01:54",
-   "mudancas": ["O técnico virou um grafo: carregar → memória (caderno + últimas lutas das mesmas composições) → analisar → conferir.",
-                "Conferir rebaixa para gravidade baixa o erro apontado numa situação que quase sempre dá certo e marca o que confirma padrão.",
-                "Servidor desligado de 26/10 23:05 a 27/10 08:04; o técnico ficou sem cota de 08:40 a 11:11 (conta antiga do agy)."]},
-  {"id": "V5", "nome": "Contestação só com elogios", "desde": "2026-10-27 15:54",
-   "mudancas": ["O grafo só contesta um erro quando a situação também foi mais elogiada que errada no caderno: contestava 41% dos erros, agora ~9%.",
-                "A promoção da desafiante passou a contar só desde 26/10 18:15 (início da V3).",
-                "Técnico na conta nova do agy (Google Pro)."]}
+ {
+  "id": "V1",
+  "nome": "Rodadas sincronizadas",
+  "desde": "2026-10-24 17:28",
+  "mudancas": [
+   "Cada trio joga uma luta, o técnico de IA analisa e todos voltam à fila juntos.",
+   "Campeã/estática = rede v3 original; Desafiante/treino começa como cópia dela e treina ao vivo."
+  ]
+ },
+ {
+  "id": "V2",
+  "nome": "Desafiante promovida",
+  "desde": "2026-10-25 10:56",
+  "mudancas": [
+   "A desafiante passou a campeã (52% × 45%) e foi congelada como a nova v3.",
+   "Uma desafiante nova começa como cópia dela.",
+   "Técnico de IA com Gemini e Claude pelo Antigravity (agy)."
+  ]
+ },
+ {
+  "id": "V3",
+  "nome": "Cobertura (LOS) e treinador novo",
+  "desde": "2026-10-26 21:15",
+  "mudancas": [
+   "Cobertura nos pilares: caster, healer e melee saem da visão dos casters inimigos sem sair da do próprio healer; enfraquece depois de 90 s e some aos 150 s.",
+   "Bot fora de combate volta para a luta.",
+   "Treinador: vantagem normalizada por lote, validação com 1 luta em 10, checkpoints, rede só publicada se não piorar.",
+   "Caderno de erros entre lutas: situação (classe + ação + faixa de vida) que erra em 3+ lutas vira padrão e é punida.",
+   "Técnico só analisa lutas da Desafiante/treino (ou do seu trio) e só com modelos gratuitos."
+  ]
+ },
+ {
+  "id": "V4",
+  "nome": "Técnico com memória (LangGraph)",
+  "desde": "2026-10-27 01:54",
+  "mudancas": [
+   "O técnico virou um grafo: carregar → memória (caderno + últimas lutas das mesmas composições) → analisar → conferir.",
+   "Conferir rebaixa para gravidade baixa o erro apontado numa situação que quase sempre dá certo e marca o que confirma padrão.",
+   "Servidor desligado de 26/10 23:05 a 27/10 08:04; o técnico ficou sem cota de 08:40 a 11:11 (conta antiga do agy)."
+  ]
+ },
+ {
+  "id": "V5",
+  "nome": "Contestação só com elogios",
+  "desde": "2026-10-27 15:54",
+  "mudancas": [
+   "O grafo só contesta um erro quando a situação também foi mais elogiada que errada no caderno: contestava 41% dos erros, agora ~9%.",
+   "A promoção da desafiante passou a contar só desde 26/10 18:15 (início da V3).",
+   "Técnico na conta nova do agy (Google Pro).",
+   "Resultado: desafiante caiu para 42% (129/308) contra 57% da campeã e 51% das regras — pior que não ter rede."
+  ]
+ },
+ {
+  "id": "V6",
+  "nome": "Técnico com peso 0,3 e âncora na campeã",
+  "desde": "2026-10-27 22:59",
+  "mudancas": [
+   "Desafiante recomeça do checkpoint de 27/10 10:44 (período de 55%, antes das notas voltarem).",
+   "Notas do técnico entram com 30% do peso (COACH_ESCALA 0.3).",
+   "Penalidade KL prende a desafiante à campeã (KL_COEF 0.5), como no RLHF.",
+   "Contestação volta à regra da V4 (revertida a da V5) e a promoção conta só desde o início da V6."
+  ]
+ }
 ]

@@ -186,9 +186,12 @@ class Replay:
         return len(steps)
 
 
-def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str = "cpu") -> dict:
+def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str = "cpu",
+                ancora: PolicyV2 | None = None) -> dict:
+    """AWR; com 'ancora' (a campeã congelada) soma KL_COEF x KL(campeã || desafiante) para ela não se afastar sem
+    evidência forte (o mesmo papel da penalidade KL do RLHF)."""
     model.train()
-    stats = {"loss_v": 0.0, "loss_pi": 0.0, "adv": 0.0}
+    stats = {"loss_v": 0.0, "loss_pi": 0.0, "adv": 0.0, "kl": 0.0}
     for _ in range(steps):
         i = torch.randint(0, buf.n, (min(BATCH, buf.n),))
         x, a, r = buf.x[i].to(dev), buf.a[i].to(dev), buf.r[i].to(dev)
@@ -204,6 +207,12 @@ def train_steps(model: PolicyV2, opt, buf: Replay, steps: int = STEPS, dev: str 
         has_a = a >= 0
         logp = torch.log_softmax(logits[has_a], 1).gather(1, a[has_a].unsqueeze(1)).squeeze(1)
         loss_pi = -(w[has_a] * logp).sum() / has_a.sum().clamp(min=1)
+        if ancora is not None:
+            with torch.no_grad():
+                la = torch.log_softmax(ancora(x)[0], 1)
+            kl = (la.exp() * (la - torch.log_softmax(logits, 1))).sum(1).mean()
+            loss_pi = loss_pi + KL_COEF * kl
+            stats["kl"] += kl.item() / steps
         opt.zero_grad()
         (loss_pi + 0.5 * loss_v).backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -245,6 +254,10 @@ RODADAS = RUNS / "rodadas"
 COACH_ERRO = {"alta": -0.3, "media": -0.15, "média": -0.15, "baixa": -0.05}
 COACH_ACERTO, COACH_REDE, COACH_MAX = 0.1, -0.3, 0.3
 COACH_PADRAO = -0.25  # x taxa do padrão (caderno.py): o erro que se repete entre lutas pesa em toda decisão igual
+# V6: as notas do técnico entram com 30% do peso e a desafiante fica presa à campeã por uma penalidade KL. Na V5 (notas
+# com peso cheio) ela caiu de 51% para 42%: o LLM aponta erros que não são erros e a rede aprendia a agradar o técnico.
+COACH_ESCALA = 0.3
+KL_COEF = 0.5  # ponytail: âncora fixa; se a desafiante não sair do lugar, baixar para 0.2
 
 
 def coach_notes(luta: dict, padroes: dict | None = None) -> dict[tuple[int, int], float]:
@@ -313,7 +326,7 @@ def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int
             padroes = caderno.padroes(tab)
         lutas = dados["lutas"]
         for luta in lutas.values():
-            notas.update(coach_notes(luta, padroes))
+            notas.update({k: COACH_ESCALA * v for k, v in coach_notes(luta, padroes).items()})
         lidas.append(f.stem)
     return notas
 
@@ -481,6 +494,7 @@ def main() -> int:
                         model.pi.weight[i] = champ.pi.weight[i]
                         model.pi.bias[i] = champ.pi.bias[i]
     model.to(dev).eval()
+    ancora = load_policy(a.campea)[0].to(dev).eval()
     idx = {x: i for i, x in enumerate(actions)}
     opt = torch.optim.Adam(model.parameters(), lr=3e-4)
     if not a.desafiante.exists():
@@ -522,7 +536,7 @@ def main() -> int:
 
         stats = {}
         if buf.n >= BATCH:
-            stats = train_steps(model, opt, buf, dev=dev)
+            stats = train_steps(model, opt, buf, dev=dev, ancora=ancora)
             totals["atualizacoes"] += 1
             nota = avalia(model, val, dev)
             stats["nota_val"] = nota
@@ -560,6 +574,7 @@ def main() -> int:
                     os.replace(a.campea.with_suffix(".tmp"), a.campea)
                     state = {"versao": state["versao"] + 1, "desde": now}
                     melhor = None
+                    ancora = load_policy(a.campea)[0].to(dev).eval()
                     evento = f"desafiante virou campeã ({rate(ch):.0%} x {rate(cp):.0%})"
                 elif rate(ch) - rate(cp) <= REVERT:
                     champ, _ = load_policy(a.campea)
@@ -622,6 +637,8 @@ def selftest() -> None:
     x = torch.tensor([features_v2(row("kick", 0, 80, enemy_cc=32))])
     p = torch.softmax(model(x)[0], 1)[0]
     assert p[1] > 0.7, p
+    st = train_steps(model, opt, buf, steps=3, ancora=PolicyV2(len(actions)))
+    assert st["kl"] > 0, st
 
     # 4) técnico: erro alto na decisão certa (mesma pessoa, ~mesmo instante, mesma ação) e erro da rede só em
     #    decisão da rede; a nota cai na posição do buffer daquela decisão

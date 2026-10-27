@@ -48,7 +48,19 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V2 | 25/10 07:56 | desafiante promovida a campeã (52% × 45%); desafiante nova copiada dela |
 | V3 | 26/10 18:15 | cobertura nos pilares (LOS); treinador com vantagem normalizada, validação e checkpoints; caderno de erros; técnico só nas lutas da desafiante e só gratuito |
 | V4 | 26/10 22:54 | técnico com memória em LangGraph |
-| V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy |
+| V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy. **Piorou: desafiante 42% (129/308)** |
+| V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4 |
+
+### Lições (não repetir)
+
+- **Mais notas do LLM não é melhor treino.** Na V5 quase todos os erros apontados pelo técnico passaram a valer peso
+  cheio e a desafiante caiu de 51% para 42% em 308 lutas — abaixo até dos Bots/sem-rede. O melhor período (55%) foi
+  justamente com o técnico quase calado. O LLM aponta erros que não são erros; com peso alto a rede aprende a agradar o
+  técnico em vez de ganhar (desalinhamento do modelo de recompensa).
+- **Mude uma coisa por versão e meça antes de seguir:** ~150 lutas da desafiante (~4 h) para ver ±8 pontos; com menos
+  que isso o placar oscila ±15.
+- **Toda mudança no peso das notas ou no técnico vira versão nova** em `versoes.json`, com o resultado anotado no fim.
+- **Nunca solte a desafiante sem âncora:** a penalidade KL na campeã (V6) limita o estrago de um sinal ruim.
 
 ## Pastas
 
