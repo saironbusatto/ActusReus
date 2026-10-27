@@ -29,7 +29,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import caderno  # noqa: E402
 
 RODADAS = caderno.RODADAS
-CONTESTA_USOS, CONTESTA_TAXA = 200, 0.05  # situação usada 200+ vezes e errada em < 5%: o "erro" é contestado
+CONTESTA_USOS, CONTESTA_TAXA = 200, 0.05  # situação usada 200+ vezes, errada em < 5% e mais elogiada que errada:
+                                          # o "erro" é contestado (pouco erro sozinho pode ser só o técnico não ter visto)
 LUTAS_ANTERIORES = 2
 
 
@@ -59,6 +60,10 @@ def tabela_caderno(pasta: Path = RODADAS, validade_s: float = 300) -> dict:
         return _CACHE["tab"]
     _CACHE.update(tab=_tabela_caderno(pasta), t=time.time())
     return _CACHE["tab"]
+
+
+def _certa(info: dict | None) -> bool:
+    return bool(info) and info["usos"] >= CONTESTA_USOS and info["taxa"] < CONTESTA_TAXA and info["acertos"] > info["erros"]
 
 
 def _tabela_caderno(pasta: Path) -> dict:
@@ -104,7 +109,7 @@ def montar(motor: Callable[[str], tuple[dict, str]], texto_luta: Callable[[dict]
                       for s in [caderno.situacao(luta, ev)] if s}
             sit = {s: tab[s] for s in vistas if s in tab and tab[s]["lutas"] >= caderno.MIN_LUTAS}
             erram = sorted((s for s in sit if sit[s]["taxa"] >= caderno.MIN_TAXA), key=lambda s: -sit[s]["taxa"])
-            certas = sorted((s for s in sit if sit[s]["usos"] >= CONTESTA_USOS and sit[s]["taxa"] < CONTESTA_TAXA),
+            certas = sorted((s for s in sit if _certa(sit[s])),
                             key=lambda s: -sit[s]["usos"])[:8]
             linhas = ["=== MEMÓRIA DO TÉCNICO (todas as rodadas anteriores) ==="]
             if erram:
@@ -138,7 +143,7 @@ def montar(motor: Callable[[str], tuple[dict, str]], texto_luta: Callable[[dict]
             s = ev and caderno.situacao(luta, ev)
             info = sit.get(s) if s else None
             x = dict(x)
-            if info and info["usos"] >= CONTESTA_USOS and info["taxa"] < CONTESTA_TAXA:
+            if _certa(info):
                 x.update(gravidade="baixa", contestado=f"{info['usos']} usos, {info['taxa']:.0%} erro no caderno")
                 contestados += 1
             elif info and info["lutas"] >= caderno.MIN_LUTAS and info["taxa"] >= caderno.MIN_TAXA:
@@ -175,7 +180,7 @@ def selftest() -> None:
                         {"tipo": "acao", "t": 20.0, "quem": "R", "acao": "purge", "rede": False, "guid": 2, "ms": 2}],
             "vida": {"W": [[0, 20]], "R": [[0, 90]]}}
     tab = {("Warlock", "life tap", "baixa"): {"usos": 50, "erros": 40, "acertos": 0, "taxa": 0.8, "lutas": 10},
-           ("Rogue", "purge", "alta"): {"usos": 900, "erros": 9, "acertos": 0, "taxa": 0.01, "lutas": 30}}
+           ("Rogue", "purge", "alta"): {"usos": 900, "erros": 9, "acertos": 60, "taxa": 0.01, "lutas": 30}}
     visto = {}
 
     def motor(texto: str) -> tuple[dict, str]:
@@ -194,6 +199,10 @@ def selftest() -> None:
 
         b, _ = analisa_com_grafo(grafo, {**luta, "membros": {1: luta["membros"][0], 2: luta["membros"][1]}})
         assert b["_memoria"]["contestados"] == 1 and b["_memoria"]["padroes_confirmados"] == 1
+
+        sem_elogio = {**tab, ("Rogue", "purge", "alta"): {**tab[("Rogue", "purge", "alta")], "acertos": 0}}
+        c, _ = analisa_com_grafo(montar(motor, lambda l: "LUTA", lambda: sem_elogio, Path(d)), luta)
+        assert c["_memoria"]["contestados"] == 0 and c["erros"][1]["gravidade"] == "alta", c
 
         def quebra() -> dict:
             raise OSError("caderno ilegível")
