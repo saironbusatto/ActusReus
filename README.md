@@ -96,6 +96,11 @@ cota ("Individual quota reached"). Deixe aberta só a sessão da conta que deve 
 **Promoção:** a janela de comparação fica no checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); para
 recomeçar a contagem, pare o `ia-ao-vivo`, troque o `desde` e suba de novo (o buffer em memória se perde).
 
+**Disco:** o `Playerbots.log` cresce ~0,5 GB/h e o treino não o usa (usa o `MlArena.log`).
+`agente/apara-log.sh` mantém o log abaixo de 5 GB (guarda o último 1 GB em `Playerbots.log.1`); suba de hora em hora
+com `systemd-run --user --unit=apara-log --on-calendar=hourly $PWD/agente/apara-log.sh`. Imagens de rollback: só
+`master`, `cobertura-v4` e `rollback-pre-cobertura` (27/10); as anteriores foram apagadas.
+
 Compilar e subir uma mudança do módulo:
 
 ```bash
