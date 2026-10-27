@@ -1,0 +1,25 @@
+From c2d7ce1b38d60bfb036128f5c7fea85090660e2d Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sun, 25 Oct 2026 19:11:38 -0300
+Subject: [PATCH 50/54] fix: arena cover uses Event::GetSource
+
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 9c203842..a10ebe75 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4318,7 +4318,7 @@ bool ArenaTactics::Execute(Event event)
+         return true;
+ 
+     // Fired by "exposed to enemy caster" while enemies are in sight: only the cover step, nothing else here
+-    if (event.getSource() == "exposed to enemy caster")
++    if (event.GetSource() == "exposed to enemy caster")
+         return bg->GetStartDelayTime() == 0 && takeCover();
+ 
+     if (bot->isMoving())
+-- 
+2.55.0
+

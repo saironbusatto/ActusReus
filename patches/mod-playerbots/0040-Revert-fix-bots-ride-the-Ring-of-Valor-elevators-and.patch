@@ -1,7 +1,7 @@
 From 9560f180391df6cce667db50891e7c2947952c7c Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 23:21:49 -0300
-Subject: [PATCH 40/44] Revert "fix: bots ride the Ring of Valor elevators and
+Subject: [PATCH 40/54] Revert "fix: bots ride the Ring of Valor elevators and
  the Dalaran Sewers pipes"
 
 This reverts commit cab1a6370f4865ded70339d6239e4be6c045a22e.

@@ -1,0 +1,149 @@
+From f63661268eb6b84059aab28e72356ef8b55baebb Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Mon, 26 Oct 2026 12:20:45 -0300
+Subject: [PATCH 53/54] fix: arena bots out of combat after the opening walk
+ back into the fight
+
+Hiding drops combat. Out of combat, an enemy behind a pillar keeps "no
+possible targets" off while "attack enemy player" fails on line of sight,
+so arena tactics never ran and warlocks and healers stood idle for 230-284 s
+(R0196). A new "arena out of combat" trigger runs arena tactics after the
+first 20 s: damage dealers walk to the nearest enemy, healers back to the
+teammate lowest on health.
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp   | 18 +++++++++++++-----
+ src/Ai/Base/Actions/BattleGroundTactics.h     |  2 ++
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  2 ++
+ src/Ai/Base/Trigger/PvpTriggers.cpp           |  8 ++++++++
+ src/Ai/Base/Trigger/PvpTriggers.h             |  9 +++++++++
+ src/Ai/Base/TriggerContext.h                  |  2 ++
+ 6 files changed, 36 insertions(+), 5 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index c4559006..15739436 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4290,8 +4290,7 @@ bool ArenaTactics::dropToRingFloor(Battleground* bg)
+     return true;
+ }
+ 
+-// Milliseconds since the arena gates opened
+-static uint32 FightTime(Battleground* bg)
++uint32 ArenaTactics::FightTime(Battleground* bg)
+ {
+     uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
+     return bg && bg->GetStartTime() > prep ? bg->GetStartTime() - prep : 0;
+@@ -4366,11 +4365,20 @@ bool ArenaTactics::Execute(Event event)
+         }
+     }
+ 
+-    // Out of combat after the opening: hiding behind pillars drops combat, and walking back to the centre spot left
+-    // damage dealers idle for minutes (R0180: 533 s fight, a warlock out of combat looping firestone for 3 min)
+-    if (!bot->IsInCombat() && (healer || FightTime(bg) < 20000))
++    if (!bot->IsInCombat() && FightTime(bg) < 20000)
+         return moveToCenter(bg);
+ 
++    // Out of combat after the opening: hiding behind pillars drops combat, and walking back to the centre spot left
++    // bots idle for minutes (R0180: 533 s fight, a warlock looping firestone for 3 min). A healer walks back to the
++    // teammate who needs it most; a damage dealer (below) to the nearest enemy.
++    if (!bot->IsInCombat() && healer)
++    {
++        Unit* mate = coverAnchor();
++        if (!mate || (bot->IsWithinDistInMap(mate, 15.0f) && bot->IsWithinLOSInMap(mate)))
++            return true;
++        return MoveTo(mate->GetMapId(), mate->GetPositionX(), mate->GetPositionY(), mate->GetPositionZ(), false, true);
++    }
++
+     // In combat (or out of it after the opening) with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
+     // other for up to 37 minutes, so a damage dealer walks to the nearest enemy it can detect
+     if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target && !inCover)
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 1fa401c7..bc68a34c 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -148,6 +148,8 @@ public:
+     static bool OffArenaFloor(Player* bot) { return InDalaranPipe(bot) || FloatingInRingOfValor(bot); }
+     // Enemy casters and hunters within 40 yards that see the point; ignore = the melee target fought anyway.
+     // shotAt is set when one of them is casting at the bot.
++    // Milliseconds since the arena gates opened
++    static uint32 FightTime(Battleground* bg);
+     static uint8 Exposure(Player* bot, float x, float y, float z, Unit* ignore = nullptr, bool* shotAt = nullptr);
+ 
+ private:
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 07be83c0..1c35bf74 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -90,6 +90,8 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("off arena floor", { NextAction("arena tactics", ACTION_EMERGENCY + 6) }));
+     // above heals and damage, below interrupts and CC (ACTION_INTERRUPT)
+     triggers.push_back(new TriggerNode("exposed to enemy caster", { NextAction("arena tactics", ACTION_MOVE + 5) }));
++    // an enemy in sight but out of LoS keeps "no possible targets" off while "attack enemy player" fails on LoS
++    triggers.push_back(new TriggerNode("arena out of combat", { NextAction("arena tactics", ACTION_BG) }));
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 748087b0..c41eecb7 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -71,6 +71,14 @@ bool ExposedToEnemyCasterTrigger::IsActive()
+            ArenaTactics::Exposure(bot, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ()) > 0;
+ }
+ 
++bool ArenaOutOfCombatTrigger::IsActive()
++{
++    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive() || bot->IsInCombat())
++        return false;
++    Battleground* bg = bot->GetBattleground();
++    return bg && bg->GetStatus() == STATUS_IN_PROGRESS && ArenaTactics::FightTime(bg) >= 20000;
++}
++
+ bool BgActiveTrigger::IsActive()
+ {
+     if (bot->InBattleground())
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.h b/src/Ai/Base/Trigger/PvpTriggers.h
+index a065aa5a..9ac9c630 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.h
++++ b/src/Ai/Base/Trigger/PvpTriggers.h
+@@ -111,6 +111,15 @@ public:
+     bool IsActive() override;
+ };
+ 
++// In an arena after the opening but out of combat (hiding drops it): ArenaTactics walks back into the fight
++class ArenaOutOfCombatTrigger : public Trigger
++{
++public:
++    ArenaOutOfCombatTrigger(PlayerbotAI* botAI) : Trigger(botAI, "arena out of combat", 1000) {}
++
++    bool IsActive() override;
++};
++
+ class BgInviteActiveTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index e6dbe8c7..f1bb70cd 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -196,6 +196,7 @@ public:
+         creators["bg active"] = &TriggerContext::bg_active;
+         creators["off arena floor"] = &TriggerContext::off_arena_floor;
+         creators["exposed to enemy caster"] = &TriggerContext::exposed_to_enemy_caster;
++        creators["arena out of combat"] = &TriggerContext::arena_out_of_combat;
+         creators["bg invite active"] = &TriggerContext::bg_invite_active;
+         creators["inside bg"] = &TriggerContext::inside_bg;
+         creators["player has no flag"] = &TriggerContext::player_has_no_flag;
+@@ -421,6 +422,7 @@ private:
+     static Trigger* bg_active(PlayerbotAI* botAI) { return new BgActiveTrigger(botAI); }
+     static Trigger* off_arena_floor(PlayerbotAI* botAI) { return new OffArenaFloorTrigger(botAI); }
+     static Trigger* exposed_to_enemy_caster(PlayerbotAI* botAI) { return new ExposedToEnemyCasterTrigger(botAI); }
++    static Trigger* arena_out_of_combat(PlayerbotAI* botAI) { return new ArenaOutOfCombatTrigger(botAI); }
+     static Trigger* bg_invite_active(PlayerbotAI* botAI) { return new BgInviteActiveTrigger(botAI); }
+     static Trigger* inside_bg(PlayerbotAI* botAI) { return new InsideBGTrigger(botAI); }
+     static Trigger* player_has_no_flag(PlayerbotAI* botAI) { return new PlayerHasNoFlag(botAI); }
+-- 
+2.55.0
+

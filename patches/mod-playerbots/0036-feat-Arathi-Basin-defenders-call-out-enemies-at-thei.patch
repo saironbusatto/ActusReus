@@ -1,7 +1,7 @@
 From 0d280fc96e7c26c8062d8e0e7da4dabc4a341e7e Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 19:34:58 -0300
-Subject: [PATCH 36/44] feat: Arathi Basin defenders call out enemies at their
+Subject: [PATCH 36/54] feat: Arathi Basin defenders call out enemies at their
  node in raid chat
 
 A raid group holding a node by order says in raid chat how many enemies are

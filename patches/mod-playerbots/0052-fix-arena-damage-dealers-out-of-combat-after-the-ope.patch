@@ -1,0 +1,64 @@
+From 4330bb29fe2ac485dcec0b68c468e448a47604cb Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Mon, 26 Oct 2026 08:51:12 -0300
+Subject: [PATCH 52/54] fix: arena damage dealers out of combat after the
+ opening hunt the nearest enemy
+
+Hiding behind pillars drops combat; out of combat ArenaTactics only walked
+back to the centre spot, so damage dealers stood idle for minutes (R0180:
+533 s fight, a warlock looping firestone for 3 min). After the first 20 s
+they now walk to the nearest enemy they can detect; healers and the opening
+keep the centre move.
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index accd7d59..c4559006 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4290,6 +4290,13 @@ bool ArenaTactics::dropToRingFloor(Battleground* bg)
+     return true;
+ }
+ 
++// Milliseconds since the arena gates opened
++static uint32 FightTime(Battleground* bg)
++{
++    uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
++    return bg && bg->GetStartTime() > prep ? bg->GetStartTime() - prep : 0;
++}
++
+ bool ArenaTactics::Execute(Event event)
+ {
+     if (!bot->InBattleground())
+@@ -4359,10 +4366,12 @@ bool ArenaTactics::Execute(Event event)
+         }
+     }
+ 
+-    if (!bot->IsInCombat())
++    // Out of combat after the opening: hiding behind pillars drops combat, and walking back to the centre spot left
++    // damage dealers idle for minutes (R0180: 533 s fight, a warlock out of combat looping firestone for 3 min)
++    if (!bot->IsInCombat() && (healer || FightTime(bg) < 20000))
+         return moveToCenter(bg);
+ 
+-    // In combat with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
++    // In combat (or out of it after the opening) with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
+     // other for up to 37 minutes, so a damage dealer walks to the nearest enemy it can detect
+     if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target && !inCover)
+         return chaseNearestEnemy(bg);
+@@ -4472,9 +4481,7 @@ bool ArenaTactics::takeCover()
+ 
+     // Both sides hiding made caster cleaves last up to 42 min (R0127): after 90 s of fight a bot only dodges a cast
+     // aimed at it, after 150 s nobody hides and the fight is decided in the open
+-    Battleground* bg = bot->GetBattleground();
+-    uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
+-    uint32 const fought = bg && bg->GetStartTime() > prep ? bg->GetStartTime() - prep : 0;
++    uint32 const fought = FightTime(bot->GetBattleground());
+     if (fought > 150000 || (fought > 90000 && !shotAt))
+         return false;
+     if (bot->IsNonMeleeSpellCast(false) && !shotAt)
+-- 
+2.55.0
+

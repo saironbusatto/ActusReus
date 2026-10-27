@@ -1,0 +1,331 @@
+From 5531d89e39680f430c2b87892b3af4a6041aa184 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sat, 24 Oct 2026 23:14:13 -0300
+Subject: [PATCH 49/54] =?UTF-8?q?fix:=20arena=20cover=20=E2=80=94=20every?=
+ =?UTF-8?q?=20role=20steps=20out=20of=20enemy=20casters'=20sight=20while?=
+ =?UTF-8?q?=20its=20healer=20still=20sees=20it?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+hideFromCaster only ran from "no possible targets", i.e. when no enemy was in sight, so it never fired in combat.
+A new "exposed to enemy caster" trigger (500 ms) runs ArenaTactics::takeCover: healers always hide, ranged damage
+dealers when shot at or below 50%, melee circle their target to the side a pillar shields. The cover point must stay
+in sight of the own healer (for a healer, of the teammate lowest on health). After hiding, the bot holds cover 3-4 s
+instead of walking straight back out to its target.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp   | 145 ++++++++++++++----
+ src/Ai/Base/Actions/BattleGroundTactics.h     |   9 +-
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |   2 +
+ src/Ai/Base/Trigger/PvpTriggers.cpp           |   6 +
+ src/Ai/Base/Trigger/PvpTriggers.h             |   9 ++
+ src/Ai/Base/TriggerContext.h                  |   2 +
+ 6 files changed, 138 insertions(+), 35 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index e8ba5c55..9c203842 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4290,7 +4290,7 @@ bool ArenaTactics::dropToRingFloor(Battleground* bg)
+     return true;
+ }
+ 
+-bool ArenaTactics::Execute(Event /*event*/)
++bool ArenaTactics::Execute(Event event)
+ {
+     if (!bot->InBattleground())
+     {
+@@ -4317,6 +4317,10 @@ bool ArenaTactics::Execute(Event /*event*/)
+     if (leaveDalaranPipe(bg) || dropToRingFloor(bg))
+         return true;
+ 
++    // Fired by "exposed to enemy caster" while enemies are in sight: only the cover step, nothing else here
++    if (event.getSource() == "exposed to enemy caster")
++        return bg->GetStartDelayTime() == 0 && takeCover();
++
+     if (bot->isMoving())
+         return false;
+ 
+@@ -4331,11 +4335,10 @@ bool ArenaTactics::Execute(Event /*event*/)
+         botAI->ChangeStrategy("-buff", BOT_STATE_NON_COMBAT);
+ 
+     bool const healer = sPlayerbotAIConfig.ArenaPvpStrategies && PlayerbotAI::IsHeal(bot);
+-    if (healer && hideFromCaster())
+-        return true;
++    bool const inCover = getMSTime() < coverUntil;  // just hid: do not walk straight back into the casters' sight
+ 
+     Unit* target = bot->GetVictim();
+-    if (target && !healer)  // a healer never walks out of cover just to see its damage target
++    if (target && !healer && !inCover)  // a healer never walks out of cover just to see its damage target
+     {
+         bool losBlocked = !bot->IsWithinLOSInMap(target) || fabs(bot->GetPositionZ() - target->GetPositionZ()) > 5.0f;
+ 
+@@ -4361,7 +4364,7 @@ bool ArenaTactics::Execute(Event /*event*/)
+ 
+     // In combat with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
+     // other for up to 37 minutes, so a damage dealer walks to the nearest enemy it can detect
+-    if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target)
++    if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target && !inCover)
+         return chaseNearestEnemy(bg);
+ 
+     return true;
+@@ -4392,42 +4395,106 @@ bool ArenaTactics::chaseNearestEnemy(Battleground* bg)
+                   false, true);
+ }
+ 
+-// Healer under caster pressure steps behind the nearest cover (pillar, tomb, crate) that still
+-// keeps line of sight to its partner. Points are sampled on rings around the bot.
+-bool ArenaTactics::hideFromCaster()
++static bool SeesPoint(Unit* from, float x, float y, float z)
+ {
+-    Unit* caster = ai::arena::FindEnemyCaster(botAI);
+-    if (!caster || !caster->IsWithinLOSInMap(bot) || !bot->IsWithinDistInMap(caster, 40.0f))
+-        return false;
++    float const eye = 2.0f;
++    return from->GetMap()->isInLineOfSight(from->GetPositionX(), from->GetPositionY(), from->GetPositionZ() + eye, x,
++                                           y, z + eye, from->GetPhaseMask(), LINEOFSIGHT_ALL_CHECKS,
++                                           VMAP::ModelIgnoreFlags::Nothing);
++}
++
++uint8 ArenaTactics::Exposure(Player* bot, float x, float y, float z, Unit* ignore, bool* shotAt)
++{
++    Battleground* bg = bot->GetBattleground();
++    if (!bg)
++        return 0;
++
++    uint8 seen = 0;
++    for (auto const& [guid, enemy] : bg->GetPlayers())  // at most 10 players in an arena
++    {
++        if (!enemy || enemy == ignore || !enemy->IsAlive() || enemy->IsSpectator() ||
++            enemy->GetBgTeamId() == bot->GetBgTeamId() || !PlayerbotAI::IsRanged(enemy, true) ||
++            PlayerbotAI::IsHeal(enemy, true) || enemy->GetExactDist(x, y, z) > 40.0f || !SeesPoint(enemy, x, y, z))
++            continue;
++
++        ++seen;
++        Spell* spell = enemy->GetCurrentSpell(CURRENT_GENERIC_SPELL);
++        if (shotAt && spell && spell->m_targets.GetUnitTarget() == bot)
++            *shotAt = true;
++    }
++    return seen;
++}
++
++// Who must keep seeing the bot from its cover: the team's healer, or for a healer the teammate lowest on health
++Unit* ArenaTactics::coverAnchor()
++{
++    Group* group = bot->GetGroup();
++    if (!group)
++        return nullptr;
+ 
+-    Spell* spell = caster->GetCurrentSpell(CURRENT_GENERIC_SPELL);
+-    bool const castAtMe = spell && spell->m_targets.GetUnitTarget() == bot;
+-    if (!castAtMe && bot->GetHealthPct() > 50.0f)
++    bool const healer = PlayerbotAI::IsHeal(bot);
++    Player* anchor = nullptr;
++    for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++    {
++        Player* member = ref->GetSource();
++        if (!member || member == bot || !member->IsAlive() || member->GetMap() != bot->GetMap())
++            continue;
++
++        if (!healer && PlayerbotAI::IsHeal(member))
++            return member;
++        if (healer && (!anchor || member->GetHealthPct() < anchor->GetHealthPct()))
++            anchor = member;
++    }
++    return anchor;
++}
++
++// Out of the enemy casters' and hunters' sight, as players play the pillars, but where the own healer still sees the
++// bot (a healer: where it still sees the teammate who needs it most). A healer always hides; a ranged damage dealer,
++// who needs its own line of sight to deal damage, when shot at or below half health; a melee on its target circles it
++// to the side a pillar shields from the other casters.
++bool ArenaTactics::takeCover()
++{
++    uint32 const now = getMSTime();
++    if (!sPlayerbotAIConfig.ArenaPvpStrategies || now < coverUntil || now < nextCoverCheck)
+         return false;
+ 
+-    Unit* partner = ai::arena::FindPartner(botAI);
+-    Map* map = bot->GetMap();
+-    uint32 const phase = bot->GetPhaseMask();
+-    float const eye = 2.0f;
++    bool const healer = PlayerbotAI::IsHeal(bot);
++    bool const melee = !healer && !PlayerbotAI::IsRanged(bot);
++    Unit* target = bot->GetVictim();
++    if (melee && (!target || !bot->IsWithinMeleeRange(target)))
++        return false;  // closing in stays with the chase; cover counts once on the target
+ 
+-    // ponytail: 3 rings x 12 angles with one PathGenerator per candidate; use a cached cover map per arena if CPU shows up
+-    for (float radius : {5.0f, 9.0f, 13.0f})
++    Unit* ignore = melee ? target : nullptr;
++    bool shotAt = false;
++    uint8 const exposed = Exposure(bot, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), ignore, &shotAt);
++    if (!exposed || (!healer && !melee && !shotAt && bot->GetHealthPct() >= 50.0f))
++        return false;
++    if (bot->IsNonMeleeSpellCast(false) && !shotAt)
++        return false;  // let the heal or nuke land first
++
++    nextCoverCheck = now + 1500;
++    Unit* anchor = coverAnchor();
++    Unit* center = melee ? target : bot;
++    std::vector<float> const radii = melee ? std::vector<float>{2.5f} : std::vector<float>{5.0f, 9.0f, 13.0f};
++    uint8 best = exposed;
++    float bestX = 0.0f, bestY = 0.0f, bestZ = 0.0f;
++
++    // ponytail: up to 36 points x (shooters + anchor) LoS checks, paths only for improving points; throttled to
++    // 1.5 s per exposed bot. A cached cover map per arena if CPU shows up.
++    for (float radius : radii)
+     {
+-        for (int i = 0; i < 12; ++i)
++        for (int i = 0; i < 12 && best > 0; ++i)
+         {
+             float const angle = i * float(M_PI) / 6.0f;
+-            float x = bot->GetPositionX() + radius * std::cos(angle);
+-            float y = bot->GetPositionY() + radius * std::sin(angle);
+-            float z = bot->GetPositionZ();
++            float x = center->GetPositionX() + radius * std::cos(angle);
++            float y = center->GetPositionY() + radius * std::sin(angle);
++            float z = center->GetPositionZ();
+             bot->UpdateAllowedPositionZ(x, y, z);
+ 
+-            if (map->isInLineOfSight(caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ() + eye,
+-                                     x, y, z + eye, phase, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing))
++            uint8 const seen = Exposure(bot, x, y, z, ignore);
++            if (seen >= best)
+                 continue;
+-
+-            if (partner && !map->isInLineOfSight(partner->GetPositionX(), partner->GetPositionY(),
+-                                                 partner->GetPositionZ() + eye, x, y, z + eye, phase,
+-                                                 LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing))
++            if (anchor && (anchor->GetExactDist(x, y, z) > 35.0f || !SeesPoint(anchor, x, y, z)))
+                 continue;
+ 
+             PathGenerator path(bot);
+@@ -4435,12 +4502,22 @@ bool ArenaTactics::hideFromCaster()
+             if (!(path.GetPathType() & PATHFIND_NORMAL))
+                 continue;
+ 
+-            if (castAtMe)
+-                bot->CastStop();
+-            return MoveTo(bot->GetMapId(), x, y, z, false, true);
++            best = seen;
++            bestX = x;
++            bestY = y;
++            bestZ = z;
+         }
++        if (best == 0)
++            break;  // inner rings first: the shortest walk to full cover
+     }
+-    return false;
++
++    if (best == exposed)
++        return false;
++
++    if (shotAt)
++        bot->CastStop();
++    coverUntil = now + (melee ? 4000 : 3000);
++    return MoveTo(bot->GetMapId(), bestX, bestY, bestZ, false, true);
+ }
+ 
+ bool ArenaTactics::moveToCenter(Battleground* bg)
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.h b/src/Ai/Base/Actions/BattleGroundTactics.h
+index 53d2e486..1fa401c7 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.h
++++ b/src/Ai/Base/Actions/BattleGroundTactics.h
+@@ -146,13 +146,20 @@ public:
+     // Hanging in the air over the Ring of Valor floor or a pillar once the elevators are up; see dropToRingFloor.
+     static bool FloatingInRingOfValor(Player* bot, float* groundZ = nullptr);
+     static bool OffArenaFloor(Player* bot) { return InDalaranPipe(bot) || FloatingInRingOfValor(bot); }
++    // Enemy casters and hunters within 40 yards that see the point; ignore = the melee target fought anyway.
++    // shotAt is set when one of them is casting at the bot.
++    static uint8 Exposure(Player* bot, float x, float y, float z, Unit* ignore = nullptr, bool* shotAt = nullptr);
+ 
+ private:
+     bool moveToCenter(Battleground* bg);
+-    bool hideFromCaster();
++    bool takeCover();
++    Unit* coverAnchor();
+     bool chaseNearestEnemy(Battleground* bg);
+     bool leaveDalaranPipe(Battleground* bg);
+     bool dropToRingFloor(Battleground* bg);
++
++    uint32 coverUntil = 0;      // in cover: no walking out to the target before this
++    uint32 nextCoverCheck = 0;  // the cover search is expensive, at most every 1.5 s
+ };
+ 
+ #endif
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 0b31203d..07be83c0 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -88,6 +88,8 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+         new TriggerNode("no possible targets", { NextAction("arena tactics", ACTION_BG)}));
+     triggers.push_back(new TriggerNode("pvp trinket", { NextAction("pvp trinket", ACTION_EMERGENCY + 5) }));
+     triggers.push_back(new TriggerNode("off arena floor", { NextAction("arena tactics", ACTION_EMERGENCY + 6) }));
++    // above heals and damage, below interrupts and CC (ACTION_INTERRUPT)
++    triggers.push_back(new TriggerNode("exposed to enemy caster", { NextAction("arena tactics", ACTION_MOVE + 5) }));
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index 577a72b2..748087b0 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -65,6 +65,12 @@ bool BgWaitingTrigger::IsActive()
+ 
+ bool OffArenaFloorTrigger::IsActive() { return ArenaTactics::OffArenaFloor(bot); }
+ 
++bool ExposedToEnemyCasterTrigger::IsActive()
++{
++    return sPlayerbotAIConfig.ArenaPvpStrategies && bot->InArena() && bot->IsAlive() && bot->IsInCombat() &&
++           ArenaTactics::Exposure(bot, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ()) > 0;
++}
++
+ bool BgActiveTrigger::IsActive()
+ {
+     if (bot->InBattleground())
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.h b/src/Ai/Base/Trigger/PvpTriggers.h
+index b59aec7d..a065aa5a 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.h
++++ b/src/Ai/Base/Trigger/PvpTriggers.h
+@@ -102,6 +102,15 @@ public:
+     bool IsActive() override;
+ };
+ 
++// In an arena an enemy caster or hunter sees the bot; ArenaTactics::takeCover decides whether to step out of sight
++class ExposedToEnemyCasterTrigger : public Trigger
++{
++public:
++    ExposedToEnemyCasterTrigger(PlayerbotAI* botAI) : Trigger(botAI, "exposed to enemy caster", 500) {}
++
++    bool IsActive() override;
++};
++
+ class BgInviteActiveTrigger : public Trigger
+ {
+ public:
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index f3921df1..e6dbe8c7 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -195,6 +195,7 @@ public:
+         creators["bg waiting"] = &TriggerContext::bg_waiting;
+         creators["bg active"] = &TriggerContext::bg_active;
+         creators["off arena floor"] = &TriggerContext::off_arena_floor;
++        creators["exposed to enemy caster"] = &TriggerContext::exposed_to_enemy_caster;
+         creators["bg invite active"] = &TriggerContext::bg_invite_active;
+         creators["inside bg"] = &TriggerContext::inside_bg;
+         creators["player has no flag"] = &TriggerContext::player_has_no_flag;
+@@ -419,6 +420,7 @@ private:
+     static Trigger* bg_waiting(PlayerbotAI* botAI) { return new BgWaitingTrigger(botAI); }
+     static Trigger* bg_active(PlayerbotAI* botAI) { return new BgActiveTrigger(botAI); }
+     static Trigger* off_arena_floor(PlayerbotAI* botAI) { return new OffArenaFloorTrigger(botAI); }
++    static Trigger* exposed_to_enemy_caster(PlayerbotAI* botAI) { return new ExposedToEnemyCasterTrigger(botAI); }
+     static Trigger* bg_invite_active(PlayerbotAI* botAI) { return new BgInviteActiveTrigger(botAI); }
+     static Trigger* inside_bg(PlayerbotAI* botAI) { return new InsideBGTrigger(botAI); }
+     static Trigger* player_has_no_flag(PlayerbotAI* botAI) { return new PlayerHasNoFlag(botAI); }
+-- 
+2.55.0
+

@@ -1,0 +1,192 @@
+From 9c485127aecf7883c5d0b2b594856d2c18c91dd7 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sat, 24 Oct 2026 18:53:54 -0300
+Subject: [PATCH 48/54] =?UTF-8?q?feat:=20arena=20observation=20v4=20?=
+ =?UTF-8?q?=E2=80=94=20DR,=20CC=20time=20left=20and=20key=20cooldowns=20pe?=
+ =?UTF-8?q?r=20unit?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Each of the six slots now also logs DR level (stun, fear, incapacitate,
+silence), CC time left and whether its interrupt, main CC and main
+defensive cooldown are ready (decision log tag v4). FeaturesFor() feeds
+151-input nets the old v2 vector and 199-input nets the new one, so the
+running nets keep working and a v4 net can be hot-loaded later.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Base/ArenaMlPolicy.h    |  8 ++--
+ src/Ai/Base/ArenaObservation.h | 84 ++++++++++++++++++++++++++++++++--
+ 2 files changed, 83 insertions(+), 9 deletions(-)
+
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index ab52b4ba..79e95515 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -100,14 +100,14 @@ namespace ai::arena
+                 return;
+             }
+             auto net = std::make_shared<PolicyNetV2>(path);
+-            if (net->ok && net->InputSize() == 151)
++            if (net->ok && (net->InputSize() == 151 || net->InputSize() == 199))
+             {
+                 std::atomic_store(&file.net, PolicyPtr(net));
+                 LOG_INFO("playerbots", "ArenaMlPolicy: '{}' loaded ({} actions)", path, net->nOut);
+             }
+             else
+-                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing or not arena-policy v2), keeping "
+-                                        "the previous weights", path);
++                LOG_ERROR("playerbots", "ArenaMlPolicy: cannot read '{}' (missing, or not a 151/199-input "
++                                        "arena-policy), keeping the previous weights", path);
+         }
+ 
+         std::atomic<uint64> lastCheck{0};
+@@ -185,7 +185,7 @@ namespace ai::arena
+         if (candidates.size() < 2)
+             return pick;  // nothing to choose between
+ 
+-        std::vector<float> const probs = net->Probabilities(FeaturesV2(CollectObservationV2(botAI)));
++        std::vector<float> const probs = net->Probabilities(FeaturesFor(net->InputSize(), CollectObservationV2(botAI)));
+         std::vector<float> w;
+         float sum = 0.0f;
+         for (int id : ids)
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+index b0bea005..a2646441 100644
+--- a/src/Ai/Base/ArenaObservation.h
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -12,6 +12,9 @@
+ #include "Battleground.h"
+ #include "GameTime.h"
+ #include "Log.h"
++#include "Player.h"
++#include "SpellAuraEffects.h"
++#include "SpellAuras.h"
+ 
+ // Arena state as the bot sees it: logged per executed action ("playerbots.ml", training data) and fed to the
+ // learned policy (ArenaMlPolicy.h). Field order must match ml/policy/features.py.
+@@ -40,8 +43,46 @@ namespace ai::arena
+         uint32 guid = 0, cls = 0, cc = 0;
+         int present = 0, visible = 0, hp = 0, power = 0, trinket = 0, defensive = 0, dist = -1, los = -1,
+             isTarget = 0;
++        // v4: what a 2009 arena player tracked on each unit. DR level 0-3 (3 = immune) per category, CC time left
++        // (ms), and whether its interrupt, main CC and main defensive cooldown are ready
++        int drStun = 0, drFear = 0, drIncap = 0, drSilence = 0, ccLeft = 0, kickReady = 0, ccReady = 0,
++            defReady = 0;
+     };
+ 
++    // Max-rank spell ids by role (a unit counts as "ready" when it knows one of them and it is off cooldown)
++    inline bool AnyReady(Player* p, std::initializer_list<uint32> spells)
++    {
++        for (uint32 id : spells)
++            if (p->HasSpell(id) && !p->HasSpellCooldown(id))
++                return true;
++        return false;
++    }
++
++    inline void ObserveCooldowns(Player* u, UnitObs& s)
++    {
++        s.drStun = int(u->GetDiminishing(DIMINISHING_STUN));
++        s.drFear = int(u->GetDiminishing(DIMINISHING_FEAR));
++        s.drIncap = int(u->GetDiminishing(DIMINISHING_DISORIENT));
++        s.drSilence = int(u->GetDiminishing(DIMINISHING_SILENCE));
++        int left = 0;
++        for (AuraType type : {SPELL_AURA_MOD_STUN, SPELL_AURA_MOD_FEAR, SPELL_AURA_MOD_CONFUSE,
++                              SPELL_AURA_MOD_SILENCE, SPELL_AURA_MOD_ROOT})
++            for (AuraEffect const* eff : u->GetAuraEffectsByType(type))
++                left = std::max(left, eff->GetBase()->GetDuration());
++        s.ccLeft = left;
++        // Kick, Counterspell, Wind Shear, Pummel, Shield Bash, Mind Freeze, Strangulate, Silence, Silencing Shot
++        s.kickReady = AnyReady(u, {1766, 2139, 57994, 6552, 72, 47528, 47476, 15487, 34490}) ? 1 : 0;
++        // Blind, Kidney Shot, Gouge, Polymorph, Deep Freeze, Psychic Scream, Psychic Horror, Fear, Death Coil, Howl
++        // of Terror, Cyclone, Hex, Hammer of Justice, Repentance, Intimidating Shout, Hungering Cold, Scatter Shot,
++        // Freezing Trap
++        s.ccReady = AnyReady(u, {2094, 8643, 1776, 12826, 44572, 10890, 64044, 6215, 47860, 17928, 33786, 51514,
++                                 10308, 20066, 5246, 49203, 19503, 14311}) ? 1 : 0;
++        // Pain Suppression, Divine Shield, Ice Block, Cloak of Shadows, Barkskin, Hand of Protection, Anti-Magic
++        // Shell, Icebound Fortitude, Deterrence, Evasion, Dispersion, Shield Wall
++        s.defReady = AnyReady(u, {33206, 642, 45438, 31224, 22812, 10278, 48707, 48792, 19263, 26669, 47585,
++                                  871}) ? 1 : 0;
++    }
++
+     struct ArenaObsV2
+     {
+         UnitObs slot[6];  // 0 self, 1-2 allies, 3-5 enemies (allies and enemies sorted by guid)
+@@ -80,6 +121,8 @@ namespace ai::arena
+             s.dist = int(bot->GetDistance(u));
+             s.los = bot->IsWithinLOSInMap(u) ? 1 : 0;
+         }
++        if (s.visible)
++            ObserveCooldowns(u, s);
+         return s;
+     }
+ 
+@@ -114,8 +157,9 @@ namespace ai::arena
+     }
+ 
+     // One CSV line per executed arena action:
+-    // v3,ms,instance,bot,action,relevance,prob,killwindow,mode,damage,healing,kills, then 6 slots of
+-    // present,visible,guid,class,hp,power,cc,trinket,defensive,dist,los,istarget
++    // v4,ms,instance,bot,action,relevance,prob,killwindow,mode,damage,healing,kills, then 6 slots of
++    // present,visible,guid,class,hp,power,cc,trinket,defensive,dist,los,istarget,
++    // drstun,drfear,drincap,drsilence,ccleft,kickready,ccready,defready
+     // mode 1 = the learned policy picked the action and prob is the probability it gave it among the queued
+     // candidates; mode 0 = the rules picked it (prob 1). damage/healing/kills are the bot's running arena scoreboard
+     // totals, so the trainer can credit each decision with what changed until the next one.
+@@ -135,13 +179,15 @@ namespace ai::arena
+                 kills = it->second->GetKillingBlows();
+             }
+         }
+-        std::string line = fmt::format("v3,{},{},{},{},{:.1f},{:.3f},{},{},{},{},{}",
++        std::string line = fmt::format("v4,{},{},{},{},{:.1f},{:.3f},{},{},{},{},{}",
+                                        GameTime::GetGameTimeMS().count(), bot->GetInstanceId(),
+                                        bot->GetGUID().GetCounter(), action->getName(), relevance, prob, o.killWindow,
+                                        mode, damage, healing, kills);
+         for (UnitObs const& s : o.slot)
+-            line += fmt::format(",{},{},{},{},{},{},{},{},{},{},{},{}", s.present, s.visible, s.guid, s.cls, s.hp,
+-                                s.power, s.cc, s.trinket, s.defensive, s.dist, s.los, s.isTarget);
++            line += fmt::format(",{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}", s.present, s.visible,
++                                s.guid, s.cls, s.hp, s.power, s.cc, s.trinket, s.defensive, s.dist, s.los, s.isTarget,
++                                s.drStun, s.drFear, s.drIncap, s.drSilence, s.ccLeft, s.kickReady, s.ccReady,
++                                s.defReady);
+         LOG_INFO("playerbots.ml", "{}", line);
+     }
+ 
+@@ -171,6 +217,34 @@ namespace ai::arena
+         f.push_back(float(o.killWindow));
+         return f;
+     }
++
++    // v4 (199 values): each slot = its 25 v2 values + DR stun/fear/incap/silence (/3), CC left (/8 s, capped),
++    // interrupt/CC/defensive ready; kill window last. Same order as ml/policy/features.py features_v4.
++    inline std::vector<float> FeaturesV4(ArenaObsV2 const& o)
++    {
++        std::vector<float> const base = FeaturesV2(o);
++        std::vector<float> f;
++        f.reserve(199);
++        for (int i = 0; i < 6; ++i)
++        {
++            f.insert(f.end(), base.begin() + i * 25, base.begin() + (i + 1) * 25);
++            UnitObs const& s = o.slot[i];
++            for (int dr : {s.drStun, s.drFear, s.drIncap, s.drSilence})
++                f.push_back(std::min(dr, 3) / 3.0f);
++            f.push_back(std::min(s.ccLeft, 8000) / 8000.0f);
++            f.push_back(float(s.kickReady));
++            f.push_back(float(s.ccReady));
++            f.push_back(float(s.defReady));
++        }
++        f.push_back(float(o.killWindow));
++        return f;
++    }
++
++    // The observation a loaded net was trained on, by its input size (151 = v2/v3 nets, 199 = v4)
++    inline std::vector<float> FeaturesFor(int inputSize, ArenaObsV2 const& o)
++    {
++        return inputSize == 199 ? FeaturesV4(o) : FeaturesV2(o);
++    }
+ }
+ 
+ #endif
+-- 
+2.55.0
+

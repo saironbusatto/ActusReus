@@ -1,7 +1,7 @@
 From 68c70b58159c41653628fd2580504985416e2769 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 17:46:46 -0300
-Subject: [PATCH 35/44] fix: arena damage dealers chase the nearest detectable
+Subject: [PATCH 35/54] fix: arena damage dealers chase the nearest detectable
  enemy when none is in sight
 
 In combat with no possible target (enemies behind a pillar or the bridge),

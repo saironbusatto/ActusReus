@@ -1,7 +1,7 @@
 From bb628e4d49702bbcf62434c165f11b6945c67c18 Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 21:37:29 -0300
-Subject: [PATCH 38/44] feat: destruction warlocks summon the Succubus when
+Subject: [PATCH 38/54] feat: destruction warlocks summon the Succubus when
  SmartPetAbilities is on
 
 The 2009 PvP destro ran Succubus for Seduction; with the Imp the new Seduction

@@ -1,7 +1,7 @@
 From 379e66b0dfe81e7828cf2133b4fb9e762186080e Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Thu, 22 Oct 2026 20:11:45 -0300
-Subject: [PATCH 37/44] feat: pets use their hand-triggered abilities (Spell
+Subject: [PATCH 37/54] feat: pets use their hand-triggered abilities (Spell
  Lock, Seduction, Gnaw) and sane autocast
 
 Saved bot pets had Spell Lock and Devour Magic off on every Felhunter and

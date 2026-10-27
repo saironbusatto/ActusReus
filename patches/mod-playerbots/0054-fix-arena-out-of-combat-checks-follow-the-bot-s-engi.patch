@@ -1,0 +1,67 @@
+From 7775cc9995dadf742f79d9e262dbfcc3bc27025c Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Mon, 26 Oct 2026 13:21:00 -0300
+Subject: [PATCH 54/54] fix: arena out-of-combat checks follow the bot's engine
+ state, not the core flag
+
+The non-combat engine also runs while the core still flags the bot in combat
+(DoTs, a hit taken), so "arena out of combat" never fired for the warlocks
+that kept idling (R0200: 268 s).
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 10 ++++++----
+ src/Ai/Base/Trigger/PvpTriggers.cpp         |  4 +++-
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 15739436..65c6849f 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4365,13 +4365,15 @@ bool ArenaTactics::Execute(Event event)
+         }
+     }
+ 
+-    if (!bot->IsInCombat() && FightTime(bg) < 20000)
++    // the non-combat engine also runs while the core still flags the bot in combat (DoTs, a hit taken)
++    bool const outOfCombat = !bot->IsInCombat() || botAI->GetState() == BOT_STATE_NON_COMBAT;
++    if (outOfCombat && FightTime(bg) < 20000)
+         return moveToCenter(bg);
+ 
+     // Out of combat after the opening: hiding behind pillars drops combat, and walking back to the centre spot left
+     // bots idle for minutes (R0180: 533 s fight, a warlock looping firestone for 3 min). A healer walks back to the
+     // teammate who needs it most; a damage dealer (below) to the nearest enemy.
+-    if (!bot->IsInCombat() && healer)
++    if (outOfCombat && healer)
+     {
+         Unit* mate = coverAnchor();
+         if (!mate || (bot->IsWithinDistInMap(mate, 15.0f) && bot->IsWithinLOSInMap(mate)))
+@@ -4379,8 +4381,8 @@ bool ArenaTactics::Execute(Event event)
+         return MoveTo(mate->GetMapId(), mate->GetPositionX(), mate->GetPositionY(), mate->GetPositionZ(), false, true);
+     }
+ 
+-    // In combat (or out of it after the opening) with nobody in sight (behind a pillar or the bridge): standing still let two healers outlast each
+-    // other for up to 37 minutes, so a damage dealer walks to the nearest enemy it can detect
++    // Nobody in sight (behind a pillar or the bridge), in combat or out of it after the opening: standing still let
++    // two healers outlast each other for up to 37 minutes, so a damage dealer walks to the nearest enemy it detects
+     if (sPlayerbotAIConfig.ArenaPvpStrategies && !healer && !target && !inCover)
+         return chaseNearestEnemy(bg);
+ 
+diff --git a/src/Ai/Base/Trigger/PvpTriggers.cpp b/src/Ai/Base/Trigger/PvpTriggers.cpp
+index c41eecb7..cc189d6b 100644
+--- a/src/Ai/Base/Trigger/PvpTriggers.cpp
++++ b/src/Ai/Base/Trigger/PvpTriggers.cpp
+@@ -73,7 +73,9 @@ bool ExposedToEnemyCasterTrigger::IsActive()
+ 
+ bool ArenaOutOfCombatTrigger::IsActive()
+ {
+-    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive() || bot->IsInCombat())
++    // the non-combat engine also runs while the core still flags the bot in combat (DoTs, a hit taken)
++    if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || !bot->IsAlive() ||
++        botAI->GetState() != BOT_STATE_NON_COMBAT)
+         return false;
+     Battleground* bg = bot->GetBattleground();
+     return bg && bg->GetStatus() == STATUS_IN_PROGRESS && ArenaTactics::FightTime(bg) >= 20000;
+-- 
+2.55.0
+

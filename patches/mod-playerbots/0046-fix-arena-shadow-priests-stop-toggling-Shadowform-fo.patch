@@ -1,0 +1,49 @@
+From cd7c57358e57b202bc80a56160899e7805f2455f Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sat, 24 Oct 2026 14:35:55 -0300
+Subject: [PATCH 46/54] fix: arena shadow priests stop toggling Shadowform for
+ every heal
+
+Every party heal or buff has "remove shadowform" as prerequisite and the
+shadow strategy recasts the form at high priority: in arena that swapped
+the form 10-44 times a fight (355 fights, 24/10 16:00 UTC), each swap a
+lost GCD. In arena the form now drops only when the priest or a party
+member is below 35% health.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ src/Ai/Class/Priest/PriestActions.cpp | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/src/Ai/Class/Priest/PriestActions.cpp b/src/Ai/Class/Priest/PriestActions.cpp
+index 1b87c5ad..3f627cdd 100644
+--- a/src/Ai/Class/Priest/PriestActions.cpp
++++ b/src/Ai/Class/Priest/PriestActions.cpp
+@@ -20,7 +20,23 @@ bool CastFadeAction::isUseful()
+     return bot->GetGroup() && !(target && target->IsPlayer());  // players have no threat
+ }
+ 
+-bool CastRemoveShadowformAction::isUseful() { return botAI->HasAura("shadowform", AI_VALUE(Unit*, "self target")); }
++// In arena a shadow priest left Shadowform for every party heal or buff and the shadow strategy put it back at once:
++// 10-44 swaps a fight, each a lost GCD. There it only drops the form to save someone (below 35% health).
++bool CastRemoveShadowformAction::isUseful()
++{
++    if (!botAI->HasAura("shadowform", AI_VALUE(Unit*, "self target")))
++        return false;
++    if (!bot->InArena())
++        return true;
++
++    if (bot->IsAlive() && bot->GetHealthPct() < 35.0f)
++        return true;
++    if (Group* group = bot->GetGroup())
++        for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++            if (Player* member = ref->GetSource(); member && member->IsAlive() && member->GetHealthPct() < 35.0f)
++                return true;
++    return false;
++}
+ 
+ Unit* CastPowerWordShieldOnAlmostFullHealthBelowAction::GetTarget()
+ {
+-- 
+2.55.0
+

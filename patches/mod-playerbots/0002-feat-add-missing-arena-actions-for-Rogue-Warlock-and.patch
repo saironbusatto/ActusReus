@@ -1,7 +1,7 @@
 From 972b60f3776d8ab3278e9c450a2609217537a17e Mon Sep 17 00:00:00 2001
 From: saironcb <saironbusatto@gmail.com>
 Date: Wed, 21 Oct 2026 00:19:33 -0300
-Subject: [PATCH 02/44] feat: add missing arena actions for Rogue, Warlock and
+Subject: [PATCH 02/54] feat: add missing arena actions for Rogue, Warlock and
  Priest
 
 ---

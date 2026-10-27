@@ -1,0 +1,81 @@
+From fab8887f3679ec836280c14af907fb4ac1e9bb02 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sat, 24 Oct 2026 14:54:22 -0300
+Subject: [PATCH 47/54] feat: arena round file can bench teams
+
+Words after the round id are arena team ids that never queue, so the
+orchestrator can keep exactly one trio per composition per role.
+
+Claude-Session: https://claude.ai/code/session_01Vn4vD1fiBmsMGCCvsiqU7z
+---
+ conf/playerbots.conf.dist |  3 ++-
+ src/Ai/Base/ArenaRound.h  | 14 +++++++++++---
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 5858b0cc..0c405645 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -570,7 +570,8 @@ Playerbots.ArenaMlControl = 0.0
+ #    Playerbots.ArenaRoundFile
+ #        Synchronised arena rounds. When set, the first word of this file is the current round id: each bot
+ #        arena team queues at most once per round id, so every trio plays one fight and waits until the file
+-#        moves to the next id (written by an external orchestrator, e.g. ml/policy/rodada_sync.py).
++#        moves to the next id (written by an external orchestrator, e.g. ml/policy/rodada_sync.py). Further
++#        words are arena team ids kept out of the queue (bench).
+ #        Default: "" - Disabled (bots queue as usual)
+ #
+ 
+diff --git a/src/Ai/Base/ArenaRound.h b/src/Ai/Base/ArenaRound.h
+index 42fe6552..b12395d6 100644
+--- a/src/Ai/Base/ArenaRound.h
++++ b/src/Ai/Base/ArenaRound.h
+@@ -10,14 +10,16 @@
+ #include <fstream>
+ #include <mutex>
+ #include <unordered_map>
++#include <unordered_set>
+ 
+ #include "Config.h"
+ #include "GameTime.h"
+ 
+ // Synchronised arena rounds: when Playerbots.ArenaRoundFile names a file, its first token is the current round id
+-// (written by ml/policy/rodada_sync.py). A bot arena team queues at most once per round id; when the file moves to
+-// a new id every team may queue again. So all trios play one fight, wait while their fights are reviewed, and
+-// queue together for the next round. No file (or an empty path) = bots queue as usual.
++// (written by ml/policy/rodada_sync.py) and any further tokens are benched team ids that do not queue at all. A bot
++// arena team queues at most once per round id; when the file moves to a new id every team may queue again. So all
++// trios play one fight, wait while their fights are reviewed, and queue together for the next round.
++// No file (or an empty path) = bots queue as usual.
+ namespace ai::arena
+ {
+     class ArenaRound
+@@ -36,6 +38,8 @@ namespace ai::arena
+             Refresh();
+             if (round.empty())
+                 return true;
++            if (benched.count(teamId))
++                return false;
+             auto const it = joined.find(teamId);
+             return it == joined.end() || it->second != round;
+         }
+@@ -64,12 +68,16 @@ namespace ai::arena
+             std::ifstream in(path);
+             std::string id;
+             round = (in >> id) ? id : "";
++            benched.clear();
++            for (uint32 team; in >> team;)
++                benched.insert(team);
+         }
+ 
+         std::mutex lock;
+         uint64 lastCheck = 0;
+         std::string round;
+         std::unordered_map<uint32, std::string> joined;
++        std::unordered_set<uint32> benched;
+     };
+ }
+ 
+-- 
+2.55.0
+

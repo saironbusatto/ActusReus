@@ -234,6 +234,11 @@ const PAPEL = { jogador: "Seu trio", campea: "Campeã/estática", desafiante: "D
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let indice = [], rodada = null, filtro = "todos", aberto = null;
+// os dados vêm em UTC ("2026-10-26 18:37[:00]"); a página mostra no fuso da máquina de quem abre
+const emSP = (s, campos) => { const d = new Date(String(s).replace(" ", "T") + "Z");
+  return isNaN(d) ? String(s ?? "") : d.toLocaleString("pt-BR", campos); };
+const SP = (s) => emSP(s, { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+const SPh = (s) => emSP(s, { hour: "2-digit", minute: "2-digit" });
 
 const SERIE = [["regras", "Bots/sem-rede", "var(--muted)", ""], ["campea", "Campeã/estática", "var(--net)", ""],
   ["desafiante", "Desafiante/treino", "var(--gold)", "6 4"]];
@@ -299,7 +304,7 @@ async function carregaIndice() {
   try { indice = await (await fetch("dados/index.json")).json(); } catch { indice = []; }
   indice.sort((a, b) => (a.inicio < b.inicio ? -1 : a.inicio > b.inicio ? 1 : a.id < b.id ? -1 : 1));  // por horário
   const sel = $("#sel");
-  sel.innerHTML = indice.map((r) => `<option value="${r.id}">${esc(r.inicio)}–${esc(r.fim.slice(11))} UTC · ${r.total_lutas} lutas</option>`).join("");
+  sel.innerHTML = indice.map((r) => `<option value="${r.id}">${esc(SP(r.inicio))}–${esc(SPh(r.fim))} · ${r.total_lutas} lutas</option>`).join("");
   if (!indice.length) { $("#grade").innerHTML = '<div class="vazio">Nenhuma rodada publicada ainda. A primeira aparece depois da próxima hora cheia.</div>'; return; }
   const pedida = location.hash.slice(1);
   await abreRodada(indice.some((r) => r.id === pedida) ? pedida : indice[indice.length - 1].id);
@@ -325,7 +330,7 @@ function desenha() {
   $("#stats").innerHTML = `<div class="stat"><span class="lbl">Lutas <button class="info" data-info="papeis" aria-label="O que são campeã, desafiante e só regras">i</button></span><b>${rodada.total_lutas}</b></div>` +
     ["campea", "desafiante", "regras", "jogador"].filter((p) => porPapel[p]).map((p) =>
       `<div class="stat"><span class="lbl">${PAPEL[p]}</span><b>${taxa(porPapel[p].v, porPapel[p].d)}</b><span class="num">${porPapel[p].v}V ${porPapel[p].d}D</span></div>`).join("") +
-    `<div class="stat"><span class="lbl">Gerada</span><b class="num" style="font-size:1rem">${esc(rodada.gerado)} UTC</b></div>`;
+    `<div class="stat"><span class="lbl">Gerada</span><b class="num" style="font-size:1rem">${esc(SP(rodada.gerado))}</b></div>`;
 
   const meu = rodada.trios.find((t) => t.papel === "jogador");
   $("#destaque").innerHTML = meu ? `<div class="destaque ${fac(meu)}">${cabecaTrio(meu)}${analiseTrio(meu)}
@@ -385,7 +390,7 @@ function resumoLuta(l, t) {
   return `<details class="luta" data-luta="${l.luta}"><summary>
     <span class="${venceu ? "res-v" : "res-d"}">${venceu ? "Vitória" : "Derrota"}</span>
     <span>contra <b>${esc(adv)}</b></span><span class="num">${l.duracao}s</span>
-    <span class="num" style="color:var(--muted)">#${l.luta} · ${esc(l.inicio.slice(11, 16))}</span>
+    <span class="num" style="color:var(--muted)">#${l.luta} · ${esc(SPh(l.inicio))}</span>
     ${l.decisoes_rede ? `<span class="chip campea">rede ${l.decisoes_rede}</span>` : ""}
     ${l.analise && !l.analise.erro ? '<span class="chip jogador">análise</span>' : ""}</summary><div class="corpo"></div></details>`;
 }

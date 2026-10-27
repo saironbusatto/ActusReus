@@ -1,0 +1,36 @@
+From 7fa56c45b3786dbb13f68b70d5f978b4448f574d Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sun, 25 Oct 2026 21:12:55 -0300
+Subject: [PATCH 51/54] fix: arena cover fades with fight time so caster
+ cleaves no longer stalemate
+
+With every caster hiding from every other, caster-vs-caster fights went from
+~100 s to 355 s on average and up to 42 min (R0124-R0127). After 90 s of
+fight a bot only takes cover from a cast aimed at it; after 150 s nobody
+hides.
+---
+ src/Ai/Base/Actions/BattleGroundTactics.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index a10ebe75..accd7d59 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -4469,6 +4469,14 @@ bool ArenaTactics::takeCover()
+     uint8 const exposed = Exposure(bot, bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), ignore, &shotAt);
+     if (!exposed || (!healer && !melee && !shotAt && bot->GetHealthPct() >= 50.0f))
+         return false;
++
++    // Both sides hiding made caster cleaves last up to 42 min (R0127): after 90 s of fight a bot only dodges a cast
++    // aimed at it, after 150 s nobody hides and the fight is decided in the open
++    Battleground* bg = bot->GetBattleground();
++    uint32 const prep = sWorld->getIntConfig(CONFIG_ARENA_PREP_TIME) * IN_MILLISECONDS;
++    uint32 const fought = bg && bg->GetStartTime() > prep ? bg->GetStartTime() - prep : 0;
++    if (fought > 150000 || (fought > 90000 && !shotAt))
++        return false;
+     if (bot->IsNonMeleeSpellCast(false) && !shotAt)
+         return false;  // let the heal or nuke land first
+ 
+-- 
+2.55.0
+
