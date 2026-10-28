@@ -1,3 +1,5 @@
+**English** · [Português (BR)](README.pt-BR.md)
+
 # ActusReus
 
 3v3 arena bots with real (ML) AI on an AzerothCore 3.3.5a server + mod-playerbots, trained live.
