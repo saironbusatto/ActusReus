@@ -37,6 +37,12 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
 - **Cobertura (pilares):** caster, healer e melee saem da visão dos casters inimigos sem sair da visão do próprio
   healer; a cobertura enfraquece depois de 90 s e some aos 150 s, e um bot fora de combate volta para a luta.
 
+- **Técnico especialista (em construção):** um Qwen3-4B com fine-tune (QLoRA/Unsloth, RTX 5060) nas lutas já
+  analisadas, para analisar em casa sem cota (~40 s por luta, 100% na placa). Conjunto:
+  `ml/tools/dataset_tecnico.py` (entrada sem o manual; erros filtrados pelo resultado — 82% das críticas do LLM caem
+  no time que perdeu, então o filtro usa só quem perde com aquela ação, não as críticas); treino:
+  `ml/especialista/treina.py` (venv próprio).
+
 ## Versões
 
 Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas/versoes.json`](agente/rodadas/versoes.json)
