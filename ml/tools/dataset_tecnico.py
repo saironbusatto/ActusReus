@@ -24,11 +24,12 @@ from pathlib import Path
 ML = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ML / "policy"), str(ML / "tools")]
 import caderno  # noqa: E402
+import verificador  # noqa: E402
 from resumo_lutas import texto  # noqa: E402
 from treinador_ia import SISTEMA  # noqa: E402
 
 RODADAS, SAIDA = ML / "runs" / "rodadas", ML / "runs" / "especialista"
-MIN_USOS, FOLGA, N_TESTE = 30, 0.05, 50
+MIN_USOS, FOLGA, N_TESTE = 30, 0.02, 50  # V2: 0.05 deixava só 38% dos erros e o especialista apontava pouco
 SISTEMA_ESPECIALISTA = SISTEMA.rsplit("Manual do projeto", 1)[0].rstrip()
 CAMPOS = ("resumo", "momento_decisivo", "erros", "oportunidades_perdidas", "acertos", "erros_da_rede",
           "conselho_por_time")
@@ -47,10 +48,12 @@ def lutas_analisadas(pasta: Path = RODADAS) -> list[dict]:
 
 
 def para_texto(l: dict) -> str:
-    """O texto que o técnico recebeu, remontado da luta compacta gravada na rodada."""
+    """O texto que o técnico recebe (V7: com os fatos do verificador), remontado da luta compacta da rodada."""
+    fatos = verificador.texto_fatos(l)
     return texto({**l, "inicio": dt.datetime.fromisoformat(l["inicio"]),
                   "vencedor": int(l["vencedor"]), "times": {int(k): v for k, v in l["times"].items()},
-                  "membros": {m["guid"]: {**m, "time": int(m["time"])} for m in l["membros"]}})
+                  "membros": {m["guid"]: {**m, "time": int(m["time"])} for m in l["membros"]}}) + \
+        ("\n\n" + fatos if fatos else "")
 
 
 def _perdeu(l: dict, nome: str) -> bool | None:
@@ -108,6 +111,14 @@ def main() -> int:
     usos = base(lutas)
     random.Random(7).shuffle(lutas)
     SAIDA.mkdir(parents=True, exist_ok=True)
+    # teste fixo entre versões (teste_ids.json): as lutas comparadas com Gemini e Opus nunca entram no treino
+    fixo = SAIDA / "teste_ids.json"
+    opus = {int(p.stem) for p in (SAIDA / "opus").glob("*.json")}
+    ids = json.loads(fixo.read_text()) if fixo.exists() else \
+        sorted(opus) + [l["luta"] for l in lutas if l["luta"] not in opus][:N_TESTE - len(opus)]
+    fixo.write_text(json.dumps(ids))
+    no_teste = set(ids)
+    lutas = [l for l in lutas if l["luta"] in no_teste] + [l for l in lutas if l["luta"] not in no_teste]
     antes = depois = 0
     for nome, parte in (("teste", lutas[:N_TESTE]), ("treino", lutas[N_TESTE:])):
         with (SAIDA / f"{nome}.jsonl").open("w") as f:

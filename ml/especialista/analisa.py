@@ -14,10 +14,13 @@ RUNS = Path(__file__).resolve().parents[1] / "runs" / "especialista"
 
 def main() -> None:
     teste = {json.loads(l)["luta"]: json.loads(l) for l in (RUNS / "teste.jsonl").open()}
-    lutas = [int(x) for x in sys.argv[1:]] or list(teste)
-    model, tok = FastLanguageModel.from_pretrained(str(RUNS / "lora"), max_seq_length=12288, load_in_4bit=True)
+    args = [x for x in sys.argv[1:] if not x.startswith("--")]
+    versao = next((x[2:] for x in sys.argv[1:] if x.startswith("--")), "lora")  # --lora-v2 usa a V2
+    lutas = [int(x) for x in args] or list(teste)
+    model, tok = FastLanguageModel.from_pretrained(str(RUNS / versao), max_seq_length=14336, load_in_4bit=True)
     FastLanguageModel.for_inference(model)
-    (RUNS / "qwen").mkdir(exist_ok=True)
+    saida = RUNS / ("qwen" if versao == "lora" else f"qwen-{versao}")
+    saida.mkdir(exist_ok=True)
     for luta in lutas:
         # a resposta já começa no "{": sem isso o modelo às vezes entra em laço de <tool_call> desde o 1º token
         prompt = tok.apply_chat_template(teste[luta]["messages"][:2], tokenize=False, add_generation_prompt=True) + "{"
@@ -31,7 +34,7 @@ def main() -> None:
         except ValueError:
             analise = {"erro": "JSON inválido", "bruto": texto}
         analise["_segundos"] = round(time.time() - t, 1)
-        (RUNS / "qwen" / f"{luta}.json").write_text(json.dumps(analise, ensure_ascii=False, indent=1))
+        (saida / f"{luta}.json").write_text(json.dumps(analise, ensure_ascii=False, indent=1))
         print(luta, analise["_segundos"], "s", "ok" if "erro" not in analise else "JSON inválido", flush=True)
 
 

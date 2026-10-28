@@ -16,7 +16,7 @@ from datasets import Dataset
 from trl import SFTConfig, SFTTrainer
 
 RUNS = Path(__file__).resolve().parents[1] / "runs" / "especialista"
-MODELO, MAX_TOKENS = "unsloth/Qwen3-4B-Instruct-2507-bnb-4bit", 10240  # com 7168 cabiam 1223/2980; pico 4 GB
+MODELO, MAX_TOKENS = "unsloth/Qwen3-4B-Instruct-2507-bnb-4bit", 12288  # 7168: 1223/2980 cabiam; 10240: 2134, pico 4.4 GB
 
 
 def main() -> None:
@@ -24,6 +24,7 @@ def main() -> None:
     ap.add_argument("--passos", type=int, default=-1, help="para o ensaio; -1 usa --epocas")
     ap.add_argument("--epocas", type=float, default=1)
     ap.add_argument("--modelo", default=MODELO)
+    ap.add_argument("--saida", default="lora", help="pasta em runs/especialista (lora = V1)")
     a = ap.parse_args()
 
     model, tok = FastLanguageModel.from_pretrained(a.modelo, max_seq_length=MAX_TOKENS, load_in_4bit=True)
@@ -42,15 +43,15 @@ def main() -> None:
                                         num_train_epochs=a.epocas, max_steps=a.passos, learning_rate=2e-4,
                                         lr_scheduler_type="cosine", warmup_steps=10, logging_steps=5,
                                         optim="adamw_8bit", bf16=True, seed=7, report_to="none",
-                                        output_dir=str(RUNS / "ckpt"), save_steps=50, save_total_limit=2))
+                                        output_dir=str(RUNS / f"ckpt-{a.saida}"), save_steps=50, save_total_limit=2))
     trainer = train_on_responses_only(trainer, instruction_part="<|im_start|>user\n",
                                       response_part="<|im_start|>assistant\n")  # só a análise conta na perda
     t = time.time()
     trainer.train()
     print(f"{time.time() - t:.0f} s; pico da placa {torch.cuda.max_memory_allocated() / 2**30:.1f} GB", flush=True)
     if a.passos < 0:
-        model.save_pretrained(RUNS / "lora")
-        tok.save_pretrained(RUNS / "lora")
+        model.save_pretrained(RUNS / a.saida)
+        tok.save_pretrained(RUNS / a.saida)
 
 
 if __name__ == "__main__":
