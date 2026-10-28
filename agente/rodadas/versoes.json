@@ -59,7 +59,18 @@
    "Desafiante recomeça do checkpoint de 27/10 10:44 (período de 55%, antes das notas voltarem).",
    "Notas do técnico entram com 30% do peso (COACH_ESCALA 0.3).",
    "Penalidade KL prende a desafiante à campeã (KL_COEF 0.5), como no RLHF.",
-   "Contestação volta à regra da V4 (revertida a da V5) e a promoção conta só desde o início da V6."
+   "Contestação volta à regra da V4 (revertida a da V5) e a promoção conta só desde o início da V6.",
+   "Resultado: desafiante 47% (168/355) contra 50% da campeã e 53% das regras — melhor que a V5, ainda abaixo das regras."
+  ]
+ },
+ {
+  "id": "V7",
+  "nome": "Verificador no grafo do técnico",
+  "desde": "2026-10-28 10:53",
+  "mudancas": [
+   "Novo passo sem LLM antes da análise (ml/policy/verificador.py): fatos contados no log entram no prompt — bot sem nenhuma ação, trinket nunca usado por quem morreu em stun/fear/poly, CC repetido em DR, ação repetida 5+ vezes, Divine Plea com aliado morrendo, manutenção a menos de 8 s da morte, golpes numa Retaliation.",
+   "Motivo: nas 10 lutas de teste, Gemini e o especialista perderam justamente esses fatos (2 bots ausentes, trinkets guardados, Divine Plea).",
+   "Treinador igual à V6 (notas x0,3, âncora KL)."
   ]
  }
 ]

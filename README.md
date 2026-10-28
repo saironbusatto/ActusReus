@@ -41,7 +41,10 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
   analisadas, para analisar em casa sem cota (~40 s por luta, 100% na placa). Conjunto:
   `ml/tools/dataset_tecnico.py` (entrada sem o manual; erros filtrados pelo resultado — 82% das críticas do LLM caem
   no time que perdeu, então o filtro usa só quem perde com aquela ação, não as críticas); treino:
-  `ml/especialista/treina.py` (venv próprio).
+  `ml/especialista/treina.py` (venv próprio). Comparação nas 10 lutas de teste (Gemini × Opus × especialista): o especialista roda em ~40 s,
+  acerta o momento decisivo em 6/10, mas aponta poucos erros e ainda inventa mecânica — não substitui o Gemini.
+- **Verificador** (`ml/policy/verificador.py`, nó `verificar` do grafo): fatos contados no log, sem LLM, antes da
+  análise. Achou nas 10 lutas de teste tudo o que os LLMs perderam (bots ausentes, trinkets guardados, Divine Plea).
 
 ## Versões
 
@@ -55,7 +58,8 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V3 | 26/10 18:15 | cobertura nos pilares (LOS); treinador com vantagem normalizada, validação e checkpoints; caderno de erros; técnico só nas lutas da desafiante e só gratuito |
 | V4 | 26/10 22:54 | técnico com memória em LangGraph |
 | V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy. **Piorou: desafiante 42% (129/308)** |
-| V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4 |
+| V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4. Desafiante 47% (168/355) |
+| V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico |
 
 ### Lições (não repetir)
 

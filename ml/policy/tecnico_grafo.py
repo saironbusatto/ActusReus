@@ -1,7 +1,10 @@
 """Técnico de IA com memória, em LangGraph: antes de apontar um erro ele consulta o caderno de erros (caderno.py) e as
 últimas lutas entre as mesmas composições, e depois confere a própria análise contra o caderno.
 
-    carregar -> memoria -> analisar -> conferir -> fim
+    carregar -> verificar -> memoria -> analisar -> conferir -> fim
+
+- verificar (sem LLM, verificador.py): fatos contados no log (bot sem ação, trinket nunca usado por quem morreu em CC,
+  CC repetido em DR, Divine Plea com aliado morrendo, golpes numa Retaliation...) entram no prompt antes da análise.
 
 - memoria: as situações (classe + ação + faixa de vida) desta luta que o caderno já conhece, com a taxa de erro, e o
   resumo das últimas lutas entre as mesmas composições. Se falhar, segue sem memória.
@@ -27,6 +30,7 @@ from langgraph.graph import END, START, StateGraph
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import caderno  # noqa: E402
+import verificador  # noqa: E402
 
 RODADAS = caderno.RODADAS
 CONTESTA_USOS, CONTESTA_TAXA = 200, 0.05  # situação usada 200+ vezes e errada em < 5%: o "erro" é contestado
@@ -37,6 +41,7 @@ class Estado(TypedDict, total=False):
     luta: dict
     texto: str
     memoria: str
+    fatos: list[str]
     situacoes: dict  # (classe, acao, faixa) -> {"usos", "erros", "acertos", "taxa"}
     analise: dict
     motor: str
@@ -96,6 +101,12 @@ def montar(motor: Callable[[str], tuple[dict, str]], texto_luta: Callable[[dict]
     def carregar(e: Estado) -> Estado:
         return {"texto": texto_luta(e["luta"]), "falhas": []}
 
+    def verificar(e: Estado) -> Estado:
+        try:
+            return {"fatos": verificador.fatos(e["luta"])}
+        except Exception as ex:  # fato a menos não impede a análise
+            return {"fatos": [], "falhas": [*e.get("falhas", []), f"verificar: {ex}"]}
+
     def memoria(e: Estado) -> Estado:
         luta = _plana(e["luta"])
         try:
@@ -124,7 +135,10 @@ def montar(motor: Callable[[str], tuple[dict, str]], texto_luta: Callable[[dict]
             return {"situacoes": {}, "memoria": "", "falhas": [*e.get("falhas", []), f"memoria: {ex}"]}
 
     def analisar(e: Estado) -> Estado:
-        texto = e["texto"] + ("\n\n" + e["memoria"] if e.get("memoria") else "")
+        fatos = e.get("fatos") or []
+        bloco = ("=== FATOS DO LOG (contados pelo programa, sem interpretação) ===\n"
+                 + "\n".join(f"- {x}" for x in fatos)) if fatos else ""
+        texto = e["texto"] + "".join("\n\n" + b for b in (bloco, e.get("memoria")) if b)
         analise, nome = motor(texto)  # exceção sobe: rodada_sync grava {"erro": ...} como hoje
         return {"analise": analise, "motor": nome}
 
@@ -146,15 +160,18 @@ def montar(motor: Callable[[str], tuple[dict, str]], texto_luta: Callable[[dict]
                 confirmados += 1
             erros.append(x)
         analise["erros"] = erros
+        analise["_fatos"] = e.get("fatos") or []
         analise["_memoria"] = {"contestados": contestados, "padroes_confirmados": confirmados,
                                "falhas": e.get("falhas", []), "usou_memoria": bool(e.get("memoria"))}
         return {"analise": analise}
 
     g = StateGraph(Estado)
-    for nome, fn in (("carregar", carregar), ("memoria", memoria), ("analisar", analisar), ("conferir", conferir)):
+    for nome, fn in (("carregar", carregar), ("verificar", verificar), ("memoria", memoria), ("analisar", analisar),
+                     ("conferir", conferir)):
         g.add_node(nome, fn)
     g.add_edge(START, "carregar")
-    g.add_edge("carregar", "memoria")
+    g.add_edge("carregar", "verificar")
+    g.add_edge("verificar", "memoria")
     g.add_edge("memoria", "analisar")
     g.add_edge("analisar", "conferir")
     g.add_edge("conferir", END)
@@ -191,6 +208,10 @@ def selftest() -> None:
         assert w.get("padrao") is True and w["gravidade"] == "alta", w
         assert r["gravidade"] == "baixa" and "contestado" in r, r
         assert a["_memoria"] == {"contestados": 1, "padroes_confirmados": 1, "falhas": [], "usou_memoria": True}
+        assert a["_fatos"] == [] and "FATOS DO LOG" not in visto["texto"]
+        ausente = {**luta, "membros": [*luta["membros"], {"nome": "X", "classe": "Priest", "time": 54}]}
+        c, _ = analisa_com_grafo(grafo, ausente)
+        assert "FATOS DO LOG" in visto["texto"] and "X não tem nenhuma ação" in c["_fatos"][0], c["_fatos"]
 
         b, _ = analisa_com_grafo(grafo, {**luta, "membros": {1: luta["membros"][0], 2: luta["membros"][1]}})
         assert b["_memoria"]["contestados"] == 1 and b["_memoria"]["padroes_confirmados"] == 1
