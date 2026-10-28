@@ -64,7 +64,7 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V4 | 26/10 22:54 | técnico com memória em LangGraph |
 | V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy. **Piorou: desafiante 42% (129/308)** |
 | V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4. Desafiante 47% (168/355) |
-| V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico |
+| V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico. **Desafiante 52% (220/427)**, melhor até agora |
 
 ### Lições (não repetir)
 

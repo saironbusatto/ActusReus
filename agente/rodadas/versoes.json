@@ -70,7 +70,8 @@
   "mudancas": [
    "Novo passo sem LLM antes da análise (ml/policy/verificador.py): fatos contados no log entram no prompt — bot sem nenhuma ação, trinket nunca usado por quem morreu em stun/fear/poly, CC repetido em DR, ação repetida 5+ vezes, Divine Plea com aliado morrendo, manutenção a menos de 8 s da morte, golpes numa Retaliation.",
    "Motivo: nas 10 lutas de teste, Gemini e o especialista perderam justamente esses fatos (2 bots ausentes, trinkets guardados, Divine Plea).",
-   "Treinador igual à V6 (notas x0,3, âncora KL)."
+   "Treinador igual à V6 (notas x0,3, âncora KL).",
+   "Resultado até 28/10 17:50 (servidor parado para treinar a LLM v3): desafiante 52% (220/427), campeã 51%, regras 48% — a melhor versão até agora."
   ]
  }
 ]
