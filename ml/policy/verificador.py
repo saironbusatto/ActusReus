@@ -31,18 +31,22 @@ def _membros(luta: dict) -> list[dict]:
     return list(m.values()) if isinstance(m, dict) else m
 
 
-def fatos(luta: dict) -> list[str]:
+def achados(luta: dict) -> list[dict]:
+    """Os fatos com tipo, instante e quem ({tipo, t, quem, texto}); o dataset do especialista os vira erros."""
     membros = _membros(luta)
     time = {m["nome"]: int(m["time"]) for m in membros}
     ev = luta.get("eventos", [])
     acoes = [e for e in ev if e.get("tipo") == "acao"]
     mortes = {e["quem"]: e["t"] for e in ev if e.get("tipo") == "morte" and e["t"] > PREPARO}
-    out: list[str] = []
+    out: list[dict] = []
+
+    def add(tipo: str, t: float, quem: str, texto: str) -> None:
+        out.append({"tipo": tipo, "t": round(float(t), 1), "quem": quem, "texto": texto})
 
     for m in membros:  # bot que não jogou
         if int(m["time"]) != TIME_USUARIO and not any(a["quem"] == m["nome"] for a in acoes) \
                 and not m.get("dano") and not m.get("cura"):
-            out.append(f"{m['nome']} não tem nenhuma ação registrada e terminou com 0 de dano e 0 de cura "
+            add("ausente", 0.0, m["nome"], f"{m['nome']} não tem nenhuma ação registrada e terminou com 0 de dano e 0 de cura "
                        "(bot ausente ou travado: o time jogou com um a menos).")
 
     trinkets = defaultdict(list)
@@ -50,12 +54,12 @@ def fatos(luta: dict) -> list[str]:
         if e.get("tipo") == "trinket":
             trinkets[e["quem"]].append(e)
             if e.get("vida", 0) >= 90:
-                out.append(f"{e['quem']} usou o trinket com {e['vida']}% de vida aos {e['t']:.1f} s.")
+                add("trinket_cheio", e["t"], e["quem"], f"{e['quem']} usou o trinket com {e['vida']}% de vida aos {e['t']:.1f} s.")
     for nome, tm in mortes.items():  # morreu em CC sem nunca usar o trinket
         ccs = [e for e in ev if e.get("tipo") == "cc" and e["quem"] == nome and tm - 20 <= e["t"] <= tm
                and e["cc"] in CC_TRINKET]
         if ccs and not trinkets[nome]:
-            out.append(f"{nome} morreu aos {tm:.1f} s sem usar o trinket na luta; esteve em "
+            add("trinket_guardado", min(c["t"] for c in ccs), nome, f"{nome} morreu aos {tm:.1f} s sem usar o trinket na luta; esteve em "
                        f"{', '.join(sorted({c['cc'] for c in ccs}))} nos 20 s antes.")
 
     por_alvo = defaultdict(list)  # mesmo CC no mesmo alvo em sequência: DR
@@ -67,7 +71,7 @@ def fatos(luta: dict) -> list[str]:
             if ts[i + MIN_DR - 1] - ts[i] <= JANELA_DR:
                 n = sum(1 for t in ts if ts[i] <= t <= ts[i] + JANELA_DR)
                 # o log guarda o alvo ATUAL do bot, não o do feitiço: o fato não afirma em quem caiu
-                out.append(f"{quem} lançou {acao} {n} vezes entre {ts[i]:.1f} e {ts[i] + JANELA_DR:.0f} s (alvo atual "
+                add("cc_dr", ts[i + MIN_DR - 1], quem, f"{quem} lançou {acao} {n} vezes entre {ts[i]:.1f} e {ts[i] + JANELA_DR:.0f} s (alvo atual "
                            f"dele: {alvo}); no mesmo alvo, a partir da 3ª o DR deixa o efeito mínimo ou imune.")
                 break
 
@@ -77,24 +81,36 @@ def fatos(luta: dict) -> list[str]:
             contagem[(a["quem"], a["acao"])].append(a["t"])
     for (quem, acao), ts in contagem.items():
         if len(ts) >= MIN_REPETE:
-            out.append(f"{quem} usou {acao} {len(ts)} vezes depois dos portões ({ts[0]:.1f}-{ts[-1]:.1f} s).")
+            add("repetida", ts[MIN_REPETE - 1], quem, f"{quem} usou {acao} {len(ts)} vezes depois dos portões ({ts[0]:.1f}-{ts[-1]:.1f} s).")
 
     for a in acoes:
         if a["acao"] == "divine plea":  # corta a cura pela metade
             caidos = [n for n, tm in mortes.items() if n != a["quem"] and time.get(n) == time.get(a["quem"])
                       and a["t"] <= tm <= a["t"] + 6]
             if caidos:
-                out.append(f"{a['quem']} usou Divine Plea aos {a['t']:.1f} s e {', '.join(caidos)} (aliado) "
+                add("divine_plea", a["t"], a["quem"], f"{a['quem']} usou Divine Plea aos {a['t']:.1f} s e {', '.join(caidos)} (aliado) "
                            "morreu nos 6 s seguintes.")
         if a["acao"] in MANUTENCAO and a["quem"] in mortes and PREPARO < a["t"] and mortes[a["quem"]] - 8 <= a["t"]:
-            out.append(f"{a['quem']} usou {a['acao']} aos {a['t']:.1f} s, menos de 8 s antes de morrer.")
+            add("manutencao", a["t"], a["quem"], f"{a['quem']} usou {a['acao']} aos {a['t']:.1f} s, menos de 8 s antes de morrer.")
         if a["acao"] == "retaliation":
             golpes = [b for b in acoes if b["acao"] in MELEE and b.get("alvo") == a["quem"]
                       and time.get(b["quem"]) != time.get(a["quem"]) and a["t"] < b["t"] <= a["t"] + 12]
             if golpes:
-                out.append(f"{a['quem']} ativou Retaliation aos {a['t']:.1f} s e levou {len(golpes)} golpes corpo a "
-                           f"corpo nos 12 s seguintes ({', '.join(sorted({b['quem'] for b in golpes}))}).")
-    return list(dict.fromkeys(out))  # sem repetidos, na ordem
+                for q in sorted({b["quem"] for b in golpes}):  # o erro é de quem bateu, não do Warrior
+                    add("retaliation", min(b["t"] for b in golpes if b["quem"] == q), q,
+                        f"{q} bateu corpo a corpo em {a['quem']} durante a Retaliation dele (aos {a['t']:.1f} s).")
+                add("info", a["t"], a["quem"], f"{a['quem']} ativou Retaliation aos {a['t']:.1f} s e levou {len(golpes)} "
+                    f"golpes corpo a corpo nos 12 s seguintes ({', '.join(sorted({b['quem'] for b in golpes}))}).")
+    vistos, unicos = set(), []
+    for x in out:  # sem repetidos, na ordem
+        if x["texto"] not in vistos:
+            vistos.add(x["texto"])
+            unicos.append(x)
+    return unicos
+
+
+def fatos(luta: dict) -> list[str]:
+    return [x["texto"] for x in achados(luta) if x["tipo"] != "retaliation"]  # no prompt basta a frase do Warrior
 
 
 def texto_fatos(luta: dict) -> str:

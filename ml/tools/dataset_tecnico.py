@@ -34,6 +34,22 @@ SISTEMA_ESPECIALISTA = SISTEMA.rsplit("Manual do projeto", 1)[0].rstrip()
 CAMPOS = ("resumo", "momento_decisivo", "erros", "oportunidades_perdidas", "acertos", "erros_da_rede",
           "conselho_por_time")
 INTERNOS = ("contestado", "padrao")
+# V3: a resposta de treino passa a citar os fatos do verificador (na V2 o especialista recebia os fatos mas imitava
+# respostas escritas sem eles, e aprendeu a ignorá-los) e perde os "erros" que são rotina (Bloodlust, buffs)
+DO_FATO = {  # tipo do achado -> (devia, porque, gravidade)
+    "ausente": ("Jogar a luta", "Bot ausente ou travado: o time jogou com um a menos", "alta"),
+    "trinket_guardado": ("Usar o trinket no CC da janela de kill", "Morreu com o trinket pronto", "alta"),
+    "trinket_cheio": ("Guardar o trinket para um CC com perigo real", "Com a vida cheia o CC não ameaçava", "media"),
+    "cc_dr": ("Esperar o DR acabar ou trocar de CC/alvo", "No mesmo DR o efeito cai pela metade a cada vez", "media"),
+    "repetida": ("Gastar o GCD em dano, cura ou CC útil", "A mesma ação em série tirou GCDs da luta", "media"),
+    "divine_plea": ("Guardar o Divine Plea para quando ninguém estiver apanhando", "Corta a cura pela metade", "alta"),
+    "manutencao": ("Curar, usar defensivo ou fugir", "GCD de manutenção a segundos da própria morte", "media"),
+    "retaliation": ("Trocar de alvo durante os 12 s da Retaliation", "Cada golpe corpo a corpo volta como dano", "media"),
+}
+ROTINA = {"bloodlust", "heroism", "call of the elements", "water shield", "earthliving weapon", "flametongue weapon",
+          "fel armor", "mage armor", "molten armor", "apply oil", "apply stone", "mark of the wild", "thorns",
+          "arcane intellect", "inner fire", "power word: fortitude", "divine spirit", "shadow protection",
+          "demonic circle: summon", "create healthstone", "bone shield", "battle shout", "self resurrect"}
 
 
 def lutas_analisadas(pasta: Path = RODADAS) -> list[dict]:
@@ -85,11 +101,34 @@ def erro_confirmado(l: dict, x: dict, usos: dict) -> bool:
     return bool(_perdeu(l, x.get("quem")))
 
 
+def _rotina(l: dict, x: dict) -> bool:
+    if str(x.get("fez", "")).strip().lower() in ("morreu", "self resurrect"):
+        return True
+    ev = caderno.casa([e for e in l["eventos"] if e.get("tipo") == "acao"], x, x.get("fez", ""))
+    return bool(ev) and ev["acao"] in ROTINA and ev["acao"].lower() in str(x.get("fez", "")).lower()
+
+
+def erros_dos_fatos(l: dict, erros: list[dict]) -> list[dict]:
+    """Um erro por achado do verificador que a análise ainda não cobre (mesmo personagem, até 3 s)."""
+    novos = []
+    for f in verificador.achados(l):
+        if f["tipo"] not in DO_FATO:
+            continue
+        perto = [x for x in erros if x.get("quem") == f["quem"] and
+                 (f["tipo"] == "ausente" or abs(float(x.get("t") or 0) - f["t"]) <= 3)]
+        if not perto:
+            devia, porque, grav = DO_FATO[f["tipo"]]
+            novos.append({"t": f["t"], "quem": f["quem"], "fez": f["texto"], "devia": devia, "porque": porque,
+                          "gravidade": grav})
+    return novos
+
+
 def alvo(l: dict, usos: dict) -> dict:
     a = l["analise"]
     limpa = lambda x: {k: v for k, v in x.items() if k not in INTERNOS}  # noqa: E731
     out = {k: a[k] for k in CAMPOS if k in a}
-    out["erros"] = [limpa(x) for x in a.get("erros", []) if erro_confirmado(l, x, usos)]
+    out["erros"] = [limpa(x) for x in a.get("erros", []) if erro_confirmado(l, x, usos) and not _rotina(l, x)]
+    out["erros"] = sorted(out["erros"] + erros_dos_fatos(l, out["erros"]), key=lambda x: float(x.get("t") or 0))
     out["acertos"] = [x for x in a.get("acertos", []) if _perdeu(l, x.get("quem")) is False]
     return out
 
@@ -156,6 +195,15 @@ def selftest() -> None:
     assert alvo(lutas[35], usos)["erros"][0]["fez"] == "fear"  # "ficou parado" sem situação: W venceu, sai
     lutas[0]["analise"]["erros"] = [{"t": 20, "quem": "R", "fez": "kick"}]
     assert alvo(lutas[0], usos)["erros"] == []
+    # V3: fatos viram erros, rotina sai
+    l = luta(99, 2, "W")
+    l["membros"].append({"nome": "X", "classe": "Priest", "time": 1, "guid": 3, "dano": 0, "cura": 0, "kills": 0})
+    l["eventos"].append({"tipo": "acao", "t": 31.0, "quem": "R", "acao": "bloodlust", "alvo": "", "rede": False,
+                         "prob": None})
+    l["analise"]["erros"] = [{"t": 31, "quem": "R", "fez": "bloodlust cedo"}, {"t": 10, "quem": "W", "fez": "fear"}]
+    a = alvo(l, usos)
+    assert not any("bloodlust" in x["fez"] for x in a["erros"]), a["erros"]
+    assert any(x["quem"] == "X" and x["gravidade"] == "alta" and "nenhuma ação" in x["fez"] for x in a["erros"])
     txt = para_texto(lutas[0])
     assert "Vencedor: B I" in txt and "W: fear" in txt and "Manual" not in SISTEMA_ESPECIALISTA
     print("ok dataset_tecnico")
