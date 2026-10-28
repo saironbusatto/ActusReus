@@ -1,137 +1,137 @@
 # ActusReus
 
-Bots de arena 3v3 com IA de verdade (ML) num servidor AzerothCore 3.3.5a + mod-playerbots, treinados ao vivo.
-Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/skills/wotlk-arena-coach](.claude/skills/wotlk-arena-coach/SKILL.md).
+3v3 arena bots with real (ML) AI on an AzerothCore 3.3.5a server + mod-playerbots, trained live.
+Full plan: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Arena manual: [.claude/skills/wotlk-arena-coach](.claude/skills/wotlk-arena-coach/SKILL.md).
 
-## Como funciona hoje
+## How it works today
 
-- **108 bots, 36 trios, 9 composições** (RMP, RLS, Wild, Shadowplay, TSG, Thunder, Fireplay, RPS, LSD), cada uma com
-  quatro cópias. Três grupos jogam e são comparados entre si:
+- **108 bots, 36 trios, 9 compositions** (RMP, RLS, Wild, Shadowplay, TSG, Thunder, Fireplay, RPS, LSD), each with
+  four copies. Three groups play and are compared against each other:
 
-  | Grupo | Times | O que é |
+  | Group | Teams | What it is |
   |---|---|---|
-  | **Campeã/estática** | 54, 58, …, 86 | rede neural congelada (`arena-policy-v3.txt`) — a régua |
-  | **Desafiante/treino** | 55, 59, …, 87 | a rede que o treinador ajusta ao vivo (`arena-policy-live.txt`) |
-  | **Bots/sem-rede** | os demais | só as regras do playerbots — o grupo de controle |
+  | **Champion/static** | 54, 58, …, 86 | frozen neural network (`arena-policy-v3.txt`) — the yardstick |
+  | **Challenger/training** | 55, 59, …, 87 | the network the trainer adjusts live (`arena-policy-live.txt`) |
+  | **Bots/no-network** | the rest | only the playerbots rules — the control group |
 
-  A cópia III de cada composição fica na reserva; o time 60 (RLS III) é o do usuário e fica fora das contas.
-- **A rede decide 25% das ações de combate** (`Playerbots.ArenaMlControl = 0.25`); o resto continua com as regras.
-- **Rodadas sincronizadas** (`ml/policy/rodada_sync.py`): cada trio joga uma luta, o técnico de IA analisa, o
-  treinador aplica as notas e todos voltam à fila juntos.
-- **Técnico de IA:** só modelos gratuitos — Gemini 3.8 Flash pelo Antigravity e, de reserva, Nemotron 3 Ultra e
-  Gemma 4 pelo OpenRouter (`:free`). Só analisa lutas em que a Desafiante/treino (ou o usuário) jogou. Se todos
-  recusarem, a luta fica sem análise e nada trava.
-- **Técnico com memória em LangGraph** (`ml/policy/tecnico_grafo.py`): `carregar → memória → analisar → conferir`. A
-  memória é o caderno de erros + as últimas lutas entre as mesmas composições; o `conferir` (sem LLM) marca `padrao` no
-  erro que confirma um padrão e **contesta** (gravidade "baixa") o erro numa situação usada 200+ vezes, errada em < 5% e
-  mais elogiada que errada — pouco erro sozinho pode ser só o técnico não ter reparado.
-- **Treinador** (`ml/policy/live.py`, RL ao vivo — um fine-tuning contínuo da desafiante):
-  - aprende com as decisões de todos os bots; cada decisão vale o que mudou depois (dano, cura, CC, mortes, vitória);
-  - vantagem normalizada por lote, para a decisão boa pesar mais que a ruim;
-  - notas do técnico por decisão, e o **caderno de erros** (`ml/policy/caderno.py`): situação (classe + ação + faixa
-    de vida) com erro em 3+ lutas e taxa ≥ 40% vira padrão e é punida em toda decisão igual — a mesma ação em outra
-    situação continua livre;
-  - **validação**: 1 luta em 10 nunca é treinada; a rede só vai para o servidor se não piorar na preferência
-    acerto × erro do técnico (a régua cai 0,02 a cada recusa); checkpoints em `ml/runs/checkpoints/`;
-  - a desafiante vira campeã com 150+ lutas de cada lado e 5 pontos acima dela; 8 abaixo, volta a ser a campeã.
-- **Cobertura (pilares):** caster, healer e melee saem da visão dos casters inimigos sem sair da visão do próprio
-  healer; a cobertura enfraquece depois de 90 s e some aos 150 s, e um bot fora de combate volta para a luta.
+  Copy III of each composition stays in reserve; team 60 (RLS III) is the user's and stays out of the scoring.
+- **The network decides 25% of combat actions** (`Playerbots.ArenaMlControl = 0.25`); the rest stays with the rules.
+- **Synchronized rounds** (`ml/policy/rodada_sync.py`): each trio plays one match, the AI coach analyzes it, the
+  trainer applies the notes and everyone returns to the queue together.
+- **AI coach:** free models only — Gemini 3.8 Flash through Antigravity and, as backup, Nemotron 3 Ultra and
+  Gemma 4 through OpenRouter (`:free`). It only analyzes matches in which the Challenger/training (or the user) played. If all of them
+  refuse, the match stays without an analysis and nothing blocks.
+- **Coach with LangGraph memory** (`ml/policy/tecnico_grafo.py`): `carregar → memória → analisar → conferir` (load → memory → analyze → verify). The
+  memory is the error notebook plus the latest matches between the same compositions; the `conferir` step (no LLM) marks `padrao` (pattern) on the
+  error that confirms a pattern and **challenges** (severity "low") the error in a situation used 200+ times, wrong in < 5% and
+  more praised than wrong — a small number of errors alone may just mean the coach did not notice them.
+- **Trainer** (`ml/policy/live.py`, live RL — a continuous fine-tuning of the challenger):
+  - learns from the decisions of all bots; each decision is worth what changed afterwards (damage, healing, CC, deaths, victory);
+  - advantage normalized per batch, so a good decision weighs more than a bad one;
+  - coach notes per decision, and the **error notebook** (`ml/policy/caderno.py`): a situation (class + action + health
+    range) with an error in 3+ matches and a rate ≥ 40% becomes a pattern and is punished on every identical decision — the same action in another
+    situation remains free;
+  - **validation**: 1 match in 10 is never trained on; the network only goes to the server if it does not worsen the coach's
+    right × wrong preference (the bar drops 0.02 on each refusal); checkpoints in `ml/runs/checkpoints/`;
+  - the challenger becomes champion with 150+ matches on each side and 5 points above it; 8 below, it becomes champion again.
+- **Coverage (pillars):** caster, healer and melee leave the enemy casters' line of sight without leaving their own
+  healer's line of sight; the coverage weakens after 90 s and disappears at 150 s, and a bot out of combat returns to the fight.
 
-- **Técnico especialista (em construção):** um Qwen3-4B com fine-tune (QLoRA/Unsloth, RTX 5060) nas lutas já
-  analisadas, para analisar em casa sem cota (~40 s por luta, 100% na placa). Conjunto:
-  `ml/tools/dataset_tecnico.py` (entrada sem o manual; erros filtrados pelo resultado — 82% das críticas do LLM caem
-  no time que perdeu, então o filtro usa só quem perde com aquela ação, não as críticas); treino:
-  `ml/especialista/treina.py` (venv próprio). Comparação nas 10 lutas de teste (Gemini × Opus × especialista): o especialista roda em ~40 s,
-  acerta o momento decisivo em 6/10, mas aponta poucos erros e ainda inventa mecânica — não substitui o Gemini.
-- **Verificador** (`ml/policy/verificador.py`, nó `verificar` do grafo): fatos contados no log, sem LLM, antes da
-  análise. Achou nas 10 lutas de teste tudo o que os LLMs perderam (bots ausentes, trinkets guardados, Divine Plea).
+- **Specialist coach (under construction):** a Qwen3-4B with fine-tuning (QLoRA/Unsloth, RTX 5060) on the matches already
+  analyzed, to analyze at home without quota (~40 s per match, 100% on the GPU). Dataset:
+  `ml/tools/dataset_tecnico.py` (input without the manual; errors filtered by outcome — 82% of the LLM's criticisms land
+  on the losing team, so the filter uses only those who lose with that action, not the criticisms); training:
+  `ml/especialista/treina.py` (its own venv). Comparison on the 10 test matches (Gemini × Opus × specialist): the specialist runs in ~40 s,
+  gets the decisive moment right in 6/10, but points out few errors and still invents mechanics — it does not replace Gemini.
+- **Verifier** (`ml/policy/verificador.py`, `verificar` node of the graph): facts counted from the log, without an LLM, before the
+  analysis. It found, in the 10 test matches, everything the LLMs missed (missing bots, saved trinkets, Divine Plea).
 
-## Sprint atual
+## Current sprint
 
-[`agente/SPRINT-LLM.md`](agente/SPRINT-LLM.md): os cinco passos da LLM em casa (especialista v3, recompensa escrita pela LLM,
-alvo e plano tático, liga de desafiantes, auto-melhoria, técnico treinado por RL), cada um com meta para seguir.
+[`agente/SPRINT-LLM.md`](agente/SPRINT-LLM.md): the five steps of the LLM at home (specialist v3, LLM-written reward,
+target and tactical plan, challengers league, self-improvement, coach trained by RL), each with a goal to move forward.
 
-## Versões
+## Versions
 
-Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas/versoes.json`](agente/rodadas/versoes.json)
-(início em UTC); o artefato Rodadas da Arena mostra uma aba por versão, com os gráficos recomeçando do zero.
+Every change that alters the game or the training becomes a version in [`agente/rodadas/versoes.json`](agente/rodadas/versoes.json)
+(start in UTC); the Arena Rounds artifact shows one tab per version, with the charts restarting from zero.
 
-| Versão | Desde (SP) | O que mudou |
+| Version | Since (SP) | What changed |
 |---|---|---|
-| V1 | 24/10 14:28 | rodadas sincronizadas; desafiante treinando ao vivo contra a v3 original |
-| V2 | 25/10 07:56 | desafiante promovida a campeã (52% × 45%); desafiante nova copiada dela |
-| V3 | 26/10 18:15 | cobertura nos pilares (LOS); treinador com vantagem normalizada, validação e checkpoints; caderno de erros; técnico só nas lutas da desafiante e só gratuito |
-| V4 | 26/10 22:54 | técnico com memória em LangGraph |
-| V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy. **Piorou: desafiante 42% (129/308)** |
-| V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4. Desafiante 47% (168/355) |
-| V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico. **Desafiante 52% (220/427)**, melhor até agora |
+| V1 | 10/24 14:28 | synchronized rounds; challenger training live against the original v3 |
+| V2 | 10/25 07:56 | challenger promoted to champion (52% × 45%); new challenger copied from it |
+| V3 | 10/26 18:15 | coverage on the pillars (LOS); trainer with normalized advantage, validation and checkpoints; error notebook; coach only on the challenger's matches and free only |
+| V4 | 10/26 22:54 | coach with LangGraph memory |
+| V5 | 10/27 12:54 | challenge only with praise (it challenged 41% of the errors, now ~9%); promotion counting since V3; coach on the new agy account. **It got worse: challenger 42% (129/308)** |
+| V6 | 10/27 19:59 | challenger back to the 10/27 10:44 checkpoint; coach notes with 30% of the weight; KL anchor on the champion; V4 challenging. Challenger 47% (168/355) |
+| V7 | 10/28 07:53 | verifier in the graph: log facts (missing bot, saved trinket, CC on DR, Divine Plea, Retaliation) in the coach's prompt. **Challenger 52% (220/427)**, best so far |
 
-### Lições (não repetir)
+### Lessons (do not repeat)
 
-- **Mais notas do LLM não é melhor treino.** Na V5 quase todos os erros apontados pelo técnico passaram a valer peso
-  cheio e a desafiante caiu de 51% para 42% em 308 lutas — abaixo até dos Bots/sem-rede. O melhor período (55%) foi
-  justamente com o técnico quase calado. O LLM aponta erros que não são erros; com peso alto a rede aprende a agradar o
-  técnico em vez de ganhar (desalinhamento do modelo de recompensa).
-- **Mude uma coisa por versão e meça antes de seguir:** ~150 lutas da desafiante (~4 h) para ver ±8 pontos; com menos
-  que isso o placar oscila ±15.
-- **Toda mudança no peso das notas ou no técnico vira versão nova** em `versoes.json`, com o resultado anotado no fim.
-- **Nunca solte a desafiante sem âncora:** a penalidade KL na campeã (V6) limita o estrago de um sinal ruim.
+- **More LLM notes is not better training.** In V5 almost every error pointed out by the coach started to carry full
+  weight and the challenger dropped from 51% to 42% across 308 matches — below even the Bots/no-network group. The best period (55%) was
+  precisely with the coach almost silent. The LLM points out errors that are not errors; at high weight the network learns to please the
+  coach instead of winning (reward model misalignment).
+- **Change one thing per version and measure before moving on:** ~150 challenger matches (~4 h) to see ±8 points; with less
+  than that the score swings ±15.
+- **Every change to the note weights or to the coach becomes a new version** in `versoes.json`, with the result written at the end.
+- **Never release the challenger without an anchor:** the KL penalty on the champion (V6) limits the damage of a bad signal.
 
-## Pastas
+## Folders
 
-| Pasta | O que é |
+| Folder | What it is |
 |---|---|
-| `patches/mod-playerbots/` | nossas mudanças no módulo (o código vive em `azerothcore-wotlk/modules/mod-playerbots`, branch `ml-arena`) |
-| `modulos/` | módulos nossos do servidor (`mod-actus-reus`) |
-| `config/` | cópia das configs em uso do servidor |
-| `ml/` | treino, treinador ao vivo, rodadas e ferramentas (Python, `uv`) |
-| `agente/` | scripts de operação, artefatos (Rodadas da Arena, Sala) e diário do agente |
+| `patches/mod-playerbots/` | our changes to the module (the code lives in `azerothcore-wotlk/modules/mod-playerbots`, branch `ml-arena`) |
+| `modulos/` | our server modules (`mod-actus-reus`) |
+| `config/` | copy of the server's configs in use |
+| `ml/` | training, live trainer, rounds and tools (Python, `uv`) |
+| `agente/` | operations scripts, artifacts (Arena Rounds, Room) and the agent's journal |
 
-Fora do Git: os clones `azerothcore-wotlk/` e `wowee/`, o cliente `Client/` e `backups/` (ver `.gitignore`); os
-dados gerados em `ml/runs/` também não são versionados.
+Outside Git: the `azerothcore-wotlk/` and `wowee/` clones, the `Client/` client and `backups/` (see `.gitignore`); the
+data generated in `ml/runs/` is also not versioned.
 
-## Operação
+## Operations
 
-Os serviços do treino são unidades `systemd --user` transitórias: **depois de reiniciar o PC, suba de novo**.
+The training services are transient `systemd --user` units: **after restarting the PC, start them again**.
 
 ```bash
-agente/ligar-ao-vivo.sh treinador                                   # treinador (unidade ia-ao-vivo)
+agente/ligar-ao-vivo.sh treinador                                   # trainer (unit ia-ao-vivo)
 cd ml && systemd-run --user --unit=rodada-sync --working-directory=$PWD \
-  --property=Restart=on-failure ~/.local/bin/uv run python -I policy/rodada_sync.py   # rodadas
+  --property=Restart=on-failure ~/.local/bin/uv run python -I policy/rodada_sync.py   # rounds
 systemctl --user is-active ia-ao-vivo rodada-sync
-journalctl --user -u ia-ao-vivo -f                                  # o que o treinador está fazendo
-uv run python -I policy/caderno.py                                  # (em ml/) os maiores padrões de erro
+journalctl --user -u ia-ao-vivo -f                                  # what the trainer is doing
+uv run python -I policy/caderno.py                                  # (in ml/) the biggest error patterns
 ```
 
-**agy (técnico):** cada chamada usa o login guardado no chaveiro do sistema. Uma sessão `agy` interativa que fique aberta
-renova o login dela e sobrescreve esse chaveiro — com duas contas, o técnico alterna entre elas e cai na que não tem
-cota ("Individual quota reached"). Deixe aberta só a sessão da conta que deve pagar as análises e confira a conta em
+**agy (coach):** each call uses the login stored in the system keyring. An interactive `agy` session left open
+renews its own login and overwrites that keyring — with two accounts, the coach alternates between them and lands on the one without
+quota ("Individual quota reached"). Leave open only the session of the account that should pay for the analyses and check the account in
 `grep -h email= ~/.gemini/antigravity-cli/log/cli-*.log | tail`.
 
-**Promoção:** a janela de comparação fica no checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); para
-recomeçar a contagem, pare o `ia-ao-vivo`, troque o `desde` e suba de novo (o buffer em memória se perde).
+**Promotion:** the comparison window lives in the checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); to
+restart the count, stop `ia-ao-vivo`, change `desde` and start it again (the in-memory buffer is lost).
 
-**Disco:** o `Playerbots.log` cresce ~0,5 GB/h e o treino não o usa (usa o `MlArena.log`).
-`agente/apara-log.sh` mantém o log abaixo de 5 GB (guarda o último 1 GB em `Playerbots.log.1`); suba de hora em hora
-com `systemd-run --user --unit=apara-log --on-calendar=hourly $PWD/agente/apara-log.sh`. Imagens de rollback: só
-`master`, `cobertura-v4` e `rollback-pre-cobertura` (27/10); as anteriores foram apagadas.
+**Disk:** `Playerbots.log` grows ~0.5 GB/h and the training does not use it (it uses `MlArena.log`).
+`agente/apara-log.sh` keeps the log under 5 GB (it keeps the last 1 GB in `Playerbots.log.1`); start it hourly
+with `systemd-run --user --unit=apara-log --on-calendar=hourly $PWD/agente/apara-log.sh`. Rollback images: only
+`master`, `cobertura-v4` and `rollback-pre-cobertura` (10/27); the previous ones were deleted.
 
-Compilar e subir uma mudança do módulo:
+Build and deploy a module change:
 
 ```bash
 cd azerothcore-wotlk
-docker tag acore/ac-wotlk-worldserver:master acore/ac-wotlk-worldserver:rollback-<nome>   # volta, se precisar
+docker tag acore/ac-wotlk-worldserver:master acore/ac-wotlk-worldserver:rollback-<name>   # go back, if needed
 docker compose build ac-worldserver
-docker compose up -d --force-recreate --no-build ac-worldserver     # ~15 min de lag de aquecimento depois
+docker compose up -d --force-recreate --no-build ac-worldserver     # ~15 min of warm-up lag afterwards
 ```
 
-Autotestes: `uv run python -I policy/live.py --selftest`, `policy/caderno.py --selftest`, `policy/rodada_sync.py --selftest`.
+Self-tests: `uv run python -I policy/live.py --selftest`, `policy/caderno.py --selftest`, `policy/rodada_sync.py --selftest`.
 
-## Auditar o trabalho do agente
+## Auditing the agent's work
 
 ```bash
-cat agente/DIARIO.md                                   # o que ele diz que fez
-git log --oneline                                      # passos no ActusReus
-git -C azerothcore-wotlk/modules/mod-playerbots diff auditoria-inicio ml-arena --stat   # código, linha por linha
-git -C azerothcore-wotlk/modules/mod-playerbots reset --hard auditoria-inicio           # desfazer tudo no módulo
+cat agente/DIARIO.md                                   # what it says it did
+git log --oneline                                      # steps in ActusReus
+git -C azerothcore-wotlk/modules/mod-playerbots diff auditoria-inicio ml-arena --stat   # code, line by line
+git -C azerothcore-wotlk/modules/mod-playerbots reset --hard auditoria-inicio           # undo everything in the module
 ```
