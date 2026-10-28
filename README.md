@@ -46,6 +46,11 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
 - **Verificador** (`ml/policy/verificador.py`, nó `verificar` do grafo): fatos contados no log, sem LLM, antes da
   análise. Achou nas 10 lutas de teste tudo o que os LLMs perderam (bots ausentes, trinkets guardados, Divine Plea).
 
+## Sprint atual
+
+[`agente/SPRINT-LLM.md`](agente/SPRINT-LLM.md): os cinco passos da LLM em casa (especialista v3, recompensa escrita pela LLM,
+alvo e plano tático, liga de desafiantes, auto-melhoria, técnico treinado por RL), cada um com meta para seguir.
+
 ## Versões
 
 Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas/versoes.json`](agente/rodadas/versoes.json)

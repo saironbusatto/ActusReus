@@ -3,6 +3,8 @@
 Atualizado em 24/10/2026, ~14:45 UTC. Objetivo do projeto: bots de arena e de AB que jogam como humanos de 2009,
 com aprendizado de máquina (RL) por cima das regras; LLM só depois.
 
+**Sprint atual (28/10): [`agente/SPRINT-LLM.md`](SPRINT-LLM.md)** — LLM em casa (especialista), alvo/plano tático, liga de desafiantes, auto-melhoria e técnico por RL.
+
 Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relatório: Obsidian `Evolucao-IA-Arena-Fase2.md`.
 
 ---
