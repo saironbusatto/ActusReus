@@ -17,6 +17,7 @@ import argparse
 import datetime as dt
 import json
 import random
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -70,6 +71,47 @@ def para_texto(l: dict) -> str:
                   "vencedor": int(l["vencedor"]), "times": {int(k): v for k, v in l["times"].items()},
                   "membros": {m["guid"]: {**m, "time": int(m["time"])} for m in l["membros"]}}) + \
         ("\n\n" + fatos if fatos else "")
+
+
+LINHA = re.compile(r"^ *(\d+\.\d)  (.*)$")
+
+
+def compacta(txt: str) -> str:
+    """V4 (velocidade do treino, que cresce com os tokens): sai a preparação (ações antes de PREPARO: pedra, óleo,
+    buffs), a mesma ação seguida do mesmo bot vira uma linha "×N até T", o "→ alvo" só aparece quando o alvo do bot
+    muda e eventos do mesmo instante dividem a linha."""
+    out, linha_tempo, serie, alvo = [], [], {}, {}  # serie: quem -> entrada ainda aberta; alvo: quem -> último alvo
+
+    def fecha() -> None:
+        for t in sorted({e[0] for e in linha_tempo}, key=float):
+            evs = [e[1] + (f" ×{e[2]} até {e[3]:.1f}" if e[2] > 1 else "") for e in linha_tempo if e[0] == t]
+            out.append(f"{t:6.1f}  " + " | ".join(evs))
+        linha_tempo.clear()
+
+    for ln in txt.split("\n"):
+        m = LINHA.match(ln)
+        if not m:
+            fecha()
+            out.append(ln)
+            continue
+        t, ev = float(m[1]), m[2]
+        if not ev.startswith("**"):
+            if t < verificador.PREPARO:
+                continue
+            quem = ev.split(":", 1)[0]
+            if quem in serie and serie[quem][4] == ev:
+                serie[quem][2] += 1
+                serie[quem][3] = t
+                continue
+        e = [t, ev, 1, t, ev]  # [t, texto mostrado, n, fim, evento original]
+        if not ev.startswith("**"):
+            acao, _, al = ev.partition(" → ")  # o log guarda o alvo atual do bot: só vale repetir quando muda
+            if al == alvo.get(quem):
+                e[1] = acao
+            serie[quem], alvo[quem] = e, al
+        linha_tempo.append(e)
+    fecha()
+    return "\n".join(out)
 
 
 def _perdeu(l: dict, nome: str) -> bool | None:
@@ -133,17 +175,19 @@ def alvo(l: dict, usos: dict) -> dict:
     return out
 
 
-def exemplo(l: dict, usos: dict) -> dict:
+def exemplo(l: dict, usos: dict, compacto: bool = False) -> dict:
     return {"luta": l["luta"], "messages": [
         {"role": "system", "content": SISTEMA_ESPECIALISTA},
-        {"role": "user", "content": para_texto(l)},
+        {"role": "user", "content": compacta(para_texto(l)) if compacto else para_texto(l)},
         {"role": "assistant", "content": json.dumps(alvo(l, usos), ensure_ascii=False)}]}
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
-    if ap.parse_args().selftest:
+    ap.add_argument("--compacto", action="store_true", help="V4: grava {treino,teste}-compacto.jsonl")
+    a = ap.parse_args()
+    if a.selftest:
         selftest()
         return 0
     lutas = lutas_analisadas()
@@ -160,9 +204,9 @@ def main() -> int:
     lutas = [l for l in lutas if l["luta"] in no_teste] + [l for l in lutas if l["luta"] not in no_teste]
     antes = depois = 0
     for nome, parte in (("teste", lutas[:N_TESTE]), ("treino", lutas[N_TESTE:])):
-        with (SAIDA / f"{nome}.jsonl").open("w") as f:
+        with (SAIDA / f"{nome}{'-compacto' if a.compacto else ''}.jsonl").open("w") as f:
             for l in parte:
-                ex = exemplo(l, usos)
+                ex = exemplo(l, usos, a.compacto)
                 antes += len(l["analise"].get("erros", []))
                 depois += len(json.loads(ex["messages"][2]["content"])["erros"])
                 f.write(json.dumps(ex, ensure_ascii=False) + "\n")
@@ -206,6 +250,10 @@ def selftest() -> None:
     assert any(x["quem"] == "X" and x["gravidade"] == "alta" and "nenhuma ação" in x["fez"] for x in a["erros"])
     txt = para_texto(lutas[0])
     assert "Vencedor: B I" in txt and "W: fear" in txt and "Manual" not in SISTEMA_ESPECIALISTA
+    c = compacta("Linha do tempo:\n  10.0  W: fear → R\n  31.0  W: shadow bolt → R\n  31.0  ** R em fear (vida 90%)\n"
+                 "  33.0  W: shadow bolt → R\n  35.0  W: fear → R\n  36.0  W: fear → X\n\nFIM")
+    assert c == ("Linha do tempo:\n  31.0  W: shadow bolt → R ×2 até 33.0 | ** R em fear (vida 90%)\n  35.0  W: fear\n"
+                 "  36.0  W: fear → X\n\nFIM"), c
     print("ok dataset_tecnico")
 
 

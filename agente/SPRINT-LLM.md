@@ -27,8 +27,15 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
       (as respostas imitadas foram escritas sem eles).
 - [x] V3 (dados): cada fato do verificador vira erro na resposta de treino; "erros" de rotina (Bloodlust, buffs,
       "morreu") saem. 3.680 lutas, 14k erros do verificador + 9,4k do técnico.
-- [ ] V3 (treino): 28/10 17:00 o sistema matou o treino por falta de RAM no passo 1/354. Religar com menos RAM
-      (preparação dos dados num processo só) com o servidor ligado.
+- [ ] V3 (treino): 28/10 17:00 o sistema matou o treino por falta de RAM no passo 1/354. Religado às 17:13 com a
+      preparação dos dados num processo só (`UNSLOTH_DATASET_NUM_PROC=1`) e o servidor parado às 17:55 para liberar
+      RAM. ~64 s/passo, fim previsto ~23:50. Parar o servidor **não acelerou** (62,8 s/passo ligado x 63,9 parado: a
+      placa é o gargalo); só liberou RAM. Loss 1,74 (passo 5) → 0,80 (passo 100).
+- [ ] V4 (velocidade), pronta no gatilho `ml/especialista/v4.sh`, só se a V3 não bater a meta: entrada compacta
+      (`dataset_tecnico.py --compacto`: sai a preparação, a ação repetida vira "×N até T", o "→ alvo" só quando muda,
+      eventos do mesmo instante numa linha) = 6.643 → 4.724 tokens por luta (−29%); e xformers do torch do venv (o
+      instalado era do torch 2.10, o treino caía na atenção comum; não há flash_attn para torch 2.14). `analisa.py`
+      lê o teste compacto sozinho pela marca `teste.txt` no LoRA.
 - [ ] Comparar V3 x Gemini x Opus nas 10 lutas fixas.
 - [ ] Modo sombra: o especialista analisa as lutas ao vivo em paralelo ao Gemini por algumas rodadas, sem ir para
       o treinador; comparar.

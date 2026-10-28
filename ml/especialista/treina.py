@@ -25,6 +25,7 @@ def main() -> None:
     ap.add_argument("--epocas", type=float, default=1)
     ap.add_argument("--modelo", default=MODELO)
     ap.add_argument("--saida", default="lora", help="pasta em runs/especialista (lora = V1)")
+    ap.add_argument("--dados", default="treino.jsonl", help="V4: treino-compacto.jsonl (dataset_tecnico --compacto)")
     a = ap.parse_args()
 
     model, tok = FastLanguageModel.from_pretrained(a.modelo, max_seq_length=MAX_TOKENS, load_in_4bit=True)
@@ -33,7 +34,7 @@ def main() -> None:
                                                              "gate_proj", "up_proj", "down_proj"],
                                              use_gradient_checkpointing="unsloth", random_state=7)
     textos = [tok.apply_chat_template(json.loads(l)["messages"], tokenize=False)
-              for l in (RUNS / "treino.jsonl").open()]
+              for l in (RUNS / a.dados).open()]
     cabem = [t for t in textos if len(tok(t).input_ids) <= MAX_TOKENS]  # lutas longas demais ficam de fora
     print(f"{len(cabem)}/{len(textos)} exemplos cabem em {MAX_TOKENS} tokens", flush=True)
 
@@ -52,6 +53,7 @@ def main() -> None:
     if a.passos < 0:
         model.save_pretrained(RUNS / a.saida)
         tok.save_pretrained(RUNS / a.saida)
+        (RUNS / a.saida / "teste.txt").write_text(a.dados.replace("treino", "teste"))  # analisa.py usa o mesmo formato
 
 
 if __name__ == "__main__":

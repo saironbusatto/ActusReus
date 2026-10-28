@@ -13,9 +13,11 @@ RUNS = Path(__file__).resolve().parents[1] / "runs" / "especialista"
 
 
 def main() -> None:
-    teste = {json.loads(l)["luta"]: json.loads(l) for l in (RUNS / "teste.jsonl").open()}
     args = [x for x in sys.argv[1:] if not x.startswith("--")]
     versao = next((x[2:] for x in sys.argv[1:] if x.startswith("--")), "lora")  # --lora-v2 usa a V2
+    marca = RUNS / versao / "teste.txt"  # V4+: o LoRA treinado no texto compacto lê o teste compacto
+    teste = {json.loads(l)["luta"]: json.loads(l)
+             for l in (RUNS / (marca.read_text() if marca.exists() else "teste.jsonl")).open()}
     lutas = [int(x) for x in args] or list(teste)
     model, tok = FastLanguageModel.from_pretrained(str(RUNS / versao), max_seq_length=14336, load_in_4bit=True)
     FastLanguageModel.for_inference(model)
