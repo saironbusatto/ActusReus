@@ -105,6 +105,22 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
 (bots ausentes, trinket guardado, Divine Plea); ≤ 1 erro inventado por luta; momento decisivo igual ao do Opus em
 ≥ 7/10; ≤ 60 s por luta. Batendo a meta, entra na fila do técnico depois do agy (versão nova).
 
+### Decisões de 29/10 (sessão de perguntas com o usuário) — valem daqui em diante
+
+- **Papel do especialista:** junto do Gemini todo dia, só com momento decisivo + fatos (sem as críticas próprias);
+  sozinho quando a cota do agy acaba. Nas noites de treino ele desliga (a placa não comporta os dois).
+- **Prioridade:** o maior ganho primeiro, ritmo agressivo. Plano tático por confronto entra já por shaping (3 itens:
+  dano no alvo de kill, CC no alvo de CC fora do DR, burst na janela; peso 0,3, sobe se ganhar). O plano como entrada
+  da rede (C++) vem logo depois que o shaping der resultado, positivo ou negativo.
+- **Régua:** subagentes Opus sem contexto, com a luta sem vencedor (e com morte neutra se o teste passar): 100 lutas
+  de treino agora (+100 se a V5 melhorar), teste cego novo por versão, juiz cego que não sabe qual técnico escreveu
+  cada crítica. Planos escritos por subagentes Opus com pesquisa + auditoria do manual, sempre revisados.
+- **A/B:** terceira rede no C++, a cópia III nas rodadas (8 trios; o 60 do usuário fora). Braço desafiante = plano
+  tático; braço cópia III = fatos por código nas análises do Gemini + nota do momento decisivo. ~100 lutas por braço:
+  +3 pontos → vai para os dois e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas, e
+  empate depois de 200 sai. Registro "V9A/V9B" no `versoes.json`.
+- **Treino de madrugada com o servidor ligado** (queda → `treina.py --retoma`).
+
 ### Passo 1b — a LLM escreve a recompensa (estratégia 1)
 
 Em vez de nota por luta, o especialista lê centenas de lutas e propõe **regras de recompensa em código** (ex.: "+x
