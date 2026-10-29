@@ -3,7 +3,8 @@ import json
 import time
 from pathlib import Path
 
-from unsloth import FastLanguageModel
+from unsloth import FastLanguageModel  # antes do torch: aplica os patches
+import torch
 
 RUNS = Path(__file__).resolve().parents[1] / "runs" / "especialista"
 
@@ -23,8 +24,14 @@ def gera(model, tok, messages: list[dict], guloso: bool = False) -> dict:
     t = time.time()
     # 4096: com 2500 a V3 cortou a 19636 no meio (6% das respostas de treino passam de ~2500 tokens);
     # repetition_penalty fazia pular a lista de erros (repete "quem"/"t")
-    out = model.generate(**ids, max_new_tokens=4096, **amostra,
-                         bad_words_ids=[tok("<tool_call>", add_special_tokens=False).input_ids])
+    try:
+        out = model.generate(**ids, max_new_tokens=4096, **amostra,
+                             bad_words_ids=[tok("<tool_call>", add_special_tokens=False).input_ids])
+    except torch.OutOfMemoryError:  # luta longa demais para 8 GB: quem chamou cai para outro motor
+        return {"erro": f"placa sem memória (entrada de {ids.input_ids.shape[1]} tokens)",
+                "_segundos": round(time.time() - t, 1)}
+    finally:
+        torch.cuda.empty_cache()  # sem isso o cache de uma luta longa sobra para a próxima e ela estoura
     texto = "{" + tok.decode(out[0][ids.input_ids.shape[1]:], skip_special_tokens=True)
     try:
         analise = json.loads(texto[texto.find("{"):texto.rfind("}") + 1])

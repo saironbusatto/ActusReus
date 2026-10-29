@@ -71,6 +71,28 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
       Gemini no cego: JSON 20/20, momento 15/20, achou 24/48 dos meus erros, 2,5 críticas sem par/luta das quais li
       as 50: 42 reais, 5 duvidosas, 3 erradas (trinket no Fear a 31% "errado", alvo de Innervate inventado, Divine
       Sacrifice cancelado "suicídio") = **0,15-0,4 crítica errada/luta**; 78% das críticas em quem perdeu.
+- [x] **V4 treinada** 29/10 01:25-06:40 (5h12, 345 passos, pico 4,4 GB); perda de validação 0,94 → 0,84 → 0,81 →
+      0,81 (o melhor checkpoint foi o último: não decorou). Teste cego (29/10 07:10; entradas do teste regeneradas
+      com o verificador corrigido, o treino usou o de antes):
+
+| | JSON | momento | fatos graves | achou | crítica errada/luta (à mão) | em quem perdeu | s/luta |
+|---|---|---|---|---|---|---|---|
+| Gemini (no ar) | 20/20 | 15/20 | 6/11 | **24/48** | **0,15-0,4** | 78% | — |
+| V3 | 17/19 | 13/17 | 8/11 | 21/40 | não lida | 71% | 58 |
+| **V4** | 19/20 | **16/19** | **11/11** (código) | 17/45 | 0,53 (até 1,1) | 91% | **34** |
+
+      **A V4 não passou** (achou < Gemini; crítica errada > 0,5) → **fica o Gemini**. A 20ª luta (22780, 12.757
+      tokens) estourou os 8 GB da placa: `gerar.py` agora devolve erro e o ao vivo cai para o Gemini. Nas 10 fixas a
+      V4 faz 0,6 crítica sem par/luta (Gemini 2,1), momento 7/10, 32 s.
+      Críticas erradas da V4 (10 em 19 lutas): Deterrence "não protege de físico", Healing Touch "quebrado" logo
+      após Nature's Swiftness, Divine Sacrifice cancelado = erro (o glossário diz que é técnica), trinket no Fear a
+      31%, Kidney no healer na abertura, Bloodlust, culpar o time vencedor por não dar peel no healer inimigo.
+      **Lições:** (1) esconder o vencedor não tirou o viés (91% em quem perdeu, pior que o Gemini): o viés está nas
+      *respostas de treino*, escritas pelo Gemini sabendo o resultado; (2) o glossário na entrada não impede o modelo
+      de repetir um erro que as respostas de treino ensinaram (Divine Sacrifice); (3) fatos por código e resposta
+      curta funcionaram (11/11, 34 s, momento 16/19). Próximo (V5 do especialista): limpar as respostas de treino —
+      tirar erro que contradiz o glossário, equilibrar críticas entre vencedor e perdedor, e mais erros próprios
+      por luta (o teto de 5 + tirar os fatos deixou 2,9/luta e o "achou" caiu).
 - [ ] **Critério para entrar no ar (registrado antes do resultado da V4):** no teste cego, JSON 20/20; fatos graves
       11/11 (do código); momento ≥ 15/20 e achou ≥ 24/48 (≥ Gemini); crítica errada (lida à mão, mesma régua)
       ≤ 0,5/luta; ≤ 60 s/luta. Passou → `ml/runs/especialista/ao-vivo.json` + `servidor.py`: as lutas dos bots vão

@@ -71,7 +71,18 @@
    "Novo passo sem LLM antes da análise (ml/policy/verificador.py): fatos contados no log entram no prompt — bot sem nenhuma ação, trinket nunca usado por quem morreu em stun/fear/poly, CC repetido em DR, ação repetida 5+ vezes, Divine Plea com aliado morrendo, manutenção a menos de 8 s da morte, golpes numa Retaliation.",
    "Motivo: nas 10 lutas de teste, Gemini e o especialista perderam justamente esses fatos (2 bots ausentes, trinkets guardados, Divine Plea).",
    "Treinador igual à V6 (notas x0,3, âncora KL).",
-   "Resultado até 28/10 17:50 (servidor parado para treinar a LLM v3): desafiante 52% (220/427), campeã 51%, regras 48% — a melhor versão até agora."
+   "Resultado até 28/10 17:50 (servidor parado para treinar a LLM v3): desafiante 52% (220/427), campeã 51%, regras 48% — a melhor versão até agora.",
+   "Encerrada em 28/10 17:55 (SP): servidor parado para treinar o especialista (V3 e V4 da LLM em casa)."
+  ]
+ },
+ {
+  "id": "V8",
+  "nome": "V7 + verificador corrigido (trinket)",
+  "desde": "2026-10-29 10:21",
+  "mudancas": [
+   "Igual à V7 (técnico Gemini em LangGraph com verificador; treinador da V6), com uma correção no verificador: a ação de trinket (pvp trinket, every man for himself, will of the forsaken) conta como uso. Antes o fato dizia 'morreu sem usar o trinket' quando o servidor não gravava o '** usou trinket' (22743, 22771).",
+   "O especialista V4 (Qwen3-4B em casa) foi testado no teste cego de 20 lutas e não passou no critério registrado antes (achou 17/45 contra 24/48 do Gemini; 0,53 crítica errada/luta contra 0,15-0,4): fica o Gemini. O caminho para o especialista entrar já existe (servidor.py + ao-vivo.json) e fica desligado.",
+   "Servidor religado 29/10 07:20 (SP) depois de ~13 h parado."
   ]
  }
 ]
