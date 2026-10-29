@@ -1,0 +1,10 @@
+{"resumo": "O Bladestorm de Celianeyix (51.3) respondeu ao Bloodlust do Fireplay IV e mandou o Mage Heshoxi para o Ice Block a 20% (57.3); logo depois o Warrior trocou para o healer Kwongwegaxi (58.8) e o matou com Execute aos 61.7 sem que o Warlock ou o Mage o tirassem de cima. Em 3v2 o Warlock caiu aos 73.8.",
+ "momento_decisivo": {"t": 58.8, "descricao": "Celianeyix troca para o healer Kwongwegaxi com o Mage em Ice Block: o Warlock dá Fear no Naminiv (58.7) em vez do Warrior, e o healer morre aos 61.7."},
+ "momento_aceitos": [51.3, 57.3, 58.7, 58.8, 59.9],
+ "erros": [
+  {"t": 58.7, "quem": "Ominousdesv", "fez": "fear no Naminiv quando o Warrior foi para o healer", "devia": "Fear/Death Coil no Celianeyix", "porque": "o healer morreu 3 s depois com o Warrior livre", "gravidade": "alta"},
+  {"t": 59.5, "quem": "Kwongwegaxi", "fez": "riptide e healing wave sob o Warrior sem tentar se soltar", "devia": "Earthbind/Frost Shock e abrir distância, ou pedir o CC no Warrior", "porque": "ficou parado no alcance do Execute", "gravidade": "media"},
+  {"t": 78.8, "quem": "Heshoxi", "fez": "evocation em 1v3", "devia": "Blink/Polymorph para ganhar tempo", "porque": "8 s parado com o Warrior em Execute", "gravidade": "baixa"}],
+ "acertos": [{"t": 51.3, "quem": "Celianeyix", "descricao": "Bladestorm imune a CC na resposta ao Bloodlust"},
+  {"t": 58.8, "quem": "Celianeyix", "descricao": "troca para o healer assim que o Mage entrou em Ice Block"},
+  {"t": 57.3, "quem": "Heshoxi", "descricao": "Ice Block a 20% sob Bladestorm"}]}

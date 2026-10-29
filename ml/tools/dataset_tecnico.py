@@ -25,6 +25,7 @@ from pathlib import Path
 ML = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ML / "policy"), str(ML / "tools")]
 import caderno  # noqa: E402
+import glossario  # noqa: E402
 import verificador  # noqa: E402
 from resumo_lutas import texto  # noqa: E402
 from treinador_ia import SISTEMA  # noqa: E402
@@ -182,14 +183,96 @@ def exemplo(l: dict, usos: dict, compacto: bool = False) -> dict:
         {"role": "assistant", "content": json.dumps(alvo(l, usos), ensure_ascii=False)}]}
 
 
+# V4: os fatos do verificador saem da resposta (o código os junta com o horário exato: na V3 o modelo os reescrevia
+# com o t errado e o caderno, que casa por 1,5 s, perdia a ação), a entrada esconde o vencedor (82% das críticas do
+# técnico caíam em quem perdeu: ele lia o placar, não a jogada) e ganha o glossário; a resposta fica só com o que o
+# treinador usa e no máximo MAX_ERROS erros (tempo: a análise é quase toda geração).
+MAX_ERROS, MAX_LISTA, N_VALIDACAO = 5, 3, 60
+GRAV = {"alta": 0, "media": 1, "média": 1, "baixa": 2}
+SISTEMA_V4 = SISTEMA_ESPECIALISTA.split("Use só nomes")[0] + """O resultado da luta NÃO é dado: julgue cada jogada pelo que ela fez no momento, nunca por quem ganhou.
+"=== FATOS DO LOG ===" já foram contados pelo programa e entram na análise sozinhos: NÃO os repita; aponte o que eles
+não cobrem. "=== O QUE CADA HABILIDADE FAZ ===" é a referência de mecânica: não contradiga.
+Use só nomes e instantes que aparecem na luta. Responda SÓ com JSON neste formato:
+{"resumo": "1-2 frases do que decidiu a luta",
+ "momento_decisivo": {"t": 0.0, "descricao": "a jogada que virou a luta (a causa, não a morte que veio depois)"},
+ "erros": [{"t": 0.0, "quem": "Nome", "fez": "...", "devia": "...", "porque": "...", "gravidade": "alta|media|baixa"}],
+ "acertos": [{"t": 0.0, "quem": "Nome", "descricao": "..."}],
+ "erros_da_rede": [{"t": 0.0, "quem": "Nome", "acao": "...", "porque": "..."}]}
+No máximo 5 erros (os mais graves), 3 acertos e 3 erros da rede."""
+
+
+def sem_vencedor(txt: str) -> str:
+    txt = re.sub(r" Vencedor: [^\n]*\.$", "", txt, count=1, flags=re.M)
+    return re.sub(r" \((venceu|perdeu)\):", ":", txt)
+
+
+def entrada_v4(l: dict) -> str:
+    acoes = {e["acao"] for e in l["eventos"] if e.get("tipo") == "acao"}
+    return compacta(sem_vencedor(para_texto(l))) + "\n\n" + glossario.linhas(acoes)
+
+
+def _do_fato(l: dict, x: dict) -> bool:
+    """O erro já é um fato do verificador (mesmo personagem, até 3 s; ausente pelo nome)."""
+    return any(f["quem"] == x.get("quem") and (f["tipo"] == "ausente" or abs(float(x.get("t") or 0) - f["t"]) <= 3)
+               for f in verificador.achados(l) if f["tipo"] in DO_FATO)
+
+
+def alvo_v4(l: dict, usos: dict) -> dict:
+    a = alvo(l, usos)
+    erros = [x for x in a["erros"] if not _do_fato(l, x)]
+    erros = sorted(sorted(erros, key=lambda x: GRAV.get(str(x.get("gravidade")), 1))[:MAX_ERROS],
+                   key=lambda x: float(x.get("t") or 0))
+    return {"resumo": a.get("resumo", ""), "momento_decisivo": a.get("momento_decisivo", {}), "erros": erros,
+            "acertos": a.get("acertos", [])[:MAX_LISTA], "erros_da_rede": a.get("erros_da_rede", [])[:MAX_LISTA]}
+
+
+def exemplo_v4(l: dict, usos: dict) -> dict:
+    return {"luta": l["luta"], "fatos_erros": erros_dos_fatos(l, []), "messages": [
+        {"role": "system", "content": SISTEMA_V4},
+        {"role": "user", "content": entrada_v4(l)},
+        {"role": "assistant", "content": json.dumps(alvo_v4(l, usos), ensure_ascii=False)}]}
+
+
+def junta_fatos(analise: dict, fatos_erros: list[dict]) -> dict:
+    """Depois da geração: os fatos entram nos erros com o horário exato (o que o modelo já cobriu não repete)."""
+    erros = analise.get("erros", [])
+    novos = [f for f in fatos_erros if not any(x.get("quem") == f["quem"] and abs(float(x.get("t") or 0) - f["t"]) <= 3
+                                               for x in erros)]
+    return {**analise, "erros": sorted(erros + novos, key=lambda x: float(x.get("t") or 0))}
+
+
+def main_v4() -> int:
+    """treino/validacao/teste/cego-v4.jsonl. O teste cego (teste_cego_ids.json, 20 lutas que nenhuma versão viu)
+    fica fora de tudo, inclusive da estatística do filtro."""
+    cego = set(json.loads((SAIDA / "teste_cego_ids.json").read_text()))
+    todas = lutas_analisadas()
+    lutas = [l for l in todas if l["luta"] not in cego]
+    usos = base(lutas)
+    random.Random(7).shuffle(lutas)
+    fixo = set(json.loads((SAIDA / "teste_ids.json").read_text()))
+    teste = [l for l in lutas if l["luta"] in fixo]
+    resto = [l for l in lutas if l["luta"] not in fixo]
+    partes = (("teste", teste), ("validacao", resto[:N_VALIDACAO]), ("treino", resto[N_VALIDACAO:]),
+              ("cego", [l for l in todas if l["luta"] in cego]))
+    for nome, parte in partes:
+        with (SAIDA / f"{nome}-v4.jsonl").open("w") as f:
+            for l in parte:
+                f.write(json.dumps(exemplo_v4(l, usos), ensure_ascii=False) + "\n")
+        print(f"{nome}-v4: {len(parte)}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--compacto", action="store_true", help="V4: grava {treino,teste}-compacto.jsonl")
+    ap.add_argument("--v4", action="store_true", help="grava {treino,validacao,teste,cego}-v4.jsonl")
     a = ap.parse_args()
     if a.selftest:
         selftest()
         return 0
+    if a.v4:
+        return main_v4()
     lutas = lutas_analisadas()
     usos = base(lutas)
     random.Random(7).shuffle(lutas)
@@ -254,6 +337,14 @@ def selftest() -> None:
                  "  33.0  W: shadow bolt → R\n  35.0  W: fear → R\n  36.0  W: fear → X\n\nFIM")
     assert c == ("Linha do tempo:\n  31.0  W: shadow bolt → R ×2 até 33.0 | ** R em fear (vida 90%)\n  35.0  W: fear\n"
                  "  36.0  W: fear → X\n\nFIM"), c
+    # V4: sem vencedor, fatos fora da resposta e juntados depois com o horário exato
+    assert "venceu" not in sem_vencedor("Luta 1 — x, 9 s. Vencedor: A.\nA (venceu): W\nB (perdeu): R") and \
+        "Vencedor" not in sem_vencedor("Luta 1 — x, 9 s. Vencedor: A I.\nz")
+    l["analise"]["erros"] = [{"t": 0, "quem": "X", "fez": "não jogou"}, {"t": 10, "quem": "W", "fez": "fear"}]
+    v4 = alvo_v4(l, usos)
+    assert [x["quem"] for x in v4["erros"]] == ["W"] and "conselho_por_time" not in v4, v4  # o X ausente é fato
+    j = junta_fatos(v4, erros_dos_fatos(l, []))
+    assert any(x["quem"] == "X" for x in j["erros"]) and len(j["erros"]) == 2, j
     print("ok dataset_tecnico")
 
 

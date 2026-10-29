@@ -1,0 +1,10 @@
+{"resumo": "Luta longa de DoTs: o Rogue Zebedeuvii abriu no Paladin Heruiv com três Cheap Shots no mesmo DR e não matou; depois, coberto de DoTs do Warlock e do Priest, gastou Evasion e Vanish a 34% (83.7-84.2) mas nunca o Cloak of Shadows e morreu aos 103.3 com Hammer of Wrath. O Warlock Ominousv caiu aos 145.7 e o healer ficou a 14%.",
+ "momento_decisivo": {"t": 84.2, "descricao": "Zebedeuvii a 34% com DoTs de Affliction e de Priest sombra usa Vanish (e Evasion) em vez do Cloak of Shadows, que limparia os DoTs; com o healer silenciado aos 87.7 ele morre aos 103.3."},
+ "momento_aceitos": [83.7, 84.2, 87.7, 102.7],
+ "erros": [
+  {"t": 84.2, "quem": "Zebedeuvii", "fez": "vanish/evasion a 34% contra dano de DoTs mágicos, sem usar o Cloak of Shadows", "devia": "Cloak of Shadows para limpar e anular os DoTs", "porque": "Evasion não reduz dano mágico; morreu com o Cloak sem uso", "gravidade": "alta"},
+  {"t": 42.7, "quem": "Zebedeuvii", "fez": "cheap shot repetido no Heruiv dentro do mesmo DR", "devia": "Kidney/Garrote ou trocar de alvo", "porque": "a 2ª e a 3ª duraram metade/um quarto e o Paladin não caiu", "gravidade": "media"},
+  {"t": 96.3, "quem": "Kwongwegaii", "fez": "cleanse spirit curse e purge com o Rogue morrendo", "devia": "curar o Zebedeuvii (Riptide, Healing Wave)", "porque": "dispel de Curse of Tongues não salvava o aliado abaixo de 30%", "gravidade": "media"}],
+ "acertos": [{"t": 87.7, "quem": "Amnesianxxi", "descricao": "Silence no healer inimigo com o Rogue baixo"},
+  {"t": 102.7, "quem": "Heruiv", "descricao": "Hammer of Wrath para finalizar o Rogue"},
+  {"t": 66.6, "quem": "Heruiv", "descricao": "Divine Protection e Divine Sacrifice cancelado sob a pressão do Rogue"}]}

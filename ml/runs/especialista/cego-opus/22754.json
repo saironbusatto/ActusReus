@@ -1,0 +1,9 @@
+{"resumo": "O RPS I resistiu ao Bladestorm com Heroism do Thunder II e virou no Warrior Celianeyix: Psychic Scream a 42% (67.8) e Kidney Shot a 23% (73.0); o Paladin não usou Hand of Protection e o Warrior caiu aos 84.5. Em 2v3 o Shaman morreu aos 166.3 gastando GCDs em Water Shield e o Paladin aos 173.7.",
+ "momento_decisivo": {"t": 73.0, "descricao": "Kidney Shot no Celianeyix a 23% (trinket logo em seguida): sem Hand of Protection do Heruxiv contra o Rogue, o Warrior morreu aos 84.5."},
+ "momento_aceitos": [65.0, 67.8, 73.0, 76.6],
+ "erros": [
+  {"t": 73.0, "quem": "Heruxiv", "fez": "flash/holy light e Divine Sacrifice cancelado com o Warrior a 23% sob o Rogue", "devia": "Hand of Protection no Celianeyix", "porque": "o dano era físico; o HoP salvava o Warrior", "gravidade": "alta"},
+  {"t": 65.0, "quem": "Celianeyix", "fez": "cleave e heroic strike no Rogue em Evasion", "devia": "trocar para o healer ou o Priest", "porque": "Evasion anulava os golpes; o Warrior ficou parado no alvo errado", "gravidade": "media"}],
+ "acertos": [{"t": 67.8, "quem": "Amnesianix", "descricao": "Psychic Scream no Warrior a 42%"},
+  {"t": 73.0, "quem": "Zebedeuxii", "descricao": "Kidney Shot no Warrior a 23%"},
+  {"t": 126.3, "quem": "Heruxiv", "descricao": "Divine Shield a 16%"}]}

@@ -1,0 +1,10 @@
+{"resumo": "Espelho RPS de 253 s decidido no fôlego: o healer Kwongwegaxii do RPS I gastou dezenas de GCDs em Cleanse Spirit de veneno enquanto o Rogue Zebedeuxii vivia abaixo de 25%; aos 195.2 o Rogue usou o Vanish para reabrir (Premeditation, Shadowstep) em vez de sair e morreu aos 198.2. O Priest Amnesianix caiu aos 232.0 na Shadow Dance com o trinket pronto de novo.",
+ "momento_decisivo": {"t": 196.0, "descricao": "Zebedeuxii, já muito baixo, usa o Vanish para Premeditation + Shadowstep em vez de resetar a luta: morre aos 198.2 e o RPS I fica em 2v3."},
+ "momento_aceitos": [184.0, 194.7, 195.2, 196.0, 196.9],
+ "erros": [
+  {"t": 196.0, "quem": "Zebedeuxii", "fez": "premeditation e shadowstep logo depois do Vanish, com pouca vida", "devia": "usar o Vanish para sair, esperar a cura ou beber", "porque": "reabriu sem vida e morreu 2 s depois", "gravidade": "alta"},
+  {"t": 135.9, "quem": "Kwongwegaxii", "fez": "cleanse spirit poison em série (dezenas de vezes) com o Rogue abaixo de 25%", "devia": "curar o Zebedeuxii e dispelar só o que importa", "porque": "o veneno do Rogue volta a cada golpe; o dispel não acompanha e a cura faltou", "gravidade": "alta"},
+  {"t": 217.2, "quem": "Amnesianix", "fez": "não usou o trinket no Kidney Shot da Shadow Dance (já tinha voltado desde os 194.9)", "devia": "trinket no Kidney e Dispersion/Psychic Scream", "porque": "ficou em stun até 50% e morreu aos 232.0", "gravidade": "media"}],
+ "acertos": [{"t": 212.4, "quem": "Zebedeuxiv", "descricao": "Shadow Dance com Cheap Shot duplo e Kidney no Priest"},
+  {"t": 231.6, "quem": "Amnesianxxv", "descricao": "Shadow Word: Death para finalizar o Priest"},
+  {"t": 92.1, "quem": "Amnesianix", "descricao": "Psychic Scream para tirar o Rogue de cima do aliado"}]}

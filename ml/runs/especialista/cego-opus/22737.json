@@ -1,0 +1,10 @@
+{"resumo": "O TSG I abriu com Charge e Bladestorm no Druid Pehdicouii (34.3-41.8): o healer foi a 24%, gastou trinket e Nature's Swiftness em si e o Hunter Beteraniv, já a 20%, morreu no Gnaw do ghoul + Execute aos 46.3 sem cura e sem trinket. Em 2v3 o Warlock caiu aos 62.7.",
+ "momento_decisivo": {"t": 45.8, "descricao": "Pet Gnaw no Beteraniv a 20% seguido de Execute do Celianeyii (46.3): o Druid estava ocupado se salvando do Bladestorm e o Hunter, sem trinket, ficou em melee."},
+ "momento_aceitos": [37.0, 42.0, 43.6, 45.8],
+ "erros": [
+  {"t": 43.6, "quem": "Beteraniv", "fez": "explosive trap e raptor strike colado no Warrior/DK a 39%", "devia": "Disengage/Frost Trap e kitar, Freezing Trap no Warrior", "porque": "ficou no melee de dois pesados e morreu em 3 s", "gravidade": "alta"},
+  {"t": 46.3, "quem": "Pehdicouii", "fez": "cyclone enquanto o Hunter a 20% morria", "devia": "curar o Beteraniv (Swiftmend/Regrowth) ou dar Cyclone no DK do Gnaw", "porque": "o Hunter morreu no mesmo segundo", "gravidade": "media"},
+  {"t": 37.0, "quem": "Ominoustres", "fez": "não tirou o Warrior em Bladestorm do healer (Spell Lock no Paladin, Death Coil no DK)", "devia": "depois do Bladestorm, Fear/Death Coil no Celianeyii", "porque": "o Warrior levou o Druid a 24% e o time perdeu a cura", "gravidade": "media"}],
+ "acertos": [{"t": 45.8, "quem": "Omasconii", "descricao": "Gnaw no Hunter a 20% para o Execute"},
+  {"t": 42.0, "quem": "Pehdicouii", "descricao": "trinket + Nature's Swiftness a 24%: se salvou do stun"},
+  {"t": 39.0, "quem": "Beteraniv", "descricao": "Deterrence a 39% sob o Bladestorm"}]}

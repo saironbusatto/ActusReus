@@ -26,26 +26,36 @@ def main() -> None:
     ap.add_argument("--modelo", default=MODELO)
     ap.add_argument("--saida", default="lora", help="pasta em runs/especialista (lora = V1)")
     ap.add_argument("--retoma", help="checkpoint em runs/especialista/ckpt-<saida>/ para continuar um treino morto")
-    ap.add_argument("--dados", default="treino.jsonl", help="V4: treino-compacto.jsonl (dataset_tecnico --compacto)")
+    ap.add_argument("--dados", default="treino.jsonl", help="V4: treino-v4.jsonl (dataset_tecnico --v4)")
+    ap.add_argument("--validacao", help="V4: validacao-v4.jsonl; avalia a cada 100 passos e fica o checkpoint de menor"
+                                        " perda de validação (não o último)")
+    ap.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="V4: 10240 corta as lutas mais longas (prazo)")
     a = ap.parse_args()
+    max_tokens = a.max_tokens
 
-    model, tok = FastLanguageModel.from_pretrained(a.modelo, max_seq_length=MAX_TOKENS, load_in_4bit=True)
+    model, tok = FastLanguageModel.from_pretrained(a.modelo, max_seq_length=max_tokens, load_in_4bit=True)
     model = FastLanguageModel.get_peft_model(model, r=16, lora_alpha=16, lora_dropout=0, bias="none",
                                              target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
                                                              "gate_proj", "up_proj", "down_proj"],
                                              use_gradient_checkpointing="unsloth", random_state=7)
-    textos = [tok.apply_chat_template(json.loads(l)["messages"], tokenize=False)
-              for l in (RUNS / a.dados).open()]
-    cabem = [t for t in textos if len(tok(t).input_ids) <= MAX_TOKENS]  # lutas longas demais ficam de fora
-    print(f"{len(cabem)}/{len(textos)} exemplos cabem em {MAX_TOKENS} tokens", flush=True)
+    def carrega(arq: str) -> Dataset:
+        textos = [tok.apply_chat_template(json.loads(l)["messages"], tokenize=False) for l in (RUNS / arq).open()]
+        cabem = [t for t in textos if len(tok(t).input_ids) <= max_tokens]  # lutas longas demais ficam de fora
+        print(f"{arq}: {len(cabem)}/{len(textos)} exemplos cabem em {max_tokens} tokens", flush=True)
+        return Dataset.from_dict({"text": cabem})
 
-    trainer = SFTTrainer(model=model, tokenizer=tok, train_dataset=Dataset.from_dict({"text": cabem}),
-                         args=SFTConfig(dataset_text_field="text", max_seq_length=MAX_TOKENS,
+    val = {"eval_dataset": carrega(a.validacao)} if a.validacao else {}
+    cada = 100 if a.passos < 0 else a.passos  # no ensaio a validação roda no fim, para testar o caminho
+    passos_val = {"eval_strategy": "steps", "eval_steps": cada, "save_steps": cada, "load_best_model_at_end": True,
+                  "metric_for_best_model": "eval_loss", "greater_is_better": False,
+                  "per_device_eval_batch_size": 1} if a.validacao else {"save_steps": 50}
+    trainer = SFTTrainer(model=model, tokenizer=tok, train_dataset=carrega(a.dados), **val,
+                         args=SFTConfig(dataset_text_field="text", max_seq_length=max_tokens, **passos_val,
                                         per_device_train_batch_size=1, gradient_accumulation_steps=8,
                                         num_train_epochs=a.epocas, max_steps=a.passos, learning_rate=2e-4,
                                         lr_scheduler_type="cosine", warmup_steps=10, logging_steps=5,
                                         optim="adamw_8bit", bf16=True, seed=7, report_to="none",
-                                        output_dir=str(RUNS / f"ckpt-{a.saida}"), save_steps=50, save_total_limit=2))
+                                        output_dir=str(RUNS / f"ckpt-{a.saida}"), save_total_limit=2))
     trainer = train_on_responses_only(trainer, instruction_part="<|im_start|>user\n",
                                       response_part="<|im_start|>assistant\n")  # só a análise conta na perda
     t = time.time()

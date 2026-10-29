@@ -1,0 +1,9 @@
+{"resumo": "Heruxii (o healer do Thunder I) não jogou: Celianeyvii e Naminii lutaram 2v3 sem cura dedicada. O Bladestorm com Heroism (35.5 s) foi neutralizado pelo Evasion do Rogue e pelo Silence do Priest no Shaman; sem cura o Warrior caiu aos 62.6 s e o Shaman em seguida.",
+ "momento_decisivo": {"t": 0.0, "descricao": "Heruxii ausente: o Thunder I jogou a luta inteira 2v3 sem o healer."},
+ "momento_aceitos": [0.0, 35.3, 38.8],
+ "erros": [
+  {"t": 42.4, "quem": "Celianeyvii", "fez": "seguiu batendo no Rogue durante o Evasion (38.8-53.8 s)", "devia": "trocar para o healer Kwongwegaxiv ou o Priest", "porque": "Evasion anula a maior parte do dano físico; os golpes no Rogue foram perdidos", "gravidade": "media"},
+  {"t": 74.6, "quem": "Naminii", "fez": "water shield a 34% com o Rogue em cima", "devia": "curar-se ou usar Thunderstorm para afastar o Rogue", "porque": "GCD de manutenção sob dano letal", "gravidade": "baixa"}],
+ "acertos": [{"t": 35.3, "quem": "Amnesianxxv", "descricao": "Silence em Naminii na abertura do Bladestorm com Heroism"},
+  {"t": 38.8, "quem": "Zebedeuxiv", "descricao": "Evasion a 43% contra o Warrior em Bladestorm"},
+  {"t": 56.9, "quem": "Zebedeuxiv", "descricao": "Vanish e reabertura com Shadow Dance no Naminii depois da morte do Warrior"}]}

@@ -1,0 +1,9 @@
+{"resumo": "O RPS IV abriu no Mage Heshoiv com Bloodlust: Blind no healer Amnesianii (44.0) e Cheap Shot no Mage a 32% (48.3) sem trinket nem Ice Block, morte aos 49.5. O RMP II segurou 2v3 por quase dois minutos com a cura do Priest, mas o Rogue caiu aos 168.4 e o Priest ficou sozinho.",
+ "momento_decisivo": {"t": 48.3, "descricao": "Cheap Shot no Heshoiv a 32% com o healer em Blind: o Mage não usou trinket nem Ice Block e morreu no Ambush aos 49.5."},
+ "momento_aceitos": [44.0, 45.7, 46.9, 48.1, 48.3],
+ "erros": [
+  {"t": 46.9, "quem": "Heshoiv", "fez": "mana shield e spellsteal caindo de 68% a 32%", "devia": "Ice Block ou Blink + trinket no Cheap Shot", "porque": "morreu com Ice Block e trinket sem uso", "gravidade": "alta"},
+  {"t": 43.8, "quem": "Amnesianii", "fez": "dispel magic em série antes do Blind enquanto o Mage caía", "devia": "Pain Suppression / Power Word: Shield no Heshoiv", "porque": "o Mage foi de 79% a 32% sem defensivo do healer", "gravidade": "media"}],
+ "acertos": [{"t": 44.0, "quem": "Zebedeuxvi", "descricao": "Blind no healer na abertura no Mage"},
+  {"t": 37.0, "quem": "Kwongwegaxvi", "descricao": "Bloodlust junto com a abertura do Rogue"},
+  {"t": 183.0, "quem": "Zebedeuxvi", "descricao": "Shadow Dance com Cheap Shot e Kidney no healer no fim"}]}

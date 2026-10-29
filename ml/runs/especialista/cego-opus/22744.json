@@ -1,0 +1,10 @@
+{"resumo": "Luta de atrito de 192 s: o Mage Heshoiv do RMP II quase não contribuiu (Shoot 16 vezes, Blizzard e Flamestrike em arena, Spellsteal em série) e o healer Amnesianii viveu sob Fears do Warlock até cair aos 176.3 com Haunt; o Rogue morreu logo depois. O Shadowplay I venceu pela pressão contínua de DoTs e CC no healer.",
+ "momento_decisivo": {"t": 175.2, "descricao": "Haunt de Ominousix no Amnesianii depois de uma luta inteira de Fear no healer (DR aos 112.7-131) e com o Mage sem dano: o healer morre aos 176.3."},
+ "momento_aceitos": [112.7, 118.3, 123.6, 172.4, 175.2],
+ "erros": [
+  {"t": 56.5, "quem": "Heshoiv", "fez": "blizzard, flamestrike e shoot como dano principal", "devia": "Frostbolt, Ice Lance em alvo congelado, Polymorph no healer", "porque": "o Mage fez 37 mil de dano em 192 s; o time perdeu a pressão", "gravidade": "alta"},
+  {"t": 54.9, "quem": "Amnesianii", "fez": "mind sear com o time sob DoTs", "devia": "curar/Power Word: Shield e dispel dos DoTs", "porque": "dano em área fraco gastando o GCD do healer", "gravidade": "media"},
+  {"t": 39.6, "quem": "Heshoiv", "fez": "spellsteal duas vezes nos portões", "devia": "abrir com CC no healer ou dano", "porque": "GCDs caros sem efeito na luta", "gravidade": "baixa"}],
+ "acertos": [{"t": 123.6, "quem": "Amnesianii", "descricao": "Pain Suppression a 13% e Desperate Prayer: sobreviveu ao primeiro aperto"},
+  {"t": 155.9, "quem": "Heshoiv", "descricao": "Ice Block a 23%"},
+  {"t": 141.4, "quem": "Ominousix", "descricao": "Howl of Terror pegando o Rogue e o Mage"}]}

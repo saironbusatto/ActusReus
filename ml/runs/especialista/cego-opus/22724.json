@@ -1,0 +1,9 @@
+{"resumo": "Zebedeuxvi abriu com Shadowstep + Shadow Dance no healer Kwongwegaxx (41.8-49.6 s) junto com o Bloodlust de Kwongwegaxvi; o healer tomou dois Cheap Shots sem trinket e nenhum dos dois aliados tirou o Rogue de cima dele. Com 3v2 desde os 49.6 s o LSD II não teve volta.",
+ "momento_decisivo": {"t": 42.4, "descricao": "Shadow Dance de Zebedeuxvi no healer Kwongwegaxx (Cheap Shot 43.2, Ambush 44.4, Cheap Shot 48.2) com Bloodlust aos 45.1: o healer morreu aos 49.6 sem trinket e sem peel."},
+ "momento_aceitos": [42.4, 43.2, 45.1, 48.2],
+ "erros": [
+  {"t": 48.9, "quem": "Ominousdesix", "fez": "fear em Amnesianxxix enquanto o Rogue matava o healer", "devia": "Fear/Death Coil em Zebedeuxvi para tirar o Rogue do healer", "porque": "o healer estava a 21% em Cheap Shot; o CC no Priest não salvava ninguém", "gravidade": "alta"},
+  {"t": 49.3, "quem": "Pehdibalii", "fez": "abolish poison e cobalt frag bomb durante a morte do healer", "devia": "Cyclone/Entangling Roots no Rogue ou curar o Kwongwegaxx", "porque": "era o único que podia dar peel ou cura no healer na janela de 43-49 s", "gravidade": "alta"},
+  {"t": 56.0, "quem": "Ominousdesix", "fez": "shoot (varinha) em 3v2", "devia": "dano real ou Fear no Rogue", "porque": "GCD perdido com dano baixo", "gravidade": "baixa"}],
+ "acertos": [{"t": 42.4, "quem": "Zebedeuxvi", "descricao": "abertura de Shadow Dance no healer com Cheap Shot duplo, sincronizada com o Bloodlust"},
+  {"t": 45.1, "quem": "Kwongwegaxvi", "descricao": "Bloodlust na janela de stun do healer inimigo"}]}

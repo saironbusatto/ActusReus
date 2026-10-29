@@ -1,0 +1,6 @@
+{"resumo": "Kwongwegaxi e Ominousdesv não jogaram: Heshoxi lutou sozinho contra três e morreu aos 54.5 s no burst com Bloodlust e Combustion do Fireplay II.",
+ "momento_decisivo": {"t": 0.0, "descricao": "Dois bots ausentes no Fireplay IV: 1v3 desde o início."},
+ "momento_aceitos": [0.0],
+ "erros": [
+  {"t": 50.6, "quem": "Heshoxi", "fez": "fire ward e mana shield sob o burst de três", "devia": "Ice Block / Blink para ganhar tempo", "porque": "morreu com o Ice Block sem uso", "gravidade": "media"}],
+ "acertos": [{"t": 48.3, "quem": "Kwongwegaix", "descricao": "Bloodlust junto com Combustion e Conflagrate na janela de burst"}]}

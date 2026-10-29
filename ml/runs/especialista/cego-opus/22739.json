@@ -1,0 +1,9 @@
+{"resumo": "Espelho LSD longo decidido no healer: Kwongwegaxx (LSD II) passou de 30% a 19% em stuns entre 78.0 e 86.6 s sem nunca usar o trinket, gastando GCDs em Purge, Cleanse Spirit e Water Shield em vez de se curar, enquanto o Druid Pehdibalii canalizava Hurricane. O Shadowfury de Ominousdesxi aos 95.8 abriu a kill (97.4); o Druid caiu aos 114.2.",
+ "momento_decisivo": {"t": 86.6, "descricao": "Kwongwegaxx em stun a 19% sem usar o trinket, depois de Purge e Water Shield com pouca vida: ficou ao alcance do Shadowfury + Drain Soul que o mataram aos 97.4."},
+ "momento_aceitos": [78.0, 82.1, 86.3, 86.6, 95.8],
+ "erros": [
+  {"t": 86.3, "quem": "Kwongwegaxx", "fez": "water shield e purge a 19-22% de vida", "devia": "curar-se (Riptide, Healing Wave, Nature's Swiftness) e usar o trinket no stun", "porque": "o healer ficou ~20 s abaixo de 30% gastando GCD em manutenção e dispel", "gravidade": "alta"},
+  {"t": 79.6, "quem": "Pehdibalii", "fez": "hurricane com o próprio healer a 20-30%", "devia": "curar o Kwongwegaxx (Rejuvenation, Nourish) ou Cyclone no Warlock que batia nele", "porque": "Hurricane é fraco em arena e o healer morreu sem ajuda", "gravidade": "alta"},
+  {"t": 86.7, "quem": "Ominousdesix", "fez": "life tap com o healer aliado a 19%", "devia": "Fear/Death Coil no Ominousdesxi ou pressão no healer inimigo", "porque": "troca de vida por mana na hora em que o time precisava de CC", "gravidade": "media"}],
+ "acertos": [{"t": 95.8, "quem": "Ominousdesxi", "descricao": "Shadowfury no healer a 24% e Drain Soul para a kill"},
+  {"t": 53.9, "quem": "Ominousdesxi", "descricao": "Shadowfury pegando os três inimigos"}]}

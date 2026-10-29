@@ -1,0 +1,11 @@
+{"resumo": "O Rogue Zebedeuxii abriu no healer Heruxiv (Kidney 40.8, Shadow Dance 45.0) e trocou para Naminiv, mas a 44% ficou no alcance do Bladestorm de Celianeyix (49.0) sem cura do Kwongwegaxii e morreu aos 53.1 depois de gastar o Vanish para reabrir em vez de fugir. Em 3v2 o Warrior matou o healer aos 87.0 e depois o Priest.",
+ "momento_decisivo": {"t": 49.0, "descricao": "Bladestorm de Celianeyix no Zebedeuxii a 44%: o Rogue usou o Vanish (50.0) para dar Cheap Shot no Heruxiv em vez de sair, o Cloak (53.0) não protege de físico e ele morreu aos 53.1."},
+ "momento_aceitos": [47.2, 49.0, 50.0, 51.9],
+ "erros": [
+  {"t": 51.9, "quem": "Zebedeuxii", "fez": "premeditation + cheap shot no Heruxiv logo depois do Vanish, a 44%", "devia": "usar o Vanish para sair do Bladestorm e esperar a cura", "porque": "reabriu sob Bladestorm com pouca vida e morreu 1.2 s depois", "gravidade": "alta"},
+  {"t": 47.9, "quem": "Kwongwegaxii", "fez": "lightning bolt no Naminiv com o Rogue a 44% sob o Warrior", "devia": "curar o Zebedeuxii (Riptide, Healing Wave) ou dar Earthbind", "porque": "o aliado morreu aos 53.1 com o healer causando dano", "gravidade": "alta"},
+  {"t": 53.0, "quem": "Zebedeuxii", "fez": "cloak of shadows contra o Bladestorm", "devia": "Evasion/Vanish antes, ou fugir", "porque": "Cloak tira magia; o dano que o matava era físico", "gravidade": "media"},
+  {"t": 46.5, "quem": "Amnesianix", "fez": "mind flay enquanto o Rogue caía", "devia": "Power Word: Shield no Zebedeuxii", "porque": "o escudo dava tempo ao Rogue durante o Bladestorm", "gravidade": "media"}],
+ "acertos": [{"t": 49.0, "quem": "Celianeyix", "descricao": "Bladestorm no Rogue a 44%, a kill que abriu o 3v2"},
+  {"t": 40.0, "quem": "Amnesianix", "descricao": "Psychic Scream que forçou o trinket do Warrior na abertura"},
+  {"t": 44.5, "quem": "Naminiv", "descricao": "Wind Shear no healer inimigo"}]}

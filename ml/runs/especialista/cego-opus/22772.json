@@ -1,0 +1,10 @@
+{"resumo": "O Hunter Beteraniv aguentou a abertura com Deterrence (51.9) mas ficou trocando golpes corpo a corpo com o DK e o Warrior, sem Disengage nem armadilha, e morreu aos 61.5 sem cura do Druid, que gastava GCDs em Caster Form e Cyclone. O Druid caiu aos 89.5 e o Warlock no fim.",
+ "momento_decisivo": {"t": 54.0, "descricao": "Depois do Deterrence, Beteraniv volta para o melee (Raptor Strike 57.2, 58.5) e o Pehdicouii troca de forma e dá Cyclone em vez de curá-lo: o Hunter morre aos 61.5."},
+ "momento_aceitos": [51.9, 54.0, 57.1, 57.2, 59.1],
+ "erros": [
+  {"t": 57.2, "quem": "Beteraniv", "fez": "raptor strike e mongoose bite colado no DK e no Warrior a 44%", "devia": "Disengage, Frost Trap e kitar; Freezing Trap no Warrior", "porque": "o Hunter perde no melee e morreu 4 s depois", "gravidade": "alta"},
+  {"t": 54.0, "quem": "Pehdicouii", "fez": "caster form e cyclone com o Hunter caindo", "devia": "Swiftmend/Regrowth/Nature's Swiftness no Beteraniv", "porque": "o aliado morreu aos 61.5 sem cura grande", "gravidade": "alta"},
+  {"t": 50.1, "quem": "Ominoustres", "fez": "life tap com o Hunter sob dois pesados", "devia": "Fear/Howl of Terror no DK ou no Warrior", "porque": "trocou vida por mana na hora do peel", "gravidade": "media"}],
+ "acertos": [{"t": 42.2, "quem": "Ominoustres", "descricao": "Howl of Terror pegando o DK na abertura"},
+  {"t": 57.1, "quem": "Omasconiv", "descricao": "Gnaw no Warlock e Empower Rune Weapon na janela de kill do Hunter"},
+  {"t": 70.1, "quem": "Pehdicouii", "descricao": "Nature's Swiftness + Healing Touch para se salvar"}]}

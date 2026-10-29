@@ -1,0 +1,9 @@
+{"resumo": "O Wild I aguentou o Bladestorm do TSG II no Druid Pehdicouve (Barkskin 38.9) e controlou o Paladin Heruix com Fears e Spell Locks; o Warrior Celianeyiv ficou entre 25% e 32% de 61.9 a 71.6 s, preso em root, enquanto o Paladin gastava os GCDs em Cleanse, e morreu no Kill Shot. O DK caiu aos 104.3 e o Paladin ficou sozinho.",
+ "momento_decisivo": {"t": 67.7, "descricao": "Celianeyiv a 25% em root e o Heruix dando Cleanse em série em vez de curá-lo: o Warrior morreu no Kill Shot aos 71.6 e o TSG perdeu o dano."},
+ "momento_aceitos": [61.9, 64.1, 65.6, 67.7, 71.0],
+ "erros": [
+  {"t": 67.7, "quem": "Heruix", "fez": "cleanse em série com o Warrior a 25%", "devia": "Holy Light/Holy Shock/Hand of Protection no Celianeyiv", "porque": "o aliado morreu 4 s depois sem cura", "gravidade": "alta"},
+  {"t": 64.9, "quem": "Celianeyiv", "fez": "slam seguido a 25-32% preso em root", "devia": "sair da linha de visão / pedir peel, Enraged Regeneration já usada — Intimidating Shout no Hunter", "porque": "ficou parado no alcance do Hunter até o Kill Shot", "gravidade": "media"}],
+ "acertos": [{"t": 38.9, "quem": "Pehdicouve", "descricao": "Barkskin no Bladestorm da abertura"},
+  {"t": 41.4, "quem": "Ominous", "descricao": "Howl of Terror que forçou o trinket do Paladin"},
+  {"t": 91.5, "quem": "Heruix", "descricao": "Divine Shield a 8%"}]}

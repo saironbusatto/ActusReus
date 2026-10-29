@@ -1,0 +1,10 @@
+{"resumo": "Espelho RLS decidido no duelo de Rogues: Zebedeuvii abriu com Shadow Dance no Zebedeuix (Cheap Shot 39.4 e 43.8, Kidney 45.2); o Rogue do RLS II gastou trinket, Vanish e Cloak e morreu aos 59.7 enquanto o próprio healer Kwongwegaiv jogava Flame Shock e Lava Burst em vez de curar. Em 2v3 o Warlock caiu aos 97.1.",
+ "momento_decisivo": {"t": 39.2, "descricao": "Shadow Dance de Zebedeuvii no Rogue inimigo com cadeia de stuns (39.4, 43.8, 45.2): sem cura do Kwongwegaiv, que fazia dano, o Zebedeuix morreu aos 59.7."},
+ "momento_aceitos": [39.2, 39.4, 43.8, 45.2, 49.2],
+ "erros": [
+  {"t": 49.2, "quem": "Kwongwegaiv", "fez": "flame shock, lava burst e lightning bolt com o próprio Rogue a 30-35%", "devia": "curar o Zebedeuix (Riptide, Healing Wave, Nature's Swiftness)", "porque": "o aliado morreu aos 59.7 com o healer fazendo dano", "gravidade": "alta"},
+  {"t": 47.7, "quem": "Zebedeuix", "fez": "cloak of shadows contra um Rogue", "devia": "Evasion/Vanish para sair, ou guardar o Cloak para os DoTs do Warlock", "porque": "o dano que o matava era físico", "gravidade": "media"},
+  {"t": 43.8, "quem": "Ominousxxi", "fez": "pet spell lock e corruption sem CC no Rogue que matava o aliado", "devia": "Fear no Zebedeuvii", "porque": "o Rogue inimigo ficou livre durante toda a janela de kill", "gravidade": "media"}],
+ "acertos": [{"t": 39.2, "quem": "Zebedeuvii", "descricao": "Shadow Dance com cadeia de stuns no Rogue inimigo"},
+  {"t": 53.5, "quem": "Zebedeuvii", "descricao": "Evasion a 42% no duelo de Rogues"},
+  {"t": 73.8, "quem": "Kwongwegaii", "descricao": "Mana Tide Totem na luta longa"}]}

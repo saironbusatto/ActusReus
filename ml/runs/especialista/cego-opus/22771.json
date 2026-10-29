@@ -1,0 +1,10 @@
+{"resumo": "O Shadowfury de Ominousdesix (34.7) pegou os três do Thunder IV e o Warrior Celianeyxi gastou o trinket nele a 83%; depois do Bladestorm, o Warrior ficou nos DoTs e levou Conflagrate + Chaos Bolt com Bloodlust (49.1-50.5) e morreu aos 52.0. O Shaman caiu aos 108.7 e o Paladin aguentou sozinho até o fim.",
+ "momento_decisivo": {"t": 49.1, "descricao": "Conflagrate e Chaos Bolt de Ominousdesix no Celianeyxi sob Bloodlust: o Warrior, sem trinket (gasto no Shadowfury aos 34.8), morreu aos 52.0."},
+ "momento_aceitos": [34.7, 34.8, 49.1, 50.5],
+ "erros": [
+  {"t": 34.8, "quem": "Celianeyxi", "fez": "every man for himself no Shadowfury de 3 s a 83% de vida", "devia": "guardar o trinket para a janela de kill", "porque": "15 s depois morreu no burst do Warlock sem saída", "gravidade": "media"},
+  {"t": 47.9, "quem": "Naminvi", "fez": "wind shear no Druid enquanto o Warlock conjurava o burst no Warrior", "devia": "Wind Shear no Ominousdesix (Chaos Bolt/Incinerate)", "porque": "o Chaos Bolt aos 50.5 matou o Warrior", "gravidade": "media"},
+  {"t": 43.4, "quem": "Heruxvi", "fez": "flash of light e cleanse com o Warrior caindo", "devia": "Holy Shock/Holy Light no Celianeyxi e Divine Sacrifice", "porque": "curas pequenas não seguraram o burst com Bloodlust", "gravidade": "media"}],
+ "acertos": [{"t": 34.7, "quem": "Ominousdesix", "descricao": "Shadowfury nos três inimigos"},
+  {"t": 49.1, "quem": "Ominousdesix", "descricao": "Conflagrate + Chaos Bolt sob Bloodlust para a kill"},
+  {"t": 139.5, "quem": "Heruxvi", "descricao": "Divine Shield a 22%"}]}

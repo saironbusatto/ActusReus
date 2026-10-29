@@ -24,6 +24,7 @@ MELEE = {"heroic strike", "mortal strike", "cleave", "slam", "execute", "overpow
          "icy touch", "crusader strike", "raptor strike", "mongoose bite", "shred", "mangle", "stormstrike", "lava lash"}
 JANELA_DR, MIN_DR, MIN_REPETE, PREPARO = 18.0, 3, 5, 30.0
 CC_TRINKET = {"stun", "fear", "poly/blind"}  # o trinket de PvP não tira silence nem root
+ACOES_TRINKET = {"pvp trinket", "every man for himself", "will of the forsaken"}
 
 
 def _membros(luta: dict) -> list[dict]:
@@ -51,6 +52,8 @@ def achados(luta: dict) -> list[dict]:
 
     trinkets = defaultdict(list)
     for e in ev:
+        if e.get("tipo") == "acao" and e["acao"] in ACOES_TRINKET:  # nem todo uso gera o "** usou trinket"
+            trinkets[e["quem"]].append(e)
         if e.get("tipo") == "trinket":
             trinkets[e["quem"]].append(e)
             if e.get("vida", 0) >= 90:
@@ -144,6 +147,9 @@ def selftest() -> None:
     assert "W usou horn of winter aos 63.0 s" in txt and "seal of wisdom aos 31" not in txt
     assert "W ativou Retaliation aos 40.0 s e levou 2 golpes" in txt
     assert texto_fatos({"membros": [], "eventos": []}) == ""
+    # 22743/22771: o Warrior usou Every Man for Himself sem o evento "** usou trinket" e o fato dizia que não usou
+    luta["eventos"].insert(0, A(45, "W", "every man for himself"))
+    assert "W morreu" not in "\n".join(fatos(luta))
     print("ok verificador")
 
 

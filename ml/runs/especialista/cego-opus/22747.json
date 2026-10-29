@@ -1,0 +1,9 @@
+{"resumo": "O Wild II segurou a abertura e o Bladestorm do TSG II no Druid Pehdicouii (Tree of Life, Nature's Swiftness) e virou no healer Heruix: Silencing Shot (47.3, 50.1) e Spell Lock (74.1) no Paladin, que a 29% usou Divine Sacrifice em vez de Divine Shield e morreu no Kill Shot aos 77.7. DK e Warrior caíram em seguida.",
+ "momento_decisivo": {"t": 74.1, "descricao": "Spell Lock no Heruix a 29% e Kill Shot de Beteraniv (77.1): o Paladin não usou o Divine Shield e o TSG perdeu o healer."},
+ "momento_aceitos": [70.2, 74.1, 75.5, 77.1],
+ "erros": [
+  {"t": 75.5, "quem": "Heruix", "fez": "divine sacrifice a 29% de vida", "devia": "Divine Shield (Bubble) ou Hand of Protection em si", "porque": "morreu 2 s depois com o Bubble sem uso", "gravidade": "alta"},
+  {"t": 61.5, "quem": "Omasconiv", "fez": "não usou CC no Druid durante o Bladestorm do Warrior (61.5-67.5)", "devia": "Strangulate ou Gnaw no Pehdicouii para o Warrior fechar a kill", "porque": "o Druid se curou com Tree of Life e Nature's Swiftness e a janela de burst passou", "gravidade": "media"}],
+ "acertos": [{"t": 47.3, "quem": "Beteraniv", "descricao": "Silencing Shot no healer inimigo, repetido aos 50.1"},
+  {"t": 74.1, "quem": "Ominoustres", "descricao": "Spell Lock no Paladin a 29% para o Kill Shot"},
+  {"t": 67.5, "quem": "Pehdicouii", "descricao": "Nature's Swiftness + Healing Touch sob o Bladestorm"}]}

@@ -1,0 +1,10 @@
+{"resumo": "O RMP II abriu no Mage Heshovii (Shadow Dance 43.3, Blind no healer 46.0, Kidney 51.9) sem matar; aos 68.6 o Rogue deu Shadowstep no healer Kwongwegavii, e o Warlock e o Mage do Fireplay I não tiraram o Rogue de cima: o healer morreu aos 74.1 e o resto caiu em 2v3.",
+ "momento_decisivo": {"t": 68.6, "descricao": "Shadowstep de Zebedeuii no healer Kwongwegavii: com Evasion (69.7) ninguém tirou o Rogue (o Warlock deu Life Tap aos 70.5, o Mage Living Bomb) e o healer morreu aos 74.1."},
+ "momento_aceitos": [68.6, 69.7, 70.2, 70.5],
+ "erros": [
+  {"t": 70.5, "quem": "Ominousdes", "fez": "life tap com o Rogue matando o próprio healer", "devia": "Fear ou Death Coil no Zebedeuii, ou Seduction nele", "porque": "o healer morreu aos 74.1 sem nenhum CC no Rogue", "gravidade": "alta"},
+  {"t": 70.2, "quem": "Heshovii", "fez": "living bomb em série no Rogue em Evasion", "devia": "Polymorph no Rogue para salvar o healer", "porque": "dano em alvo com Evasion não tirava a pressão; o CC sim", "gravidade": "media"},
+  {"t": 75.2, "quem": "Heshovii", "fez": "evocation logo depois da morte do healer, em 2v3", "devia": "ficar ativo (Frostbolt, Polymorph, Blink)", "porque": "8 s parado com três inimigos vivos", "gravidade": "baixa"}],
+ "acertos": [{"t": 46.0, "quem": "Zebedeuii", "descricao": "Blind no healer no meio da abertura no Mage"},
+  {"t": 68.6, "quem": "Zebedeuii", "descricao": "Shadowstep no healer com Evasion pronto: a troca que decidiu a luta"},
+  {"t": 54.2, "quem": "Heshoiv", "descricao": "Counterspell no healer inimigo"}]}

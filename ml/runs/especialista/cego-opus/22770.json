@@ -1,0 +1,9 @@
+{"resumo": "Espelho Wild longo e equilibrado, decidido no healer: aos 111-115 s o Warlock Ominous prendeu o Druid Pehdicouii em Fear (o trinket aos 112.7 foi respondido com outro Fear na hora) e o Howl de 115.5 fechou o controle; sem cura, o Hunter Beteraniv, a 42% depois do Deterrence, morreu no Kill Shot aos 121.0. O Druid caiu aos 138.3.",
+ "momento_decisivo": {"t": 112.8, "descricao": "Ominous refaz o Fear no Pehdicouii logo depois do trinket: com o healer controlado, o Beteraniv sai do Deterrence a 42% sem cura e morre aos 121.0."},
+ "momento_aceitos": [111.0, 111.5, 112.8, 115.5, 120.1],
+ "erros": [
+  {"t": 74.5, "quem": "Pehdicouii", "fez": "caster form, abolish poison e remove curse em série durante a luta toda", "devia": "manter HoTs no Hunter e guardar GCD para curas grandes", "porque": "19 trocas de forma e dispels de baixo valor; quando o Hunter caiu não havia margem", "gravidade": "media"},
+  {"t": 110.2, "quem": "Ominoustres", "fez": "life tap logo antes da janela de kill no Hunter aliado", "devia": "Fear/Death Coil no Warlock inimigo que controlava o healer", "porque": "o Druid ficou em Fear em cadeia sem nenhum peel", "gravidade": "media"}],
+ "acertos": [{"t": 112.8, "quem": "Ominous", "descricao": "Fear de novo no healer logo depois do trinket"},
+  {"t": 120.1, "quem": "Beteranii", "descricao": "Silencing Shot + Kill Shot no Hunter a 16%"},
+  {"t": 113.1, "quem": "Pehdicouii", "descricao": "trinket + Nature's Swiftness a 31%"}]}

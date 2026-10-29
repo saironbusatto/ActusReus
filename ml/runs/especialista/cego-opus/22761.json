@@ -1,0 +1,9 @@
+{"resumo": "Kwongwegaxx, o healer do LSD II, não jogou. O Rogue Zebedeuxiv abriu no Druid Pehdibalii com Shadow Dance e uma cadeia de stuns (39.5, 44.3, 45.4), deu Vanish e reabriu para a kill aos 52.7; o Warlock sozinho caiu depois.",
+ "momento_decisivo": {"t": 0.0, "descricao": "Healer Kwongwegaxx ausente: o LSD II jogou sem cura contra uma abertura de Rogue."},
+ "momento_aceitos": [0.0, 36.7, 44.3, 45.4, 48.8],
+ "erros": [
+  {"t": 44.3, "quem": "Ominousdesix", "fez": "corruption e curse em vez de CC no Rogue que matava o Druid (44-52 s)", "devia": "Fear no Zebedeuxiv (Death Coil já usado aos 39.4)", "porque": "o Druid tomou três stuns seguidos sem nenhum CC no Rogue", "gravidade": "alta"},
+  {"t": 51.7, "quem": "Pehdibalii", "fez": "barkskin só com 8% de vida", "devia": "Barkskin no primeiro stun (39.5-45.4)", "porque": "Barkskin é usável em stun; tarde demais não salvou", "gravidade": "media"},
+  {"t": 57.4, "quem": "Ominousdesix", "fez": "life tap com o Rogue em cima", "devia": "Fear/Howl of Terror no Rogue", "porque": "trocou vida por mana sob pressão", "gravidade": "baixa"}],
+ "acertos": [{"t": 48.8, "quem": "Zebedeuxiv", "descricao": "Vanish e reabertura com Premeditation para fechar o Druid"},
+  {"t": 39.4, "quem": "Ominousdesix", "descricao": "Death Coil no Rogue na primeira investida"}]}
