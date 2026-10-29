@@ -1,0 +1,20 @@
+{"resumo": "Zebedeuxii trinketou um fear aos 40%, deu shadowstep direto num psychic horror e nunca se recuperou; com o curador Kwongwegaxii trancado por spell lock e gastando GCD em purge, o rogue morreu aos 95.4 e a Shadowplay II venceu na atrito.",
+ "momento_decisivo": {"t": 63.8, "descricao": "Zebedeuxii gasta o pvp trinket no psychic scream e dá shadowstep em Amnesianxxi, que responde com psychic horror; sem trinket, o próximo psychic scream (87.5, 22% de vida) leva à morte dele."},
+ "erros": [
+  {"t": 63.8, "quem": "Zebedeuxii", "fez": "pvp trinket no fear e shadowstep imediato no priest inimigo", "devia": "esperar o fear quebrar com dano/DoTs ou trinketar só para cobrir um kill; nunca colar em priest com psychic horror disponível logo após trinketar", "porque": "levou psychic horror aos 64.6 e ficou sem saída para o psychic scream de 87.5, quando estava a 22%", "gravidade": "alta"},
+  {"t": 52.7, "quem": "Kwongwegaxii", "fez": "purge ×3 até 57.1 (e outro aos 59.3)", "devia": "priorizar cura no rogue e grounding/tremor, purgando só escudos importantes", "porque": "o rogue foi de 88% a 44% nesse período e o shaman, que já sofria spell lock, gastou os GCDs livres em purge", "gravidade": "alta"},
+  {"t": 47.3, "quem": "Zebedeuxii", "fez": "hemorrhage e slice and dice em loop sem finishers de dano", "devia": "acumular combo e usar rupture/eviscerate ou kidney shot coordenado com o shadow priest", "porque": "em 60 s de luta o rogue não forçou nenhum defensivo grande; só pressão de hemorrhage não mata curador paladino", "gravidade": "media"},
+  {"t": 122.5, "quem": "Amnesianix", "fez": "dispersion a 100% de vida", "devia": "guardar Dispersion para quando tomar burst ou para escapar de fear/roots com vida baixa", "porque": "cooldown defensivo gasto sem dano; mais tarde, aos 191-193, caiu a 16% sem ele", "gravidade": "media"},
+  {"t": 147.8, "quem": "Amnesianxxi", "fez": "dispersion a 100% de vida", "devia": "usar só sob pressão ou para recuperar mana em momento seguro", "porque": "defensivo desperdiçado sem ameaça imediata", "gravidade": "baixa"},
+  {"t": 108.3, "quem": "Kwongwegaxii", "fez": "purge ×2 até 114.9 em 2v3", "devia": "se posicionar contra o fear e curar/proteger quem estava sob DoTs, usando tremor totem contra os fears do warlock", "porque": "estava sendo feared seguidamente (105.8, 107.7, 109.5) e não colocou tremor totem; em 2v3 cada GCD de cura conta", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 87.5, "quem": "Amnesianxxi", "descricao": "Psychic scream no rogue a 22% sem trinket, isolando-o do curador; morreu aos 95.4."},
+  {"t": 45.6, "quem": "Ominousx", "descricao": "Spell lock do felhunter no Kwongwegaxii logo na abertura, e manutenção de locks no curador durante a luta."},
+  {"t": 71.6, "quem": "Amnesianxxi", "descricao": "Shadowfiend + inner focus para sustentar mana numa luta longa de atrito."}
+ ],
+ "erros_da_rede": [
+  {"t": 64.1, "quem": "Zebedeuxii", "acao": "shadowstep → Amnesianxxi", "porque": "logo após trinketar, saltar no priest que tinha psychic horror pronto resultou em stun imediato aos 64.6."},
+  {"t": 85.2, "quem": "Amnesianix", "acao": "shadowform → Amnesianxxi", "porque": "o rogue do time estava a ~16-22%; voltar para shadowform corta a cura no momento em que ele precisava, e ele morreu aos 95.4."},
+  {"t": 48.7, "quem": "Zebedeuxii", "acao": "slice and dice → Heruiv", "porque": "gastou combo em buff de velocidade de ataque em vez de kidney shot/rupture num paladino curador, sem pressão real."}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "O RMP matou o Pehdibalv com shadow dance, cheap shot, ambush e kidney enquanto o Kwongwegaxxv jogava purge e cleanse em vez de curar; depois o Heshoii prendeu o curador com deep freeze duplo e o Zebedeu matou o Ominousdesxi.",
+ "momento_decisivo": {"t": 70.3, "descricao": "Com o Pehdibalv preso em cheap shot/kidney indo de 62% a 28%, o Kwongwegaxxv usou purge (70.3, 71.4) e cleanse spirit poison (69.2, 74.8, 75.9) e não curou o druida, que morreu aos 75.9."},
+ "erros": [
+  {"t": 70.3, "quem": "Kwongwegaxxv", "fez": "purge e cleanse spirit em veneno seguidos (69.2-75.9) durante a janela de shadow dance no Pehdibalv", "devia": "riptide + healing wave/nature's swiftness no druida e wind shear no Amnesian", "porque": "o druida morreu sem receber cura do shaman nesses 7 s", "gravidade": "alta"},
+  {"t": 73.6, "quem": "Pehdibalv", "fez": "cyclone logo depois de gastar o trinket a 28% (e outros cyclones em 71.5)", "devia": "se curar (regrowth/swiftmend) ou fugir do rogue em travel form", "porque": "conjurar cyclone parado a 28% com rogue em cima é morte certa; morreu 2,3 s depois", "gravidade": "alta"},
+  {"t": 45.2, "quem": "Amnesian", "fez": "mind sear três vezes (45.2-50.0) enquanto o Zebedeu estava em root/fear caindo de 73% a 41%", "devia": "shield, penance e flash heal no rogue, e dispel do root", "porque": "o rogue precisou gastar a evasion aos 50.9 por falta de cura", "gravidade": "media"},
+  {"t": 74.9, "quem": "Ominousdesxi", "fez": "life tap com o druida a 28% morrendo", "devia": "death coil/fear no Zebedeu ou spell lock do pet no Amnesian", "porque": "nenhum peel no rogue; o time perdeu o druida e ficou 2v3", "gravidade": "media"},
+  {"t": 75.5, "quem": "Zebedeu", "fez": "pvp trinket para sair de um stun com 66% de vida", "devia": "aguentar esse stun e guardar o trinket para a próxima pressão", "porque": "aos 83.3 caiu a 22% e precisou de cloak e vanish para sobreviver, sem trinket", "gravidade": "media"},
+  {"t": 64.5, "quem": "Heshoii", "fez": "blizzard ×2 (64.5-70.8), e flamestrike aos 43.0", "devia": "polymorph no Kwongwegaxxv durante o shadow dance do rogue, ou frostbolt no alvo", "porque": "canal de AoE em 3v3 é dano baixo; tirar o curador na janela de kill valia muito mais", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 66.6, "quem": "Zebedeu", "descricao": "shadow dance com cheap shot, ambush e depois kidney (72.7) no Pehdibalv: kill limpa do druida"},
+  {"t": 78.6, "quem": "Heshoii", "descricao": "deep freeze no Kwongwegaxxv, cold snap e segundo deep freeze aos 79.8: tirou o curador enquanto o Zebedeu ia para o lock"},
+  {"t": 83.3, "quem": "Zebedeu", "descricao": "cloak of shadows e vanish a 22% para sair dos DoTs do warlock, e voltou para matar o Ominousdesxi"}
+ ],
+ "erros_da_rede": [
+  {"t": 49.5, "quem": "Zebedeu", "acao": "hemorrhage no Kwongwegaxxv estando a 45% em root", "porque": "sob DoTs e roots o rogue devia se defender (evasion/cloak) antes de seguir batendo; só usou evasion depois"},
+  {"t": 48.0, "quem": "Amnesian", "acao": "prayer of mending", "porque": "com o Zebedeu a 45%, cura lenta de rebote não basta; shield ou penance direto no rogue era o necessário"}
+ ]}

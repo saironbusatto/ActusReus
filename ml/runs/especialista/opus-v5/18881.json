@@ -1,0 +1,16 @@
+{"resumo": "Os dois warlocks trocaram spell locks, mas o Shadowplay somou silence do priest e spell lock do pet no xamã curandeiro até matá-lo silenciado aos 81.0. Sem cura, Zebedeuxi caiu aos 92.5.",
+ "momento_decisivo": {"t": 80.6, "descricao": "Spell lock de Ominousxii em Kwongwegavi a 7%, emendado no silence de Amnesianxxiv (65.4) e nos spell locks anteriores. O xamã não conseguiu se curar e morreu aos 81.0."},
+ "erros": [
+  {"t": 53.4, "quem": "Zebedeuxi", "fez": "deu kidney shot em Heruvi sem CC no outro curandeiro e sem burst junto, e repetiu aos 74.3", "devia": "fazer blind ou gouge em Amnesianxxiv antes, e soltar o kidney com os warlocks em cima do mesmo alvo", "porque": "kidney sem setup só gasta o DR e os combo points, e o paladino foi curado pelo priest", "gravidade": "media"},
+  {"t": 36.0, "quem": "Kwongwegavi", "fez": "não usou tremor totem nem grounding totem contra um time com dois warlocks e priest", "devia": "baixar tremor totem logo de cara e grounding contra spell lock/fear", "porque": "o time dele sofreu fears e silences o tempo todo, e ele mesmo morreu silenciado", "gravidade": "alta"},
+  {"t": 76.5, "quem": "Heruvi", "fez": "usou divine plea logo depois do kidney shot, já com a vida caindo", "devia": "guardar divine plea para um momento sem pressão", "porque": "o plea corta 50% da cura, e o paladino caiu de 60% para 31% em seguida, tendo que usar o bubble aos 83.0", "gravidade": "media"},
+  {"t": 53.6, "quem": "Heruvi", "fez": "usou every man for himself no kidney shot com 67% de vida", "devia": "aguentar o kidney com a cura do priest e guardar o trinket para um kidney com a vida baixa", "porque": "ele levou outro kidney aos 74.3 sem trinket e chegou a 18%", "gravidade": "baixa"},
+  {"t": 41.6, "quem": "Ominousxxiv", "fez": "passou a luta repetindo corruption/curse of tongues e nunca deu fear em Amnesianxxiv", "devia": "dar fear no priest para isolar o paladino nos kidneys do rogue", "porque": "o fear era o CC que faltava para o rogue fechar um kill; o priest curou à vontade", "gravidade": "media"},
+  {"t": 39.0, "quem": "Ominousxii", "fez": "usou shoot (varinha) várias vezes (39.0, 45.5, 51.7)", "devia": "lançar haunt, unstable affliction ou shadow bolt", "porque": "a varinha dá muito pouco dano; com mana, o warlock perde pressão com ela", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 65.4, "quem": "Amnesianxxiv", "descricao": "Silence em Kwongwegavi a 43%, abrindo a janela de kill no curandeiro."},
+  {"t": 80.6, "quem": "Ominousxii", "descricao": "Spell lock no xamã a 7%, que garantiu a morte dele."},
+  {"t": 83.0, "quem": "Heruvi", "descricao": "Divine shield a 18% sob o vanish e o premeditation do rogue."}
+ ],
+ "erros_da_rede": []}

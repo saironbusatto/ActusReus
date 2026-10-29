@@ -1,0 +1,19 @@
+{"resumo": "Wild I travou o Shaman Kwongwegaxxv numa sequência de Fear e stun e, com Pehdibalv silenciado, Beteranii deu Silencing Shot no curador com 8% de vida e o matou aos 83.9; sem curador, Ominousdesxi caiu aos 92.2.",
+ "momento_decisivo": {"t": 81.8, "descricao": "Beteranii deu Silencing Shot em Kwongwegaxxv com 8% de vida, logo depois do Spell Lock de Ominous em Pehdibalv: sem cura própria e sem a cura do aliado, o Shaman morreu na troca seguinte."},
+ "erros": [
+  {"t": 69.4, "quem": "Kwongwegaxxv", "fez": "usou Purge duas vezes (69.4-73.5) quando estava com 26-44% de vida e sendo focado", "devia": "curar a si mesmo (Riptide/Healing Wave) ou ativar Nature's Swiftness", "porque": "o curador era o alvo da kill, e tirar buff do inimigo não salva a própria vida", "gravidade": "alta"},
+  {"t": 52.2, "quem": "Pehdicouve", "fez": "canalizou Hurricane como Druida Resto (52.2 e 65.4)", "devia": "manter HoTs no time e usar Cyclone/Roots no alvo certo", "porque": "o dano de AoE quebra o Fear de Ominous em Kwongwegaxxv (49.5, 62.5) e prende o curador numa canalização", "gravidade": "alta"},
+  {"t": 52.7, "quem": "Beteranii", "fez": "usou Volley (52.7, 58.1-63.5) logo depois dos Fears de Ominous no Shaman", "devia": "dar dano de alvo único no Shaman (Chimera/Aimed) e deixar o Fear durar", "porque": "Volley quebra o CC aliado e espalha dano que não mata ninguém", "gravidade": "media"},
+  {"t": 47.7, "quem": "Pehdibalv", "fez": "lançou Entangling Roots em Beteranii (47.7, 54.9)", "devia": "usar Starfire/Wrath ou Cyclone no Warlock inimigo", "porque": "prender um Hunter no lugar não o impede de atirar; foi GCD jogado fora", "gravidade": "media"},
+  {"t": 56.8, "quem": "Ominousdesxi", "fez": "reaplicou Corruption seguidas vezes (56.8-62.1) enquanto Kwongwegaxxv caía de vida", "devia": "dar Fear em Beteranii ou Death Coil para aliviar a pressão no curador", "porque": "o time estava perdendo a troca do curador e DoT não tira ninguém de cima dele", "gravidade": "media"},
+  {"t": 79.1, "quem": "Pehdibalv", "fez": "entrou e saiu de Moonkin/caster form (79.1, 80.8, 82.9, 87.4) enquanto o Shaman morria", "devia": "ficar em caster form e curar Kwongwegaxxv (Nourish/Regrowth)", "porque": "cada troca de forma gasta um GCD na hora exata em que a cura de apoio salvaria o curador", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 68.2, "quem": "Pehdibalv", "descricao": "Barkskin com 18% de vida, sobrevivendo ao burst."},
+  {"t": 72.2, "quem": "Beteranii", "descricao": "Deterrence com 42% de vida, depois Readiness + Rapid Fire para voltar à ofensiva."},
+  {"t": 62.5, "quem": "Ominous", "descricao": "Fear e Curse of Tongues em sequência no Shaman, deixando o curador fora da luta antes do kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 50.8, "quem": "Pehdicouve", "acao": "shadowmeld → Pehdibalv", "porque": "Shadowmeld no meio do combate, com os inimigos em cima, não tira o druida de nada e custa ação"},
+  {"t": 50.9, "quem": "Beteranii", "acao": "hunter's mark → Pehdibalv", "porque": "terceira marca em alvo diferente em 10 s (Kwongwegaxxv, Ominousdesxi, Pehdibalv): GCD perdido e pressão espalhada"}
+ ]}

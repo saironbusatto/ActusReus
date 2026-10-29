@@ -1,0 +1,20 @@
+{"resumo": "O warrior Celianeyiv passou a luta em cleave/heroic strike sem mortal strike e morreu para os DoTs do Ominousx com o paladino curador silenciado; sem o warrior, o DK caiu e o paladino sozinho só arrastou o fim.",
+ "momento_decisivo": {"t": 62.7, "descricao": "Ominousx usa spell lock no Heruix com curse of agony/UA/haunt rodando em Celianeyiv; repetido aos 67.7, deixa o warrior sem cura até morrer aos 75.9."},
+ "erros": [
+  {"t": 49.7, "quem": "Celianeyiv", "fez": "cleave/heroic strike em sequência no Amnesianxxi a 29%", "devia": "mortal strike para cortar a cura e fechar o priest", "porque": "sem o debuff de cura do MS o priest saiu do shadowform e se curou; o primeiro MS só veio aos 73.6", "gravidade": "alta"},
+  {"t": 42.9, "quem": "Celianeyiv", "fez": "every man for himself no primeiro fear, com 94% de vida", "devia": "berserker rage para sair do fear e guardar o trinket", "porque": "ele usou berserker rage logo depois, no howl (43.8); o trinket foi gasto à toa", "gravidade": "media"},
+  {"t": 61.2, "quem": "Celianeyiv", "fez": "demoralizing shout, battle shout e sunder armor seguidos", "devia": "mortal strike/hamstring no priest ou intervir pelo curador", "porque": "GCDs de baixo valor no PvP enquanto o alvo se curava", "gravidade": "media"},
+  {"t": 75.9, "quem": "Heruix", "fez": "judgement of light no momento em que Celianeyiv morria", "devia": "flash of light/hand of protection ou divine sacrifice no warrior", "porque": "o warrior estava sob vários DoTs; o paladino não usou nenhum cooldown de proteção nele", "gravidade": "alta"},
+  {"t": 48.5, "quem": "Omasconiv", "fez": "mind freeze no Heruiv já em stun do gnaw", "devia": "guardar o mind freeze para um holy light do paladino fora do stun", "porque": "interromper alvo em stun não faz nada e põe o interrupt em recarga", "gravidade": "media"},
+  {"t": 109.6, "quem": "Heruix", "fez": "every man for himself num fear com 85% de vida", "devia": "segurar o trinket ou usá-lo só para salvar um cast decisivo", "porque": "foi feared de novo aos 111.5 e 116.4; o trinket não mudou nada", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 43.7, "quem": "Ominousx", "descricao": "howl of terror pegando os dois melees de uma vez e tirando o trinket do DK"},
+  {"t": 49.9, "quem": "Amnesianxxi", "descricao": "trinket no stun a 29%, silence no curador e saída do shadowform para se curar, sobrevivendo à pressão dupla"},
+  {"t": 56.0, "quem": "Omasconiv", "descricao": "gargoyle em conjunto com os gnaws repetidos no paladino curador"}
+ ],
+ "erros_da_rede": [
+  {"t": 48.5, "quem": "Omasconiv", "acao": "mind freeze → Heruiv", "porque": "o alvo estava em stun do gnaw desde 48.2; o interrupt foi desperdiçado"},
+  {"t": 99.3, "quem": "Ominousx", "acao": "life tap → Heruix", "porque": "três life taps seguidos (97.8-100.9) no 3v1 em vez de pressionar o último inimigo"},
+  {"t": 97.4, "quem": "Heruiv", "acao": "hand of freedom on party → Heruix", "porque": "não havia root/slow relevante no time; GCD sem efeito"}
+ ]}

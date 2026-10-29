@@ -1,0 +1,18 @@
+{"resumo": "Espelho de warrior/xamã/paladino. Celianeyix deu charge e bladestorm em Heruxvi com heroism, e o paladino morreu aos 40.5 sem usar divine shield. Sem curandeiro, Celianeyxi caiu aos 47.4.",
+ "momento_decisivo": {"t": 36.2, "descricao": "Bladestorm de Celianeyix em Heruxvi com heroism, junto de elemental mastery e thunderstorm de Naminiv. O paladino caiu em 4 s sem usar divine shield nem hand of protection."},
+ "erros": [
+  {"t": 38.8, "quem": "Heruxvi", "fez": "lançou holy light (cast longo) sob bladestorm e morreu aos 40.5 sem divine shield", "devia": "usar divine shield ou hand of protection em si mesmo assim que o bladestorm começou", "porque": "o bubble existe exatamente para isso; um paladino morrer com o divine shield disponível define a luta", "gravidade": "alta"},
+  {"t": 32.6, "quem": "Heruxvi", "fez": "lançou cleanse magic duas vezes na abertura enquanto o warrior inimigo vinha nele", "devia": "se preparar para o burst: guardar GCD, aplicar o próprio sacred shield ou flash of light, e ficar perto do warrior aliado", "porque": "a ameaça era física e em cima dele; dispelar flame shock não mudava nada", "gravidade": "media"},
+  {"t": 33.4, "quem": "Celianeyxi", "fez": "usou every man for himself no stun do charge, com 92% de vida", "devia": "aguentar o stun curto e guardar o trinket para um hamstring/intimidating shout ou para proteger o curandeiro", "porque": "o charge dura 1.5 s e não ameaçava ninguém; sem trinket, ele não conseguiu reagir quando o paladino caiu", "gravidade": "media"},
+  {"t": 36.3, "quem": "Celianeyxi", "fez": "deu bladestorm no próprio alvo enquanto Celianeyix massacrava Heruxvi", "devia": "fazer peel: intervene no paladino, hamstring ou intimidating shout em Celianeyix", "porque": "o curandeiro dele caía e o warrior inimigo estava livre; o bladestorm dele não matou ninguém", "gravidade": "alta"},
+  {"t": 37.3, "quem": "Naminvi", "fez": "lançou chain lightning, elemental mastery e lava burst enquanto o paladino aliado caía", "devia": "jogar earthbind/frost shock em Celianeyix e dar uma cura emergencial em Heruxvi", "porque": "o xamã era o segundo curandeiro possível e o único que podia fazer peel à distância", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 36.2, "quem": "Celianeyix", "descricao": "Charge e bladestorm no paladino curandeiro dentro do heroism, burst que matou em 4 s."},
+  {"t": 38.0, "quem": "Naminiv", "descricao": "Thunderstorm e lava burst com elemental mastery somados ao burst do warrior no mesmo alvo."},
+  {"t": 46.5, "quem": "Heruxiv", "descricao": "Divine shield a 16% depois do kill, sobrevivendo ao contra-ataque."}
+ ],
+ "erros_da_rede": [
+  {"t": 49.5, "quem": "Celianeyix", "acao": "sunder armor", "porque": "com o inimigo restante isolado, sunder é o GCD de menor dano; mortal strike ou execute fechavam mais rápido"},
+  {"t": 43.4, "quem": "Naminiv", "acao": "purge", "porque": "purge num warrior quase sem buffs mágicos, com o alvo caindo e um lava burst/chain lightning disponível"}
+ ]}

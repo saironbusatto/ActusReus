@@ -1,0 +1,20 @@
+{"resumo": "O Zebedeuxi quase matou o Celianeyix com shadow dance, mas o warrior escapou com EMFH/trinket e depois treinou o rogue até a morte enquanto o Ominousxxiv sumia da luta (healthstone, life tap e quase 60 s sem agir); sozinho, o Kwongwegavi aguentou até os 128.",
+ "momento_decisivo": {"t": 67.0, "descricao": "Ominousxxiv conjurou create healthstone e life tap e ficou sem nenhuma ação de 69.4 a 128.9; sem fear, death coil ou spell lock no warrior e no paladino, o Zebedeuxi foi treinado e morreu aos 86.1."},
+ "erros": [
+  {"t": 67.0, "quem": "Ominousxxiv", "fez": "create healthstone e life tap no meio da luta e depois ficou sem agir até 128.9", "devia": "fear/death coil no Celianeyix, spell lock no Heruxiv quando o rogue estivesse baixo, DoTs no shaman", "porque": "o time ficou 2v3 na prática; o rogue morreu e o curador apanhou sozinho do warrior por 40 s", "gravidade": "alta"},
+  {"t": 44.5, "quem": "Heruxiv", "fez": "cleanse poison ×2 (44.5-48.8) com o Celianeyix em cheap shot/kidney indo de 58% a 28%", "devia": "hand of protection no warrior preso no stun ou holy light/holy shock nele", "porque": "contra um rogue em shadow dance o BoP anula o dano físico; o warrior precisou queimar EMFH e trinket para sobreviver", "gravidade": "alta"},
+  {"t": 43.0, "quem": "Celianeyix", "fez": "every man for himself para sair do cheap shot com 60% de vida, levando outro stun 0,9 s depois e gastando também o trinket aos 46.9", "devia": "aguentar o cheap shot e usar uma única saída no kidney com vida baixa", "porque": "o shadow dance permite reaplicar stuns; ele queimou as duas saídas de CC em 4 s", "gravidade": "media"},
+  {"t": 71.0, "quem": "Zebedeuxi", "fez": "cloak of shadows a 70% contra um warrior; antes, vanish (69.7) seguido de premeditation e kick em vez de se resetar", "devia": "guardar o vanish para sair do warrior e se recompor, e usar blind no Celianeyix", "porque": "cloak não reduz dano físico e o vanish foi gasto sem ganho; aos 86.1 o rogue morreu sem saída", "gravidade": "media"},
+  {"t": 91.4, "quem": "Naminiv", "fez": "drink (e o Heruxiv cast greater blessing + apply oil de 91.4 a 119.3) enquanto o Celianeyix lutava sozinho contra o Kwongwegavi", "devia": "entrar na luta com wind shear no curador e dano para fechar o 3v2", "porque": "o shaman inimigo resistiu 37 s porque só um jogador o atacava", "gravidade": "media"},
+  {"t": 64.8, "quem": "Celianeyix", "fez": "sunder armor repetido (53.7, 64.8, 74.4-76.2, 107-110.5)", "devia": "mortal strike, overpower e slam; hamstring para manter o alvo", "porque": "em arena o sunder é GCD de dano quase nulo e atrasou a kill", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.6, "quem": "Zebedeuxi", "descricao": "shadow dance com cheap shot, kidney e cheap shot encadeados levando o warrior de 60% a 28%"},
+  {"t": 48.4, "quem": "Celianeyix", "descricao": "logo após sair do stun aproveitou execute e use trinket para virar o duelo contra o rogue"},
+  {"t": 41.4, "quem": "Ominousxxiv", "descricao": "howl of terror tirando o Heruxiv da cura bem na hora em que o rogue abriu o shadow dance"}
+ ],
+ "erros_da_rede": [
+  {"t": 53.7, "quem": "Celianeyix", "acao": "sunder armor no Zebedeuxi", "porque": "com o rogue a 38% em evasion, o GCD devia ir para hamstring/mortal strike, não para sunder"},
+  {"t": 101.2, "quem": "Celianeyix", "acao": "sunder armor no Kwongwegavi", "porque": "contra um shaman curando a si mesmo, sunder não ajuda; mortal strike e interrupção com pummel sim"},
+  {"t": 148.3, "quem": "Heruxiv", "acao": "apply oil", "porque": "aplicar óleo em pleno combate é GCD perdido; o paladino devia curar o warrior que apanhava UA/DoTs"}
+ ]}

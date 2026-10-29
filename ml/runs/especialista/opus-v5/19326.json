@@ -1,0 +1,16 @@
+{"resumo": "O Fireplay matou o Ominousxii aos 73 s numa janela de burst (fire blast + conflagrate/chaos bolt) em que o Heruvi estava lançando greater blessing; depois a luta virou desgaste, o Amnesianxxiv caiu aos 183 e o 3v1 contra o paladino não fechou por falta de pressão.",
+ "momento_decisivo": {"t": 64.7, "descricao": "Heruvi conjurou cast greater blessing assignment ×2 (64.7-68.9) bem quando o Heshoxi atordoou o Ominousxii (67.6) e o Ominousdesv soltou conflagrate, chaos bolt e incinerate; sem cura, o lock morreu aos 73.2."},
+ "erros": [
+  {"t": 64.7, "quem": "Heruvi", "fez": "greater blessing ×2 no meio da luta, com o Ominousxii a 55% e caindo", "devia": "flash of light/holy shock no lock e hand of protection/sacrifice durante o stun", "porque": "bênçãos se aplicam antes dos portões; o curador gastou a janela crítica e o parceiro morreu", "gravidade": "alta"},
+  {"t": 69.8, "quem": "Ominousxii", "fez": "escape artist logo após o stun do fire blast, sem usar demonic circle: teleport (círculo colocado aos 36.5)", "devia": "teleportar para o círculo para sair do alcance do mage/warlock e quebrar a linha de visão", "porque": "escape artist só remove root/lentidão; o lock ficou parado sob o burst e morreu aos 73.2", "gravidade": "alta"},
+  {"t": 41.3, "quem": "Heruvi", "fez": "every man for himself para sair do shadowfury com 85% de vida, sendo atordoado de novo aos 42.9", "devia": "aguentar um stun curto com vida alta e guardar a saída de CC para um stun com vida baixa ou para quebrar fear", "porque": "ficou sem trinket para o resto da luta e passou dezenas de segundos em fear depois", "gravidade": "media"},
+  {"t": 113.2, "quem": "Amnesianxxiv", "fez": "dispersion com 100% de vida", "devia": "guardar para o momento em que fosse focado e estivesse baixo", "porque": "o defensivo principal ficou gasto sem uso; ele morreu mais tarde sob pressão", "gravidade": "media"},
+  {"t": 72.9, "quem": "Amnesianxxiv", "fez": "só saiu da shadowform para curar (renew) quando o Ominousxii já estava morrendo", "devia": "ajudar a cura do lock (shield/flash heal) ou dar psychic scream no Ominousdesv/Heshoxi no começo do burst (67.5)", "porque": "com o paladino fora de jogo, o priest era a única ajuda possível para o lock", "gravidade": "media"},
+  {"t": 196.7, "quem": "Heshoxi", "fez": "conjure mana gem, drink e apply oil ×6 (196.7-236.2) com o Heruvi sozinho contra três", "devia": "manter pressão no paladino (frostfire/fireball) e counterspell nos flash of light", "porque": "em 3v1 a luta se arrastou por quase 1 minuto sem kill", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 41.3, "quem": "Ominousdesv", "descricao": "shadowfury pegando Ominousxii, Heruvi e Amnesianxxiv de uma vez na abertura"},
+  {"t": 67.5, "quem": "Ominousdesv", "descricao": "conflagrate, chaos bolt e incinerate emendados no stun do fire blast do Heshoxi: kill do Ominousxii"},
+  {"t": 89.0, "quem": "Amnesianxxiv", "descricao": "silence no Heshoxi logo depois do início da evocation, cortando a recuperação de mana do mage"}
+ ],
+ "erros_da_rede": []}

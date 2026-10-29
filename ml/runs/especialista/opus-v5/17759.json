@@ -1,0 +1,94 @@
+{
+ "resumo": "Luta longa de desgaste em que o Ominous controlou os dois curadores da RPS com spell lock e fear; quando o Zebedeuxvi caiu para 20% sem defensivos, os curadores estavam travados e ele morreu, e o Kwongwegaxvi foi logo atrás.",
+ "momento_decisivo": {
+  "t": 101.3,
+  "descricao": "Ominous usa pet spell lock no Kwongwegaxvi (logo depois de silenciar a Amnesianxxix) com o Zebedeuxvi já a 22%: a escola de cura do xamã fica travada e a RPS não consegue mais segurar o rogue, que já tinha gastado evasion, vanish e cloak."
+ },
+ "erros": [
+  {
+   "t": 53.6,
+   "quem": "Zebedeuxvi",
+   "fez": "kidney shot na Pehdicouve (tree of life) sem burst de ninguém em cima dela",
+   "devia": "usar o kidney no Ominous ou no Beteranii junto com o dano do priest, ou guardar para um momento de abate",
+   "porque": "stunar o curador sem que alguém esteja matando outro alvo só gasta o kidney; o druida volta a curar sem ter perdido nada",
+   "gravidade": "media"
+  },
+  {
+   "t": 64.4,
+   "quem": "Amnesianxxix",
+   "fez": "dispersion com 100% de vida",
+   "devia": "guardar a dispersion para quando estiver sob pressão ou para escapar de um stun ou de um fear",
+   "porque": "é o principal defensivo do shadow priest; aos 115 s ele estava a 33% silenciado e sem esse recurso",
+   "gravidade": "media"
+  },
+  {
+   "t": 66.1,
+   "quem": "Amnesianxxix",
+   "fez": "alterna remove shadowform e shadowform várias vezes (66.1, 67.9, 68.9, 77.3, 81.5, 83.3...)",
+   "devia": "decidir o papel: ficar em shadowform e curar só com instantâneos ou sair de vez para curar",
+   "porque": "cada troca gasta GCD e mana, e o priest passa a luta sem curar nem dar dano de verdade",
+   "gravidade": "media"
+  },
+  {
+   "t": 42.5,
+   "quem": "Beteranii",
+   "fez": "hunter's mark repetido sem parar (×2 até 42.5, ×2 até 45.8, ×3 até 61.4...) no mesmo alvo",
+   "devia": "marcar uma vez e usar os GCDs em chimera, aimed shot e no controle (scatter ou trap) do curador",
+   "porque": "re-marcar um alvo já marcado não traz ganho nenhum e atrasa o dano do caçador",
+   "gravidade": "media"
+  },
+  {
+   "t": 36.8,
+   "quem": "Kwongwegaxvi",
+   "fez": "lava burst ×2 na abertura enquanto a equipe tomava o primeiro avanço",
+   "devia": "no começo, ficar pronto para curar e jogar totens (grounding contra fear e spell lock)",
+   "porque": "o curador conjurando dano foi interrompido pelo silencing shot e travado logo de cara",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 99.6,
+   "quem": "Zebedeuxvi",
+   "fez": "slice and dice com 22% de vida e preso no root",
+   "devia": "sair do alcance ou parar o ataque até um curador ficar livre; usar o kidney no Ominous para cortar o controle",
+   "porque": "o rogue já não tinha defensivos, e manter o buff de dano não salva a vida dele",
+   "gravidade": "alta"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 82.8,
+   "quem": "Ominous",
+   "descricao": "Encadeia pet spell lock na Amnesianxxix e no Kwongwegaxvi (82.8, 84.1, 85.5), e a RPS fica sem cura justamente quando o rogue precisa"
+  },
+  {
+   "t": 52.9,
+   "quem": "Pehdicouve",
+   "descricao": "Barkskin antes do kidney shot de 53.6, o que segura o druida na janela de stun"
+  },
+  {
+   "t": 81.8,
+   "quem": "Zebedeuxvi",
+   "descricao": "Evasion a 43% e depois vanish e cloak de shadows, que prolongam a vida do rogue sob dano de caçador e bruxo"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 34.1,
+   "quem": "Beteranii",
+   "acao": "hunter's mark → Zebedeuxvi",
+   "porque": "ele tinha marcado o mesmo alvo 1.6 s antes; o GCD é desperdiçado"
+  },
+  {
+   "t": 88.2,
+   "quem": "Beteranii",
+   "acao": "hunter's mark → Amnesianxxix",
+   "porque": "troca a marca para o priest e 1.4 s depois volta a marcar o Zebedeuxvi (89.6): dois GCDs gastos sem efeito"
+  },
+  {
+   "t": 59.9,
+   "quem": "Beteranii",
+   "acao": "hunter's mark → Zebedeuxvi",
+   "porque": "mais uma remarcação no meio da sequência de marcas, em vez de dano ou controle"
+  }
+ ]
+}

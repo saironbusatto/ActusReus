@@ -1,0 +1,85 @@
+{
+ "resumo": "Com o trinket do Heruiv já gasto aos 33.0, um atordoamento em área aos 59.6 prendeu Heruiv e Amnesianxxi juntos e o Fireplay I explodiu o Ominousx (conflagrate, lava burst, fireball, drain soul); depois o 3x2 decidiu.",
+ "momento_decisivo": {
+  "t": 59.6,
+  "descricao": "Heruiv e Amnesianxxi ficam atordoados juntos (shadowfury do Ominousdes); sem cura nem peel, Ominousdes/Kwongwegavii/Heshovii despejam conflagrate, lava burst e fireball no Ominousx."
+ },
+ "momento_aceitos": [
+  33.0,
+  59.6,
+  60.6,
+  62.2
+ ],
+ "erros": [
+  {
+   "t": 56.2,
+   "quem": "Heruiv",
+   "fez": "cast greater blessing assignment em pleno combate",
+   "devia": "curar/preparar o Ominousx, que já era o alvo da troca do Fireplay I",
+   "porque": "gastou GCD em buff de antes da luta logo antes da explosão que matou o Ominousx",
+   "gravidade": "alta"
+  },
+  {
+   "t": 124.9,
+   "quem": "Heruiv",
+   "fez": "usou divine protection e, em seguida, divine illumination",
+   "devia": "divine shield (bolha) — imunidade total, ou hand of protection se fosse físico",
+   "porque": "divine protection só reduz o dano; morreu 3 s depois (128.0) com a bolha sem uso",
+   "gravidade": "alta"
+  },
+  {
+   "t": 60.3,
+   "quem": "Amnesianxxi",
+   "fez": "remove shadowform e renew com o Ominousx caindo",
+   "devia": "psychic scream no mago/warlock colados ou flash heal/penance direto no Ominousx",
+   "porque": "renew cura devagar demais; o silence no Ominousdes só veio aos 62.6, já tarde",
+   "gravidade": "media"
+  },
+  {
+   "t": 35.1,
+   "quem": "Amnesianxxi",
+   "fez": "mind sear na abertura",
+   "devia": "CC/dispel ou dano em alvo único",
+   "porque": "mind sear é canalizado, fraco contra jogadores espalhados e o deixa parado sob o fogo do mago",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 50.4,
+   "quem": "Ominousx",
+   "fez": "seguiu dando DoTs e spell lock enquanto virava alvo",
+   "devia": "guardar fear/death coil para se descolar e jogar fora de linha de visão",
+   "porque": "gastou o death coil aos 38.4 e não tinha resposta quando o Fireplay trocou para ele",
+   "gravidade": "media"
+  },
+  {
+   "t": 82.5,
+   "quem": "Heruiv",
+   "fez": "holy shock ofensivo no Heshovii no 2x3",
+   "devia": "curar ou dispel do parceiro sob fear/poly",
+   "porque": "no 2x3 cada GCD de cura conta; o Amnesianxxi estava em fear/poly em cadeia",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 32.7,
+   "quem": "Ominousdes",
+   "descricao": "Shadowfury na abertura pegou os três inimigos e forçou o trinket do Heruiv."
+  },
+  {
+   "t": 35.2,
+   "quem": "Kwongwegavii",
+   "descricao": "Purge no Heruiv logo cedo."
+  },
+  {
+   "t": 59.6,
+   "quem": "Ominousdes",
+   "descricao": "Segundo atordoamento em área travou curador e priest juntos na troca."
+  },
+  {
+   "t": 73.0,
+   "quem": "Heshovii",
+   "descricao": "Frost nova para segurar os dois inimigos e abrir espaço."
+  }
+ ]
+}

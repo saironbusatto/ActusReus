@@ -1,0 +1,94 @@
+{
+ "resumo": "RLS II matou Ominousdesv cedo: Zebedeuix e Ominousxxi encadearam kick, kidney e spell lock enquanto o curador Kwongwegaxi estava em fear e sem curar; depois o curador e o mage caíram em sequência.",
+ "momento_decisivo": {
+  "t": 51.3,
+  "descricao": "Zebedeuix dá kidney shot em Ominousdesv a 41% junto com o spell lock do felhunter de Ominousxxi, com Kwongwegaxi saindo de fear; o trinket aos 52.8 veio tarde e a vida não voltou."
+ },
+ "erros": [
+  {
+   "t": 51.0,
+   "quem": "Ominousdesv",
+   "fez": "shoot (varinha) aos 51.0, 58.9 e 61.7 sendo o alvo do foco",
+   "devia": "usar o healthstone criado aos 35.8, death coil/fear no rogue ou drain life",
+   "porque": "a varinha não protege nem cura; o healthstone feito no pré-portão nunca foi usado e ele morreu aos 63.7",
+   "gravidade": "alta"
+  },
+  {
+   "t": 54.1,
+   "quem": "Kwongwegaxi",
+   "fez": "bloodlust e lifeblood com o aliado a 34%",
+   "devia": "riptide/healing wave em Ominousdesv",
+   "porque": "o warlock acabara de sair de kidney com 34% e precisava de cura imediata; ele usou o GCD em ofensa",
+   "gravidade": "alta"
+  },
+  {
+   "t": 55.6,
+   "quem": "Kwongwegaxi",
+   "fez": "cleanse spirit poison ×2 até 58.9",
+   "devia": "curar Ominousdesv; o veneno do rogue é reaplicado a cada golpe",
+   "porque": "limpar veneno de rogue é inútil contra a pressão; o curador quase não curou (4536 na luta)",
+   "gravidade": "media"
+  },
+  {
+   "t": 41.0,
+   "quem": "Kwongwegaxi",
+   "fez": "jogou sem tremor totem contra dois warlocks (fear aos 41.0 e 50.2)",
+   "devia": "baixar tremor totem logo no início",
+   "porque": "tremor tira o fear do curador; os dois fears fizeram o warlock aliado ficar sem cura no foco",
+   "gravidade": "media"
+  },
+  {
+   "t": 40.0,
+   "quem": "Zebedeuix",
+   "fez": "abriu com fan of knives depois de shadowstep e sprint",
+   "devia": "abrir com cheap shot/garrote em Ominousdesv para começar a cadeia de stun",
+   "porque": "FoK no opener tira o rogue do stealth sem controle nenhum; o primeiro stun real só veio aos 51.3",
+   "gravidade": "media"
+  },
+  {
+   "t": 66.9,
+   "quem": "Zebedeuix",
+   "fez": "vanish e hemorrhage logo em seguida aos 67.4",
+   "devia": "usar o vanish para sair do dano e reabrir com cheap shot/ garrote, ou só evasion",
+   "porque": "bater meio segundo depois do vanish desfaz o vanish; ele precisou de evasion a 29% de qualquer jeito",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 40.6,
+   "quem": "Heshoxi",
+   "descricao": "Frost nova no rogue que acabara de chegar no warlock aliado."
+  },
+  {
+   "t": 49.2,
+   "quem": "Heshoxi",
+   "descricao": "Dragon's breath em Zebedeuix para tirá-lo de cima de Ominousdesv."
+  },
+  {
+   "t": 48.9,
+   "quem": "Ominousxxi",
+   "descricao": "Fear no curador inimigo pouco antes da cadeia kidney + spell lock no alvo."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 64.0,
+   "quem": "Zebedeuix",
+   "acao": "hemorrhage → Ominousdesv",
+   "porque": "Ominousdesv já tinha morrido aos 63.7; GCD perdido em alvo morto"
+  },
+  {
+   "t": 56.6,
+   "quem": "Ominousxxi",
+   "acao": "curse of agony on attacker",
+   "porque": "reaplicou o mesmo curse 1.2 s depois do anterior (55.4), GCD desperdiçado"
+  },
+  {
+   "t": 84.6,
+   "quem": "Zebedeuix",
+   "acao": "slice and dice → Heshoxi",
+   "porque": "com o mage sozinho e baixo, os pontos de combo iam melhor em kidney ou dano direto"
+  }
+ ]
+}

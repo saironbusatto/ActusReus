@@ -1,0 +1,90 @@
+{
+ "resumo": "Zebedeuii abriu shadow dance no curador Kwongwegaix (39.0) com cheap shot, vanish, ambush e outro cheap shot, e o matou aos 45.1 sem que ele curasse uma vez; depois o RMP limpou o 2x3.",
+ "momento_decisivo": {
+  "t": 39.0,
+  "descricao": "Zebedeuii troca para o Kwongwegaix com shadow dance e cheap shot (39.6) junto do blizzard do Heshoiv; o curador fica em cadeia de stuns até morrer."
+ },
+ "momento_aceitos": [
+  39.0,
+  39.6,
+  43.2,
+  44.5
+ ],
+ "erros": [
+  {
+   "t": 35.5,
+   "quem": "Kwongwegaix",
+   "fez": "purge ×2 até 39.1 com o rogue e o mago batendo",
+   "devia": "curar, soltar tremor/grounding totem e se posicionar",
+   "porque": "terminou a luta com cura 0; o time morreu sem o curador agir como curador",
+   "gravidade": "alta"
+  },
+  {
+   "t": 43.8,
+   "quem": "Kwongwegaix",
+   "fez": "cleanse spirit poison depois do ambush",
+   "devia": "healing wave/riptide em si mesmo (ou nature's swiftness)",
+   "porque": "estava a um golpe da morte: caiu de 76% a 3% em 5 s e o veneno não era o problema",
+   "gravidade": "alta"
+  },
+  {
+   "t": 34.0,
+   "quem": "Kwongwegaix",
+   "fez": "flame shock no Zebedeuii",
+   "devia": "guardar os GCDs para cura e totens",
+   "porque": "o curador não tem dano relevante e o rogue já estava pressionando",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 39.7,
+   "quem": "Ominousdesii",
+   "fez": "curse of the elements enquanto o rogue abria shadow dance no curador",
+   "devia": "fear no Zebedeuii para salvar o Kwongwegaix",
+   "porque": "o death coil já tinha sido usado (35.6) e o fear era o único peel no rogue",
+   "gravidade": "alta"
+  },
+  {
+   "t": 48.5,
+   "quem": "Ominousdesii",
+   "fez": "curse of tongues no Zebedeuii",
+   "devia": "curse of exhaustion/weakness ou fear",
+   "porque": "curse of tongues não afeta rogue (energia, sem conjuração)",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 50.2,
+   "quem": "Ominousdesii",
+   "fez": "corruption ×4 até 55.0 com o Heshoix em 5%",
+   "devia": "fear no Zebedeuii/peel no parceiro",
+   "porque": "DoTs não mudam a luta no 2x3; o mago só sobreviveu por causa do ice block",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 39.0,
+   "quem": "Zebedeuii",
+   "descricao": "Shadow dance + cheap shot no curador na hora certa."
+  },
+  {
+   "t": 47.2,
+   "quem": "Zebedeuii",
+   "descricao": "Cloak of shadows tirou o living bomb do Heshoix."
+  },
+  {
+   "t": 59.9,
+   "quem": "Heshoiv",
+   "descricao": "Deep freeze, cold snap e icy veins para fechar o Ominousdesii."
+  },
+  {
+   "t": 50.2,
+   "quem": "Heshoix",
+   "descricao": "Ice block com 5% de vida."
+  },
+  {
+   "t": 35.6,
+   "quem": "Ominousdesii",
+   "descricao": "Death coil no rogue que abria no time."
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+{
+ "resumo": "Espelho RPS longo decidido por desgaste: Zebedeuxiv passou a luta batendo hemorrhage no rogue inimigo e foi morto depois de cair a 15%, com o curador Kwongwegaxiv gastando GCDs em purge e cleanse de veneno.",
+ "momento_decisivo": {
+  "t": 114.3,
+  "descricao": "Kidney shot de Zebedeuxvi em Zebedeuxiv a 15%, com o trinket e o cloak dele já gastos; sem defensivo e sem cura concentrada, Zebedeuxiv morreu aos 128.4."
+ },
+ "erros": [
+  {
+   "t": 111.5,
+   "quem": "Kwongwegaxiv",
+   "fez": "cleanse spirit poison ×3 até 123.8 com Zebedeuxiv a 15%",
+   "devia": "healing wave/riptide no rogue",
+   "porque": "o veneno é reaplicado a cada golpe; com o aliado a 15% o GCD tem que ser cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 56.3,
+   "quem": "Kwongwegaxiv",
+   "fez": "purge em Zebedeuxvi (56.3, 59.6, 70.6, 83.8, 100.4 ×3)",
+   "devia": "curar ou purgar só os escudos dos priests",
+   "porque": "rogue não tem buff mágico relevante para purge; cada GCD perdido é cura a menos",
+   "gravidade": "media"
+  },
+  {
+   "t": 132.3,
+   "quem": "Kwongwegaxiv",
+   "fez": "call of the elements ×3 até 135.2 já em 2v3",
+   "devia": "curar e se posicionar contra o rogue que vinha nele",
+   "porque": "recolocar totens não ajuda com o time em desvantagem; foi stunado e morto pelo rogue",
+   "gravidade": "media"
+  },
+  {
+   "t": 61.3,
+   "quem": "Zebedeuxiv",
+   "fez": "ficou batendo no rogue Zebedeuxvi a luta toda",
+   "devia": "trocar para o priest ou o shaman, com kidney nesses alvos",
+   "porque": "o rogue tinha evasion, cloak e vanish; bater nele só gasta energia sem matar",
+   "gravidade": "media"
+  },
+  {
+   "t": 124.1,
+   "quem": "Amnesianxxv",
+   "fez": "dispersion a 100% de vida",
+   "devia": "guardar para quando fosse focado (caiu a 18% aos 145.9)",
+   "porque": "dispersion tem recarga longa; quando precisou, estava silenciado e sem defensivo",
+   "gravidade": "media"
+  },
+  {
+   "t": 36.1,
+   "quem": "Zebedeuxiv",
+   "fez": "abriu com fan of knives em Amnesianxxix",
+   "devia": "cheap shot/garrote para começar a cadeia de stun",
+   "porque": "FoK tira do stealth sem controle e o priest respondeu com psychic scream na hora",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 36.4,
+   "quem": "Amnesianxxix",
+   "descricao": "Psychic scream e silence aos 37.8 no rogue que abriu nele."
+  },
+  {
+   "t": 50.5,
+   "quem": "Zebedeuxvi",
+   "descricao": "Vanish a 35% seguido de premeditation e ambush: saiu do foco e voltou batendo."
+  },
+  {
+   "t": 61.8,
+   "quem": "Kwongwegaxiv",
+   "descricao": "Mana tide totem cedo, sustentando a cura numa luta longa."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 61.3,
+   "quem": "Zebedeuxiv",
+   "acao": "hemorrhage → Zebedeuxvi ×2 até 121.6",
+   "porque": "só hemorrhage, sem finalizador nem troca de alvo, contra um rogue com defensivos"
+  },
+  {
+   "t": 53.7,
+   "quem": "Amnesianxxv",
+   "acao": "shadow word: death → Zebedeuxvi",
+   "porque": "Zebedeuxvi tinha usado cloak of shadows aos 52.6 e estava imune a feitiços"
+  },
+  {
+   "t": 93.8,
+   "quem": "Kwongwegaxiv",
+   "acao": "cleanse spirit poison on party → Zebedeuxvi",
+   "porque": "limpar veneno de rogue é inútil, o golpe seguinte reaplica"
+  }
+ ]
+}

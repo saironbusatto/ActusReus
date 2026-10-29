@@ -1,0 +1,21 @@
+{"resumo": "O RMP controlou o Paladino Heruiv: Kidney Shot aos 81.9 forçou o trinket dele com 20% de vida e, sem trinket, Deep Freeze + Kidney Shot o mataram aos 102.5; Ominousx caiu depois, aos 125.9, num Shadow Dance com Cheap Shot.",
+ "momento_decisivo": {"t": 100.3, "descricao": "Heshovi deu Deep Freeze em Heruiv com 20% de vida, logo depois do trinket do Paladino aos 82.0, e emendou com Cold Snap e Icy Veins; Zebedeuvi completou o chain com Kidney Shot aos 102.3 e o curador morreu."},
+ "erros": [
+  {"t": 56.1, "quem": "Heshovi", "fez": "lançou Blizzard/Flamestrike repetidas vezes (54.5-92.5), um deles logo depois do Blind de Zebedeuvi em Heruiv aos 55.1", "devia": "usar Frostbolt no alvo de kill e não lançar AoE durante CC do próprio time", "porque": "o dano de AoE quebra Blind/Polymorph e tem dano baixo contra 3 alvos espalhados", "gravidade": "alta"},
+  {"t": 50.4, "quem": "Amnesianvii", "fez": "canalizou Mind Sear dezenas de vezes como curador Disc (50.4-102.0)", "devia": "usar Dispel/Penance/Shield e só dar dano com Smite/Mind Blast com o time estável", "porque": "Mind Sear quebra CC aliado e gasta tempo de canalização enquanto o próprio time toma pressão", "gravidade": "media"},
+  {"t": 62.1, "quem": "Amnesianxxi", "fez": "alternou remove shadowform/shadowform várias vezes (62.1, 68.6, 76.5, 78.7, 84.6, 89.0, 100.6)", "devia": "escolher um papel (curar fora de forma ou causar dano) e trocar só quando necessário", "porque": "cada troca gasta um GCD e mana, e fora da forma ele perde 15% de redução de dano", "gravidade": "media"},
+  {"t": 42.3, "quem": "Zebedeuvi", "fez": "abriu com Fan of Knives (42.3, 50.5-51.5)", "devia": "abrir com Cheap Shot/Garrote no alvo escolhido", "porque": "FoK gasta energia, não ganha pontos de combo no alvo e quebra CC", "gravidade": "media"},
+  {"t": 82.3, "quem": "Heruiv", "fez": "depois do trinket com 20%, usou Divine Protection", "devia": "usar Divine Shield (imunidade total) e curar até ficar fora de perigo", "porque": "Divine Protection só reduz 50% do dano e o deixou abaixo de 20% na hora do Deep Freeze seguinte", "gravidade": "alta"},
+  {"t": 86.2, "quem": "Ominousx", "fez": "usou o trinket com 89% de vida sem CC visível", "devia": "guardar o trinket para um Kidney/Blind ou Deep Freeze em momento de kill", "porque": "levou Deep Freeze aos 103.5 e Cheap Shot aos 122.2 e morreu aos 125.9 sem trinket", "gravidade": "alta"},
+  {"t": 43.7, "quem": "Ominousx", "fez": "passou a luta reaplicando Corruption/UA/Devour Magic, sem usar Fear nem Howl of Terror", "devia": "dar Fear no curador Amnesianvii ou Howl para tirar Zebedeuvi de cima de Heruiv", "porque": "o Warlock era o maior CC do time e deixou o RMP com controle livre", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 81.9, "quem": "Zebedeuvi", "descricao": "Kidney Shot em Heruiv com 20% de vida, que tirou o trinket do curador antes do kill."},
+  {"t": 87.5, "quem": "Amnesianxxi", "descricao": "Dispersion com 16% de vida, evitando a morte."},
+  {"t": 114.6, "quem": "Amnesianvii", "descricao": "Pain Suppression com 18% de vida e Desperate Prayer em seguida, sobrevivendo ao burst."}
+ ],
+ "erros_da_rede": [
+  {"t": 37.6, "quem": "Heruiv", "acao": "apply oil", "porque": "óleo reaplicado ainda dentro da preparação, o que não traz ganho nenhum"},
+  {"t": 108.1, "quem": "Amnesianxxi", "acao": "shadowform → Amnesianvii", "porque": "mais uma troca de forma que gastou GCD com o time em 2v3"},
+  {"t": 115.8, "quem": "Ominousx", "acao": "life tap → Amnesianvii", "porque": "Life Tap no momento em que o curador inimigo estava com 18% de vida, quando era hora de pressionar"}
+ ]}

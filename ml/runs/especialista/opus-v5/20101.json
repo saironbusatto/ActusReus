@@ -1,0 +1,20 @@
+{"resumo": "Ominousdesvi matou Pehdibalii aos 101.2 com Conflagrate + Chaos Bolt + Incinerate, com o Druida preso em Roots e o curador Kwongwegaxx gastando GCDs em Purge. Depois a luta virou uma guerra de Purge e Water Shield entre os Shamans por mais de 150 s, até LSD II cair por desgaste.",
+ "momento_decisivo": {"t": 98.4, "descricao": "Com Pehdibalii preso em Roots e com 64% de vida, Ominousdesvi emendou Conflagrate, Chaos Bolt e Incinerate (98.4-100.5) enquanto Kwongwegaxix chutava o curador inimigo com Wind Shear; Kwongwegaxx usou Purge em vez de curar e o Druida morreu."},
+ "erros": [
+  {"t": 100.2, "quem": "Kwongwegaxx", "fez": "usou Purge e Wind Shear em Pehdicouv (93.9, 100.2) enquanto Pehdibalii estava preso e tomando o burst do Warlock", "devia": "curar Pehdibalii com Riptide/Healing Wave ou Nature's Swiftness", "porque": "o aliado morreu 1 s depois e era a cura que faltava", "gravidade": "alta"},
+  {"t": 57.5, "quem": "Pehdibalii", "fez": "usou Barkskin com 83% de vida sem burst nenhum em cima", "devia": "guardar Barkskin para o burst de Chaos Bolt/Conflagrate", "porque": "aos 98-101 ele tomou o burst sem Barkskin (o cooldown ainda não tinha voltado) e morreu", "gravidade": "alta"},
+  {"t": 159.2, "quem": "Kwongwegaxix", "fez": "passou de 159 a 303 s em Purge quase sem parar (dezenas de casts), quase sempre no Water Shield de Kwongwegaxx", "devia": "dar pressão de verdade (Flame Shock/Lava Burst) num alvo junto do Warlock ou guardar mana", "porque": "tirar Water Shield que volta em 1 GCD não gera vantagem e queima mana dos dois lados", "gravidade": "media"},
+  {"t": 161.7, "quem": "Kwongwegaxx", "fez": "reaplicou Water Shield em loop (dezenas de vezes) respondendo a cada Purge", "devia": "ignorar o escudo e gastar os GCDs curando ou dando dano", "porque": "entrou no jogo do Purge do adversário e perdeu tempo sem fazer nada útil", "gravidade": "media"},
+  {"t": 101.6, "quem": "Ominousdesvi", "fez": "depois do kill aos 101.2, ficou praticamente parado de 102 a 277 s (Life Tap/Firestone)", "devia": "pressionar Ominousdesix ou o curador com DoTs e Fear aproveitando o 3v2", "porque": "com vantagem numérica, cada segundo parado deixava o inimigo se recuperar e esticava a luta", "gravidade": "alta"},
+  {"t": 49.7, "quem": "Pehdicouv", "fez": "como curador, usou cobalt frag bomb várias vezes (49.7, 53.6, 114.4)", "devia": "usar Cyclone ou manter HoTs", "porque": "o stun da bomba é curto e o curador perde um GCD e se expõe", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.7, "quem": "Ominousdesvi", "descricao": "Shadowfury pegando Pehdibalii e Kwongwegaxx juntos logo na abertura."},
+  {"t": 99.5, "quem": "Ominousdesvi", "descricao": "Combo de Destruction (Immolate, Conflagrate, Chaos Bolt, Incinerate) no Druida preso, que garantiu o kill."},
+  {"t": 117.9, "quem": "Pehdicouv", "descricao": "Barkskin quando os dois Warlocks começaram a lançar nele."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.3, "quem": "Pehdibalii", "acao": "starfall → Ominousdesvi", "porque": "Starfall (cooldown longo) aberto antes do contato, quando ninguém estava no alcance"},
+  {"t": 161.4, "quem": "Kwongwegaxix", "acao": "purge → Kwongwegaxx ×6", "porque": "loop de Purge no Water Shield, que o alvo reaplica na hora"},
+  {"t": 172.9, "quem": "Kwongwegaxx", "acao": "water shield → Pehdicouv ×4", "porque": "reaplicando escudo atrás de cada Purge, sem curar nem dar dano"}
+ ]}

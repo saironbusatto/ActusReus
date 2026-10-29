@@ -1,0 +1,94 @@
+{
+ "resumo": "O rogue Zebedeuxiv gastou o trinket num gnaw do ghoul e morreu aos 90.6 sem que os curadores o estabilizassem; mesmo derrubando Heruxi aos 103.1, a RPS perdeu Kwongwegaxiv para o cleave/charge de Celianeyvi e Amnesianxxv acabou perdendo o 1v1 longo para Omasconvi.",
+ "momento_decisivo": {
+  "t": 64.2,
+  "descricao": "Zebedeuxiv usa o pvp trinket num gnaw de ghoul (stun curto) aos 34% de vida; sem trinket, segue tomando stuns (83.6) e morre aos 90.6, abrindo o 3v2."
+ },
+ "erros": [
+  {
+   "t": 64.2,
+   "quem": "Zebedeuxiv",
+   "fez": "pvp trinket para sair do gnaw do ghoul",
+   "devia": "aguentar o gnaw (3 s) e guardar o trinket para um stun de DK/warrior com burst ou para um controle no curador",
+   "porque": "gnaw é stun curto de pet; logo depois ele ainda caiu para 7% e tomou stun aos 83.6 sem trinket, morrendo aos 90.6",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.0,
+   "quem": "Heruxi",
+   "fez": "every man for himself no kidney shot aos 57% de vida",
+   "devia": "segurar o trinket e usar Hand of Protection/curar após o stun, ou trinketar só num stun em vida baixa",
+   "porque": "sem trinket, tomou dois cheap shots (67.0 e 70.4) e caiu a 24%, sendo obrigado a queimar Divine Shield aos 71.9",
+   "gravidade": "media"
+  },
+  {
+   "t": 52.5,
+   "quem": "Amnesianxxv",
+   "fez": "mind sear ×2 (canal AoE) com o próprio rogue sob pressão",
+   "devia": "usar dano de alvo único (VT, mind blast) no alvo do time ou dar escudos/cura ao Zebedeuxiv",
+   "porque": "mind sear em 3v3 rende pouco dano real e prende o priest num canal longo; o rogue chegou a 40% aos 55.5 e a 7% aos 71.5",
+   "gravidade": "media"
+  },
+  {
+   "t": 55.0,
+   "quem": "Heruxi",
+   "fez": "holy light on party ×4 até 63.6 em cima do rogue",
+   "devia": "usar holy shock/flash of light e se posicionar longe do rogue antes de castar",
+   "porque": "holy light tem cast longo e foi chutado (kick aos 55.3); casts longos colados num rogue são o jeito mais fácil de perder a escola de cura",
+   "gravidade": "media"
+  },
+  {
+   "t": 84.9,
+   "quem": "Heruxi",
+   "fez": "divine sacrifice cancelado logo em seguida (85.2)",
+   "devia": "usar Divine Sacrifice só quando o time vai tomar burst, e mantê-lo",
+   "porque": "cancelar no mesmo segundo desperdiça o cooldown longo sem absorver dano",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 72.1,
+   "quem": "Omasconvi",
+   "fez": "icy touch ×4 seguidos até 77.1",
+   "devia": "aplicar doenças e gastar runas em blood strike/obliterate ou death coil no alvo baixo",
+   "porque": "repetir icy touch não aumenta a doença e desperdiça runas de gelo enquanto o rogue estava a 7%",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 71.9,
+   "quem": "Heruxi",
+   "descricao": "Divine Shield aos 24% após dois cheap shots, tirando o kill do rogue e fazendo a RPS trocar de alvo."
+  },
+  {
+   "t": 110.9,
+   "quem": "Amnesianxxv",
+   "descricao": "Psychic scream com Celianeyvi a 23% e, depois do trinket dele, psychic horror aos 114.3 para fechar o warrior, que morreu aos 119.0."
+  },
+  {
+   "t": 64.3,
+   "quem": "Omasconvi",
+   "descricao": "Summon Gargoyle logo após o rogue gastar o trinket, colocando burst na janela sem defesa dele."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 68.9,
+   "quem": "Kwongwegaxiv",
+   "acao": "mana tide totem",
+   "porque": "o rogue do time estava despencando (7% aos 71.5); o GCD devia ir para cura direta, não para mana."
+  },
+  {
+   "t": 65.6,
+   "quem": "Zebedeuxiv",
+   "acao": "shadow dance → Heruxi",
+   "porque": "abriu Shadow Dance com 44% de vida e sem trinket, seguido de hemorrhage em vez de ambush/cheap shot; o paladino bubblou e o cooldown foi perdido."
+  },
+  {
+   "t": 126.1,
+   "quem": "Amnesianxxv",
+   "acao": "abolish disease on party (repetido aos 128.1)",
+   "porque": "contra um DK sozinho as doenças voltam a cada golpe; gastar GCDs removendo-as no 1v1 é jogar fora tempo de dano/fear."
+  }
+ ]
+}

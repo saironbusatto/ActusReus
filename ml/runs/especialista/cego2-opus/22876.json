@@ -1,0 +1,18 @@
+{"resumo": "Zebedeuxiv entrou no healer Kwongwegaxx com shadow dance (38.1), cheap shot e ambush, com mind sear de Amnesianxxv ajudando; o shaman não fez nenhuma cura na luta, ninguém o protegeu, e ele morreu aos 44.5. No 3v2, Pehdibalii caiu aos 67.6.",
+ "momento_decisivo": {"t": 39.8, "descricao": "Cheap shot do shadow dance de Zebedeuxiv em Kwongwegaxx (65%), seguido de ambush (43.4) e outro cheap shot (44.5); o healer, sem trinket e sem peel do time, morre preso."},
+ "momento_aceitos": [34.8, 38.1, 39.8, 43.4],
+ "erros": [
+  {"t": 43.8, "quem": "Kwongwegaxx", "fez": "cleanse spirit poison com pouca vida, entre stuns do rogue", "devia": "riptide/healing wave em si mesmo, ou trinket no cheap shot dos 39.8", "porque": "o burst de ambush + hemorrhage era dano direto; tirar veneno não o salvou, e ele terminou a luta com 0 de cura", "gravidade": "alta"},
+  {"t": 32.6, "quem": "Kwongwegaxx", "fez": "abriu com bloodlust (30.3), wind shear e flame shock, jogando como DPS", "devia": "se posicionar perto de pilar e preparar a cura (earth shield em si mesmo, riptide), sabendo que o rogue ia abrir nele", "porque": "contra rogue/priest o healer shaman é o alvo natural, e ele chegou ao stun dos 33.9 sem nada preparado", "gravidade": "media"},
+  {"t": 41.1, "quem": "Pehdibalii", "fez": "faerie fire (41.1, de novo aos 47.9) e trocas de forma com o healer do time morrendo", "devia": "cyclone ou entangling roots em Zebedeuxiv durante o shadow dance, ou curar Kwongwegaxx (regrowth, rejuvenation)", "porque": "o healer morreu aos 44.5 sem nenhum peel nem cura do druida, que era o único outro que podia curar", "gravidade": "alta"},
+  {"t": 40.1, "quem": "Ominousdesix", "fez": "corruption 2 vezes até 41.1 enquanto o rogue estava em cima do healer", "devia": "fear ou seduction em Zebedeuxiv, ou howl of terror", "porque": "o death coil já tinha sido usado (33.4) e era preciso tirar o rogue do healer; uma DoT não muda nada em 4 s", "gravidade": "media"},
+  {"t": 38.4, "quem": "Pehdibalii", "fez": "barkskin com 80% de vida", "devia": "guardar para quando ele virasse o alvo no 3v2", "porque": "ele não era o alvo naquele momento, e morreu aos 67.6 sem defensivo", "gravidade": "baixa"},
+  {"t": 37.0, "quem": "Pehdibalii", "fez": "trocou de forma várias vezes: caster (37.0), moonkin (39.0), caster (40.8), moonkin (65.8)", "devia": "definir o papel na hora: ficar em caster para curar ou em moonkin para fazer dano", "porque": "cada troca gasta GCD e mana na janela mais crítica da luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 32.5, "quem": "Zebedeuxiv", "descricao": "Cobalt frag bomb que stunou os três inimigos na abertura"},
+  {"t": 38.1, "quem": "Zebedeuxiv", "descricao": "Shadow dance com cheap shot e ambush no healer para fechar o kill"},
+  {"t": 34.8, "quem": "Amnesianxxv", "descricao": "Mind sear no healer junto com o rogue"},
+  {"t": 33.4, "quem": "Ominousdesix", "descricao": "Death coil em Zebedeuxiv logo na abertura"},
+  {"t": 50.4, "quem": "Zebedeuxiv", "descricao": "Kidney shot em Ominousdesix (49%) para manter a pressão no 3v2"}
+ ]}

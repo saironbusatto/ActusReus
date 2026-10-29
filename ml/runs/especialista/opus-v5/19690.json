@@ -1,0 +1,19 @@
+{"resumo": "Ominousx deu spell lock várias vezes em Heruvi, que gastava os GCDs livres em cleanse em vez de se curar, e o paladino do time IV morreu aos 100.3. Depois, Ominousxii caiu aos 145.2 e Amnesianxxiv ficou sozinho.",
+ "momento_decisivo": {"t": 94.9, "descricao": "Spell lock de Ominousx em Heruvi, já sem divine shield (usado aos 68.5). Ele foi silenciado de novo aos 97.2 com 32%, sem cura de Amnesianxxiv, e morreu aos 100.3."},
+ "erros": [
+  {"t": 90.7, "quem": "Heruvi", "fez": "cleanse e cleanse magic quase sem parar (81.5, 84.1, 88.0, 90.7, 92.0, 94.6, 95.9) com 32-69% de vida", "devia": "flash of light e holy light em si mesmo nas janelas sem silence, e limpar só UA, fear ou haunt", "porque": "Dois warlocks de afliction reaplicavam corruption e curse em segundos. O paladino terminou com 5354 de cura e morreu sob DoT", "gravidade": "alta"},
+  {"t": 95.5, "quem": "Amnesianxxiv", "fez": "entrar e sair da shadowform sem parar (82.5, 84.1, 85.7, 95.5, 97.2, 100.1) enquanto Heruvi morria", "devia": "ficar em forma normal curando Heruvi com flash heal, shield e prayer of mending, ou usar pain suppression", "porque": "O paladino era silenciado o tempo todo e dependia do priest. Cada troca de forma custou o GCD que podia salvá-lo", "gravidade": "alta"},
+  {"t": 66.8, "quem": "Heruvi", "fez": "divine sacrifice e cancel 0.4 s depois, com 32% de vida", "devia": "usar divine shield ou se curar direto", "porque": "Com a vida baixa, o sacrifice só aumenta o dano que o paladino recebe. Os dois GCDs fizeram ele chegar a 12% antes do divine shield", "gravidade": "media"},
+  {"t": 37.2, "quem": "Heruvi", "fez": "exorcism (e de novo aos 41.7) no começo da luta", "devia": "guardar mana e GCD para curar e se posicionar fora do alcance do felhunter", "porque": "Um holy paladin causando dano contra dois felhunters só se expõe a mais spell lock. Ele levou silence logo em seguida (37.3 e 41.8)", "gravidade": "baixa"},
+  {"t": 99.8, "quem": "Ominousxii", "fez": "life tap com o próprio healer silenciado e com 32%", "devia": "fear ou death coil em Ominousx, ou spell lock no paladino inimigo para tirar a pressão", "porque": "Life tap custa vida e não ajuda o aliado. Heruvi morreu 0.5 s depois", "gravidade": "media"},
+  {"t": 74.1, "quem": "Heruiv", "fez": "cast greater blessing assignment no meio da luta", "devia": "flash of light ou cleanse de UA e fear num aliado", "porque": "Blessing é preparação para antes dos portões. No meio da luta, isso gasta GCD à toa", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 64.0, "quem": "Ominousx", "descricao": "Spell lock (pet e talento) em Heruvi com 32%, mantendo o healer fechado até o divine shield."},
+  {"t": 68.5, "quem": "Heruvi", "descricao": "Divine shield com 12% de vida, evitando uma morte imediata."},
+  {"t": 145.7, "quem": "Amnesianxxiv", "descricao": "Dispersion com 47% logo depois da morte do warlock aliado, segurando a luta sozinho."}
+ ],
+ "erros_da_rede": [
+  {"t": 149.2, "quem": "Amnesianxxi", "acao": "shadow word: death → Amnesianxxiv", "porque": "SW:D num priest em dispersion (ativada aos 145.7) quase não dá dano e devolve dano ao priest. Era melhor esperar a dispersion acabar."},
+  {"t": 127.3, "quem": "Ominousx", "acao": "life tap → Ominousxii", "porque": "Life tap repetido (127.3 e 129.9) com o warlock inimigo por volta de 40%. Gastou janelas de pressão para matar."}
+ ]}

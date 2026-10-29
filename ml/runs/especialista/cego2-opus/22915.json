@@ -1,0 +1,93 @@
+{
+ "resumo": "Celianeyix ficou solto batendo no Pehdibalv a luta inteira; aos 104.9 saiu do stun com o trinket e emendou execute até matar o Pehdibalv, que gastou GCDs em cyclone em vez de se salvar.",
+ "momento_decisivo": {
+  "t": 104.9,
+  "descricao": "Celianeyix usa o pvp trinket no stun já com o Pehdibalv em faixa de execute e emenda execute (105.3, 107.1) até a morte."
+ },
+ "momento_aceitos": [
+  102.8,
+  103.5,
+  104.9,
+  106.3
+ ],
+ "erros": [
+  {
+   "t": 106.3,
+   "quem": "Pehdibalv",
+   "fez": "cyclone no Heruxiv estando em faixa de execute",
+   "devia": "bear form/regrowth ou nature's swiftness em si mesmo",
+   "porque": "o warrior estava livre do stun e acertando execute; a ameaça era o Celianeyix, não o curador inimigo",
+   "gravidade": "alta"
+  },
+  {
+   "t": 104.0,
+   "quem": "Ominousdesxi",
+   "fez": "curse of tongues e corruption enquanto o parceiro levava execute",
+   "devia": "fear no Celianeyix (ou felhunter/seduction nele)",
+   "porque": "o warrior não tinha mais trinket após 104.9; um fear salvava o Pehdibalv",
+   "gravidade": "alta"
+  },
+  {
+   "t": 104.2,
+   "quem": "Kwongwegaxxv",
+   "fez": "mana spring totem com o parceiro em faixa de execute",
+   "devia": "healing wave/riptide no Pehdibalv",
+   "porque": "era o momento de cura máxima; o totem de mana não serve para nada ali",
+   "gravidade": "alta"
+  },
+  {
+   "t": 49.9,
+   "quem": "Pehdibalv",
+   "fez": "entrou em moonkin form, force of nature e hurricane (cancelado aos 56.3)",
+   "devia": "ficar em forma de cura e manter HoTs, porque o Celianeyix já estava em cima",
+   "porque": "hurricane é canalizado e fraco; o druid largou o papel de curador enquanto era o alvo",
+   "gravidade": "media"
+  },
+  {
+   "t": 48.9,
+   "quem": "Kwongwegaxxv",
+   "fez": "chain lightning, flame shock e lava burst como curador logo no início",
+   "devia": "cura e controle de totens contra o warrior (earthbind/stoneclaw)",
+   "porque": "o curador gastou GCD em dano fraco enquanto o warrior abria no Pehdibalv",
+   "gravidade": "media"
+  },
+  {
+   "t": 69.4,
+   "quem": "Celianeyix",
+   "fez": "sunder armor ×2 no Kwongwegaxxv",
+   "devia": "mortal strike/heroic strike no alvo que estava pressionando",
+   "porque": "sunder em arena gasta rage e GCD com pouco ganho",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 71.5,
+   "quem": "Naminiv",
+   "fez": "water shield repetido (×2 até 76.6, e outras vezes)",
+   "devia": "dano, purge ou wind shear úteis",
+   "porque": "refazer o water shield sem ter perdido as cargas desperdiça GCD",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 104.9,
+   "quem": "Celianeyix",
+   "descricao": "Trinket guardado para sair do stun e completar o execute."
+  },
+  {
+   "t": 102.8,
+   "quem": "Celianeyix",
+   "descricao": "Bloodrage + sweeping strikes para entrar no execute com rage."
+  },
+  {
+   "t": 82.1,
+   "quem": "Pehdibalv",
+   "descricao": "Cyclone no Heruxiv (curador) quando ainda estava em vida alta."
+  },
+  {
+   "t": 90.4,
+   "quem": "Kwongwegaxxv",
+   "descricao": "Mana tide totem na luta longa."
+  }
+ ]
+}

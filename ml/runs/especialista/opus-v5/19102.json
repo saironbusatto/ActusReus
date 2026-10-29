@@ -1,0 +1,19 @@
+{"resumo": "Zebedeu desceu para 37% na abertura e continuou no ataque sem receber cura do priest. Heshovii o matou com pyroblast + frost nova aos 60.5, e depois o Fireplay matou Heshoii (75.3) e jogou contra Amnesian sozinho.",
+ "momento_decisivo": {"t": 47.5, "descricao": "Com Zebedeu a 37% (evasion aos 45.9), Amnesian lançou cobalt frag bomb duas vezes (47.5-50.3) em vez de curar o rogue. Zebedeu nunca recuperou a vida e caiu aos 60.5."},
+ "erros": [
+  {"t": 47.5, "quem": "Amnesian", "fez": "lançou cobalt frag bomb duas vezes com o rogue aliado a 37%", "devia": "dar power word: shield, penance e flash heal em Zebedeu", "porque": "o priest era o único curandeiro, e o rogue morreu sem cura aos 60.5", "gravidade": "alta"},
+  {"t": 72.9, "quem": "Amnesian", "fez": "usou hyperspeed accelerators duas vezes e o trinket com Heshoii caindo", "devia": "curar Heshoii (shield, penance, pain suppression) e dar psychic scream nos atacantes", "porque": "o mago morreu aos 75.3 enquanto o priest gastava GCDs com engenharia", "gravidade": "alta"},
+  {"t": 52.3, "quem": "Zebedeu", "fez": "depois de vanish, blind e cloak, voltou a atacar com fan of knives e hemorrhage com a vida baixa", "devia": "usar o vanish/cloak para resetar: sair da linha de visão, ir até o priest e esperar cura", "porque": "o rogue não tinha mais defensivos e foi morto 8 s depois, abrindo um 2v3", "gravidade": "alta"},
+  {"t": 42.2, "quem": "Amnesian", "fez": "lançou mind sear várias vezes (42.2, 63.8, 92.9, 98.8, 106.5)", "devia": "curar, ou usar mind blast/dispel ofensivo se sobrasse GCD", "porque": "mind sear é canalizado e fraco em 3v3; o time precisava da cura que ele não fez", "gravidade": "media"},
+  {"t": 36.6, "quem": "Heshoii", "fez": "lançou flamestrike (36.6 e 53.0) e nunca deu polymorph no curandeiro inimigo", "devia": "dar polymorph em Kwongwegavii para deixar o mago ou o warlock sem cura no burst do rogue", "porque": "AoE dá pouco dano no 3v3; o xamã curou 44k sem ser controlado pelo mago", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 47.3, "quem": "Zebedeu", "descricao": "Vanish e blind no xamã logo depois do counterspell de Heshoii (46.8): o curandeiro inimigo ficou travado."},
+  {"t": 58.8, "quem": "Heshovii", "descricao": "Pyroblast e frost nova no rogue sem defensivos, o primeiro kill da luta."},
+  {"t": 100.2, "quem": "Amnesian", "descricao": "Pain suppression a 20% e desperate prayer: aguentou um 1v3 por mais de 30 s."}
+ ],
+ "erros_da_rede": [
+  {"t": 52.3, "quem": "Zebedeu", "acao": "fan of knives", "porque": "AoE de pouco dano com a vida baixa e sem defensivos; o momento pedia reset"},
+  {"t": 72.9, "quem": "Amnesian", "acao": "hyperspeed accelerators", "porque": "usou engenharia enquanto o mago aliado morria, em vez de curar"},
+  {"t": 38.1, "quem": "Heshoii", "acao": "remove curse on party", "porque": "parou o próprio burst (icy veins, mirror image) para dispelar uma maldição pequena"}
+ ]}

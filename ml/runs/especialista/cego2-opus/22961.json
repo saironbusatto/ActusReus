@@ -1,0 +1,90 @@
+{
+ "resumo": "Ominousv pôs DoTs no Celianeyx (UA, haunt, agony) enquanto o Heruxv só fazia cleanse no time em vez de curar; o warrior morreu aos 74.1, o Naminv caiu fazendo purge aos 101.7 e o paladino ficou sozinho.",
+ "momento_decisivo": {
+  "t": 55.7,
+  "descricao": "Heruxv entra em cadeia de cleanse (×3 até 74.1) em vez de curar o Celianeyx, que leva unstable affliction (57.5), haunt (63.4) e curse of agony (68.6) do Ominousv."
+ },
+ "momento_aceitos": [
+  55.7,
+  57.5,
+  63.4,
+  68.6
+ ],
+ "erros": [
+  {
+   "t": 55.7,
+   "quem": "Heruxv",
+   "fez": "cleanse magic ×3 até 74.1 sem curar o Celianeyx",
+   "devia": "holy light/flash of light/holy shock no warrior ou hand of sacrifice",
+   "porque": "o warrior morreu aos 74.1 sem receber cura; limpar UA ainda arrisca o silence de retorno",
+   "gravidade": "alta"
+  },
+  {
+   "t": 97.2,
+   "quem": "Heruxv",
+   "fez": "cleanse ×5 até 106.5 com o Naminv levando hemorrhage",
+   "devia": "curar o Naminv ou dar hand of protection contra o rogue",
+   "porque": "Naminv morreu aos 101.7 no meio da sequência de cleanse",
+   "gravidade": "alta"
+  },
+  {
+   "t": 100.0,
+   "quem": "Naminv",
+   "fez": "purge no Zebedeuvii com a vida acabando",
+   "devia": "healing wave em si mesmo, thunderstorm ou earthbind para afastar o rogue",
+   "porque": "shaman tem cura própria; purge num rogue não salva ninguém",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.5,
+   "quem": "Celianeyx",
+   "fez": "largou o Kwongwegaii (curador) e passou ao Zebedeuvii com sweeping strikes",
+   "devia": "manter pressão no curador ou trocar para o warlock que o estava matando com DoTs",
+   "porque": "o rogue tem evasion/vanish; bater nele não forçou nada",
+   "gravidade": "media"
+  },
+  {
+   "t": 49.3,
+   "quem": "Celianeyx",
+   "fez": "battle shout logo depois do charge",
+   "devia": "mortal strike/hamstring no alvo",
+   "porque": "GCD em buff no começo da pressão",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 62.0,
+   "quem": "Naminv",
+   "fez": "call of the elements no meio da luta",
+   "devia": "dano ou cura útil",
+   "porque": "refazer totens gasta GCD quando o warrior já estava em 51%",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 49.3,
+   "quem": "Ominousv",
+   "descricao": "Death coil no Celianeyx que tinha dado charge no curador."
+  },
+  {
+   "t": 81.1,
+   "quem": "Ominousv",
+   "descricao": "Spell lock no Naminv antes da próxima morte."
+  },
+  {
+   "t": 108.7,
+   "quem": "Heruxv",
+   "descricao": "Divine shield com 21% de vida."
+  },
+  {
+   "t": 84.9,
+   "quem": "Zebedeuvii",
+   "descricao": "Evasion com 39% de vida."
+  },
+  {
+   "t": 134.2,
+   "quem": "Zebedeuvii",
+   "descricao": "Shadow dance + cheap shot no paladino sem trinket."
+  }
+ ]
+}

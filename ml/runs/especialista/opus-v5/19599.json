@@ -1,0 +1,19 @@
+{"resumo": "Foi uma luta longa entre dois times de dois casters e um healer, decidida no desgaste: Heruvi gastou trinket e divine shield cedo, levou silences seguidos e morreu aos 136.8. Depois, Amnesianxxiv ficou alternando shadowform sem conseguir se curar e morreu aos 168.7.",
+ "momento_decisivo": {"t": 132.0, "descricao": "Heruvi foi silenciado com 34% de vida, já sem trinket nem divine shield, e o Shadowplay II emendou stun e dano até a morte dele aos 136.8. A cura do time IV acabou ali."},
+ "erros": [
+  {"t": 125.0, "quem": "Heruvi", "fez": "divine sacrifice com a própria vida baixa (estava em 19% aos 112.8 e 34% aos 132.0)", "devia": "curar a si mesmo com holy light ou flash of light e só usar o sacrifice com vida cheia", "porque": "Divine sacrifice transfere para o paladino parte do dano que os aliados levam. Com o healer baixo e sendo focado, isso acelerou a morte dele", "gravidade": "alta"},
+  {"t": 147.4, "quem": "Amnesianxxiv", "fez": "entrar e sair da shadowform sem parar (147.4, 149.3, 150.8, 154.4, 156.7, 160.1, 162.4)", "devia": "sair da forma uma vez e curar a si mesmo de verdade, ou ficar em shadowform e usar dispersion e linha de visão", "porque": "Cada troca gasta GCD e mana. Sozinho depois da morte do paladino, ele nunca conseguiu se recuperar e morreu com 16% aos 168.7", "gravidade": "alta"},
+  {"t": 79.9, "quem": "Heruvi", "fez": "cleanse e cleanse magic quase sem parar (79.9-82.4, 87.2, 94.3, 102.0, 103.4) contra um warlock de afliction", "devia": "guardar os GCDs para curar e limpar só fear e UA nos momentos certos", "porque": "Ominousx reaplicava corruption e curse em seguida (corruption ×3 até 87.2). O paladino gastou mana à toa numa luta de desgaste", "gravidade": "media"},
+  {"t": 49.3, "quem": "Ominousxii", "fez": "spell lock do pet no warlock inimigo Ominousx", "devia": "usar o spell lock em Heruiv, o healer, ou no priest Amnesianxxi quando ele lançasse fear ou cura", "porque": "Silenciar um warlock de DoT tem pouco impacto. O interrupt é mais valioso no healer, que segurava o time inimigo", "gravidade": "media"},
+  {"t": 39.1, "quem": "Amnesianxxiv", "fez": "mind sear no paladino Heruiv logo na abertura", "devia": "vampiric touch, shadow word: pain e mind blast no alvo, ou fear no warlock", "porque": "Mind sear é dano em área ao redor do alvo e não acerta o próprio alvo. Contra um alvo só, foi GCD perdido", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 112.8, "quem": "Heruvi", "descricao": "Divine shield com 19% de vida no momento certo, depois do silence dos 108.3."},
+  {"t": 145.8, "quem": "Amnesianxxiv", "descricao": "Dispersion com 75% para aguentar o dano de UA, haunt e mind flay estando sozinho."},
+  {"t": 43.8, "quem": "Amnesianxxi", "descricao": "Psychic scream no healer inimigo, forçando o trinket logo no começo e abrindo espaço para o howl of terror do warlock."}
+ ],
+ "erros_da_rede": [
+  {"t": 47.8, "quem": "Amnesianxxi", "acao": "shadow word: death → Heruvi", "porque": "SW:D dá o mesmo dano com o alvo em qualquer vida e devolve dano ao priest. Num paladino com vida alta, é pior do que mind blast ou mind flay."},
+  {"t": 84.7, "quem": "Ominousx", "acao": "corruption on attacker → Heruvi", "porque": "Corruption num paladino que limpava tudo (cleanse aos 87.2 e 90.6). A rede repetiu aos 88.8, gastando GCDs à toa."},
+  {"t": 171.8, "quem": "Ominousx", "acao": "life tap", "porque": "Life tap repetido no fim da luta trocou vida por mana sem nenhum uso imediato para essa mana."}
+ ]}

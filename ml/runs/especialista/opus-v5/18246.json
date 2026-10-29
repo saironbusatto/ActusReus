@@ -1,0 +1,88 @@
+{
+ "resumo": "Fireplay II matou Pehdicouve, que gastou a luta em roots e hurricane em vez de curar, mas o curador Kwongwegaix ficou em purge e foi travado por spell locks; Beteranii fechou com readiness e kill shot.",
+ "momento_decisivo": {
+  "t": 83.7,
+  "descricao": "Readiness e rapid fire de Beteranii com Kwongwegaix silenciado pelo spell lock (83.8) a 25%: o curador morre aos 87.3 e Fireplay fica sem cura."
+ },
+ "erros": [
+  {
+   "t": 62.1,
+   "quem": "Pehdicouve",
+   "fez": "hurricane aos 62.1, 66.8 e 72.7 (cancelando o canal duas vezes)",
+   "devia": "curar com HoTs, swiftmend, nature's swiftness",
+   "porque": "druid curador canalizando dano não cura ninguém; ele morreu aos 76.8 com só 16 mil de cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 76.1,
+   "quem": "Pehdicouve",
+   "fez": "cyclone em Ominousdesii estando para morrer",
+   "devia": "cura própria/barkskin ou se esconder atrás de pilar",
+   "porque": "o cyclone não para os DoTs nem o mage; morreu 0.7 s depois",
+   "gravidade": "media"
+  },
+  {
+   "t": 66.6,
+   "quem": "Kwongwegaix",
+   "fez": "purge aos 66.6, 70.2 ×2, 72.3, 76.3, 77.7, 78.8",
+   "devia": "curar Heshoix (13% aos 76.0)",
+   "porque": "o mage quase morreu e precisou de ice block; os GCDs do curador foram em dispel ofensivo",
+   "gravidade": "alta"
+  },
+  {
+   "t": 50.8,
+   "quem": "Kwongwegaix",
+   "fez": "sem grounding totem contra o felhunter",
+   "devia": "grounding para comer o spell lock",
+   "porque": "os spell locks aos 50.8 e 83.8 travaram a cura; o segundo deixou ele morrer",
+   "gravidade": "media"
+  },
+  {
+   "t": 54.4,
+   "quem": "Kwongwegaix",
+   "fez": "sem tremor totem contra dois warlocks (feared aos 54.4, 57.5, 63.9)",
+   "devia": "tremor totem",
+   "porque": "os fears seguidos tiraram o curador da luta enquanto o mage apanhava",
+   "gravidade": "media"
+  },
+  {
+   "t": 60.7,
+   "quem": "Heshoix",
+   "fez": "blizzard e depois shoot (varinha) aos 62.0",
+   "devia": "polymorph/counterspell no curador ou dano focado",
+   "porque": "blizzard e varinha não pressionam ninguém; Fireplay não tinha alvo de morte",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 75.3,
+   "quem": "Beteranii",
+   "descricao": "Silencing shot em Ominousdesii no momento em que Pehdicouve estava caindo."
+  },
+  {
+   "t": 83.7,
+   "quem": "Beteranii",
+   "descricao": "Readiness + rapid fire + kill command com o curador travado."
+  },
+  {
+   "t": 60.7,
+   "quem": "Ominous",
+   "descricao": "Spell locks seguidos no curador e no mage, cortando cura e dano."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 69.1,
+   "quem": "Kwongwegaix",
+   "acao": "purge → Ominous",
+   "porque": "com Heshoix caindo para 34%, o GCD devia ser cura"
+  },
+  {
+   "t": 58.7,
+   "quem": "Beteranii",
+   "acao": "hunter's mark → Ominousdesii",
+   "porque": "troca de hunter's mark sem burst preparado; GCD sem dano"
+  }
+ ]
+}

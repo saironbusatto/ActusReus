@@ -1,0 +1,94 @@
+{
+ "resumo": "Celianeyvi ficou soltando cleave/heroic strike e caiu no execute do Celianeyvii aos 54.3 sem o Heruxi gastar nenhuma hand. Depois o Omasconvi, com gargoyle e pressão no Heruxii, virou a luta matando o paladino e o warrior.",
+ "momento_decisivo": {
+  "t": 50.9,
+  "descricao": "Omasconvi invoca a gargoyle com plague/icy no Heruxii. O paladino já tinha queimado o divine protection aos 46.3 e cai aos 63.3, deixando o Celianeyvii sem cura."
+ },
+ "erros": [
+  {
+   "t": 38.6,
+   "quem": "Celianeyvi",
+   "fez": "spam de cleave/heroic strike de 38.6 a 49.4; mortal strike só aos 50.4",
+   "devia": "mortal strike no alvo da kill",
+   "porque": "sem MS o Celianeyvii se curava (enraged regeneration + paladino) e o outro warrior ganhou a troca",
+   "gravidade": "alta"
+  },
+  {
+   "t": 47.2,
+   "quem": "Heruxi",
+   "fez": "holy light longo (45.9-49.2) com o Celianeyvi já na faixa de execute",
+   "devia": "hand of protection/hand of sacrifice no Celianeyvi",
+   "porque": "execute + MS matam com cura de cast longo no meio; uma hand salva o warrior",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.6,
+   "quem": "Heruxi",
+   "fez": "divine sacrifice cancelado 0.4 s depois",
+   "devia": "usar a hand certa ou curar",
+   "porque": "dois GCDs sem efeito no meio da pressão",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 56.3,
+   "quem": "Heruxii",
+   "fez": "divine sacrifice cancelado em 56.6 e cleanse aos 59.2 apanhando do DK",
+   "devia": "se curar/divine shield",
+   "porque": "morreu aos 63.3 sem usar nenhum defensivo grande",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.3,
+   "quem": "Naminii",
+   "fez": "cure toxins em sequência (57.3, 60.0, 63.6, 66.3) com o Heruxii morrendo",
+   "devia": "healing wave/hex no Omasconvi",
+   "porque": "limpar veneno não segura o dano do DK com a gargoyle; o time perdeu o healer",
+   "gravidade": "media"
+  },
+  {
+   "t": 62.8,
+   "quem": "Celianeyvii",
+   "fez": "sunder armor ×2 com o próprio healer morrendo",
+   "devia": "mortal strike/hamstring no Omasconvi ou intercept pra fazer peel",
+   "porque": "sunder em arena é GCD quase inútil",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 47.2,
+   "quem": "Celianeyvii",
+   "descricao": "Execute + mortal strike no Celianeyvi assim que ele entrou na faixa, abrindo a primeira kill."
+  },
+  {
+   "t": 37.5,
+   "quem": "Omasconvi",
+   "descricao": "Gnaw do pet no Naminii pra parar o caster."
+  },
+  {
+   "t": 50.9,
+   "quem": "Omasconvi",
+   "descricao": "Gargoyle + empower rune weapon na hora da troca, garantindo a kill no Heruxii."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 31.3,
+   "quem": "Naminii",
+   "acao": "heroism antes do contato (charges só aos 34.0)",
+   "porque": "perde parte dos 40 s de heroism sem ninguém batendo"
+  },
+  {
+   "t": 56.3,
+   "quem": "Heruxii",
+   "acao": "divine sacrifice cancelado logo em seguida",
+   "porque": "GCD perdido com ele mesmo como alvo do DK"
+  },
+  {
+   "t": 69.0,
+   "quem": "Naminii",
+   "acao": "lightning bolt no Omasconvi sozinho contra dois",
+   "porque": "mind freeze vem fácil; precisava kitar ou curar"
+  }
+ ]
+}

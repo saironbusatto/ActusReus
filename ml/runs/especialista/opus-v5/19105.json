@@ -1,0 +1,20 @@
+{"resumo": "Espelho RPS longo decidido por recursos: o RPS IV queimou trinkets e defensivos cedo (trinkets duplos aos 63 s, dispersion com vida cheia aos 131 s) e o RPS I fechou o Kwongwegaxvi com silence no outro curador + kidney shot sem trinket disponível; depois o Amnesianxxix caiu sozinho.",
+ "momento_decisivo": {"t": 141.0, "descricao": "Amnesianix silenciou o Amnesianxxix (que tinha saído da shadowform para curar) e 0,7 s depois o Zebedeuxii deu kidney shot no Kwongwegaxvi a 28% sem trinket: sem cura nenhuma do lado IV, o shaman morreu aos 145.8."},
+ "erros": [
+  {"t": 63.7, "quem": "Kwongwegaxvi", "fez": "pvp trinket para sair de um kidney shot com 65% de vida, no mesmo instante em que o parceiro também gastava o trinket", "devia": "aguentar o kidney a 65% (o parceiro estava livre para cobrir) e guardar o trinket para um stun com vida baixa", "porque": "o time IV ficou sem nenhum trinket na metade da luta; no kidney de 141.7 a 28% o shaman não tinha saída e morreu", "gravidade": "alta"},
+  {"t": 131.3, "quem": "Amnesianxxix", "fez": "dispersion com 100% de vida", "devia": "guardar a dispersion (3 min de recarga) para quando fosse focado ou para regenerar mana já com o curador sob pressão", "porque": "depois que o Kwongwegaxvi morreu ele virou o alvo e morreu aos 173 sem o defensivo principal", "gravidade": "alta"},
+  {"t": 140.2, "quem": "Amnesianxxix", "fez": "sai e volta da shadowform várias vezes (remove 140.2, volta 141.9, remove 143.3; o mesmo em 63.9/65.7 e 92.5/94.2) para jogar flash heal e prayer of mending", "devia": "ou ficar em shadowform pressionando/controlando, ou ficar fora dela e curar de forma contínua enquanto o curador apanha", "porque": "cada troca de forma custa um GCD e mana; no momento crítico a cura dele saiu picada e foi silenciada", "gravidade": "media"},
+  {"t": 131.0, "quem": "Kwongwegaxvi", "fez": "cleanse spirit em veneno três vezes seguidas (131.0-139.9) enquanto apanhava hemorrhage dos dois rogues", "devia": "curar a si mesmo (riptide/healing wave) e posicionar atrás de pilar", "porque": "os rogues reaplicam o veneno a cada golpe; limpar wound/crippling contra dois rogues é GCD jogado fora no momento em que ele caía para 28%", "gravidade": "media"},
+  {"t": 39.8, "quem": "Zebedeuxii", "fez": "kick no Zebedeuxvi", "devia": "guardar o kick para um curador (flash heal/healing wave) ou para o mind blast do shadow priest", "porque": "rogue não conjura nada; o kick fica 10 s em recarga sem efeito", "gravidade": "baixa"},
+  {"t": 136.3, "quem": "Amnesianxxix", "fez": "apply oil no meio do combate", "devia": "aplicar óleo antes dos portões", "porque": "gasta tempo de ação em plena luta, logo antes da janela de kill do inimigo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 141.0, "quem": "Amnesianix", "descricao": "silence on enemy healer no Amnesianxxix exatamente quando ele foi curar, sincronizado com o kidney do Zebedeuxii no Kwongwegaxvi"},
+  {"t": 106.4, "quem": "Amnesianix", "descricao": "dispersion com 23% de vida sob foco: sobreviveu e voltou para a luta"},
+  {"t": 44.5, "quem": "Amnesianix", "descricao": "psychic scream tirando o Zebedeuxvi de cima logo após o shadow dance/cheap shot de abertura"}
+ ],
+ "erros_da_rede": [
+  {"t": 66.9, "quem": "Zebedeuxii", "acao": "hemorrhage trocando o alvo para o Amnesianxxix", "porque": "o Kwongwegaxvi acabava de gastar o trinket e estava a 65%; trocar para o priest que tem shield e dispersion dispersou o dano no momento de apertar o curador"},
+  {"t": 108.3, "quem": "Kwongwegaxii", "acao": "cleanse spirit em veneno (repetido em 113.5 e 141.4)", "porque": "contra dois rogues o veneno volta no próximo golpe; GCD melhor gasto em cura ou purge do shield"},
+  {"t": 146.2, "quem": "Amnesianix", "acao": "shadow word: death no Amnesianxxix", "porque": "SW:D é golpe de execução e devolve dano ao conjurador; usado logo após a morte do shaman, sem o alvo em vida de execução, em vez de mind blast/mind flay"}
+ ]}

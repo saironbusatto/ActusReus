@@ -1,0 +1,80 @@
+{
+ "resumo": "O kidney shot do Zebedeu no Pehdicouiv a 32% obrigou o trinket. Sem peel do Wild no rogue, o druida caiu aos 57.0, e o deep freeze + shadow dance mataram o Ominousvii depois.",
+ "momento_decisivo": {
+  "t": 42.5,
+  "descricao": "Zebedeu dá kidney shot no Pehdicouiv a 32%, que gasta trinket e barkskin; daí ninguém tira o rogue de cima dele."
+ },
+ "erros": [
+  {
+   "t": 34.6,
+   "quem": "Pehdicouiv",
+   "fez": "hurricane no início, cancelado aos 36.6",
+   "devia": "se preparar pra curar (HoTs)/ficar em tree",
+   "porque": "channel AoE de dano em healer quase não dá dano e foi cancelado: GCD e mana perdidos",
+   "gravidade": "media"
+  },
+  {
+   "t": 42.4,
+   "quem": "Ominousvii",
+   "fez": "pet spell lock no Zebedeu (aos 42.4 e de novo aos 45.7)",
+   "devia": "fear/death coil no Zebedeu ou spell lock no Amnesian",
+   "porque": "spell lock num rogue não trava nada; o druida estava morrendo nas mãos dele",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.5,
+   "quem": "Pehdicouiv",
+   "fez": "sair do tree of life pra caster form (45.5, 49.1, 51.4)",
+   "devia": "ficar em tree e curar com HoTs",
+   "porque": "sair do tree tira armadura extra e aura de cura justo quando o rogue bate",
+   "gravidade": "media"
+  },
+  {
+   "t": 30.8,
+   "quem": "Beteranvi",
+   "fez": "hunter's mark repetido (30.8, 32.4, 34.0, 37.3, 42.5, 45.7)",
+   "devia": "usar scatter/trap no rogue, que estava em cima do healer",
+   "porque": "refazer marca é GCD perdido",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 56.1,
+   "quem": "Beteranvi",
+   "fez": "silencing shot no Zebedeu",
+   "devia": "silencing no Amnesian/Heshoii",
+   "porque": "silence quase não atrapalha rogue; era interrupt pra caster",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 42.5,
+   "quem": "Zebedeu",
+   "descricao": "Kidney shot no healer com 32% de vida, forçando trinket + barkskin."
+  },
+  {
+   "t": 59.3,
+   "quem": "Zebedeu",
+   "descricao": "A 18% em fear usou trinket, vanish e cloak of shadows e saiu vivo."
+  },
+  {
+   "t": 68.3,
+   "quem": "Heshoii",
+   "descricao": "Deep freeze no Ominousvii pro Zebedeu entrar com shadow dance + ambush e fechar a kill aos 72.1."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 37.8,
+   "quem": "Heshoii",
+   "acao": "ice lance no Pehdicouiv sem alvo congelado",
+   "porque": "fora de freeze, ice lance dá dano baixo; frostbolt/poly rendiam mais"
+  },
+  {
+   "t": 57.6,
+   "quem": "Heshoii",
+   "acao": "ice lance no Ominousvii sem freeze",
+   "porque": "mesmo motivo: o dano só triplica em alvo congelado"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{"resumo": "Luta de atrito entre dois warlocks; o RLS IV ganhou quando o Zebedeuxi pegou o Amnesianxxi com kidney shot e o Ominousxxiv travou a cura dele com spell lock, enquanto o Heruiv limpava magias em vez de proteger o priest.",
+ "momento_decisivo": {"t": 91.8, "descricao": "Zebedeuxi trocou para o Amnesianxxi e deu kidney shot a 47%; o priest não usou Dispersion a tempo, o Heruiv seguiu com cleanse em vez de Hand of Protection/cura, e o spell lock aos 104.5 fechou a morte."},
+ "erros": [
+  {"t": 104.0, "quem": "Heruiv", "fez": "cleanse magic on party enquanto o Amnesianxxi caía de 47% para 11%", "devia": "Hand of Protection no priest (o dano principal era do rogue) e Holy Light/Holy Shock nele", "porque": "os DoTs voltavam na hora; o parceiro sob kidney shot de rogue era o alvo de kill e precisava de proteção física e cura direta", "gravidade": "alta"},
+  {"t": 105.9, "quem": "Heruiv", "fez": "cancel divine sacrifice logo após ativar, com o priest a 11%", "devia": "manter o Divine Sacrifice ativo para absorver parte do dano no Amnesianxxi", "porque": "cancelar 0,3 s depois anulou a única proteção que estava em cima do priest no instante da morte", "gravidade": "media"},
+  {"t": 92.0, "quem": "Amnesianxxi", "fez": "não usou Dispersion entre o kidney shot a 47% e os 11%, só ativou aos 106.3 já com 0%", "devia": "Dispersion assim que saísse do stun ou PW:S + Psychic Scream no rogue", "porque": "Dispersion reduz 90% do dano; usada no fim não salva, e o priest morreu com o defensivo praticamente sem efeito", "gravidade": "alta"},
+  {"t": 95.9, "quem": "Amnesianxxi", "fez": "remove shadowform e voltar à forma (104.7) várias vezes", "devia": "ficar em Shadowform aplicando dano/controle ou ficar fora curando de vez", "porque": "cada troca custa GCD e mana; o priest fez só 7k de dano na luta toda", "gravidade": "media"},
+  {"t": 114.7, "quem": "Zebedeuxi", "fez": "evasion aos 38% contra pressão de warlock (UA, corruption, curse)", "devia": "Cloak of Shadows, que limparia os DoTs e o UA", "porque": "Evasion só evita golpes físicos; o dano vinha de feitiço, e o rogue nunca usou Cloak na luta", "gravidade": "media"},
+  {"t": 140.0, "quem": "Heruiv", "fez": "divine plea com o Ominousx sob kidney shot e a 27%", "devia": "Holy Light/Flash of Light no Ominousx ou Hand of Freedom/Cleanse para tirá-lo do controle", "porque": "Divine Plea corta a cura pela metade justo no momento do segundo kill", "gravidade": "media"},
+  {"t": 59.3, "quem": "Kwongwegavi", "fez": "lightning bolt, flame shock e lava burst em sequência (59-80)", "devia": "Earth Shield no Zebedeuxi, Grounding contra spell lock e reserva de mana", "porque": "o dano do curador foi irrelevante (3k na luta) e o time tomava fear/spell lock constante", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.6, "quem": "Zebedeuxi", "descricao": "shadowstep + shadow dance + cheap shot no Heruiv no portão, forçando o trinket do curador na abertura."},
+  {"t": 91.8, "quem": "Zebedeuxi", "descricao": "troca para o Amnesianxxi com kidney shot quando ele estava a 47%, iniciando o kill decisivo."},
+  {"t": 104.5, "quem": "Ominousxxiv", "descricao": "spell lock no Amnesianxxi a 11% cortando a cura dele e garantindo a morte."}
+ ],
+ "erros_da_rede": [
+  {"t": 43.5, "quem": "Amnesianxxi", "acao": "shadow word: death → Kwongwegavi", "porque": "SW:D no curador a quase 100% de vida: dano pequeno, devolve dano ao priest e gasta GCD na abertura."},
+  {"t": 104.7, "quem": "Amnesianxxi", "acao": "shadowform → Kwongwegavi", "porque": "a 11% de vida e silenciado, voltar à forma não ajuda; precisava de Dispersion ou defesa."},
+  {"t": 77.8, "quem": "Heruiv", "acao": "divine plea → Zebedeuxi", "porque": "sob pressão constante de DoTs, reduzir a cura pela metade enfraqueceu o time sem necessidade imediata de mana."}
+ ]}

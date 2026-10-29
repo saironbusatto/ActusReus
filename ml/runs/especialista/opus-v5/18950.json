@@ -1,0 +1,19 @@
+{"resumo": "Celianeyix deu charge e bladestorm no paladino Heruxii, que gastou o trinket no stun do charge com vida cheia e depois morreu na faixa de execute sem usar divine shield. Sem curandeiro, Naminii e Celianeyvii caíram em seguida.",
+ "momento_decisivo": {"t": 52.3, "descricao": "Heruxii, já na faixa de execute (Celianeyix lançou execute aos 50.8), usou divine sacrifice e cancelou 0.4 s depois, em vez de usar divine shield. Morreu no execute aos 58.4."},
+ "erros": [
+  {"t": 39.9, "quem": "Heruxii", "fez": "usou every man for himself no stun do charge com 100% de vida", "devia": "aguentar o stun curto e guardar o trinket para um CC com a vida baixa", "porque": "o charge dura 1.5 s; sem trinket, o paladino não teve fuga quando o warrior o levou ao execute", "gravidade": "media"},
+  {"t": 52.3, "quem": "Heruxii", "fez": "na faixa de execute, usou divine sacrifice e cancelou, e morreu aos 58.4 sem divine shield", "devia": "usar divine shield (ou hand of protection, contra dano físico) e se curar dentro do bubble", "porque": "o bubble anula o execute e o bladestorm; morrer com ele disponível perde a luta", "gravidade": "alta"},
+  {"t": 43.3, "quem": "Celianeyvii", "fez": "passou de 43.3 a 46.9 lançando sunder armor três vezes enquanto o curandeiro dele levava bladestorm", "devia": "fazer peel em Celianeyix (hamstring, intervene no paladino, intimidating shout) e manter mortal strike nele", "porque": "o warrior inimigo estava livre no curandeiro; sunder não faz dano nem tira pressão", "gravidade": "alta"},
+  {"t": 56.2, "quem": "Naminii", "fez": "lançou chain lightning e elemental mastery enquanto o paladino aliado caía na faixa de execute", "devia": "curar Heruxii (healing wave/riptide) e jogar frost shock/earthbind em Celianeyix", "porque": "o xamã fez só 5.1k de cura; o paladino morreu a seu lado", "gravidade": "alta"},
+  {"t": 50.8, "quem": "Celianeyvii", "fez": "usou bladestorm no time inimigo enquanto o próprio curandeiro estava a menos de 20%", "devia": "guardar o bladestorm e usar intervene/intimidating shout para salvar Heruxii", "porque": "o bladestorm não matou ninguém, e o paladino morreu 8 s depois", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 41.0, "quem": "Celianeyix", "descricao": "Charge e bladestorm no paladino curandeiro, que forçou o trinket e o levou à faixa de execute."},
+  {"t": 52.9, "quem": "Naminiv", "descricao": "Elemental mastery e lava burst somados ao warrior na janela do kill."},
+  {"t": 58.4, "quem": "Celianeyix", "descricao": "Execute que fechou o kill no curandeiro."}
+ ],
+ "erros_da_rede": [
+  {"t": 43.3, "quem": "Celianeyvii", "acao": "sunder armor", "porque": "sunder em sequência (43.3, 45.1, 46.9, 60.5) enquanto o curandeiro aliado era o alvo: zero peel e pouco dano"},
+  {"t": 49.6, "quem": "Naminiv", "acao": "heroism", "porque": "o time dele já tinha usado o burst do warrior; usou o heroism meio sem sincronia, com o inimigo também lançando heroism aos 49.5"},
+  {"t": 55.9, "quem": "Heruxii", "acao": "cleanse magic on party", "porque": "dispelou com a própria vida na faixa de execute, quando precisava de divine shield ou cura em si mesmo"}
+ ]}

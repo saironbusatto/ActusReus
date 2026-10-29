@@ -1,0 +1,21 @@
+{"resumo": "Espelho TSG: os dois lados trocaram cleave e heroic strike em vez de Mortal Strike, mas o Heruxi curou muito mais e o Heruix gastou GCDs limpando doenças enquanto o Omasconiv caía, que morreu aos 70 e abriu o 3v2.",
+ "momento_decisivo": {"t": 51.9, "descricao": "Com o Omasconiv a 44% e sob dois melees, o Heruix passou a limpar doença em sequência (até 59.9) em vez de curar; os DKs inimigos reaplicavam a doença na hora e o Omasconiv nunca se recuperou."},
+ "erros": [
+  {"t": 51.9, "quem": "Heruix", "fez": "cleanse disease on party ×2 até 59.9 com o Omasconiv a 44%", "devia": "Holy Light/Flash of Light no Omasconiv e Hand of Protection quando ele estivesse baixo", "porque": "Icy Touch e Plague Strike reaplicam doença em 1 GCD; limpar era troca perdida enquanto o parceiro tomava dano pesado", "gravidade": "alta"},
+  {"t": 45.4, "quem": "Celianeyiv", "fez": "heroic strike e cleave sem parar, só usando mortal strike aos 72.5", "devia": "manter Mortal Strike no alvo de kill para aplicar o debuff de cura", "porque": "sem o -50% de cura do MS, o Heruxi (73k de cura) segurava o time inteiro; cleave/HS gastam raiva sem impedir cura", "gravidade": "alta"},
+  {"t": 46.8, "quem": "Celianeyvi", "fez": "cleave e heroic strike em série, primeiro mortal strike só aos 57.5", "devia": "abrir com Mortal Strike no alvo de kill", "porque": "o Heruix ainda curava; o debuff de cura é a principal ferramenta do warrior contra time com paladino", "gravidade": "media"},
+  {"t": 60.6, "quem": "Celianeyiv", "fez": "sunder armor repetido (60.6, 67.5, 70.9, 75.3, 79.9)", "devia": "Mortal Strike, Hamstring ou Intercept no curador", "porque": "Sunder em arena é GCD de pouco valor; o warrior morreu aos 80.7 tendo gasto vários GCDs nisso", "gravidade": "media"},
+  {"t": 62.6, "quem": "Omasconiv", "fez": "summon gargoyle já perto de morrer", "devia": "usar Anti-Magic Shell/Lichborne ou Death Pact antes, e a Gargoyle no início do burst", "porque": "a Gargoyle precisa de tempo para dar dano; com o DK morrendo aos 70 o cooldown foi perdido", "gravidade": "baixa"},
+  {"t": 95.8, "quem": "Heruix", "fez": "divine sacrifice estando sozinho", "devia": "Divine Shield e cura própria, ou tentar Hammer of Justice no warrior", "porque": "Divine Sacrifice redireciona dano dos membros do grupo; com os dois parceiros mortos não protege ninguém", "gravidade": "baixa"},
+  {"t": 82.7, "quem": "Celianeyvi", "fez": "sunder armor ×4 até 87.5 no Heruix", "devia": "Mortal Strike para impedir a cura do paladino e fechar a luta", "porque": "contra paladino sozinho curando, o MS é o que acaba a luta; sunder só atrasou o fim", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.3, "quem": "Celianeyvi", "descricao": "charge no Celianeyiv seguido de sweeping strikes e bladestorm, abrindo dano em todos os inimigos agrupados."},
+  {"t": 51.8, "quem": "Omasconvi", "descricao": "icebound fortitude aos 43% sob dois melees, aguentando até a cura do Heruxi estabilizar."},
+  {"t": 81.3, "quem": "Celianeyvi", "descricao": "charge no Heruix logo após a morte do Celianeyiv, pressionando o último inimigo sem tempo para se recuperar."}
+ ],
+ "erros_da_rede": [
+  {"t": 63.8, "quem": "Heruix", "acao": "divine plea → Heruxi", "porque": "Divine Plea corta a cura do paladino pela metade logo antes do Omasconiv morrer (70.0)."},
+  {"t": 59.1, "quem": "Celianeyiv", "acao": "sunder armor → Omasconvi", "porque": "GCD de pouco valor em arena num DK com Icebound; Mortal Strike daria dano e cortaria a cura."},
+  {"t": 44.0, "quem": "Heruix", "acao": "cleanse disease on party → Heruxi", "porque": "limpar doença nos primeiros segundos contra dois DKs é inútil: reaplicação instantânea; a cura era mais necessária."}
+ ]}

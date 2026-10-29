@@ -1,0 +1,88 @@
+{
+ "resumo": "Wild I matou o paladino Heruxvi em 13 s com silencing shot, spell lock e fear em cadeia; Heruxvi nunca usou divine shield e Thunder IV ficou sem cura.",
+ "momento_decisivo": {
+  "t": 44.4,
+  "descricao": "Spell lock do felhunter de Ominous em Heruxvi a 37%, seguido de fear aos 45.2 depois do silencing shot aos 40.4: o curador não conseguiu se curar e morreu aos 47.5."
+ },
+ "erros": [
+  {
+   "t": 46.4,
+   "quem": "Heruxvi",
+   "fez": "divine sacrifice a 14% de vida",
+   "devia": "divine shield",
+   "porque": "divine sacrifice puxa para o paladino o dano dos aliados; a 14% isso só acelera a morte, enquanto o bubble zerava o dano",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.7,
+   "quem": "Heruxvi",
+   "fez": "holy light (cast longo) a 73% sob foco de hunter e warlock",
+   "devia": "flash of light/holy shock em si mesmo e bubble antes de ficar a 37%",
+   "porque": "o cast foi trancado pelo spell lock aos 44.4; cast longo contra felhunter é convite ao lock",
+   "gravidade": "media"
+  },
+  {
+   "t": 45.7,
+   "quem": "Heruxvi",
+   "fez": "every man for himself logo depois do pvp trinket aos 45.3",
+   "devia": "um basta; o segundo GCD devia ser divine shield",
+   "porque": "os dois tiram CC, gastar ambos em sequência não salva ninguém a 14%",
+   "gravidade": "media"
+  },
+  {
+   "t": 37.4,
+   "quem": "Celianeyxi",
+   "fez": "sweeping strikes, bladestorm, cleave e heroic strike; nenhum mortal strike na luta",
+   "devia": "mortal strike e hamstring no curador Pehdicouve depois do charge",
+   "porque": "sem o redutor de cura, Pehdicouve curou 48 mil; o charge no druid aos 36.3 não foi aproveitado",
+   "gravidade": "alta"
+  },
+  {
+   "t": 44.4,
+   "quem": "Naminvi",
+   "fez": "sem grounding ou tremor totem enquanto o curador era travado",
+   "devia": "grounding totem para comer o spell lock e tremor para o fear",
+   "porque": "o curador morreu exatamente em spell lock + fear, que os totens anulavam",
+   "gravidade": "media"
+  },
+  {
+   "t": 45.8,
+   "quem": "Naminvi",
+   "fez": "chain lightning com o curador aliado a 14%",
+   "devia": "healing wave/lesser healing wave em Heruxvi",
+   "porque": "um shaman elemental ainda cura; o paladino morreu 2 s depois",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 40.4,
+   "quem": "Beteranii",
+   "descricao": "Silencing shot no curador inimigo abrindo a janela de morte."
+  },
+  {
+   "t": 44.4,
+   "quem": "Ominous",
+   "descricao": "Spell lock seguido de fear no mesmo curador, sem deixá-lo agir."
+  },
+  {
+   "t": 43.6,
+   "quem": "Pehdicouve",
+   "descricao": "Nature's swiftness + healing touch quando estava a 54% sob o charge do warrior."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 58.4,
+   "quem": "Pehdicouve",
+   "acao": "caster form",
+   "porque": "já estava em caster form desde 54.3; shift redundante gasta GCD e mana"
+  },
+  {
+   "t": 50.1,
+   "quem": "Pehdicouve",
+   "acao": "healing touch on party → Naminvi",
+   "porque": "cast longo sem nature's swiftness com o warrior inimigo vivo; rejuvenation/wild growth curariam sem risco de interrupção"
+  }
+ ]
+}

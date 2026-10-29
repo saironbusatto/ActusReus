@@ -1,0 +1,20 @@
+{"resumo": "Celianeyxi queimou bladestorm e trinket cedo e bateu só cleave/heroic strike, sem Mortal Strike; Heshoix sobreviveu com ice block e, com o counterspell no Heruxvi, a Fireplay II matou o warrior aos 65.7 e depois venceu o atrito trancando o paladino com polymorph.",
+ "momento_decisivo": {"t": 64.2, "descricao": "Counterspell de Heshoix no Heruxvi trava a escola holy do paladino; sem cura, Celianeyxi morre 1.5 s depois (65.7) e o Thunder IV fica em 2v3."},
+ "erros": [
+  {"t": 41.2, "quem": "Celianeyxi", "fez": "cleave e heroic strike em loop (41.2-64.6) sem nenhum Mortal Strike", "devia": "manter Mortal Strike no alvo e usar intercept/hamstring para colar no mage ou no curador", "porque": "o shaman curou mais de 100k na luta; sem a redução de cura de Mortal Strike o warrior não matou ninguém", "gravidade": "alta"},
+  {"t": 40.8, "quem": "Celianeyxi", "fez": "bladestorm a 93% de vida logo após o charge, com mirror image ativo", "devia": "guardar Bladestorm para uma janela de kill ou para escapar de controle", "porque": "os golpes se espalharam entre as imagens; o mage chegou a 24% mas deu ice block e o cooldown já estava gasto", "gravidade": "media"},
+  {"t": 42.1, "quem": "Heruxvi", "fez": "every man for himself num fear com 89% de vida", "devia": "guardar o racial para um polymorph/fear em momento de cura crítica", "porque": "depois foi polimorfado e feared seguidamente (55.5, 60.5, 74.6, 81.4) enquanto os aliados morriam", "gravidade": "media"},
+  {"t": 94.2, "quem": "Naminvi", "fez": "purge em sequência (94.2, 97.3 ×2, 105.6, 110.8) com a própria vida entre 2% e 32%", "devia": "curar-se (healing wave, gift of the naaru já usado), usar ghost wolf e quebrar linha de visão", "porque": "era o alvo do warlock destro; remover buffs não impediu que morresse aos 131.7", "gravidade": "alta"},
+  {"t": 107.8, "quem": "Heruxvi", "fez": "cleanse magic on party ×3 até 113.3 com Naminvi baixo", "devia": "priorizar flash of light/holy shock no shaman e posicionar-se fora do alcance do polymorph", "porque": "o shaman do time estava sob burst destro; limpar DoTs que voltam a cada GCD não sustentou a vida dele", "gravidade": "media"},
+  {"t": 49.4, "quem": "Heruxvi", "fez": "holy light on party contra um mage", "devia": "usar flash of light e holy shock, reservando holy light para quando o mage estivesse sem counterspell", "porque": "casts longos contra mage e felhunter são cortados; aos 64.2 o counterspell fechou a escola e o warrior morreu", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 45.3, "quem": "Heshoix", "descricao": "Ice block a 24% sob o warrior, saindo da pressão do bladestorm/cleave."},
+  {"t": 64.2, "quem": "Heshoix", "descricao": "Counterspell no paladino curador no momento em que o warrior estava baixo, garantindo o kill."},
+  {"t": 74.6, "quem": "Heshoix", "descricao": "Dragon's breath pegando Naminvi e Heruxvi juntos, cortando cura e dano ao mesmo tempo."}
+ ],
+ "erros_da_rede": [
+  {"t": 35.9, "quem": "Heshoix", "acao": "berserking → Naminvi", "porque": "usado nos portões junto com combustion, antes de qualquer alvo em alcance; o cooldown expirou sem dano."},
+  {"t": 49.5, "quem": "Ominousdesii", "acao": "life tap → Heruxvi", "porque": "com o warrior inimigo ativo e o próprio mage a 24% pouco antes, gastar vida e GCD em mana no começo da luta é desperdício."},
+  {"t": 60.6, "quem": "Ominousdesii", "acao": "life tap → Celianeyxi", "porque": "o warrior estava perto de morrer; o GCD devia ir para conflagrate/chaos bolt nele."}
+ ]}

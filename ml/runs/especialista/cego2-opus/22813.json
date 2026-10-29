@@ -1,0 +1,18 @@
+{"resumo": "Na troca de CC entre os dois druidas, o healer Kwongwegaxxv passou de 84 a 101 s em stuns seguidos sem usar trinket, e Ominousdesix aproveitou para drenar Pehdibalv até a morte (107.8). No 2v3, Ominousdesxi caiu aos 189.1, preso pelos roots de Pehdibalii.",
+ "momento_decisivo": {"t": 96.7, "descricao": "Ominousdesix começa o drain soul em Pehdibalv enquanto o healer dele, Kwongwegaxxv, está stunado (53% aos 95.3) e não usa trinket; Pehdibalv gasta o tempo dando cyclone em Pehdibalii em vez de se curar."},
+ "momento_aceitos": [91.4, 95.3, 96.7, 99.0, 103.0],
+ "erros": [
+  {"t": 95.3, "quem": "Kwongwegaxxv", "fez": "ficou stunado aos 84.0, 85.1, 88.2, 95.3 e 101.4, com a vida caindo para 43%, sem usar trinket", "devia": "usar o trinket no stun dos 95.3 e curar Pehdibalv, que estava sob drain soul", "porque": "o único healer do time ficou fora da luta exatamente na janela em que Pehdibalv morreu", "gravidade": "alta"},
+  {"t": 99.0, "quem": "Pehdibalv", "fez": "cyclone → Pehdibalii 2 vezes até 101.5 enquanto levava drain soul", "devia": "se curar (regrowth/nourish), ou usar o cyclone em Ominousdesix, que era quem estava drenando", "porque": "o cyclone no druida inimigo não reduzia o dano que ele recebia, e ele morreu aos 107.8", "gravidade": "alta"},
+  {"t": 74.0, "quem": "Pehdibalii", "fez": "barkskin com 96% de vida", "devia": "guardar o barkskin para o Shadowfury + conflagrate dos 91.4 (49%) ou para o fear aos 11% (96.2)", "porque": "o defensivo foi gasto sem pressão nenhuma, e ele quase morreu 20 s depois", "gravidade": "media"},
+  {"t": 85.2, "quem": "Pehdibalii", "fez": "começou e cancelou hurricane várias vezes (85.2, 85.5-85.9, 88.2-88.6, 89.6-90.0)", "devia": "lançar dano de alvo único ou se curar, já que estava perdendo vida", "porque": "cada canal cancelado é um GCD perdido, e nisso a vida dele caiu para 49%", "gravidade": "media"},
+  {"t": 120.2, "quem": "Ominousdesix", "fez": "alternou curse of tongues e curse of the elements no mesmo alvo (120.2, 127.6, 131.8, 133.2, 144.8)", "devia": "escolher uma maldição por alvo e usar os GCDs em dano ou fear", "porque": "cada warlock só mantém uma maldição por alvo, então uma sobrescreve a outra e o GCD anterior se perde", "gravidade": "media"},
+  {"t": 65.8, "quem": "Pehdibalv", "fez": "ficou trocando de forma: moonkin (65.8), caster (70.0), moonkin (74.9)", "devia": "definir um papel (cura ou dano) e ficar nele", "porque": "cada troca gasta GCD e mana e não dá nem cura nem dano", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 68.8, "quem": "Ominousdesxi", "descricao": "Shadowfury pegando Pehdibalii e Ominousdesix ao mesmo tempo"},
+  {"t": 96.9, "quem": "Pehdibalv", "descricao": "Cyclone em Ominousdesix interrompendo o drain soul, um peel correto, mesmo que tenha vindo tarde"},
+  {"t": 109.0, "quem": "Kwongwegaxx", "descricao": "Mana tide totem garantindo mana para a parte longa do 3v2"},
+  {"t": 176.0, "quem": "Ominousdesxi", "descricao": "Demonic circle: teleport para sair do root"},
+  {"t": 182.1, "quem": "Pehdibalii", "descricao": "Roots seguidos em Ominousdesxi enquanto Ominousdesix finalizava com chaos bolt e incinerate"}
+ ]}

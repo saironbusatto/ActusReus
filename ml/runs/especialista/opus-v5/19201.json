@@ -1,0 +1,19 @@
+{"resumo": "O Zebedeuxi abriu com shadow dance no Kwongwegaiv e o encadeou em cheap shot, ambush, cheap shot e kidney; o shaman desperdiçou a única janela livre e morreu aos 57.7. O RLS IV trocou kills a seu favor e o Zebedeuxi venceu o duelo final de rogues.",
+ "momento_decisivo": {"t": 47.2, "descricao": "Na única janela fora de stun (43-49 s) o Kwongwegaiv usou lifeblood e cleanse spirit em veneno em vez de se curar; o segundo cheap shot (49.2) e o kidney (51.7) o pegaram a 39-32% e ele morreu aos 57.7."},
+ "erros": [
+  {"t": 47.2, "quem": "Kwongwegaiv", "fez": "cleanse spirit em veneno (depois de lifeblood aos 46.9) na janela entre os stuns do rogue", "devia": "riptide + healing wave em si mesmo e correr para o parceiro/pilar antes do próximo stun", "porque": "o veneno volta no próximo golpe do rogue; o shaman terminou a luta com 1,5 mil de cura e morreu no segundo ciclo de stuns", "gravidade": "alta"},
+  {"t": 42.1, "quem": "Ominousxxi", "fez": "fear e shoot no Ominousxxiv enquanto o próprio curador apanhava stuns em sequência; o primeiro death coil só saiu aos 66.3", "devia": "death coil/fear no Zebedeuxi e spell lock do pet guardado para o curador inimigo", "porque": "sem peel nenhum, o Zebedeuxi ficou livre para matar o shaman sozinho", "gravidade": "alta"},
+  {"t": 55.4, "quem": "Kwongwegavi", "fez": "cleanse spirit em veneno (55.4 e 59.3) com o Ominousxxiv a 32% sendo treinado", "devia": "riptide/healing wave no warlock e wind shear no Ominousxxi", "porque": "o lock do próprio time morreu aos 61.6 enquanto o curador limpava venenos de rogue", "gravidade": "media"},
+  {"t": 95.6, "quem": "Zebedeuix", "fez": "pvp trinket para sair de um kidney shot com 82% de vida no duelo de rogues", "devia": "aguentar esse kidney e guardar o trinket para o stun com vida baixa", "porque": "aos 108.9-111.1 tomou cheap shot e depois outro stun a 23% sem trinket e morreu", "gravidade": "alta"},
+  {"t": 111.0, "quem": "Zebedeuix", "fez": "cloak of shadows contra rogue + shaman de restauração", "devia": "fugir/kitar ou usar o blind no Zebedeuxi para se recompor", "porque": "cloak não reduz dano físico; o golpe que importava era do rogue, e ele morreu 2,8 s depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 41.3, "quem": "Zebedeuxi", "descricao": "shadow dance com cheap shot, ambush, cheap shot e kidney encadeados no curador: kill do Kwongwegaiv sem ele jogar"},
+  {"t": 55.0, "quem": "Ominousxxiv", "descricao": "trinket a 32% emendado em demonic circle: teleport, saindo do rogue que o treinava"},
+  {"t": 111.1, "quem": "Zebedeuxi", "descricao": "cheap shot no Zebedeuix a 23% assim que o cloak saiu, fechando o duelo de rogues"}
+ ],
+ "erros_da_rede": [
+  {"t": 46.9, "quem": "Kwongwegaiv", "acao": "lifeblood", "porque": "cura pequena num momento em que precisava de cura grande e de posicionamento antes do próximo stun"},
+  {"t": 52.3, "quem": "Zebedeuix", "acao": "slice and dice com o Ominousxxiv em kidney a 66%", "porque": "gastou a janela do stun reforçando buff em vez de hemorrhage/eviscerate no alvo preso"},
+  {"t": 109.9, "quem": "Zebedeuix", "acao": "eviscerate no Zebedeuxi a 100%", "porque": "gastou combo points num finalizador de dano num alvo cheio em vez de kidney shot para controlar o duelo"}
+ ]}

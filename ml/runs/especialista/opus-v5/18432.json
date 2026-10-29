@@ -1,0 +1,88 @@
+{
+ "resumo": "Os spell locks do Ominousx travaram o Kwongwegaxvi e o Amnesianxxix em ciclo. O Zebedeuxvi, a 39% e com evasion inútil contra casters, caiu aos 77.1 e o RPS se desfez.",
+ "momento_decisivo": {
+  "t": 70.5,
+  "descricao": "Ominousx dá spell lock no Kwongwegaxvi bem quando o Zebedeuxvi, já com os defensivos gastos, precisava de cura; o rogue morre aos 77.1."
+ },
+ "erros": [
+  {
+   "t": 66.2,
+   "quem": "Zebedeuxvi",
+   "fez": "evasion a 39% contra time de casters (priest/lock)",
+   "devia": "cloak of shadows/vanish ou sair da luta",
+   "porque": "evasion só evita golpe físico; o dano vinha de dots e mind flay",
+   "gravidade": "media"
+  },
+  {
+   "t": 62.9,
+   "quem": "Kwongwegaxvi",
+   "fez": "lightning bolt com felhunter em cima",
+   "devia": "segurar casts de nature pra cura e usar instantâneos",
+   "porque": "o spell lock num lightning bolt trava a escola nature, ou seja, toda a cura do shaman",
+   "gravidade": "alta"
+  },
+  {
+   "t": 67.7,
+   "quem": "Amnesianxxix",
+   "fez": "entrar e sair do shadowform várias vezes (67.7, 71.2, 76.8, 78.9, 89.4, 91.9, 93.6, 95.4, 97.1)",
+   "devia": "ficar numa função: shadow pra pressão ou fora pra curar",
+   "porque": "cada troca é um GCD; ele não curou nem bateu direito e acabou a 7%",
+   "gravidade": "alta"
+  },
+  {
+   "t": 44.9,
+   "quem": "Heruiv",
+   "fez": "every man for himself no blind a 100% sem pressão",
+   "devia": "deixar o blind correr ou pedir dispel",
+   "porque": "trinket gasto à toa; depois tomou stun aos 56.3 e 68.6 sem ter como sair",
+   "gravidade": "media"
+  },
+  {
+   "t": 38.9,
+   "quem": "Ominousx",
+   "fez": "shoot (wand) aos 38.9, 40.9, 50.1 e 62.2",
+   "devia": "dots/curse ou fear",
+   "porque": "wand é dano desprezível pra um warlock",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 34.5,
+   "quem": "Amnesianxxix",
+   "fez": "mind sear no Ominousx",
+   "devia": "mind blast/VT ou silence",
+   "porque": "mind sear é AoE em volta do alvo e quase não faz dano single target",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 46.1,
+   "quem": "Amnesianxxi",
+   "descricao": "Psychic scream pra tirar o Zebedeuxvi do kidney/blind no time."
+  },
+  {
+   "t": 57.3,
+   "quem": "Amnesianxxi",
+   "descricao": "Psychic horror no Zebedeuxvi pra quebrar a pressão do rogue."
+  },
+  {
+   "t": 36.0,
+   "quem": "Ominousx",
+   "descricao": "Spell lock em ciclo nos dois healers/casters do RPS, tirando a cura nas horas-chave."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 46.5,
+   "quem": "Ominousx",
+   "acao": "toggle pet spell no meio da luta",
+   "porque": "ação de configuração sem efeito no combate"
+  },
+  {
+   "t": 101.7,
+   "quem": "Ominousx",
+   "acao": "shadow bolt com o Amnesianxxix a 13%",
+   "porque": "cast longo dá chance de LoS/shield; com o alvo baixo, haunt/drain soul/instantâneos fechavam mais rápido"
+  }
+ ]
+}

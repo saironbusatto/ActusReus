@@ -1,0 +1,20 @@
+{"resumo": "Espelho hunter/warlock/druid: a Wild IV aguentou o burst duplo no Pehdicouiv com barkskin e cyclone, depois trocou para Beteraniv e, com howl of terror a 23%, matou o hunter que não tinha trinket; Ominoustres caiu em seguida e a Wild II ficou só com o druid.",
+ "momento_decisivo": {"t": 67.2, "descricao": "Ominousvii lança howl of terror e pega Beteraniv a 23% de vida; sem cura do Pehdicouii e sem trinket gasto, o hunter só tem deterrence e morre aos 74.9."},
+ "erros": [
+  {"t": 64.4, "quem": "Pehdicouii", "fez": "wild growth e regrowth on party enquanto Beteraniv despencava para 23%", "devia": "usar nature's swiftness + healing touch ou swiftmend no hunter focado, e cyclonar o Beteranvi", "porque": "curas em área e HoTs não seguram um alvo sob dois DPS; o hunter morreu aos 74.9 com o curador livre", "gravidade": "alta"},
+  {"t": 37.0, "quem": "Beteraniv", "fez": "trocou o hunter's mark de Pehdicouiv para Ominousvii logo após abrir rapid fire e kill command", "devia": "manter o burst no mesmo alvo (o druid estava enraizado e caindo)", "porque": "dividir a primeira janela de burst desperdiçou rapid fire, kill command e trinket", "gravidade": "media"},
+  {"t": 59.2, "quem": "Pehdicouii", "fez": "barkskin com 69% de vida", "devia": "guardar Barkskin para quando fosse focado com burst ou para curar sob controle", "porque": "não havia ameaça de morte; o defensivo ficou indisponível quando o time começou a perder", "gravidade": "media"},
+  {"t": 73.2, "quem": "Beteraniv", "fez": "volley (canal AoE) com 14% de vida", "devia": "usar disengage e quebrar linha de visão atrás de pilar, ou trinket/aspect para fugir", "porque": "ficou parado canalizando e foi silenciado e morto 1.7 s depois", "gravidade": "media"},
+  {"t": 44.8, "quem": "Beteraniv", "fez": "tranquilizing shot em vez de manter dano (repetido aos 58.8 e 67.0)", "devia": "usar aimed shot/chimera shot no alvo do time ou viper sting no curador", "porque": "não havia enrage ou buff decisivo para remover; GCDs gastos sem efeito real", "gravidade": "baixa"},
+  {"t": 70.9, "quem": "Ominoustres", "fez": "shoot (varinha) e devour magic enquanto o hunter do time morria", "devia": "usar death coil/fear no Beteranvi e soul link/health de proteção para o time", "porque": "o warlock tinha controles disponíveis para tirar pressão do hunter e não usou", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 53.4, "quem": "Pehdicouiv", "descricao": "Barkskin a 36% seguido de cyclone aos 54.0, sobrevivendo ao burst de readiness dos dois hunters."},
+  {"t": 67.2, "quem": "Ominousvii", "descricao": "Howl of terror pegando Beteraniv a 23% e Ominoustres, isolando o alvo baixo."},
+  {"t": 54.7, "quem": "Beteranvi", "descricao": "Readiness e silencing shot no druid curador inimigo, cortando a cura na janela de burst."}
+ ],
+ "erros_da_rede": [
+  {"t": 34.8, "quem": "Beteraniv", "acao": "hunter's mark → Pehdicouiv", "porque": "marcou o druid e trocou de alvo 2 s depois, dividindo a abertura do burst."},
+  {"t": 56.9, "quem": "Ominoustres", "acao": "curse of agony → Beteranvi", "porque": "com o hunter inimigo em burst, curse of tongues/exhaustion ou um fear valiam mais que um DoT lento."},
+  {"t": 60.0, "quem": "Pehdicouii", "acao": "healing touch on party → Beteranvi", "porque": "cast longo contra dois hunters com silencing shot é fácil de cortar; devia usar nature's swiftness antes ou cura instantânea."}
+ ]}

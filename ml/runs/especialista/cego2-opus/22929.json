@@ -1,0 +1,85 @@
+{
+ "resumo": "Thunder I trocou para o Celianeyix aos 52.8 com elemental mastery do Naminii e thunder clap/cleave/execute do Celianeyvii, sem resposta do Heruxiv; depois o Heruxiv caiu no execute.",
+ "momento_decisivo": {
+  "t": 52.8,
+  "descricao": "Naminii usa elemental mastery no Celianeyix e o Celianeyvii troca para ele (53.3); o Heruxiv não usa mão nenhuma e o warrior morre aos 55.6."
+ },
+ "momento_aceitos": [
+  52.8,
+  53.3,
+  53.4,
+  55.1
+ ],
+ "erros": [
+  {
+   "t": 54.0,
+   "quem": "Heruxiv",
+   "fez": "holy light (2.5 s) com o Celianeyix em faixa de execute",
+   "devia": "hand of protection/hand of sacrifice no Celianeyix ou holy shock/flash of light",
+   "porque": "a cura lenta não chegou a tempo e as mãos ficaram sem uso",
+   "gravidade": "alta"
+  },
+  {
+   "t": 59.3,
+   "quem": "Heruxiv",
+   "fez": "divine sacrifice e cancelou aos 59.6",
+   "devia": "divine shield com o warrior em cima dele",
+   "porque": "morreu 1 s depois no execute (60.7) com a bolha disponível",
+   "gravidade": "alta"
+  },
+  {
+   "t": 54.8,
+   "quem": "Celianeyix",
+   "fez": "battle shout com a vida no fim",
+   "devia": "defensivo (enraged regeneration já gasto) ou intercept/pedir peel",
+   "porque": "GCD em buff no momento em que levava execute",
+   "gravidade": "media"
+  },
+  {
+   "t": 47.1,
+   "quem": "Celianeyix",
+   "fez": "sunder armor no Celianeyvii",
+   "devia": "mortal strike/slam ou hamstring",
+   "porque": "sunder em arena tem pouco valor e gasta GCD/rage",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 54.4,
+   "quem": "Naminiv",
+   "fez": "water shield com o parceiro morrendo",
+   "devia": "healing wave no Celianeyix ou thunderstorm/hex para afastar o warrior",
+   "porque": "era o único jogador livre para salvar o Celianeyix",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.4,
+   "quem": "Naminiv",
+   "fez": "flame shock no Heruxii enquanto o Celianeyvii abria bladestorm no time",
+   "devia": "earthbind/hex no warrior ou purge do Heruxii",
+   "porque": "deixou o warrior inimigo livre na abertura",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 42.2,
+   "quem": "Celianeyvii",
+   "descricao": "Charge no Naminiv e bladestorm (45.6) para abrir."
+  },
+  {
+   "t": 48.0,
+   "quem": "Naminii",
+   "descricao": "Wind shear no curador inimigo."
+  },
+  {
+   "t": 52.8,
+   "quem": "Naminii",
+   "descricao": "Elemental mastery sincronizado com a troca para o Celianeyix."
+  },
+  {
+   "t": 60.7,
+   "quem": "Celianeyvii",
+   "descricao": "Troca rápida para o Heruxiv e execute."
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "resumo": "RLS II matou Pehdicouve com cadeias de cheap shot/kidney e spell lock; o druid respondeu com cyclone em vez de se curar e os aliados dele não descolaram o rogue.",
+ "momento_decisivo": {
+  "t": 117.4,
+  "descricao": "Spell lock de Ominousxxi em Pehdicouve a 32% enquanto ele tentava cyclone: sem cura, o druid chegou a 13% e morreu no kidney aos 129.4."
+ },
+ "erros": [
+  {
+   "t": 117.4,
+   "quem": "Pehdicouve",
+   "fez": "cyclone aos 117.4 (32%) e 126.1 (13%)",
+   "devia": "HoTs instantâneos, swiftmend ou barkskin; nada de cast longo com felhunter perto",
+   "porque": "os dois cyclones foram travados pelo spell lock; o druid curou só 8881 na luta",
+   "gravidade": "alta"
+  },
+  {
+   "t": 129.4,
+   "quem": "Pehdicouve",
+   "fez": "tree of life a 2% de vida",
+   "devia": "cura instantânea antes, não forma",
+   "porque": "a forma não cura; morreu 2 s depois",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 95.8,
+   "quem": "Beteranii",
+   "fez": "tranquilizing shot ×2 até 105.3 enquanto o rogue batia no druid",
+   "devia": "scatter shot/freezing trap ou wing clip em Zebedeuix",
+   "porque": "o druid caiu de 88% a 34% entre 90.9 e 103.0 sem nenhum descolamento",
+   "gravidade": "media"
+  },
+  {
+   "t": 103.0,
+   "quem": "Ominous",
+   "fez": "curse of tongues aos 92.9, 103.0, 117.4 e 131.7 e devour magic seguido",
+   "devia": "fear/death coil em Zebedeuix durante os stuns no druid",
+   "porque": "Ominous tinha fear e death coil para tirar o rogue; os GCDs foram em curses repetidos",
+   "gravidade": "media"
+  },
+  {
+   "t": 80.4,
+   "quem": "Kwongwegaiv",
+   "fez": "purge aos 80.4, 95.8, 103.0, 112.7, 117.4, 122.0, 123.9, 126.1",
+   "devia": "curar o time e só purgar buff importante",
+   "porque": "curou 15936 em 167 s; morreu aos 139.4 sem ter gasto o tempo com o próprio time",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 103.0,
+   "quem": "Zebedeuix",
+   "descricao": "Kidney shot em Pehdicouve a 34%, forçando o trinket."
+  },
+  {
+   "t": 107.8,
+   "quem": "Pehdicouve",
+   "descricao": "Nature's swiftness + healing touch logo depois do trinket."
+  },
+  {
+   "t": 126.1,
+   "quem": "Ominousxxi",
+   "descricao": "Spell lock no druid a 13%, impedindo a última cura."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 97.7,
+   "quem": "Beteranii",
+   "acao": "rapid fire → Kwongwegaiv",
+   "porque": "com o druid a 57% no foco do rogue, a hora era de descolar (scatter/trap), não de burst"
+  },
+  {
+   "t": 122.0,
+   "quem": "Kwongwegaiv",
+   "acao": "purge → Pehdicouve",
+   "porque": "GCD em purge enquanto o próprio time estava sob DoTs de Ominous"
+  }
+ ]
+}

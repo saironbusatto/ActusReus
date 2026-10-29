@@ -1,0 +1,94 @@
+{
+ "resumo": "Fireplay prendeu o curador Kwongwegaxxv (polymorph 59.5, counterspell 62.5) e Ominousdes fechou com shadowfury em Pehdibalv a 24%, que morreu aos 67.7; o 3v2 depois foi lento mas inevitável.",
+ "momento_decisivo": {
+  "t": 62.5,
+  "descricao": "Heshovii dá counterspell no curador Kwongwegaxxv logo depois do polymorph; com o healer travado, o shadowfury de Ominousdes aos 63.9 pega Pehdibalv a 24% sem cura possível."
+ },
+ "erros": [
+  {
+   "t": 50.0,
+   "quem": "Pehdibalv",
+   "fez": "barkskin a 82% de vida, sem burst real em cima",
+   "devia": "guardar barkskin para o burst (caiu de 82% para 24% entre 50 e 64 s)",
+   "porque": "barkskin tem 60 s de recarga; no shadowfury a 24% aos 63.9 ele estava sem defensivo",
+   "gravidade": "media"
+  },
+  {
+   "t": 55.6,
+   "quem": "Pehdibalv",
+   "fez": "canalizou hurricane ×2 até 59.1 enquanto era o alvo do foco",
+   "devia": "sair de moonkin, rejuvenation/regrowth em si mesmo ou se reposicionar perto do curador",
+   "porque": "hurricane é canal que não protege nem cura; perdeu ~4 s de GCDs enquanto a vida derretia",
+   "gravidade": "alta"
+  },
+  {
+   "t": 60.2,
+   "quem": "Pehdibalv",
+   "fez": "innervate com a vida em queda",
+   "devia": "usar o GCD em cura própria/defesa; innervate não resolve vida",
+   "porque": "o problema dele era vida, não mana; 7 s depois estava morto",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 44.9,
+   "quem": "Kwongwegaxxv",
+   "fez": "purge aos 44.9, 47.2, 48.3 e 54.3 em sequência",
+   "devia": "priorizar cura em Pehdibalv e grounding totem contra o polymorph/counterspell do mage",
+   "porque": "cada purge é um GCD sem cura; o druid chegou a 24% com o curador gastando tempo em dispel ofensivo",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.9,
+   "quem": "Ominousdesxi",
+   "fez": "pvp trinket no shadowfury a 89% de vida",
+   "devia": "aceitar o stun curto e guardar o trinket",
+   "porque": "sem pressão sobre ele, o trinket ficou gasto enquanto o aliado morria; depois foi preso em stun aos 69.7, 71.0, 74.2 sem resposta",
+   "gravidade": "media"
+  },
+  {
+   "t": 72.8,
+   "quem": "Ominousdes",
+   "fez": "alternou curse of tongues e curse of the elements no mesmo alvo (72.8, 76.1, 81.1, 84.5)",
+   "devia": "manter um único curse por alvo e gastar os GCDs em dano (immolate/conflagrate/incinerate)",
+   "porque": "cada warlock só mantém um curse dele por alvo; trocar entre os dois sobrescreve o próprio curse e desperdiça GCD",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 62.5,
+   "quem": "Heshovii",
+   "descricao": "Counterspell no curador inimigo encadeado ao polymorph aos 59.5, abrindo a janela de morte em Pehdibalv."
+  },
+  {
+   "t": 63.9,
+   "quem": "Ominousdes",
+   "descricao": "Shadowfury no momento em que Pehdibalv estava a 24% e o curador estava silenciado."
+  },
+  {
+   "t": 80.7,
+   "quem": "Kwongwegavii",
+   "descricao": "Mana tide totem no meio do 3v2 longo, garantindo mana para fechar a luta."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 59.5,
+   "quem": "Heshovii",
+   "acao": "remove curse on party",
+   "porque": "GCD gasto em dispel no início da janela de morte, em vez de dano ou CC no curador"
+  },
+  {
+   "t": 64.6,
+   "quem": "Ominousdes",
+   "acao": "life tap",
+   "porque": "com Pehdibalv a 24% e ainda em stun, life tap tira vida e não dá dano; era hora de conflagrate/incinerate"
+  },
+  {
+   "t": 71.6,
+   "quem": "Kwongwegavii",
+   "acao": "purge → Ominousdesxi",
+   "porque": "purge em warlock quase sem buffs úteis, em vez de cura ou pressão no curador"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{"resumo": "Atropelamento: o TSG matou os três em 20 s. O Celianeyii abriu com charge e bladestorm, o Pehdibalv morreu sem receber nenhuma cura do Kwongwegaxxv, que também não se curou e caiu logo depois.",
+ "momento_decisivo": {"t": 44.6, "descricao": "Com o Pehdibalv sob o bladestorm do Celianeyii (barkskin a 71%), o Kwongwegaxxv, único curador, jogou purge em vez de curar e não curou ninguém até o druida morrer aos 50.6."},
+ "erros": [
+  {"t": 44.6, "quem": "Kwongwegaxxv", "fez": "purge com o Pehdibalv sendo morto pelo bladestorm (cura total na luta: 297)", "devia": "riptide + healing wave/chain heal no druida e earthbind/frost shock para tirar o warrior", "porque": "o druida morreu em 7 s sem receber cura", "gravidade": "alta"},
+  {"t": 50.9, "quem": "Kwongwegaxxv", "fez": "bloodlust e lifeblood logo depois da morte do parceiro, já sendo focado", "devia": "healing wave em si, nature's swiftness e correr para o pilar com o lock", "porque": "bloodlust não salva um curador a segundos de morrer; ele morreu aos 53.1", "gravidade": "media"},
+  {"t": 46.5, "quem": "Pehdibalv", "fez": "cyclone ×2 (46.5-50.3) parado e sob ataque", "devia": "se curar (regrowth/swiftmend) ou se afastar do warrior em travel/cat form", "porque": "conjurar cyclone apanhando do bladestorm e do warrior não é controle; morreu ao terminar a segunda conjuração", "gravidade": "media"},
+  {"t": 48.4, "quem": "Ominousdesxi", "fez": "death coil no Heruvii com 100% de vida durante o bladestorm", "devia": "guardar o death coil para o Celianeyii no fim do bladestorm (43.0+6 s) e dar fear no warrior para salvar o druida", "porque": "o warrior, livre, terminou o Pehdibalv aos 50.6", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 41.2, "quem": "Celianeyii", "descricao": "charge no curador e bladestorm logo após o EMFH: abriu a luta com pressão total"},
+  {"t": 59.0, "quem": "Omasconii", "descricao": "pet gnaw no Ominousdesxi a 32% e novo gnaw aos 60.2 depois do trinket, prendendo o warlock para o execute"},
+  {"t": 55.3, "quem": "Omasconii", "descricao": "mind freeze no Ominousdesxi enquanto ele tentava se recompor sozinho"}
+ ],
+ "erros_da_rede": [
+  {"t": 54.0, "quem": "Celianeyii", "acao": "cleave no Ominousdesxi", "porque": "com um alvo só, cleave é rage mal gasto; mortal strike ou slam seriam melhores"},
+  {"t": 50.8, "quem": "Omasconii", "acao": "death and decay no Kwongwegaxxv", "porque": "AoE parado contra um curador que se move; icy touch/plague strike ou strangulate no curador fariam mais"}
+ ]}

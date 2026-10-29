@@ -1,0 +1,20 @@
+{"resumo": "Espelho de priest/paladino/warlock decidido por atrito: os dois felhunters da Shadowplay IV mantiveram o Heruiv trancado e o Amnesianxxi da Shadowplay II gastou o tempo em dispel e shadowform em vez de curar, e o Ominousx caiu aos 168.5.",
+ "momento_decisivo": {"t": 150.7, "descricao": "Heruiv, a 50%, insiste em holy light contra dois felhunters e é silenciado pelo spell lock (150.7 e 157.1); Ominousx, já baixo, fica sem cura e morre aos 168.5."},
+ "erros": [
+  {"t": 148.9, "quem": "Heruiv", "fez": "holy light on party ×2 até 155.3 contra dois warlocks com felhunter", "devia": "usar holy shock e flash of light (cast curto) e espalhar casts para baitar o spell lock", "porque": "holy light é o cast mais fácil de interromper; o lock trancou a escola holy dele duas vezes e o warlock aliado morreu sem cura", "gravidade": "alta"},
+  {"t": 108.4, "quem": "Ominousx", "fez": "corruption on attacker ×4 até 113.4", "devia": "aplicar corruption uma vez e usar os GCDs em fear no curador, UA, haunt ou drain life", "porque": "reaplicar a mesma DoT não acrescenta dano e o warlock seguia perdendo vida (22% aos 128.4)", "gravidade": "media"},
+  {"t": 163.1, "quem": "Ominousxii", "fez": "corruption on attacker ×4 até 168.5", "devia": "manter os DoTs e gastar GCDs em fear/haunt ou death coil no alvo baixo", "porque": "repetir corruption não aumenta dano; o kill veio mesmo assim, mas mais lento", "gravidade": "baixa"},
+  {"t": 128.4, "quem": "Ominousx", "fez": "seguiu com shoot e cobalt frag bomb a 22% de vida", "devia": "usar death coil e drain life para se curar, ou recuar para o demonic circle e pedir peel/cura", "porque": "warlock baixo sob DoTs precisa se autocurar; ele não usou nenhuma ferramenta defensiva e morreu aos 168.5", "gravidade": "alta"},
+  {"t": 139.2, "quem": "Heruiv", "fez": "divine sacrifice cancelado aos 140.2", "devia": "manter o Divine Sacrifice para absorver o dano no warlock baixo, ou guardá-lo", "porque": "cooldown gasto sem efeito com um aliado em perigo", "gravidade": "baixa"},
+  {"t": 157.9, "quem": "Amnesianxxiv", "fez": "dispersion a 100% de vida", "devia": "guardar Dispersion para pressão real ou para escapar de fear/silence", "porque": "defensivo longo usado sem ameaça", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 98.3, "quem": "Amnesianxxiv", "descricao": "Silence no Ominousx quando ele estava a 44%, cortando a autocura e os fears dele."},
+  {"t": 150.7, "quem": "Ominousxii", "descricao": "Spell lock do felhunter no holy light do Heruiv, trancando a cura justo quando o warlock inimigo estava baixo."},
+  {"t": 185.3, "quem": "Amnesianxxi", "descricao": "Psychic scream no Ominousxii depois do psychic horror, ganhando tempo no 2v3."}
+ ],
+ "erros_da_rede": [
+  {"t": 127.5, "quem": "Amnesianxxi", "acao": "shadowform → Ominousxii", "porque": "o warlock do time estava a 22% (128.4); voltar para shadowform impede a cura no momento crítico."},
+  {"t": 154.4, "quem": "Amnesianxxi", "acao": "shadowform → Heruvi", "porque": "com Ominousx baixo e Heruiv silenciado, o priest era o único curador livre e escolheu dano."},
+  {"t": 199.5, "quem": "Amnesianxxi", "acao": "shadow word: death → Amnesianxxiv", "porque": "SW:D num priest a 85% não executa nada e o recuo de dano custa vida em 2v3."}
+ ]}

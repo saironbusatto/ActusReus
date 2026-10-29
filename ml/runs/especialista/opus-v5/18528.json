@@ -1,0 +1,67 @@
+{
+ "resumo": "Os spell locks do Ominousxxiv travaram o Kwongwegaxvi a cada healing wave. O Zebedeuxvi caiu aos 64.8 e o Amnesianxxix, sem dano e sem cura de verdade, caiu aos 72.8.",
+ "momento_decisivo": {
+  "t": 53.4,
+  "descricao": "Zebedeuxi dá kidney no Zebedeuxvi a 43% e aos 54.3 o Ominousxxiv dá spell lock no Kwongwegaxvi; o rogue gasta trinket e defensivos e não recupera."
+ },
+ "erros": [
+  {
+   "t": 54.2,
+   "quem": "Kwongwegaxvi",
+   "fez": "healing wave (cast longo) contra felhunter, aos 54.2, 58.7 e 64.3",
+   "devia": "riptide e instantâneos, se mexer pra fora da LoS do pet",
+   "porque": "foi silenciado nos três; spell lock na escola nature trava toda a cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 53.1,
+   "quem": "Amnesianxxix",
+   "fez": "troca de shadowform toda hora (53.1, 54.8, 59.8, 61.9, 68.2, 70.0, 72.1)",
+   "devia": "ficar numa função",
+   "porque": "terminou com 0 de dano e pouca cura; cada troca custa GCD",
+   "gravidade": "alta"
+  },
+  {
+   "t": 35.6,
+   "quem": "Amnesianxxix",
+   "fez": "mind sear no início",
+   "devia": "VT/SW:P/mind blast no alvo ou psychic scream pra peel",
+   "porque": "mind sear quase não faz dano single target",
+   "gravidade": "media"
+  },
+  {
+   "t": 41.6,
+   "quem": "Kwongwegaxvi",
+   "fez": "cleanse spirit poison ×4 (41.6-51.7) contra dois rogues",
+   "devia": "curar e usar totem de cleansing (passivo)",
+   "porque": "os rogues reaplicam veneno a cada golpe; o dispel não acompanha",
+   "gravidade": "media"
+  },
+  {
+   "t": 34.2,
+   "quem": "Zebedeuxvi",
+   "fez": "abrir no Zebedeuxi (outro rogue)",
+   "devia": "abrir no warlock ou no healer",
+   "porque": "o lock seguiu solto travando os healers",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 36.3,
+   "quem": "Ominousxxiv",
+   "descricao": "Spell lock do pet em ciclo nos dois healers/casters (36.3, 43.6, 54.3, 61.6, 64.1)."
+  },
+  {
+   "t": 53.4,
+   "quem": "Zebedeuxi",
+   "descricao": "Kidney shot no rogue inimigo a 43% em sincronia com o lockout."
+  },
+  {
+   "t": 74.3,
+   "quem": "Zebedeuxi",
+   "descricao": "Shadow dance + cheap shot no Kwongwegaxvi a 6% pra fechar a luta."
+  }
+ ],
+ "erros_da_rede": []
+}

@@ -1,0 +1,20 @@
+{"resumo": "Beteranii usou Readiness para encadear dois Silencing Shot, Ominous emendou um Spell Lock e o Paladino Heruvi morreu aos 55.1; depois disso a luta ficou parada por uns 250 s até Wild I voltar a atacar e matar Ominousxii aos 324.7.",
+ "momento_decisivo": {"t": 50.2, "descricao": "Readiness de Beteranii resetou Silencing Shot e Rapid Fire: silêncio em Heruvi com 48% aos 50.5, Spell Lock de Ominous com 34% aos 51.9 e kill shot; o curador não conseguiu lançar mais nada e morreu."},
+ "erros": [
+  {"t": 52.1, "quem": "Heruvi", "fez": "com 34% de vida, ativou Divine Sacrifice e cancelou logo em seguida", "devia": "usar Divine Shield ou Hand of Protection em si mesmo para escapar do burst físico do Hunter", "porque": "Divine Sacrifice não protege o próprio Paladino, e ele morreu 3 s depois sem usar a imunidade", "gravidade": "alta"},
+  {"t": 46.2, "quem": "Heruvi", "fez": "gastou GCDs em Exorcism e Judgement (43.2, 46.2) sob a pressão do Hunter", "devia": "curar e se posicionar atrás de pilar fora da linha de visão do Hunter", "porque": "dano baixo e cast longo contra um time que tinha Silencing Shot e Spell Lock prontos", "gravidade": "media"},
+  {"t": 40.7, "quem": "Amnesianxxiv", "fez": "durante o burst em Heruvi usou cobalt frag bomb, Shadow Protection on party e só um Renew aos 52.9", "devia": "dar Power Word: Shield, Penance e Pain Suppression em Heruvi", "porque": "o aliado foi de 100% a morto em 12 s com o Priest praticamente sem curar", "gravidade": "alta"},
+  {"t": 73.0, "quem": "Beteranii", "fez": "com 3v2 garantido, o time ficou parado de 73 a 312 s, só com buffs", "devia": "abrir na hora em Ominousxii ou Amnesianxxiv, aproveitando a vantagem numérica", "porque": "cada segundo parado deixava o inimigo recuperar mana e cooldowns (trinket, Pain Suppression)", "gravidade": "alta"},
+  {"t": 41.0, "quem": "Ominousxii", "fez": "reaplicou UA/Corruption enquanto Heruvi era focado", "devia": "dar Fear/Death Coil em Beteranii para tirar o Hunter de cima do curador", "porque": "era o único CC capaz de interromper o burst que matou o Paladino", "gravidade": "media"},
+  {"t": 335.6, "quem": "Amnesianxxiv", "fez": "sozinho contra três, lançou Vampiric Touch (335.6, 338.8)", "devia": "curar a si mesmo e usar Psychic Scream para ganhar tempo", "porque": "dano de DoT não muda um 1v3; ele foi de 73% a 20% e ficou sem trinket", "gravidade": "media"},
+  {"t": 329.3, "quem": "Amnesianxxiv", "fez": "usou Dispersion com 73% de vida", "devia": "guardar Dispersion para a hora em que caísse abaixo de 30%", "porque": "aos 339.7 estava com 22%, em Fear, e precisou gastar o trinket", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 50.2, "quem": "Beteranii", "descricao": "Readiness para encadear dois Silencing Shot e Rapid Fire em cima do curador."},
+  {"t": 51.9, "quem": "Ominous", "descricao": "Spell Lock em Heruvi logo depois do Silencing Shot, mantendo o curador calado até morrer."},
+  {"t": 321.1, "quem": "Beteranii", "descricao": "Readiness para um segundo Silencing Shot em Ominousxii, que morreu aos 324.7."}
+ ],
+ "erros_da_rede": [
+  {"t": 317.8, "quem": "Ominous", "acao": "spell lock → Ominousxii", "porque": "Spell Lock no mesmo instante do Silencing Shot de Beteranii no mesmo alvo: o silêncio se sobrepôs e foi desperdiçado"},
+  {"t": 54.5, "quem": "Beteranii", "acao": "steady shot → Heruvi", "porque": "cast de 1.5 s+ num curador quase morto, quando um tiro instantâneo (Arcane/Chimera) fecharia o kill mais rápido"}
+ ]}

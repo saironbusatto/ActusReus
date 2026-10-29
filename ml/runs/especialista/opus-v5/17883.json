@@ -1,0 +1,74 @@
+{
+ "resumo": "A RMP queimou o mage com CDs e trocou para o curador assim que o Heshoxi entrou no ice block. O Kwongwegaxi ficou purgando e limpando em vez de se curar e morreu; o mage caiu logo depois.",
+ "momento_decisivo": {
+  "t": 54.0,
+  "descricao": "Zebedeuii troca para o Kwongwegaxi enquanto o Heshoxi está no ice block; o curador, enraizado, não se cura e morre aos 59.8."
+ },
+ "erros": [
+  {
+   "t": 55.5,
+   "quem": "Kwongwegaxi",
+   "fez": "purge e cleanse spirit poison (55.5, 56.6, 57.7, 58.8) a 59% e caindo",
+   "devia": "se curar (riptide, healing wave com nature's swiftness) e usar trinket ou totem para tirar o rogue",
+   "porque": "morreu aos 59.8 sem conjurar nenhuma cura em si nesses 6 s",
+   "gravidade": "alta"
+  },
+  {
+   "t": 71.8,
+   "quem": "Heshoxi",
+   "fez": "evocation com o Zebedeuii colado nele e a vida baixa",
+   "devia": "dar blink e fugir, ou nova e sair do alcance do rogue antes de canalizar",
+   "porque": "o kick do 71.9 interrompeu e o kidney do 74.0 o matou",
+   "gravidade": "alta"
+  },
+  {
+   "t": 50.6,
+   "quem": "Heshoxi",
+   "fez": "mana sapphire a 32% de vida",
+   "devia": "fugir, usar mana shield ou ice block primeiro",
+   "porque": "a ameaça era a vida, não a mana",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.7,
+   "quem": "Ominousdesv",
+   "fez": "pvp trinket a 45% contra um stun, e foi stunado de novo em seguida (64.9)",
+   "devia": "guardar o trinket para o kidney ou para uma janela de abate",
+   "porque": "sem DR controlado, ele trocou o trinket por 1 s de liberdade",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.1,
+   "quem": "Heshoiv",
+   "fez": "blizzard e flamestrike (44.0) em vez de feitiços de alvo único",
+   "devia": "frostbolt, deep freeze e poly no curador",
+   "porque": "AoE de mage no 3v3 rende pouco, e o alvo dele estava indo para o ice block",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 48.0,
+   "quem": "Heshoiv",
+   "descricao": "Counterspell no curador enquanto o rogue pressionava o mage"
+  },
+  {
+   "t": 56.4,
+   "quem": "Amnesianii",
+   "descricao": "Pain suppression e desperate prayer a 20%, que salvam a priest"
+  },
+  {
+   "t": 71.9,
+   "quem": "Zebedeuii",
+   "descricao": "Kick na evocation do Heshoxi e kidney logo depois para matar"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 58.7,
+   "quem": "Zebedeuii",
+   "acao": "slice and dice → Kwongwegaxi",
+   "porque": "o curador estava morrendo; o certo era eviscerate ou kidney"
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{"resumo": "O TSG pegou Zebedeuvi no bladestorm, no death and decay e nas doenças, e o rogue morreu aos 56.5 depois de voltar a bater logo após vanish e cloak. Em 3v2, o mago ficou sem mana e morreu aos 79.4.",
+ "momento_decisivo": {"t": 54.9, "descricao": "Zebedeuvi, com pouca vida, saiu do vanish e do cloak of shadows e voltou a dar hemorrhage em vez de se afastar para receber cura. Em menos de 2 s morreu para o DK e o warrior."},
+ "erros": [
+  {"t": 54.9, "quem": "Zebedeuvi", "fez": "hemorrhage logo depois de vanish e cloak, ainda com pouca vida", "devia": "ficar em stealth fora do alcance, pegar linha de visão com o priest e só voltar com vida", "porque": "Vanish e cloak servem para escapar. Voltar a bater desfez o reset e deixou o rogue no alcance do warrior e do DK com gargoyle", "gravidade": "alta"},
+  {"t": 56.5, "quem": "Amnesianvii", "fez": "power word: shield aleatório no grupo enquanto o rogue morria", "devia": "pain suppression e flash heal em Zebedeuvi a partir dos 50.7, quando ele estava com 41%", "porque": "O priest chegou a 62 mil de cura, mas espalhada em renew e prayer of mending. Ninguém salvou o alvo que estava sendo focado", "gravidade": "alta"},
+  {"t": 61.1, "quem": "Amnesianvii", "fez": "abolish disease repetido contra o DK (44.7, 46.7, 61.1, 68.2, 72.3, 76.4)", "devia": "usar esses GCDs em escudo e cura direta em Heshovi e em psychic scream ou mana burn no paladino", "porque": "O DK reaplica as doenças em segundos com icy touch e plague strike. Limpar sem parar gasta mana e GCD sem resultado", "gravidade": "media"},
+  {"t": 74.2, "quem": "Heshovi", "fez": "evocation ao alcance do DK e do warrior", "devia": "kitar com blink e frost nova, e só canalizar fora de linha de visão ou com o warrior em CC", "porque": "Evocation canalizada no meio da luta fica exposta a mind freeze e dano. O mago terminou sem mana, dando shoot (75.5), e morreu aos 79.4", "gravidade": "media"},
+  {"t": 57.7, "quem": "Celianeyvi", "fez": "cleave e heroic strike sem parar entre 57.7 e 61.6, e mortal strike só aos 76.5", "devia": "manter mortal strike no alvo da equipe", "porque": "Sem a redução de cura do mortal strike, o priest curou o mago com sobra durante 20 s e a morte dele atrasou muito", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 40.2, "quem": "Celianeyvi", "descricao": "Bladestorm no meio do RMP logo na abertura, junto com o death and decay do DK, desgastando o rogue."},
+  {"t": 54.9, "quem": "Omasconvi", "descricao": "Summon gargoyle quando o rogue saiu do vanish com pouca vida. O burst confirmou a primeira morte."},
+  {"t": 62.3, "quem": "Heshovi", "descricao": "Deep freeze, cold snap, icy veins e ice barrier em sequência para sobreviver e pressionar com o time em desvantagem."}
+ ],
+ "erros_da_rede": []}

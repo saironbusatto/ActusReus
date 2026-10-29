@@ -1,0 +1,20 @@
+{"resumo": "Luta curta: o bladestorm do Celianeyiv pegou o xamã Kwongwegaii, que não curou nada e morreu aos 41.1; o rogue Zebedeuvii entrou no bladestorm, queimou os defensivos errados e morreu em seguida.",
+ "momento_decisivo": {"t": 35.1, "descricao": "Celianeyiv dá bladestorm logo após o charge, no meio do time; o xamã Kwongwegaii fica no alcance gastando GCDs em purge/cleanse e morre aos 41.1 no cleave."},
+ "erros": [
+  {"t": 34.7, "quem": "Kwongwegaii", "fez": "purge, cleanse spirit disease e lifeblood durante o bladestorm, sem nenhuma cura", "devia": "sair do alcance do bladestorm/death and decay e usar riptide/healing wave em si", "porque": "o curador terminou com 885 de cura e morreu 6 s depois", "gravidade": "alta"},
+  {"t": 36.5, "quem": "Zebedeuvii", "fez": "shadowstep no Celianeyiv em bladestorm", "devia": "esperar o bladestorm acabar longe dele e então abrir com cheap shot/kidney", "porque": "durante o bladestorm o warrior fica imune a CC e bate em área; o rogue foi a 30% em segundos", "gravidade": "alta"},
+  {"t": 40.4, "quem": "Zebedeuvii", "fez": "vanish + premeditation + ambush a 30% de vida", "devia": "usar o vanish para sair do combate e se recuperar", "porque": "gastou o vanish no ataque e morreu sem defensivos 7 s depois", "gravidade": "media"},
+  {"t": 45.3, "quem": "Zebedeuvii", "fez": "cloak of shadows contra dano físico", "devia": "trinket do stun e se afastar dos melees", "porque": "cloak não reduz dano físico do warrior e do DK", "gravidade": "media"},
+  {"t": 36.4, "quem": "Ominousv", "fez": "death coil no Celianeyiv durante o bladestorm", "devia": "fear/death coil no DK ou guardar o coil para depois do bladestorm", "porque": "o warrior em bladestorm é imune a medo/horror; o cooldown foi desperdiçado", "gravidade": "media"},
+  {"t": 41.6, "quem": "Ominousv", "fez": "howl of terror que só pegou o Omasconiv", "devia": "se posicionar para pegar warrior e DK juntos, no xamã", "porque": "o medo veio tarde demais (xamã já morto) e pegou um só inimigo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 35.1, "quem": "Celianeyiv", "descricao": "charge + sweeping strikes + bladestorm no meio do time, matando o curador em segundos"},
+  {"t": 38.4, "quem": "Ominousv", "descricao": "spell lock no paladino curador Heruix"},
+  {"t": 54.0, "quem": "Celianeyiv", "descricao": "charge no Ominousv logo depois do teleporte do demonic circle, impedindo a fuga"}
+ ],
+ "erros_da_rede": [
+  {"t": 38.8, "quem": "Zebedeuvii", "acao": "shadow dance → Celianeyiv", "porque": "cooldown de abertura gasto a 30% contra um warrior em bladestorm, imune a CC"},
+  {"t": 46.3, "quem": "Zebedeuvii", "acao": "kidney shot → Celianeyiv", "porque": "com o rogue morrendo, devia usar trinket/defensivo e não tentar controlar o warrior"},
+  {"t": 41.6, "quem": "Ominousv", "acao": "howl of terror → Celianeyiv", "porque": "o fear pegou só o DK e veio depois da morte do xamã"}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "Espelho lock/mage/shaman: o healer Kwongwegaix passou de 48.8 a 78.5 s sem uma cura de verdade (purge, cleanse curse, water shield), e Ominousdesv aproveitou o stun nele aos 69.0 para matar Ominousdesii com conflagrate, chaos bolt e incinerate (74.4). Depois Kwongwegaix também caiu, aos 94.2.",
+ "momento_decisivo": {"t": 72.3, "descricao": "Chaos bolt de Ominousdesv em Ominousdesii, depois do conflagrate dos 70.9, com o healer Kwongwegaix stunado (37%, aos 69.0) e sem curar havia 20 s; o warlock morre aos 74.4."},
+ "momento_aceitos": [63.3, 69.0, 70.9, 72.3],
+ "erros": [
+  {"t": 52.4, "quem": "Kwongwegaix", "fez": "purge (52.4), cleanse spirit curse (54.6, 67.6) e water shield (56.0), sem nenhuma cura entre o riptide dos 48.8 e o dos 78.5", "devia": "riptide/healing wave/chain heal em Heshoix (39% aos 56.3, 32% aos 64.6) e em Ominousdesii", "porque": "o time ficou 30 s sem cura sob duas fontes de DoT e burst, o mago precisou dar ice block a 15%, e o warlock morreu", "gravidade": "alta"},
+  {"t": 73.8, "quem": "Kwongwegaix", "fez": "water shield com Ominousdesii levando conflagrate, chaos bolt e incinerate", "devia": "healing wave/nature's swiftness em Ominousdesii assim que saiu do stun", "porque": "o warlock morreu 0.6 s depois; o escudo de mana não fazia diferença naquele momento", "gravidade": "alta"},
+  {"t": 67.2, "quem": "Ominousdesii", "fez": "fear (67.2, 70.4) e immolate enquanto era o alvo do burst", "devia": "usar a healthstone que tinha criado aos 31.3, ou demonic circle: teleport para sair do alcance", "porque": "sem cura do healer, a healthstone era a única cura imediata, e ele morreu aos 74.4 sem usá-la", "gravidade": "media"},
+  {"t": 34.9, "quem": "Heshoix", "fez": "combustion logo na abertura, sem lançar feitiço de fogo até o living bomb dos 41.7", "devia": "guardar o combustion para uma janela de kill com pyroblast/fireball em alvo sob CC", "porque": "o cooldown de dano foi gasto no posicionamento inicial, sem efeito nenhum", "gravidade": "baixa"},
+  {"t": 71.9, "quem": "Heshoxi", "fez": "canalizou evocation no meio do burst do time, sem ter mana crítica", "devia": "pôr polymorph no healer Kwongwegaix ou dano em Ominousdesii para acelerar o kill", "porque": "8 s parado canalizando na janela de kill tiram pressão e deixam o mago vulnerável", "gravidade": "baixa"},
+  {"t": 56.0, "quem": "Ominousdesii", "fez": "toggle pet spell e pet autocast setup (47.5) no meio da troca de dano", "devia": "usar esses GCDs em dano ou em fear no healer inimigo", "porque": "mexer na configuração do pet no meio da luta gasta tempo sem efeito em combate", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.1, "quem": "Ominousdesv", "descricao": "Shadowfury pegando Heshoix e Ominousdesii"},
+  {"t": 45.2, "quem": "Ominousdesii", "descricao": "Shadowfury pegando os três inimigos"},
+  {"t": 63.3, "quem": "Ominousdesv", "descricao": "Howl of terror pegando Heshoix (32%) e Ominousdesii, forçando o will of the forsaken"},
+  {"t": 67.0, "quem": "Heshoix", "descricao": "Ice block com 15% de vida"},
+  {"t": 70.9, "quem": "Ominousdesv", "descricao": "Conflagrate + chaos bolt + incinerate com o healer inimigo stunado, para fechar o kill"},
+  {"t": 91.1, "quem": "Ominousdesv", "descricao": "Drain soul para finalizar o healer Kwongwegaix"}
+ ]}

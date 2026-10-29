@@ -1,0 +1,94 @@
+{
+ "resumo": "Celianeyvi ficou em cima do Pehdicouii com cleave/execute sem ser controlado de verdade, já que os fears do Ominoustres foram para o Heruxi. O druida caiu aos 73.9 e o Ominoustres logo depois.",
+ "momento_decisivo": {
+  "t": 66.1,
+  "descricao": "Celianeyvi gasta o trinket no howl of terror e volta direto no Pehdicouii. O Wild já tinha gastado os fears no Heruxi e não tinha mais CC pra tirar o warrior do healer."
+ },
+ "erros": [
+  {
+   "t": 42.6,
+   "quem": "Celianeyvi",
+   "fez": "slam ×3 logo depois do charge",
+   "devia": "mortal strike e ficar em cima do alvo com golpes instantâneos",
+   "porque": "slam tem tempo de cast e no PvP é interrompido por movimento/CC; o warlock saiu do alcance e deu fear",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.6,
+   "quem": "Celianeyvi",
+   "fez": "spam de heroic strike/cleave de 50.6 a 58.7 sem mortal strike (o primeiro MS só sai aos 77.1)",
+   "devia": "manter mortal strike no alvo da kill",
+   "porque": "sem o -50% de cura do MS, o Pehdicouii e o Heruxi seguravam a pressão; heroic strike/cleave são despejo de rage, não pressão de kill",
+   "gravidade": "alta"
+  },
+  {
+   "t": 52.9,
+   "quem": "Pehdicouii",
+   "fez": "cyclone no Celianeyvi durante o bladestorm (49.9 a ~55.9)",
+   "devia": "curar ou esperar o bladestorm acabar pra dar o cyclone",
+   "porque": "bladestorm deixa o warrior imune a CC; o cast de 1.5 s vai pro lixo enquanto o druida apanha",
+   "gravidade": "media"
+  },
+  {
+   "t": 57.7,
+   "quem": "Pehdicouii",
+   "fez": "cyclone com 38% de vida, sozinho embaixo do warrior",
+   "devia": "nourish/regrowth ou bear form pra se segurar e deixar o CC pro warlock",
+   "porque": "com o healer a 38%, gastar outro cast de 1.5 s em CC (e com DR de cyclone) só aumenta a janela de dano",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.1,
+   "quem": "Beteraniv",
+   "fez": "hunter's mark repetido (50.1, 55.1, 59.1, 64.7, 72.4)",
+   "devia": "aplicar uma vez e usar os GCDs em silencing/wyvern/scatter no warrior",
+   "porque": "refazer marca é GCD perdido enquanto o healer dele estava morrendo",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 43.1,
+   "quem": "Ominoustres",
+   "fez": "fears no Heruxi (healer) com o Celianeyvi já batendo nele",
+   "devia": "fear/death coil no Celianeyvi pra quebrar o tunnel",
+   "porque": "quem matava era o warrior; CC no healer inimigo não salva o próprio time quando você é o alvo",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 41.3,
+   "quem": "Celianeyvi",
+   "descricao": "Charge no Ominoustres logo de cara, abrindo pressão no caster que dá o CC."
+  },
+  {
+   "t": 61.3,
+   "quem": "Beteraniv",
+   "descricao": "Silencing shot no Heruxi junto com o mind freeze do Omasconvi; repetiu aos 66.5 com o paladino a 27%."
+  },
+  {
+   "t": 56.0,
+   "quem": "Beteraniv",
+   "descricao": "Deterrence aos 41% e de novo aos 66.8 (37%) depois do readiness, segurando dano físico."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 67.2,
+   "quem": "Ominoustres",
+   "acao": "shadow bolt no Heruxi",
+   "porque": "com o Celianeyvi em cima do Pehdicouii, o GCD tinha que ir em fear/death coil no warrior, não em dano no healer"
+  },
+  {
+   "t": 74.1,
+   "quem": "Ominoustres",
+   "acao": "life tap logo depois da morte do healer",
+   "porque": "perder vida em life tap com o warrior vindo na sua direção acelerou a morte aos 80.4"
+  },
+  {
+   "t": 73.0,
+   "quem": "Beteraniv",
+   "acao": "auto shot/troca de alvo pro Heruxi",
+   "porque": "com o druida morrendo, a hora era de peel (trap/scatter) no Celianeyvi, não de trocar pro healer"
+  }
+ ]
+}

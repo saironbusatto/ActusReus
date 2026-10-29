@@ -1,0 +1,84 @@
+{
+ "resumo": "O curador Kwongwegaiv passou a luta fazendo purge em vez de curar; com os DoTs do Ominousix nele, o psychic scream do Amnesianxix aos 63.5 (32% de vida) o deixou em fear até morrer aos 76.8, e o Zebedeuix caiu depois.",
+ "momento_decisivo": {
+  "t": 63.5,
+  "descricao": "Amnesianxix solta psychic scream com o Kwongwegaiv em 32% e cheio de DoTs do Ominousix; o curador fica em fear e morre sem se curar."
+ },
+ "momento_aceitos": [
+  30.1,
+  59.8,
+  63.5
+ ],
+ "erros": [
+  {
+   "t": 45.8,
+   "quem": "Kwongwegaiv",
+   "fez": "purge no Amnesianxix (e de novo ×2 até 53.6 e ×2 até 63.5) em vez de curar",
+   "devia": "healing wave/riptide em si mesmo e no time; tremor totem contra fears",
+   "porque": "terminou com cura 1475 e morreu cheio de DoTs; os purges não mudaram nada",
+   "gravidade": "alta"
+  },
+  {
+   "t": 63.5,
+   "quem": "Kwongwegaiv",
+   "fez": "entrou no psychic scream sem tremor totem, contra um time de priest + warlock",
+   "devia": "deixar tremor totem no chão antecipando o fear",
+   "porque": "com 32% de vida, o fear sem resposta foi a morte",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.4,
+   "quem": "Zebedeuix",
+   "fez": "ficou batendo no Heruii (hemorrhage) enquanto o Ominousix matava o curador com DoTs",
+   "devia": "kidney/blind/kick no Ominousix ou no Amnesianxix para dar peel ao Kwongwegaiv",
+   "porque": "o rogue não protegeu o curador, que era o alvo",
+   "gravidade": "media"
+  },
+  {
+   "t": 43.6,
+   "quem": "Heruii",
+   "fez": "cast greater blessing assignment em combate",
+   "devia": "curar/cleanse ou judgement",
+   "porque": "gastou GCD em buff de pré-luta com o rogue já em cima",
+   "gravidade": "media"
+  },
+  {
+   "t": 45.8,
+   "quem": "Zebedeuix",
+   "fez": "fan of knives sem alvos furtivos nem bom alvo em área",
+   "devia": "hemorrhage/eviscerate no alvo ou kick",
+   "porque": "gasto alto de energia com pouco dano",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 92.4,
+   "quem": "Zebedeuix",
+   "fez": "voltou a bater no Heruii depois de sair de 34% (evasion/vanish/cloak)",
+   "devia": "CC no paladino e pressão no Ominousix/Amnesianxix, ou ficar em stealth para sobreviver",
+   "porque": "paladino com cura própria é o pior alvo; o rogue gastou tudo e morreu aos 100.3",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 63.5,
+   "quem": "Amnesianxix",
+   "descricao": "Psychic scream no curador baixo."
+  },
+  {
+   "t": 30.1,
+   "quem": "Ominousix",
+   "descricao": "Unstable affliction no curador logo de cara."
+  },
+  {
+   "t": 72.5,
+   "quem": "Zebedeuix",
+   "descricao": "Evasion, vanish e cloak em sequência para sair de 34%."
+  },
+  {
+   "t": 115.2,
+   "quem": "Ominousix",
+   "descricao": "Spell lock no Ominousxxi para cortar o último caster."
+  }
+ ]
+}

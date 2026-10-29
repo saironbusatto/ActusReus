@@ -1,0 +1,20 @@
+{"resumo": "Espelho de dois warlocks virou guerra de curses e dispels por mais de 100 s; o LSD ganhou porque o Fireplay nunca converteu as janelas de polymorph no Kwongwegaxxv e o Kwongwegaix gastou dezenas de GCDs limpando curses até morrer aos 147.",
+ "momento_decisivo": {"t": 123.6, "descricao": "Kwongwegaix entrou num ciclo de cleanse spirit curse (×2 até 132.3 e de novo depois) contra dois warlocks que reaplicavam na hora, curando pouco enquanto o Pehdibalv e o Ominousdesxi pressionavam; morreu aos 147 sem ter usado as janelas em que o curador inimigo estava em polymorph."},
+ "erros": [
+  {"t": 123.6, "quem": "Kwongwegaix", "fez": "cleanse spirit curse repetido (102-145) contra Curse of the Elements/Tongues", "devia": "deixar a curse e curar com Healing Wave/Riptide, ou limpar só Curse of Tongues no momento de cast importante", "porque": "cada curse volta em 1 GCD do warlock; o curador trocava GCD de cura por nada e morreu aos 147", "gravidade": "alta"},
+  {"t": 30.0, "quem": "Heshoix", "fez": "combustion e mirror image com o portão abrindo", "devia": "guardar Combustion para uma janela de CC no curador e Mirror Image para quando tomasse burst", "porque": "sem alvo em alcance, os cooldowns expiraram; mais tarde, a 21%, o mago só tinha Ice Block", "gravidade": "media"},
+  {"t": 129.6, "quem": "Heshoix", "fez": "polymorph no Kwongwegaxxv seguido só de shoot", "devia": "aproveitar o curador em polymorph para Pyroblast/Fire Blast no alvo de kill junto com o Ominousdesii", "porque": "a janela de CC no curador inimigo é o momento de matar; o mago ficou no wand e a janela passou sem dano", "gravidade": "alta"},
+  {"t": 35.5, "quem": "Kwongwegaix", "fez": "purge (35.5, 41.0) logo na abertura", "devia": "Earth Shield/Riptide nos parceiros que acabavam de tomar shadowfury e starfall", "porque": "abertura com dois warlocks e moonkin é dano alto; purge de buff menor não protege ninguém", "gravidade": "baixa"},
+  {"t": 116.6, "quem": "Pehdibalv", "fez": "remove curse on party ×5 até 133.5", "devia": "usar esses GCDs em Wrath/Starfire no shaman ou em Cyclone no mago", "porque": "o mesmo ciclo do lado oposto: o Ominousdesii reaplicava a curse na hora; o LSD só não pagou por isso porque o Fireplay também desperdiçava GCD", "gravidade": "media"},
+  {"t": 111.5, "quem": "Heshoix", "fez": "mana shield três vezes (111.5-115.7)", "devia": "Blink/Frost Nova para sair do alcance e Polymorph no druida", "porque": "Mana Shield queima mana sem mitigar DoTs com eficiência; o mago já tinha gastado o Ice Block", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 33.1, "quem": "Ominousdesii", "descricao": "shadowfury pegando três inimigos logo na abertura."},
+  {"t": 50.5, "quem": "Ominousdesxi", "descricao": "shadowfury no Heshoix e no Ominousdesii seguida de death coil, derrubando o warlock inimigo para 47%."},
+  {"t": 80.7, "quem": "Kwongwegaxxv", "descricao": "mana tide totem antes do adversário numa luta de mana longa."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.4, "quem": "Heshoix", "acao": "mirror image → Pehdibalv", "porque": "defensivo usado no portão, sem ameaça; expirou sem absorver nada."},
+  {"t": 118.9, "quem": "Kwongwegaix", "acao": "cleanse spirit curse on party → Ominousdesxi", "porque": "dentro do ciclo de dispel contra dois warlocks; GCD trocado por uma curse que voltou na hora."},
+  {"t": 104.1, "quem": "Kwongwegaix", "acao": "purge → Ominousdesxi", "porque": "o curador gastou GCD em purge de buff enquanto o Heshoix saía do Ice Block a 21% precisando de cura."}
+ ]}

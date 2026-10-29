@@ -1,0 +1,21 @@
+{"resumo": "Espelho Fireplay decidido no atrito de warlocks: o Kwongwegaxi passou dezenas de GCDs limpando curses em ciclo e o time dele foi desgastado; os dois magos caíram quase juntos (133 e 138) e o Fireplay II terminou o curador inimigo aos 163.",
+ "momento_decisivo": {"t": 90.9, "descricao": "Kwongwegaxi entrou no segundo ciclo de cleanse spirit curse (×6 até 103.0) contra dois warlocks que reaplicavam na hora; sem cura de verdade nesse período, o Heshoxi ficou exposto e chegou a 7% aos 111.4, queimando Ice Block e trinket, e morreu logo depois."},
+ "erros": [
+  {"t": 64.0, "quem": "Kwongwegaxi", "fez": "cleanse spirit curse on party ×6 até 71.7 (e de novo ×6 até 103.0)", "devia": "curar com Healing Wave/Riptide e só limpar Curse of Tongues em momento crítico", "porque": "contra dois warlocks cada curse volta em 1 GCD; o curador trocou mais de 12 GCDs por nada", "gravidade": "alta"},
+  {"t": 30.1, "quem": "Heshoxi", "fez": "combustion, mirror image e berserking no portão", "devia": "guardar Combustion para uma janela de CC no curador e Mirror Image para defesa", "porque": "os cooldowns expiraram sem alvo; mais tarde o mago chegou a 7% sem defensivo além do Ice Block", "gravidade": "media"},
+  {"t": 56.9, "quem": "Heshoxi", "fez": "evocation, arcane intellect (61.8) e conjure mana gem (63.2) no meio da luta", "devia": "pressionar ou controlar (Polymorph no Kwongwegaix, dano no warlock)", "porque": "três GCDs/canais de preparo em combate deixaram o time sem dano nem controle por vários segundos", "gravidade": "media"},
+  {"t": 111.8, "quem": "Heshoxi", "fez": "pvp trinket dentro do Ice Block", "devia": "guardar o trinket para depois do Ice Block", "porque": "no Ice Block o mago já está imune; o trinket foi gasto sem efeito e ele morreu aos 138.3", "gravidade": "media"},
+  {"t": 125.7, "quem": "Kwongwegaix", "fez": "wind shear, purge (126.0, 133.6) e wind shear (132.2) com o Heshoix morrendo", "devia": "Healing Wave/Nature's Swiftness no Heshoix", "porque": "o mago morreu aos 133.0 sob DoTs; o curador gastou os GCDs nesse intervalo em utilidade em vez de cura", "gravidade": "alta"},
+  {"t": 85.4, "quem": "Heshoix", "fez": "focus magic e evocation (87.7) no meio da luta", "devia": "Polymorph no curador inimigo e dano no alvo de kill", "porque": "buff e canal de mana em combate tiram o mago da luta justamente quando o Kwongwegaix estava em polymorph inimigo", "gravidade": "baixa"},
+  {"t": 140.3, "quem": "Kwongwegaxi", "fez": "purge (134.8, 140.3, 144.8) estando sozinho contra dois", "devia": "curar a si mesmo, usar o pilar e Grounding contra fear", "porque": "o curador sobrevivente precisava ganhar tempo; purge não reduz o dano dos warlocks", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.1, "quem": "Ominousdesv", "descricao": "shadowfury pegando os três inimigos na abertura."},
+  {"t": 79.3, "quem": "Ominousdesii", "descricao": "death coil no Kwongwegaxi e howl of terror logo depois, travando o curador e o warlock inimigos."},
+  {"t": 87.1, "quem": "Heshoxi", "descricao": "polymorph no Kwongwegaix, tirando o curador inimigo da luta para abrir janela de dano."}
+ ],
+ "erros_da_rede": [
+  {"t": 126.0, "quem": "Kwongwegaix", "acao": "purge → Ominousdesv", "porque": "com o Heshoix a 7 s de morrer, o GCD devia ir para cura."},
+  {"t": 54.8, "quem": "Heshoix", "acao": "remove curse on party → Heshoxi", "porque": "decurse contra dois warlocks é troca perdida; o mago devia pressionar ou controlar."},
+  {"t": 133.6, "quem": "Kwongwegaix", "acao": "purge → Heshoxi", "porque": "logo após a morte do parceiro, o curador seguiu na utilidade em vez de estabilizar o Ominousdesii."}
+ ]}

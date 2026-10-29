@@ -1,0 +1,19 @@
+{"resumo": "TSG IV prendeu o druida healer Pehdicouii com gnaw do ghoul (40.4, 44.6, 47.6) enquanto Celianeyvi batia em área com bladestorm e sweeping strikes; o druida chegou a 26% e gastou trinket e barkskin, o hunter Beteraniv ficou sem cura e morreu aos 58.0, e o druida morreu aos 66.6.",
+ "momento_decisivo": {"t": 40.4, "descricao": "Omasconvi usa o gnaw do ghoul em Pehdicouii (74%) e emenda bladestorm de Celianeyvi aos 41.3; daí em diante o healer fica em stuns seguidos e Wild II perde toda a cura."},
+ "momento_aceitos": [35.8, 40.4, 41.3, 44.6],
+ "erros": [
+  {"t": 54.1, "quem": "Beteraniv", "fez": "hunter's mark 3 vezes até 57.2, depois de já ter usado aos 33.3, 35.1, 36.7, 41.6, 47.2, 48.8, 51.0 e 52.5", "devia": "usar os GCDs em aimed shot/chimera shot, scatter shot ou concussive shot para se afastar dos melees", "porque": "reaplicar a marca não dá dano nem controle; ele morreu aos 58.0 gastando o fim da vida com isso", "gravidade": "alta"},
+  {"t": 39.8, "quem": "Beteraniv", "fez": "raptor strike corpo a corpo (39.8, 42.6, 51.3) com o DK e o warrior em cima dele", "devia": "disengage + concussive shot para kitar, e scatter shot/freezing trap em Celianeyvi para ajudar o healer", "porque": "um hunter que fica em melee contra warrior e DK perde o dano à distância e não ajuda o druida stunado", "gravidade": "media"},
+  {"t": 41.9, "quem": "Ominoustres", "fez": "death coil em Celianeyvi no meio do bladestorm (41.3)", "devia": "usar o death coil logo depois do bladestorm, ou em Omasconvi para tirar o DK de cima do healer", "porque": "durante o bladestorm o warrior é imune a efeitos de perda de controle, então o horror foi perdido", "gravidade": "media"},
+  {"t": 44.4, "quem": "Pehdicouii", "fez": "cyclone em Celianeyvi enquanto o bladestorm ainda estava ativo", "devia": "se curar (estava a 33%) ou usar o cyclone depois que o bladestorm acabasse", "porque": "o bladestorm dá imunidade a CC; o cast foi gasto e ele levou outro gnaw aos 44.6", "gravidade": "media"},
+  {"t": 55.8, "quem": "Ominoustres", "fez": "fel domination + summon felhunter (56.2) + create soul shard (56.9) enquanto Beteraniv morria", "devia": "fazer peel no hunter (fear/howl of terror em Celianeyvi) ou dano de pressão em Omasconvi", "porque": "foram três GCDs fora da luta exatamente na janela em que o time perdeu o primeiro jogador", "gravidade": "media"},
+  {"t": 56.1, "quem": "Pehdicouii", "fez": "entangling roots e cyclone (58.0) com Beteraniv à beira da morte", "devia": "regrowth/swiftmend/nourish em Beteraniv", "porque": "o hunter estava sem deterrence e morreu aos 58.0; o root não segurava o burst de dois melees", "gravidade": "media"},
+  {"t": 37.1, "quem": "Celianeyvi", "fez": "every man for himself num root com 100% de vida", "devia": "esperar o root acabar ou usar intercept, e guardar o EMFH para um fear ou um cyclone", "porque": "o root no começo da luta não ameaçava nada e o EMFH tem 2 min de recarga", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.4, "quem": "Omasconvi", "descricao": "Gnaw do ghoul no healer, repetido aos 44.6 e 47.6, travando a cura de Wild II"},
+  {"t": 41.3, "quem": "Celianeyvi", "descricao": "Bladestorm com sweeping strikes no meio dos dois DPS inimigos"},
+  {"t": 42.0, "quem": "Beteraniv", "descricao": "Silencing shot no paladino Heruxi"},
+  {"t": 43.7, "quem": "Omasconvi", "descricao": "Empower rune weapon e, depois, summon gargoyle (57.4) para fechar o kill"},
+  {"t": 72.2, "quem": "Ominoustres", "descricao": "Howl of terror pegando Celianeyvi e Omasconvi no 1v3"}
+ ]}

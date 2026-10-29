@@ -1,0 +1,20 @@
+{"resumo": "RLS abriu no mago forçando o ice block e depois trocou para Zebedeuii, que já tinha gasto vanish/evasion/cloak; o kidney aos 78.0 com ele a 11% forçou o trinket e os DoTs fecharam, sem pain suppression do priest.",
+ "momento_decisivo": {"t": 78.0, "descricao": "Zebedeuix dá kidney shot em Zebedeuii a 11%, forçando o trinket sem nenhum defensivo restante; os DoTs do Ominousxxi o matam aos 85.9."},
+ "erros": [
+  {"t": 78.1, "quem": "Amnesianii", "fez": "prayer of mending com o parceiro Zebedeuii a 11% em kidney", "devia": "pain suppression em Zebedeuii (ou shield + flash heal)", "porque": "era o único defensivo capaz de segurar o rogue; ele usou o pain suppression só aos 101.1 em si mesmo", "gravidade": "alta"},
+  {"t": 64.8, "quem": "Zebedeuii", "fez": "vanish e shadow dance + cheap shot em Zebedeuix a 91%", "devia": "guardar o vanish como defensivo, já que estava a 44% e sendo focado pelos DoTs", "porque": "usou vanish, evasion (62.1) e cloak (68.0) em 6 s; aos 78 s não tinha nada além do trinket", "gravidade": "alta"},
+  {"t": 74.5, "quem": "Heshoiv", "fez": "spellsteal no Zebedeuix", "devia": "polymorph/frostbolt ou counterspell no Kwongwegaiv", "porque": "rogue não tem buff mágico para roubar; foi GCD jogado fora enquanto o parceiro caía", "gravidade": "media"},
+  {"t": 69.6, "quem": "Heshoiv", "fez": "mana shield, icy veins e berserking sem alvo controlado", "devia": "guardar icy veins para uma janela de deep freeze/kill ou usar polymorph no curador", "porque": "os cooldowns ofensivos expiraram enquanto ele só usava spellsteal e remove curse", "gravidade": "media"},
+  {"t": 41.5, "quem": "Amnesianii", "fez": "power infusion com o mago já em stun", "devia": "segurar o PI para uma janela de dano ou de cura de emergência", "porque": "Heshoiv estava em stun/cheap shot e não podia aproveitar; o PI foi desperdiçado", "gravidade": "baixa"},
+  {"t": 61.3, "quem": "Zebedeuix", "fez": "trocou para Zebedeuii com Heshoiv recém-saído do ice block", "devia": "a troca estava certa, mas sem kidney até 78.0 deixou o rogue se recuperar com eviscerate/vanish", "porque": "o controle no alvo novo só veio 17 s depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 41.8, "quem": "Zebedeuix", "descricao": "blind no priest Amnesianii logo na abertura e cheap shot no mago, que forçou o ice block a 5% aos 59.1"},
+  {"t": 78.0, "quem": "Zebedeuix", "descricao": "kidney shot no rogue a 11% forçando o trinket e garantindo a primeira morte"},
+  {"t": 100.1, "quem": "Ominousxxi", "descricao": "fear no priest forçando pain suppression e trinket, abrindo a morte do mago aos 122.0"}
+ ],
+ "erros_da_rede": [
+  {"t": 63.3, "quem": "Kwongwegaiv", "acao": "flame shock → Zebedeuii", "porque": "GCD do curador em dano logo depois de Zebedeuix ficar a 26% e precisar de cura"},
+  {"t": 72.1, "quem": "Heshoiv", "acao": "lifeblood", "porque": "curinha de herbalismo sem pressão no mago, enquanto o parceiro precisava de peel"},
+  {"t": 40.8, "quem": "Amnesianii", "acao": "power word: shield → Ominousxxi", "porque": "escudo com alvo no warlock inimigo na abertura, enquanto o rogue já vinha de shadowstep no próprio priest"}
+ ]}

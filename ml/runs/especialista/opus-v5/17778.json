@@ -1,0 +1,94 @@
+{
+ "resumo": "Espelho de rogue e priest em que o mage da RMP quase não deu dano (spellsteal e ice lance sem congelar). A RPS ganhou no desgaste: o Zebedeu ficou sem defensivos e morreu num kidney, e a Amnesian, sozinha, caiu depois.",
+ "momento_decisivo": {
+  "t": 201.9,
+  "descricao": "Zebedeuxii usa kidney shot no Zebedeu (a 21%), que tinha acabado de gastar cloak e vanish e voltou a atacar com premeditation e eviscerate, sem nenhum defensivo; ele morre aos 204.8."
+ },
+ "erros": [
+  {
+   "t": 135.8,
+   "quem": "Heshoii",
+   "fez": "ice lance ×3 no Zebedeuxii sem alvo congelado",
+   "devia": "usar frostbolt ou deep freeze e só soltar ice lance com o alvo congelado (frost nova, deep freeze ou fingers of frost)",
+   "porque": "ice lance fora de congelamento dá dano baixo; o mage terminou com 20k de dano numa luta de 233 s",
+   "gravidade": "media"
+  },
+  {
+   "t": 202.9,
+   "quem": "Zebedeu",
+   "fez": "depois de cloak e vanish a 21%, volta com premeditation e eviscerate",
+   "devia": "usar o vanish para se reposicionar perto da Amnesian, esperar a cura e só voltar com vida",
+   "porque": "jogou fora os últimos defensivos e voltou ao corpo a corpo a 21%; levou kidney e morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.8,
+   "quem": "Kwongwegaxii",
+   "fez": "purge ×7 seguido na Amnesian (até 70.7)",
+   "devia": "um purge no PW:S ou no buff importante e depois voltar a curar ou a usar totens",
+   "porque": "a disc reaplica o shield de graça; o xamã queima mana e GCDs sem tirar vantagem",
+   "gravidade": "media"
+  },
+  {
+   "t": 155.1,
+   "quem": "Amnesianix",
+   "fez": "dispersion com 96% de vida",
+   "devia": "guardar para um momento de pressão ou de CC",
+   "porque": "defensivo de 2 min gasto sem ameaça",
+   "gravidade": "media"
+  },
+  {
+   "t": 123.7,
+   "quem": "Heshoii",
+   "fez": "durante o kidney shot do Zebedeu no Zebedeuxii, segue com spellsteal ×3 (120.2-125.0)",
+   "devia": "acompanhar o stun com frostbolt, deep freeze ou poly no curador",
+   "porque": "o kidney do parceiro é a janela de abate; roubar buffs nessa hora a desperdiça",
+   "gravidade": "alta"
+  },
+  {
+   "t": 95.5,
+   "quem": "Amnesianix",
+   "fez": "silence na Amnesian com ela a 100%",
+   "devia": "guardar o silence para quando o alvo da RPS estiver baixo",
+   "porque": "silenciar o curador sem ninguém para matar só gasta o recurso; aos 145.3 ele precisou e por sorte estava pronto",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 132.9,
+   "quem": "Amnesian",
+   "descricao": "Pain suppression a 18% seguido de desperate prayer, que salvam a priest de uma morte certa"
+  },
+  {
+   "t": 47.5,
+   "quem": "Amnesian",
+   "descricao": "Psychic scream logo que o Zebedeuxii abriu nela, o que corta o opener do rogue"
+  },
+  {
+   "t": 206.3,
+   "quem": "Zebedeuxii",
+   "descricao": "Logo depois do abate, shadowstep na Amnesian sozinha para fechar a luta"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 135.8,
+   "quem": "Heshoii",
+   "acao": "ice lance → Zebedeuxii",
+   "porque": "ice lance sem o alvo congelado é o feitiço de menor dano do mage"
+  },
+  {
+   "t": 88.4,
+   "quem": "Heshoii",
+   "acao": "spellsteal → Zebedeuxii",
+   "porque": "rouba de um rogue que quase não tem buff mágico, num momento sem pressão"
+  },
+  {
+   "t": 121.3,
+   "quem": "Amnesianix",
+   "acao": "inner focus → Amnesian",
+   "porque": "gasta o inner focus fora de qualquer cura ou burst decisivo"
+  }
+ ]
+}

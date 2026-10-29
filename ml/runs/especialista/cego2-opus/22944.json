@@ -1,0 +1,90 @@
+{
+ "resumo": "Celianeyxi castigou o Zebedeuxiv até a faixa de execute enquanto o Kwongwegaxiv fazia purge no Heruxvi e o Amnesianxxv trocava de forma; o rogue morreu aos 114.6 e o priest caiu depois no 3x2.",
+ "momento_decisivo": {
+  "t": 105.7,
+  "descricao": "Com o Zebedeuxiv baixo, o curador Kwongwegaxiv passa a fazer purge no Heruxvi (×2 até 112.4) em vez de curar, e o Celianeyxi acerta execute aos 111.3 e 113.1."
+ },
+ "momento_aceitos": [
+  105.7,
+  111.0,
+  111.3,
+  113.1
+ ],
+ "erros": [
+  {
+   "t": 105.7,
+   "quem": "Kwongwegaxiv",
+   "fez": "purge ×2 no Heruxvi até 112.4 com o rogue em faixa de execute",
+   "devia": "healing wave/riptide no Zebedeuxiv",
+   "porque": "o rogue morreu aos 114.6 depois de dois execute sem cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 114.3,
+   "quem": "Zebedeuxiv",
+   "fez": "blind no Heruxvi em faixa de execute",
+   "devia": "blind/kidney no Celianeyxi, que era quem matava",
+   "porque": "CC no curador não para o execute do warrior",
+   "gravidade": "alta"
+  },
+  {
+   "t": 95.7,
+   "quem": "Amnesianxxv",
+   "fez": "dispersion com 100% de vida",
+   "devia": "guardar a dispersion para quando estivesse em perigo",
+   "porque": "gastou o maior defensivo sem ameaça e não tinha mais nada quando foi focado",
+   "gravidade": "media"
+  },
+  {
+   "t": 111.0,
+   "quem": "Amnesianxxv",
+   "fez": "remove shadowform/shadowform repetido (97.3, 98.8, 100.4, 103.7, 111.0)",
+   "devia": "ficar fora de forma e curar o rogue com flash heal/penance",
+   "porque": "cada troca de forma custa GCD e a cura chegou atrasada",
+   "gravidade": "media"
+  },
+  {
+   "t": 41.3,
+   "quem": "Heruxvi",
+   "fez": "every man for himself com 89% no cheap shot da abertura",
+   "devia": "aguentar o cheap shot e guardar o racial para o kidney/CC do priest",
+   "porque": "levou kidney shot aos 47.2 e stuns seguidos já sem saída",
+   "gravidade": "media"
+  },
+  {
+   "t": 97.8,
+   "quem": "Heruxvi",
+   "fez": "divine sacrifice e cancelou aos 98.2",
+   "devia": "manter cura no Celianeyxi ou só usar com dano real a absorver",
+   "porque": "gastou um cooldown sem efeito nenhum",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 111.3,
+   "quem": "Celianeyxi",
+   "descricao": "Execute em sequência no rogue baixo."
+  },
+  {
+   "t": 40.2,
+   "quem": "Zebedeuxiv",
+   "descricao": "Shadow dance na abertura com cheap shot no curador."
+  },
+  {
+   "t": 66.5,
+   "quem": "Zebedeuxiv",
+   "descricao": "Evasion, vanish e cloak para sair de 32%."
+  },
+  {
+   "t": 115.5,
+   "quem": "Celianeyxi",
+   "descricao": "Charge imediato no Amnesianxxv depois da morte do rogue."
+  },
+  {
+   "t": 86.0,
+   "quem": "Amnesianxxv",
+   "descricao": "Silence no Heruxvi com 29% de vida."
+  }
+ ]
+}

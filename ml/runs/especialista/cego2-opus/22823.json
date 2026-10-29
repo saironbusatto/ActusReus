@@ -1,0 +1,18 @@
+{"resumo": "Celianeyvi abriu com charge + bladestorm em Omasconiv, que já tinha gastado o EMFH; o paladino Heruix praticamente não curou (1221 de cura) e ficou dando cleanse em doença, e Omasconiv morreu aos 55.6. Depois Celianeyiv também morreu sem cura, aos 70.0.",
+ "momento_decisivo": {"t": 51.7, "descricao": "Com Omasconiv a 38% e acabando de usar icebound fortitude, Heruix gasta GCDs em cleanse disease (×2 até 53.0, e de novo aos 54.3) em vez de curar; Celianeyvi termina com execute e cleave e o DK morre aos 55.6."},
+ "momento_aceitos": [43.4, 51.3, 51.7, 54.6],
+ "erros": [
+  {"t": 51.7, "quem": "Heruix", "fez": "cleanse disease 2 vezes até 53.0 e cleanse aos 54.3 com Omasconiv a 38% de vida", "devia": "holy light/flash of light em Omasconiv, ou hand of protection nele contra o dano físico do warrior", "porque": "o dano era todo físico (cleave, heroic strike, execute); tirar doença não salva ninguém, e o DK morreu aos 55.6", "gravidade": "alta"},
+  {"t": 62.2, "quem": "Heruix", "fez": "depois do divine shield, gastou os GCDs em judgement of light (62.2), hand of freedom (63.8) e cleanse disease (58.2, 60.9, 66.1), sem curar", "devia": "curar Celianeyiv, que estava sendo executado, e usar hand of protection nele", "porque": "Celianeyiv morreu aos 70.0 sob execute com o healer do lado e sem nenhuma cura; Heruix fez só 1221 de cura na luta toda", "gravidade": "alta"},
+  {"t": 48.3, "quem": "Celianeyiv", "fez": "sunder armor em Celianeyvi enquanto o DK do time era derrubado", "devia": "fazer peel em Omasconiv (hamstring/intercept em Celianeyvi, ou intervene no DK) ou pôr mortal strike no healer Heruxi", "porque": "sunder não pressiona nem protege; o warrior inimigo ficou livre batendo no DK", "gravidade": "media"},
+  {"t": 53.6, "quem": "Celianeyiv", "fez": "continuou com heroic strike e cleave em Celianeyvi, sem mortal strike em ninguém, enquanto Omasconiv morria", "devia": "pôr mortal strike em Celianeyvi para cortar o enraged regeneration (52.9) ou a cura de Heruxi, ou dar disarm/intimidating shout nele", "porque": "o dano espalhado de cleave não impediu Celianeyvi de se curar e matar o DK", "gravidade": "media"},
+  {"t": 54.1, "quem": "Omasconiv", "fez": "raise dead com pouca vida, 1.5 s antes de morrer, depois de gastar GCD com death and decay aos 52.6", "devia": "invocar o ghoul antes e usar death pact para se curar, ou chains of ice/death grip para se afastar do warrior", "porque": "sem peel e sem cura, a única ferramenta de sobrevivência que ele tinha era a combinação ghoul + death pact, e ela veio tarde demais", "gravidade": "media"},
+  {"t": 61.6, "quem": "Celianeyiv", "fez": "demoralizing shout no 1v3 contra dois melees", "devia": "usar o GCD em mortal strike/hamstring ou em defensivo (shield wall com escudo)", "porque": "a redução de poder de ataque é pequena e não mudava em nada o kill que vinha", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 43.4, "quem": "Celianeyvi", "descricao": "Bladestorm logo depois do charge em Omasconiv, que já estava sem EMFH"},
+  {"t": 49.7, "quem": "Celianeyvi", "descricao": "Retaliation quando os dois melees inimigos o atacavam"},
+  {"t": 54.2, "quem": "Omasconvi", "descricao": "Pestilence + empower rune weapon para manter as doenças e aumentar o dano na hora do kill"},
+  {"t": 54.6, "quem": "Celianeyvi", "descricao": "Execute no DK com pouca vida para fechar o kill"},
+  {"t": 56.5, "quem": "Omasconvi", "descricao": "Icebound fortitude com 43% de vida sob pressão"}
+ ]}

@@ -1,0 +1,94 @@
+{
+ "resumo": "Ominousx manteve Amnesianxxv em spell lock e fear a luta toda; o priest de RPS II gastou os GCDs livres em mind sear e dispel, e caiu aos 109.7 com o curador em fear. Depois curador e rogue caíram em 2v3.",
+ "momento_decisivo": {
+  "t": 104.9,
+  "descricao": "Spell lock de Ominousx em Amnesianxxv logo após o fear em Kwongwegaxiv (104.3): o priest fica sem se curar e sem cura do shaman, e o shadow bolt aos 107.2 encaminha a morte aos 109.7."
+ },
+ "erros": [
+  {
+   "t": 50.1,
+   "quem": "Amnesianxxv",
+   "fez": "mind sear aos 50.1, 57.6, 65.0, 73.2, 85.4, 92.1, 101.0 e 109.1",
+   "devia": "mind flay/mind blast/vampiric touch num alvo, ou cura com shadowform fora",
+   "porque": "mind sear é canal em área de pouco dano e fácil de travar; o felhunter o silenciou várias vezes durante esses canais",
+   "gravidade": "alta"
+  },
+  {
+   "t": 102.7,
+   "quem": "Amnesianxxv",
+   "fez": "hymn of hope com a vida em 44%",
+   "devia": "se curar (flash heal/PW:S) ou pressionar",
+   "porque": "canal longo sendo o alvo do foco; morreu 7 s depois",
+   "gravidade": "media"
+  },
+  {
+   "t": 52.9,
+   "quem": "Kwongwegaxiv",
+   "fez": "chain lightning ×2 até 57.7, depois aos 66.5 e 68.0",
+   "devia": "ficar curando e com totens defensivos",
+   "porque": "shaman curador sem dano útil; cada cast longo foi exposto ao spell lock (silenciado aos 53.3 e 68.2)",
+   "gravidade": "media"
+  },
+  {
+   "t": 66.9,
+   "quem": "Kwongwegaxiv",
+   "fez": "sem tremor totem contra priest e warlock (feared aos 66.9, 69.7, 104.3, 107.2, 116.4)",
+   "devia": "tremor totem posto e reposto",
+   "porque": "o fear no curador abriu as duas mortes do time",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.3,
+   "quem": "Kwongwegaxiv",
+   "fez": "purge ×3 até 50.3 no início",
+   "devia": "curar e posicionar; purge só em escudo/buff que importa",
+   "porque": "três GCDs no começo sem cura enquanto o rogue abria",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 95.9,
+   "quem": "Heruiv",
+   "fez": "holy light ×3 até 102.8 com rogue batendo nele",
+   "devia": "flash of light/holy shock; holy light só com o kick em recarga",
+   "porque": "levou kick aos 97.3; cast longo contra rogue é perda de tempo",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 44.7,
+   "quem": "Zebedeuxiv",
+   "descricao": "Blind no curador inimigo para abrir a pressão no warlock."
+  },
+  {
+   "t": 66.0,
+   "quem": "Amnesianxxi",
+   "descricao": "Psychic scream no rogue que pressionava o time."
+  },
+  {
+   "t": 50.4,
+   "quem": "Ominousx",
+   "descricao": "Spell locks seguidos no priest inimigo, travando o dano e a cura dele."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 104.9,
+   "quem": "Kwongwegaxiv",
+   "acao": "purge → Heruiv",
+   "porque": "acabara de gastar o trinket para sair do fear com o aliado em perigo; o GCD devia ser cura em Amnesianxxv"
+  },
+  {
+   "t": 41.6,
+   "quem": "Amnesianxxv",
+   "acao": "shadow word: death → Ominousx",
+   "porque": "SW:D no alvo a 100% dá pouco dano e devolve dano ao priest; é finalizador"
+  },
+  {
+   "t": 113.3,
+   "quem": "Kwongwegaxiv",
+   "acao": "water shield → Heruiv",
+   "porque": "com Zebedeuxiv a 17% depois do trinket, o GCD tinha que ser cura"
+  }
+ ]
+}

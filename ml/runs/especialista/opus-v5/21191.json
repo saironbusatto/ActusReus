@@ -1,0 +1,20 @@
+{"resumo": "TSG forçou trinket e bubble do Heruiv com os gnaws e trocou para Ominousx, que não fez peel nem se defendeu e morreu aos 62.0; no 2v3, os stuns em cadeia do DK no paladino fecharam a luta.",
+ "momento_decisivo": {"t": 48.0, "descricao": "Com Heruiv em bubble, Celianeyiv troca para Ominousx; o warlock fica sem peel (sem fear, sem death coil no warrior, sem psychic scream do priest) e morre no execute aos 62.0."},
+ "erros": [
+  {"t": 45.0, "quem": "Ominousx", "fez": "life tap com o warrior e o DK em cima dele", "devia": "fear/death coil no Celianeyiv ou se afastar", "porque": "life tap tira vida no momento em que ele era o próximo alvo", "gravidade": "media"},
+  {"t": 60.8, "quem": "Ominousx", "fez": "shoot com o warrior batendo e vida baixa", "devia": "death coil ou fear no Celianeyiv, ou cast de fear no DK", "porque": "não usou nenhum controle defensivo do warlock antes de morrer", "gravidade": "alta"},
+  {"t": 47.6, "quem": "Amnesianxxi", "fez": "voltou ao shadowform e saiu de novo aos 50.7 com o warlock sendo focado", "devia": "ficar fora da forma curando e dar psychic scream nos dois melees no warlock", "porque": "a dança de formas gasta GCD; o priest não usou psychic scream nenhuma vez na luta", "gravidade": "alta"},
+  {"t": 38.3, "quem": "Celianeyiv", "fez": "heroic strike/cleave em sequência no Heruiv até 43.3", "devia": "mortal strike no paladino curador", "porque": "sem o debuff de cura, Heruiv se curou com holy light até o bubble; o primeiro MS só veio aos 53.3", "gravidade": "alta"},
+  {"t": 35.5, "quem": "Celianeyiv", "fez": "every man for himself sem estar em CC", "devia": "guardar o trinket para fear/psychic scream", "porque": "foi stunado aos 59.8 e usou o trinket de novo; o primeiro uso não serviu para nada", "gravidade": "media"},
+  {"t": 101.2, "quem": "Heruiv", "fez": "divine sacrifice e cancelou na hora", "devia": "não usar ou deixar ativo para absorver dano do parceiro", "porque": "cooldown queimado sem efeito", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.9, "quem": "Omasconiv", "descricao": "gnaws em cadeia no paladino curador forçando trinket (42.5) e divine shield (44.1)"},
+  {"t": 44.1, "quem": "Heruiv", "descricao": "divine shield a 23% sobrevivendo ao primeiro burst"},
+  {"t": 116.9, "quem": "Omasconiv", "descricao": "nova cadeia de gnaws em Heruiv sem trinket, levando à morte aos 144.6"}
+ ],
+ "erros_da_rede": [
+  {"t": 42.2, "quem": "Amnesianxxi", "acao": "lifeblood → Omasconiv", "porque": "com o paladino parceiro a 32% em stun, o certo era flash heal/shield nele"},
+  {"t": 58.8, "quem": "Heruiv", "acao": "hand of freedom on party → Heruix", "porque": "Ominousx morria sob o warrior; o GCD devia ir para a cura dele"},
+  {"t": 64.5, "quem": "Amnesianxxi", "acao": "shadowform → Heruix", "porque": "logo depois da morte do warlock, no 2v3, o priest precisava curar e não entrar em shadowform"}
+ ]}

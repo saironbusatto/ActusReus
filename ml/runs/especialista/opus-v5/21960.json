@@ -1,0 +1,19 @@
+{"resumo": "Zebedeuxiv blindou o curador Kwongwegaix, sobreviveu a 16% com trinket, vanish e cloak, e voltou com shadow dance para matar o shaman aos 47.3; em 2v3 a Fireplay II só atrasou o fim com ice block e mana shield.",
+ "momento_decisivo": {"t": 40.0, "descricao": "Blind de Zebedeuxiv no Kwongwegaix tira o curador da luta; a sequência shadow dance, cheap shot (46.1) e ambush mata o shaman aos 47.3."},
+ "erros": [
+  {"t": 37.5, "quem": "Heshoix", "fez": "spellsteal em vez de controle (e de novo ×2 até 50.9 e aos 54.0)", "devia": "polymorph no Kwongwegaxiv ou frost nova + controle no rogue que mirava o próprio curador", "porque": "o mage não usou polymorph na luta; o curador do time foi blindado e morto sem nenhum peel do mage", "gravidade": "alta"},
+  {"t": 42.4, "quem": "Ominousdesii", "fez": "corruption on attacker ×3 até 45.1 com o curador do time sendo atacado", "devia": "fear/howl of terror no rogue que saía de vanish, ou spell lock do felhunter no priest", "porque": "reaplicar a mesma DoT não ajuda; o shaman morreu aos 47.3 sem controle no rogue", "gravidade": "alta"},
+  {"t": 34.3, "quem": "Kwongwegaix", "fez": "purge no Zebedeuxiv (e outro purge aos 39.0)", "devia": "se posicionar perto do mage e colocar tremor/earthbind totem, pré-curar", "porque": "o rogue estava abrindo nele; GCDs em purge deixaram o curador sem preparação para o blind e a sequência de stun", "gravidade": "media"},
+  {"t": 41.9, "quem": "Heshoix", "fez": "fire blast que stunou o rogue a 20%, mas sem seguir com dano em burst", "devia": "com o rogue a 20% e stunado, despejar scorch/fire blast e pedir death coil do warlock antes do trinket", "porque": "o rogue trinketou, deu vanish e cloak; a chance de kill passou e o time perdeu o curador logo depois", "gravidade": "media"},
+  {"t": 58.5, "quem": "Ominousdesii", "fez": "drain soul e curses em 2v3 sem se proteger", "devia": "manter distância, usar demonic circle/death coil quando focado e controlar o rogue", "porque": "morreu aos 80.6 sem nenhum defensivo registrado", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.0, "quem": "Zebedeuxiv", "descricao": "Blind no curador inimigo, abrindo a janela de kill no shaman."},
+  {"t": 42.2, "quem": "Zebedeuxiv", "descricao": "Trinket no stun a 20% seguido de vanish, evasion e cloak, saindo vivo de 16%."},
+  {"t": 69.1, "quem": "Heshoix", "descricao": "Ice block a 19% sob stun, adiando o kill em 2v3."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.4, "quem": "Heshoix", "acao": "combustion → Kwongwegaxiv", "porque": "usado na abertura dos portões, antes de haver alvo ou dano crítico para aproveitar; o cooldown foi desperdiçado."},
+  {"t": 51.8, "quem": "Ominousdesii", "acao": "life tap → Zebedeuxiv", "porque": "acabando de perder o curador, trocar vida por mana em 2v3 só acelera a própria morte."},
+  {"t": 56.3, "quem": "Zebedeuxiv", "acao": "slice and dice → Heshoix", "porque": "com o curador inimigo morto, os combos deviam ir para kidney/eviscerate no mage, não para renovar buff."}
+ ]}

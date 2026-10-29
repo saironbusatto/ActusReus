@@ -1,0 +1,20 @@
+{"resumo": "A primeira troca acabou empatada (Pehdicouve morreu aos 85.5 e Zebedeuvi aos 93.4, e Beteranii caiu aos 112.1), mas Heshovi entrou no 2v1 sem mana e passou 150 s de Shoot/Ice Lance, enquanto Ominous, sozinho, desgastou o RMP com DoTs e Spell Lock até matar Amnesianvii aos 262.2.",
+ "momento_decisivo": {"t": 113.2, "descricao": "Logo depois de Beteranii morrer, Heshovi trocou para Ominous já sem mana (gasta em AoE e Spellsteal na abertura) e só conseguia usar varinha e Ice Lance; sem dano real no 2v1, o Warlock teve tempo de ganhar por desgaste."},
+ "erros": [
+  {"t": 52.5, "quem": "Heshovi", "fez": "lançou Flamestrike/Blizzard na abertura (49.7, 52.5, 70.2, 72.7, 77.2), um deles logo depois do Blind de Zebedeuvi em Pehdicouve aos 50.3", "devia": "usar Frostbolt/Polymorph no alvo e economizar mana", "porque": "AoE quebra CC aliado e gastou a mana que faltou no 2v1 longo", "gravidade": "alta"},
+  {"t": 234.5, "quem": "Heshovi", "fez": "usou Icy Veins + Mirror Image no 2v1 e continuou só com Shoot", "devia": "usar Evocation/gema de mana antes e encaixar Polymorph/Deep Freeze em Ominous com burst de Frostbolt", "porque": "cooldown de dano sem mana para lançar feitiço não faz nada", "gravidade": "alta"},
+  {"t": 78.8, "quem": "Zebedeuvi", "fez": "usou Cloak of Shadows logo depois de Vanish/Premeditation, sem DoT pesado em cima", "devia": "guardar Cloak para o Spell Lock/UA de Ominous quando estivesse em vida baixa", "porque": "aos 91.6 foi silenciado com 3% de vida, sem Cloak nem Evasion, e morreu aos 93.4", "gravidade": "alta"},
+  {"t": 55.4, "quem": "Amnesianvii", "fez": "canalizou Mind Sear (55.4, 62.1, 71.3, 77.6) enquanto o time tomava pressão e ele mesmo caía para 23% aos 66.9", "devia": "manter Shield/Penance nos aliados e dispelar CC", "porque": "Mind Sear quebra o Blind/Fear do próprio time e foi tempo de cura perdido", "gravidade": "media"},
+  {"t": 76.7, "quem": "Beteranii", "fez": "lançou Hunter's Mark mais de 10 vezes trocando de alvo (53.1-105.0)", "devia": "manter a marca num alvo e usar os GCDs em Aimed/Chimera Shot ou Scatter", "porque": "cada marca é um GCD sem dano e espalha a pressão", "gravidade": "media"},
+  {"t": 68.1, "quem": "Beteranii", "fez": "usou Readiness só para reativar Rapid Fire", "devia": "guardar Readiness para um segundo Deterrence ou Scatter+Silencing Shot", "porque": "sem esse cooldown defensivo ele morreu aos 112.1, 15 s depois do Deterrence de 96.8", "gravidade": "media"},
+  {"t": 54.9, "quem": "Beteranii", "fez": "usou Multi-Shot (54.9, 66.3, 69.3) com Fear de Ominous ativo em Amnesianvii", "devia": "usar ataques de alvo único", "porque": "Multi-Shot quebra o Fear aliado e espalha o dano", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 50.8, "quem": "Zebedeuvi", "descricao": "Blind no curador + Shadow Dance com Cheap Shot e depois Kidney, que forçaram o trinket de Pehdicouve com 34% de vida; o curador morreu aos 85.5."},
+  {"t": 212.3, "quem": "Heshovi", "descricao": "Ice Block com 23% de vida, salvando o mago no 2v1."},
+  {"t": 113.3, "quem": "Ominous", "descricao": "Sozinho contra dois, rodou Fear, Spell Lock, Curse of Tongues e DoTs sem parar e ganhou a luta por desgaste."}
+ ],
+ "erros_da_rede": [
+  {"t": 46.5, "quem": "Pehdicouve", "acao": "cobalt frag bomb → Amnesianvii", "porque": "curador gastando GCD com bomba de engenharia no momento em que o time entrava em burst"},
+  {"t": 76.7, "quem": "Beteranii", "acao": "hunter's mark → Zebedeuvi", "porque": "GCD gasto só em marca, sem dano, em plena troca"}
+ ]}

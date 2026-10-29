@@ -1,0 +1,21 @@
+{"resumo": "O Celianeyxi abriu com charge, Sweeping Strikes e Bladestorm e matou o Zebedeuxiv aos 55.8 enquanto o Kwongwegaxiv fazia dano em vez de curar; depois o warrior, bem curado pelo Heruxvi, venceu o Amnesianxxv no atrito.",
+ "momento_decisivo": {"t": 53.9, "descricao": "Com o Zebedeuxiv a 35% depois de Evasion e Vanish, o Kwongwegaxiv lançou lightning bolt ×2 em vez de curar; o rogue morreu aos 55.8 e o RPS ficou 2v3."},
+ "erros": [
+  {"t": 53.9, "quem": "Kwongwegaxiv", "fez": "lightning bolt ×2 com o Zebedeuxiv a 35%", "devia": "Riptide + Healing Wave (ou Nature's Swiftness) no Zebedeuxiv", "porque": "o rogue estava sem defensivos e sob warrior e shaman elemental; dano do curador não muda nada e o parceiro morreu 2 s depois", "gravidade": "alta"},
+  {"t": 42.5, "quem": "Kwongwegaxiv", "fez": "lightning bolt, flame shock e lava burst (42.5-49.6) na abertura", "devia": "Earth Shield e cura preventiva no Zebedeuxiv, que estava colado no Bladestorm do warrior", "porque": "com Sweeping Strikes e Bladestorm ativos, o dano em quem estava em melee ia ser alto; o curador escolheu dano", "gravidade": "media"},
+  {"t": 50.8, "quem": "Zebedeuxiv", "fez": "vanish seguido de premeditation e kick (52.2) a 35%", "devia": "usar o Vanish para sair do combate, recuar até o curador e esperar a cura", "porque": "voltar a atacar com pouca vida perto do warrior jogou fora o reset; morreu aos 55.8", "gravidade": "alta"},
+  {"t": 51.2, "quem": "Amnesianxxv", "fez": "remove shadowform, SW:D, shadowform, remove shadowform, PW:S, shadowform (51.2-55.9)", "devia": "sair da forma uma vez e curar o Zebedeuxiv (Flash Heal/PW:S nele) ou dar Psychic Scream no warrior", "porque": "a troca de forma consome GCD e mana; o rogue morreu no meio dessa sequência sem receber cura", "gravidade": "alta"},
+  {"t": 120.9, "quem": "Celianeyxi", "fez": "sunder armor repetido (120.9, 127.5, 149.0, 166.1, 174.1)", "devia": "Mortal Strike/Hamstring e manter o debuff de cura", "porque": "Sunder em arena é GCD de pouco valor; prolongou o atrito contra o priest", "gravidade": "baixa"},
+  {"t": 60.4, "quem": "Heruxvi", "fez": "cast greater blessing assignment no meio da luta (também 91.4 e 161.5)", "devia": "Flash of Light no Celianeyxi ou cleanse dos DoTs do priest", "porque": "buff de fora de combate gasta GCD do curador em plena luta", "gravidade": "baixa"},
+  {"t": 37.4, "quem": "Amnesianxxv", "fez": "shadow word: death no Heruxvi no portão", "devia": "Power Word: Shield em si mesmo antes do charge ou Vampiric Touch/Shadow Word: Pain", "porque": "SW:D com o paladino a 100% faz pouco dano e devolve dano; o warrior deu charge no priest no mesmo instante", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 37.5, "quem": "Celianeyxi", "descricao": "charge no Amnesianxxv e Sweeping Strikes logo em seguida, abrindo pressão em vários alvos."},
+  {"t": 43.0, "quem": "Celianeyxi", "descricao": "every man for himself saindo do Psychic Scream e Bladestorm na hora, mantendo o dano em cima do rogue e do priest."},
+  {"t": 41.5, "quem": "Amnesianxxv", "descricao": "silence no Naminvi enquanto o Zebedeuxiv abria no Heruxvi com blind e cheap shot."}
+ ],
+ "erros_da_rede": [
+  {"t": 38.4, "quem": "Kwongwegaxiv", "acao": "flame shock → Naminvi", "porque": "curador fazendo dano com o warrior acabando de dar charge no priest e abrindo Sweeping Strikes."},
+  {"t": 45.9, "quem": "Kwongwegaxiv", "acao": "flame shock", "porque": "durante o Bladestorm em cima do time; a cura era prioridade e o rogue morreu 10 s depois."},
+  {"t": 51.5, "quem": "Amnesianxxv", "acao": "shadow word: death → Celianeyxi", "porque": "warrior com vida alta; SW:D quase sem valor e com dano de volta, no momento em que o rogue precisava de cura."}
+ ]}

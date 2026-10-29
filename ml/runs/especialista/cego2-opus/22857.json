@@ -1,0 +1,18 @@
+{"resumo": "Zebedeuxiv abriu no mago e caiu a 33% já aos 42 s com frost nova, living bomb e as DoTs de Ominousdesii; os healers dele passaram os 30 s seguintes em purge, cleanse e trocando de shadowform, e ele morreu aos 71.2. Fireplay venceu o 3v2 longo com fear e polymorph, matando Amnesianxxv (204.8) e Kwongwegaxiv (214.4).",
+ "momento_decisivo": {"t": 46.9, "descricao": "Com Zebedeuxiv a 33% e já sem evasion e vanish, o healer Kwongwegaxiv começa uma série de purge (46.9, 50.2, 53.5, 55.7), water shield e cleanse curse em vez de curar; o rogue chega a 26% (59.9) e morre sob drain soul."},
+ "momento_aceitos": [42.0, 46.9, 59.9, 60.6, 66.2],
+ "erros": [
+  {"t": 46.9, "quem": "Kwongwegaxiv", "fez": "purge (46.9, 50.2, 53.5, 55.7), water shield (60.2) e cleanse spirit curse 2 vezes até 64.6 com Zebedeuxiv entre 33% e 26%", "devia": "riptide + healing wave/chain heal em Zebedeuxiv sem parar, e grounding totem no mago", "porque": "o rogue morreu aos 71.2 sem ter recebido uma única cura de verdade em 30 s, e foi essa morte que decidiu a luta", "gravidade": "alta"},
+  {"t": 60.6, "quem": "Amnesianxxv", "fez": "voltou para a shadowform com Zebedeuxiv a 26% e preso no frost nova", "devia": "ficar fora da forma, dar flash heal + power word: shield nele e dispel no root e nas DoTs", "porque": "só 4 s depois ele precisou sair da forma de novo (64.6) para um flash heal tardio, e o rogue morreu aos 71.2", "gravidade": "alta"},
+  {"t": 42.0, "quem": "Zebedeuxiv", "fez": "evasion com 33% de vida, tomando dano de mago e warlock", "devia": "cloak of shadows para tirar living bomb, corruption e immolate, e só depois vanish", "porque": "evasion só ajuda contra golpes físicos; o dano era todo mágico, e o cloak só veio aos 53.8", "gravidade": "media"},
+  {"t": 45.1, "quem": "Zebedeuxiv", "fez": "voltou do vanish (42.8) com premeditation e kidney shot no mago, ainda com cerca de 33%", "devia": "usar o vanish para se resetar, ficar fora de alcance e esperar a cura antes de voltar", "porque": "voltar para a luta com pouca vida e as DoTs ainda ativas deixou ele exposto ao frost nova e ao drain soul", "gravidade": "media"},
+  {"t": 201.6, "quem": "Amnesianxxv", "fez": "canalizou hymn of hope com cerca de 46% de vida, sob conflagrate e chaos bolt", "devia": "power word: shield + flash heal em si mesmo, ou psychic scream em Ominousdesii", "porque": "canalizar mana sob burst o deixou parado, e ele morreu aos 204.8 com drain soul", "gravidade": "media"},
+  {"t": 162.2, "quem": "Heshoix", "fez": "combustion sem ter dano de fogo forte em seguida (só um scorch aos 168.3, depois foi silenciado)", "devia": "guardar o combustion para uma janela de pyroblast/fireball com o alvo sob CC", "porque": "o cooldown foi desperdiçado num momento sem pressão", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.5, "quem": "Heshoix", "descricao": "Frost nova + blast wave no rogue que abriu nele, tirando-o do melee"},
+  {"t": 37.5, "quem": "Heshoix", "descricao": "Counterspell no healer inimigo Kwongwegaxiv"},
+  {"t": 66.2, "quem": "Ominousdesii", "descricao": "Drain soul para executar Zebedeuxiv com pouca vida"},
+  {"t": 121.0, "quem": "Heshoix", "descricao": "Dragon's breath no healer inimigo a 36%, combinado com o polymorph"},
+  {"t": 202.4, "quem": "Ominousdesii", "descricao": "Chaos bolt + drain soul para fechar o kill em Amnesianxxv"}
+ ]}

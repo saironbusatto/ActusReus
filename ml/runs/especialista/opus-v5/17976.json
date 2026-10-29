@@ -1,0 +1,80 @@
+{
+ "resumo": "A RLS abriu com spell lock e stun no druida e no hunter, foram cinco segundos sem cura. O Beteranii morreu e o Ominous caiu numa cadeia de stuns.",
+ "momento_decisivo": {
+  "t": 42.4,
+  "descricao": "Ominousxxi usa pet spell lock no Pehdicouve e o Zebedeuix entra no Beteranii com shadowstep: o hunter é derrubado sem cura."
+ },
+ "erros": [
+  {
+   "t": 51.1,
+   "quem": "Pehdicouve",
+   "fez": "cyclone (51.1, 53.1) com o Beteranii a 44%",
+   "devia": "curar o hunter (lifebloom, swiftmend, rejuvenation)",
+   "porque": "o druida curou só 5.8k na luta toda; o parceiro morreu sem cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 54.4,
+   "quem": "Pehdicouve",
+   "fez": "hyperspeed accelerators ×2 enquanto o hunter caía",
+   "devia": "usar os GCDs para curar",
+   "porque": "a vida do parceiro era a prioridade",
+   "gravidade": "media"
+  },
+  {
+   "t": 69.2,
+   "quem": "Ominous",
+   "fez": "pvp trinket a 25% contra um cheap shot, e levou kidney aos 70.3",
+   "devia": "guardar o trinket para o kidney ou usar o death coil",
+   "porque": "o trinket gasto no stun mais curto o deixou sem resposta para o seguinte",
+   "gravidade": "alta"
+  },
+  {
+   "t": 69.6,
+   "quem": "Ominous",
+   "fez": "escape artist logo depois do trinket",
+   "devia": "usar demonic circle: teleport ou fear",
+   "porque": "gastou GCD na hora de fugir",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.9,
+   "quem": "Beteranii",
+   "fez": "hunter's mark a 44% depois do deterrence",
+   "devia": "usar disengage e se afastar",
+   "porque": "GCD gasto com a vida baixa",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 42.4,
+   "quem": "Ominousxxi",
+   "descricao": "Spell lock no curador no começo, que permite o abate"
+  },
+  {
+   "t": 71.3,
+   "quem": "Zebedeuix",
+   "descricao": "Blind no druida durante o abate do Ominous"
+  },
+  {
+   "t": 62.4,
+   "quem": "Zebedeuix",
+   "descricao": "Cadeia de cheap shot e kidney no Ominous"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 66.2,
+   "quem": "Pehdicouve",
+   "acao": "hyperspeed accelerators → Zebedeuix",
+   "porque": "GCD em vez de cura com o Ominous sob pressão"
+  },
+  {
+   "t": 59.4,
+   "quem": "Pehdicouve",
+   "acao": "remove curse on party → Ominousxxi",
+   "porque": "o Beteranii estava morrendo e precisava de cura direta"
+  }
+ ]
+}

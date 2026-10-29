@@ -1,0 +1,20 @@
+{"resumo": "Celianeyvii abriu com charge, gastou o trinket racial num shadowfury a 87% e, preso por roots da druida sob o burst destro, morreu em 10 s sem cura efetiva do Heruxii; com o warrior fora, Naminii caiu aos 68.1 e a LSD II controlou o resto.",
+ "momento_decisivo": {"t": 33.8, "descricao": "Celianeyvii usa every man for himself no shadowfury com 87% de vida; os roots seguintes (37.0, 38.0) o prendem sem saída e o burst do Ominousdesix o mata aos 42.9."},
+ "erros": [
+  {"t": 33.8, "quem": "Celianeyvii", "fez": "every man for himself no shadowfury a 87%", "devia": "aceitar o stun de 3 s com vida alta e guardar o trinket para o root/fear seguido de burst", "porque": "foi enraizado aos 37-38 e caiu de 59% para 32% sem poder sair, morrendo aos 42.9", "gravidade": "alta"},
+  {"t": 35.7, "quem": "Heruxii", "fez": "every man for himself sem estar em controle, e pvp trinket aos 38.2 com 72%", "devia": "guardar os dois escapes para quando um controle impedisse curar o warrior em perigo", "porque": "queimou racial e trinket em 3 s com vida alta; o paladino ficou sem resposta para o resto da luta", "gravidade": "alta"},
+  {"t": 41.1, "quem": "Heruxii", "fez": "cancel divine sacrifice com o warrior a ~30%", "devia": "manter o Divine Sacrifice ativo para dividir o dano que estava matando o Celianeyvii", "porque": "o warrior morreu 1.8 s depois do cancelamento", "gravidade": "alta"},
+  {"t": 38.9, "quem": "Heruxii", "fez": "cleanse magic on party enquanto o warrior despencava enraizado", "devia": "curar direto (holy shock, flash of light) e dar hand of freedom no warrior para tirar o root", "porque": "o dano destro e de druida estava matando o warrior; remover magia sem cura não segurou a vida dele", "gravidade": "media"},
+  {"t": 40.7, "quem": "Naminii", "fez": "pvp trinket num stun com 70% de vida", "devia": "segurar o trinket; com 70% o stun não era letal", "porque": "mais tarde, feared aos 54.6 e sob pressão, não tinha mais saída e morreu aos 68.1", "gravidade": "media"},
+  {"t": 49.4, "quem": "Naminii", "fez": "purge, wind shear e purge em sequência (49.4-62.4)", "devia": "em 2v3 usar earthbind/grounding e curar a si mesmo, ou focar dano num alvo só", "porque": "os GCDs foram para remoções sem alvo de kill enquanto ele e o paladino perdiam vida", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 33.6, "quem": "Ominousdesix", "descricao": "Shadowfury no warrior logo após o charge, quebrando a abertura do Thunder I."},
+  {"t": 37.0, "quem": "Pehdibalii", "descricao": "Entangling roots no warrior que já tinha gasto o trinket, travando-o para o burst."},
+  {"t": 41.7, "quem": "Pehdibalii", "descricao": "Barkskin a 28% sob bladestorm, sobrevivendo ao último esforço do warrior."}
+ ],
+ "erros_da_rede": [
+  {"t": 40.4, "quem": "Heruxii", "acao": "divine sacrifice → Kwongwegaxx", "porque": "a escolha foi certa no momento mas o bot cancelou 0.7 s depois; a ação ficou sem efeito com o warrior morrendo."},
+  {"t": 44.4, "quem": "Naminii", "acao": "chain lightning → Pehdibalii", "porque": "acabando de perder o warrior, o elemental devia se proteger ou controlar, não gastar cast em dano espalhado."},
+  {"t": 58.4, "quem": "Naminii", "acao": "purge → Pehdibalii", "porque": "a 59% e sendo o próximo alvo do warlock destro, gastou GCD em purge em vez de se curar ou sair de linha de visão."}
+ ]}

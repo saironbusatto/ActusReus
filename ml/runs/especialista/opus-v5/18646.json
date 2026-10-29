@@ -1,0 +1,21 @@
+{"resumo": "Zebedeuxii abriu o warlock com kidney shot e blind no curandeiro, mas o kill só saiu aos 76.8, depois que Kwongwegaxx e Pehdibalii gastaram os trinkets num stun aos 70-71 s. Sem warlock, o xamã caiu aos 94.1 e o druida ficou num 1v3 longo.",
+ "momento_decisivo": {"t": 71.6, "descricao": "Kwongwegaxx (84%) e Pehdibalii (93%) usaram o trinket num stun que não ameaçava ninguém. O warlock, sem defensivo, ficou exposto, e Zebedeuxii matou com eviscerate aos 76.8."},
+ "erros": [
+  {"t": 71.6, "quem": "Kwongwegaxx", "fez": "usou o trinket num stun com 84% de vida", "devia": "guardar o trinket para quando o warlock estivesse em perigo ou para o próximo kidney shot do rogue", "porque": "aos 85.8 ele levou kidney shot com 45%, sem trinket, e morreu aos 94.1", "gravidade": "alta"},
+  {"t": 55.8, "quem": "Ominousdesix", "fez": "sob kidney shot e depois sob a pressão do rogue, não usou demonic circle: teleport, fear nem death coil (o circle foi posto aos 30.1)", "devia": "teleportar no circle quando o stun acabasse e dar fear ou death coil em Zebedeuxii", "porque": "o circle e o death coil existem exatamente para fugir de rogue; ele morreu aos 76.8 sem ter usado nenhum defensivo", "gravidade": "alta"},
+  {"t": 66.1, "quem": "Pehdibalii", "fez": "passou de 65.6 a 76.8 lançando cyclone e trocando de forma, sem curar o warlock (só rejuvenation aos 51.1)", "devia": "manter HoTs e nourish em Ominousdesix enquanto o rogue o caçava", "porque": "o warlock caiu com dois curandeiros híbridos do lado; a cura dele faltou na hora do kill", "gravidade": "alta"},
+  {"t": 111.3, "quem": "Kwongwegaxii", "fez": "lançou water breathing e water walking cinco vezes entre 111 e 123 s", "devia": "manter flame shock/lava burst no druida ou guardar mana para curar", "porque": "buffs de água não fazem nada numa arena sem água; foram GCDs jogados fora no fim da luta", "gravidade": "baixa"},
+  {"t": 63.3, "quem": "Amnesianix", "fez": "tirou e voltou para shadowform várias vezes (59.1, 62.0, 63.3, 71.4)", "devia": "escolher uma forma: ficar em shadowform pressionando ou sair de vez para curar", "porque": "cada entrada custa GCD e mana, e fora da forma ele perde 15% de redução de dano", "gravidade": "media"},
+  {"t": 52.2, "quem": "Kwongwegaxii", "fez": "lançou purge em sequência (×4 entre 52.2 e 61.0, e de novo depois)", "devia": "alternar o purge com wind shear e cura, e usar purge só em buffs que importam (barkskin, HoTs grandes)", "porque": "purge repetido gasta mana e GCD com retorno pequeno", "gravidade": "baixa"},
+  {"t": 104.5, "quem": "Pehdibalii", "fez": "sozinho contra três, ficou em moonkin/typhoon/faerie fire em vez de se curar e fugir", "devia": "ficar em forma de viagem ou de urso para kitar, e se curar com HoTs fora da linha de visão", "porque": "no 1v3 o único plano é sobreviver e ganhar tempo; ficar parado dando dano só adia a morte", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 56.9, "quem": "Zebedeuxii", "descricao": "Blind no curandeiro Kwongwegaxx logo depois do kidney shot no warlock, deixando o alvo sem cura."},
+  {"t": 58.9, "quem": "Zebedeuxii", "descricao": "Evasion aos 39%, depois vanish e cloak of shadows, sobreviveu à pressão sem perder o alvo."},
+  {"t": 38.5, "quem": "Amnesianix", "descricao": "Silence em Pehdibalii na abertura, cortando o druida no burst dos dois bloodlusts."}
+ ],
+ "erros_da_rede": [
+  {"t": 62.0, "quem": "Amnesianix", "acao": "shadowform", "porque": "voltou para shadowform 3 s depois de sair dela e saiu de novo aos 63.3; foram dois GCDs desperdiçados"},
+  {"t": 71.4, "quem": "Amnesianix", "acao": "shadowform", "porque": "outra troca de forma bem na janela de kill, quando ele devia dar dano ou controle"},
+  {"t": 76.5, "quem": "Kwongwegaxii", "acao": "mana tide totem", "porque": "usou o cooldown de mana no meio do kill, e logo depois perdeu tempo com purges e buffs de água: a mana não era o problema"}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "Luta de troca de curadores: Kwongwegaiv gastou o tempo em purge e caiu aos 54.1, mas o felhunter de Ominousxxi e o rogue trancaram e mataram Kwongwegaxxv aos 66.8, e o kidney final derrubou Ominousdesxi.",
+ "momento_decisivo": {"t": 48.0, "descricao": "Zebedeuix dá kidney shot no Kwongwegaxxv logo após o spell lock de 44.1, iniciando a pressão no curador da LSD IV que acabou morrendo aos 66.8."},
+ "erros": [
+  {"t": 39.2, "quem": "Kwongwegaiv", "fez": "purge em loop (39.2, 44.5, 45.7, 51.2, 53.6) enquanto era o alvo", "devia": "curar a si mesmo (riptide, healing wave), usar tremor/grounding e se afastar do boomkin", "porque": "o curador estava sendo focado por dois casters e morreu aos 54.1 gastando GCDs em remover buffs", "gravidade": "alta"},
+  {"t": 48.7, "quem": "Kwongwegaiv", "fez": "cleanse spirit curse ×3 até 52.4", "devia": "remover só curse of tongues de quem cura e priorizar cura sob pressão", "porque": "dois warlocks reaplicam maldições a cada GCD; o shaman perdeu o pouco tempo que tinha para se curar", "gravidade": "media"},
+  {"t": 55.2, "quem": "Kwongwegaxxv", "fez": "purge → Zebedeuix com o rogue em cima", "devia": "usar frost shock/earthbind e curar-se, ou pedir cyclone no rogue", "porque": "estava sendo morto pelo rogue e pelo warlock; morreu aos 66.8", "gravidade": "media"},
+  {"t": 56.2, "quem": "Pehdibalv", "fez": "seguiu em entangling roots e dano enquanto o curador do time era focado", "devia": "trocar para cura (rejuvenation/regrowth) ou cyclonar o rogue antes, não só aos 65.7", "porque": "o druid era a única ajuda possível ao Kwongwegaxxv sob rogue e felhunter", "gravidade": "media"},
+  {"t": 75.0, "quem": "Ominousdesxi", "fez": "drain soul com o rogue em cima e vida baixa", "devia": "usar death coil/fear no rogue ou ir para o demonic circle", "porque": "levou kidney shot aos 76.6 a 1% e morreu sem tempo de reagir", "gravidade": "media"},
+  {"t": 74.3, "quem": "Ominousxxi", "fez": "pvp trinket num stun com 83% de vida", "devia": "segurar o trinket com vida alta", "porque": "stun sem burst e com vida alta não justifica o trinket; deixou o warlock exposto a controles depois (77.4)", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 44.1, "quem": "Ominousxxi", "descricao": "Spell lock do felhunter no Kwongwegaxxv, preparando o kidney do rogue no curador."},
+  {"t": 48.0, "quem": "Zebedeuix", "descricao": "Kidney shot no curador inimigo silenciado, abrindo a janela de kill."},
+  {"t": 76.6, "quem": "Zebedeuix", "descricao": "Kidney shot no Ominousdesxi a 1% para fechar a luta."}
+ ],
+ "erros_da_rede": [
+  {"t": 40.2, "quem": "Ominousxxi", "acao": "life tap → Pehdibalv", "porque": "gastou vida (68%) no meio do burst inicial com o curador do time sob stuns; mana não era o problema."},
+  {"t": 51.2, "quem": "Kwongwegaiv", "acao": "purge → Kwongwegaxxv", "porque": "o shaman morreu 3 s depois; purgar o curador inimigo não salva quem está sendo focado."},
+  {"t": 76.8, "quem": "Ominousxxi", "acao": "life tap → Ominousdesxi", "porque": "com o inimigo a 1% e stunado, o GCD devia ir para dano (shadow bolt/conflagrate), não para mana."}
+ ]}

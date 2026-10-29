@@ -1,0 +1,20 @@
+{"resumo": "O Wild I silenciou e travou o Kwongwegaix (silencing shot + spell lock) e queimou ele com readiness/rapid fire sem nenhum peel do Fireplay; com o curador morto, o Heshoix caiu logo em seguida.",
+ "momento_decisivo": {"t": 47.2, "descricao": "Beteranii usou Readiness + Rapid Fire no Kwongwegaix já cortado por silencing shot e spell lock; o Fireplay não respondeu com fear, death coil ou polymorph no hunter e o curador morreu aos 57.6."},
+ "erros": [
+  {"t": 40.0, "quem": "Kwongwegaix", "fez": "cleanse spirit poison repetido (38.8, 40.0, 41.1, 53.1, 55.3)", "devia": "curar/Earth Shield e guardar GCD; deixar o Serpent Sting rolar", "porque": "o Beteranii reaplicava Serpent Sting na hora (40.2, 52.3, 55.4); limpar DoT de hunter é troca de GCD perdida para o curador sob trem", "gravidade": "media"},
+  {"t": 49.8, "quem": "Kwongwegaix", "fez": "purge (49.8, 52.0, 54.2) enquanto tomava rapid fire e kill command", "devia": "curar a si mesmo, usar Nature's Swiftness/Healing Wave e o trinket, ou pedir peel", "porque": "estava sendo morto pelo burst do hunter; tirar buff do inimigo não salva o curador que morreu 3 s depois", "gravidade": "alta"},
+  {"t": 35.7, "quem": "Kwongwegaix", "fez": "chain lightning na abertura", "devia": "Earth Shield/Grounding Totem antecipando o silencing shot e o spell lock", "porque": "com hunter e warlock com pet felhunter no outro lado, o Grounding protegeria o curador de um dos cortes; dano de curador foi irrelevante (0 de dano no final)", "gravidade": "baixa"},
+  {"t": 51.0, "quem": "Ominousdesii", "fez": "death coil e cobalt frag bomb no Pehdicouve", "devia": "Death Coil/Fear no Beteranii, que estava matando o próprio curador", "porque": "o Kwongwegaix estava sob rapid fire e kill command; o controle defensivo no hunter era o único peel disponível", "gravidade": "alta"},
+  {"t": 55.4, "quem": "Heshoix", "fez": "mana shield enquanto o curador morria", "devia": "Polymorph/Frost Nova/Deep Freeze no Beteranii ou no pet para aliviar o Kwongwegaix", "porque": "o mago tinha os melhores controles para quebrar o trem no curador e ficou se protegendo; o polymorph só saiu aos 59.5, depois da morte", "gravidade": "alta"},
+  {"t": 30.0, "quem": "Heshoix", "fez": "mirror image (e berserking) com o portão abrindo", "devia": "guardar Mirror Image para quando o hunter abrisse burst nele", "porque": "as imagens expiram antes de haver alvo; quando o mago tomou dano real (44.4) já não tinha o defensivo e foi obrigado ao Ice Block aos 15%", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 36.6, "quem": "Beteranii", "descricao": "silencing shot no Kwongwegaix logo na abertura, tirando o curador da luta enquanto o time começava a pressão."},
+  {"t": 46.6, "quem": "Beteranii", "descricao": "readiness seguido de rapid fire e kill command no curador cortado — burst sincronizado com o CC."},
+  {"t": 33.5, "quem": "Ominousdesii", "descricao": "shadowfury pegando três inimigos (Ominous, Pehdicouve, Beteranii) logo na abertura."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.0, "quem": "Heshoix", "acao": "mirror image → Pehdicouve", "porque": "cooldown defensivo usado no portão, sem ameaça; faltou quando o mago caiu para 15%."},
+  {"t": 42.2, "quem": "Heshoix", "acao": "remove curse on party → Beteranii", "porque": "o warlock inimigo reaplica curse instantâneo; o mago gastou GCD em decurse em vez de controlar o hunter."},
+  {"t": 60.3, "quem": "Ominous", "acao": "spell lock → Heshoix", "porque": "o pet já tinha travado o Heshoix aos 59.8 (silence ativo); segundo lock no mesmo alvo foi desperdício."}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "O Shadowfury de Ominousdesii aos 34.5 tirou o EMFH de Celianeyvii e de Heruxii logo na abertura; o warrior passou o Heroism controlado (poly, frost nova) e trocando de alvo, e morreu aos 60.3 sob chaos bolt + pyroblast enquanto Heruxii só dava cleanse. Depois disso Thunder ficou 2v3 e Heruxii caiu aos 170.2.",
+ "momento_decisivo": {"t": 34.8, "descricao": "Celianeyvii gasta Every Man for Himself num Shadowfury de 3 s logo depois do Heroism; sem o EMFH, ele fica preso no Polymorph (38.1) e no Frost Nova (40.8) e, mais tarde, não tem como sair do burst que o mata."},
+ "momento_aceitos": [34.5, 34.8, 38.1, 55.9, 57.5],
+ "erros": [
+  {"t": 34.8, "quem": "Celianeyvii", "fez": "every man for himself num Shadowfury de 3 s, no começo da luta", "devia": "aguentar o stun curto e guardar o EMFH para o Polymorph ou para um stun durante o kill", "porque": "o EMFH tem 2 min de recarga e era o escape dele; logo depois ele levou poly (38.1) e root (40.8) no Heroism e morreu aos 60.3 sem nenhum escape", "gravidade": "alta"},
+  {"t": 34.9, "quem": "Heruxii", "fez": "every man for himself no mesmo Shadowfury, e ainda foi stunado de novo aos 35.4", "devia": "segurar o EMFH para um CC longo (fear/poly) na hora em que o warrior precisasse de cura", "porque": "gastou o escape à toa e ficou sem resposta ao fear em cadeia de Ominousdesii pelo resto da luta", "gravidade": "media"},
+  {"t": 43.4, "quem": "Celianeyvii", "fez": "trocou de alvo em sequência durante o Heroism: Kwongwegaix, depois Heshoix (43.4), Kwongwegaix (44.8), Ominousdesii (46.2) e Kwongwegaix de novo (48.4), quase só com cleave/heroic strike", "devia": "ficar num alvo só (o healer Kwongwegaix ou o mago) com mortal strike e rend, junto com Naminii", "porque": "a pressão do Heroism se espalhou por três alvos e ninguém do Fireplay precisou gastar defensivo", "gravidade": "alta"},
+  {"t": 55.9, "quem": "Heruxii", "fez": "cleanse → Heshoix 4 vezes até 63.4 enquanto o warrior recebia chaos bolt (57.5) e pyroblast (59.4)", "devia": "curar Celianeyvii com holy light/flash of light e usar hand of protection ou divine sacrifice nele", "porque": "Celianeyvii morreu aos 60.3 com o paladino gastando GCD em dispel; foi essa morte que decidiu a luta", "gravidade": "alta"},
+  {"t": 50.7, "quem": "Naminii", "fez": "trocou o dano entre Kwongwegaix (50.7) e Heshoix (55.4) e gastou GCD com gift of the naaru e call of the elements no meio do Heroism", "devia": "pôr o dano no mesmo alvo do warrior, de preferência o healer, com flame shock + lava burst", "porque": "o burst de Heroism de dois DPS em alvos diferentes não forçou nenhum cooldown inimigo", "gravidade": "media"},
+  {"t": 131.8, "quem": "Heruxii", "fez": "divine sacrifice e cancelou aos 132.2", "devia": "guardar o cooldown ou usar divine protection/cura em si mesmo", "porque": "num 2v3 o sacrifício cancelado não protege ninguém e queima um cooldown importante", "gravidade": "baixa"},
+  {"t": 110.0, "quem": "Naminii", "fez": "water shield 2 vezes até 118.8 e de novo de 139.3 a 141.0, além de flame shock repetido em Heshoix", "devia": "usar os GCDs em wind shear no healer, curar Heruxii ou fazer dano de verdade", "porque": "reaplicar um escudo que ainda está ativo não faz nada, e num 2v3 cada GCD conta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.5, "quem": "Ominousdesii", "descricao": "Shadowfury pegando os três inimigos logo no Heroism, o que forçou dois EMFH"},
+  {"t": 37.1, "quem": "Heshoix", "descricao": "Polymorph no warrior em pleno Heroism e, depois, frost nova (40.8) contra o bladestorm"},
+  {"t": 38.5, "quem": "Heshoix", "descricao": "Spellsteal em Naminii para tirar um buff do caster inimigo"},
+  {"t": 116.1, "quem": "Heshoix", "descricao": "Dragon's breath + frost nova (117.8) em Naminii, abrindo espaço para o fear e o dano"},
+  {"t": 144.7, "quem": "Heruxii", "descricao": "Divine shield aos 20% de vida, adiando a morte no 2v3"},
+  {"t": 167.8, "quem": "Ominousdesii", "descricao": "Drain soul para executar Heruxii com pouca vida"}
+ ]}

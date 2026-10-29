@@ -1,0 +1,86 @@
+{
+ "resumo": "A TSG abriu com charge, sweeping strikes e bladestorm no Ominousv. O curador da RLS ficou dando dano e o bruxo não teve peel; o gnaw do DK depois do trinket fechou o abate em 8 s, e o xamã caiu logo depois.",
+ "momento_decisivo": {
+  "t": 44.0,
+  "descricao": "Omasconiv usa pet gnaw no Ominousv logo depois do trinket a 25% (43.3), e o Celianeyiv termina com cleave: o bruxo morre sem ter sido curado uma única vez."
+ },
+ "erros": [
+  {
+   "t": 38.0,
+   "quem": "Kwongwegaii",
+   "fez": "flame shock no Heruix enquanto o Ominousv era atacado pelo warrior e pelo DK",
+   "devia": "curar o Ominousv (riptide, healing wave) e pôr earthbind ou totem de proteção",
+   "porque": "a primeira cura do xamã só sai aos 44.9, depois que o bruxo morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 37.9,
+   "quem": "Ominousv",
+   "fez": "death coil no Heruix",
+   "devia": "guardar o death coil para o Celianeyiv quando o bladestorm terminasse, ou para se salvar",
+   "porque": "era o único peel instantâneo do bruxo e foi usado no curador sem que houvesse abate em andamento",
+   "gravidade": "alta"
+  },
+  {
+   "t": 43.3,
+   "quem": "Ominousv",
+   "fez": "pvp trinket a 25% e logo depois shadow bolt",
+   "devia": "depois do trinket, sair do alcance (demonic circle, fear no warrior) em vez de conjurar",
+   "porque": "conjurar no meio do warrior e do DK com o gnaw pronto o deixou parado para o stun seguinte",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.7,
+   "quem": "Zebedeuvii",
+   "fez": "slice and dice no Heruix enquanto o parceiro estava a 51%",
+   "devia": "usar kidney shot no Celianeyiv ou blind no DK para tirar pressão do bruxo",
+   "porque": "o rogue estava preso no curador inimigo sem trocar o alvo para defesa",
+   "gravidade": "media"
+  },
+  {
+   "t": 38.1,
+   "quem": "Celianeyiv",
+   "fez": "every man for himself com a vida quase cheia, antes do bladestorm",
+   "devia": "guardar o trinket para um CC de verdade (fear, stun)",
+   "porque": "não havia nenhum CC nele; ficou sem resposta para o resto da luta",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 39.1,
+   "quem": "Celianeyiv",
+   "descricao": "Sweeping strikes e bladestorm no grupo inimigo, que deixam a dupla RLS sem peel"
+  },
+  {
+   "t": 44.0,
+   "quem": "Omasconiv",
+   "descricao": "Gnaw logo depois do trinket do Ominousv para emendar o stun e garantir o abate"
+  },
+  {
+   "t": 42.1,
+   "quem": "Omasconiv",
+   "descricao": "Mind freeze no curador durante a pressão"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 36.6,
+   "quem": "Ominousv",
+   "acao": "corruption on attacker → Heruix",
+   "porque": "DoT no paladino enquanto o warrior entrava nele; devia ser fear ou outro controle no warrior"
+  },
+  {
+   "t": 39.1,
+   "quem": "Ominousv",
+   "acao": "corruption on attacker → Heruix",
+   "porque": "repete DoT no curador no meio do bladestorm, sem se defender"
+  },
+  {
+   "t": 38.0,
+   "quem": "Kwongwegaii",
+   "acao": "flame shock → Heruix",
+   "porque": "o curador causando dano quando o parceiro estava sendo derrubado"
+  }
+ ]
+}

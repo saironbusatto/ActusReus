@@ -1,0 +1,20 @@
+{"resumo": "Espelho de RMP: Zebedeuii passou a luta inteira em Zebedeuvi e o levou a 4%, mas trocou de alvo bem quando o rogue gastou trinket/vanish/cloak; Zebedeuvi reabriu com shadow dance no Amnesianii, que morreu sem usar nenhum defensivo, e o mago caiu logo depois.",
+ "momento_decisivo": {"t": 99.9, "descricao": "Com Zebedeuvi a 4% depois de queimar trinket, vanish e cloak, Zebedeuii troca para Amnesianvii; o rogue sobrevive, abre shadow dance + cheap shot no Amnesianii aos 101.1 e mata o priest aos 108.1."},
+ "erros": [
+  {"t": 99.9, "quem": "Zebedeuii", "fez": "shadowstep no Amnesianvii deixando Zebedeuvi a 4%", "devia": "continuar em Zebedeuvi e esperar o cloak/vanish acabar, com fan of knives para tirar do stealth", "porque": "o rogue estava sem trinket nem defensivos; trocar de alvo jogou fora 60 s de pressão", "gravidade": "alta"},
+  {"t": 101.7, "quem": "Amnesianii", "fez": "morreu entre cheap shot (101.7), cheap shot (104.7) e kidney (105.8) sem pain suppression nem desperate prayer", "devia": "pain suppression em si mesmo na primeira queda de vida (39%), entre os stuns", "porque": "era o defensivo que segurava o burst do rogue; tinha gastado o trinket com 100% de vida", "gravidade": "alta"},
+  {"t": 102.8, "quem": "Heshoiv", "fez": "shoot e ice lance enquanto o próprio curador era morto em stun", "devia": "frost nova/polymorph no Zebedeuvi ou counterspell no Amnesianvii para salvar o priest", "porque": "o mago não fez nenhum peel na janela da morte do curador", "gravidade": "alta"},
+  {"t": 56.4, "quem": "Heshoiv", "fez": "icy veins, berserking e lifeblood logo depois do ice block, sem casts em seguida", "devia": "guardar os cooldowns para uma janela de deep freeze/kill", "porque": "os cooldowns expiraram enquanto ele usava polymorph e spellsteal; terminou com só 12858 de dano", "gravidade": "media"},
+  {"t": 75.8, "quem": "Heshoiv", "fez": "spellsteal no rogue Zebedeuvi", "devia": "frostbolt/polymorph", "porque": "rogue não tem buff mágico para roubar; GCD perdido", "gravidade": "baixa"},
+  {"t": 99.1, "quem": "Heshoiv", "fez": "summon water elemental no momento crítico", "devia": "frost nova em Zebedeuvi, que estava a 4% saindo do vanish", "porque": "o elemental nem chegou a contar; o rogue inimigo podia ter morrido ali", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 41.6, "quem": "Zebedeuvi", "descricao": "abertura em Heshoiv com shadow dance + cheap shot forçando ice block a 3%"},
+  {"t": 98.8, "quem": "Zebedeuvi", "descricao": "trinket, vanish e cloak de shadows encadeados a 4%, sobrevivendo ao foco"},
+  {"t": 101.1, "quem": "Zebedeuvi", "descricao": "shadow dance + cheap shot no curador inimigo sem trinket, fechando a morte com cheap shot e kidney"}
+ ],
+ "erros_da_rede": [
+  {"t": 99.9, "quem": "Zebedeuii", "acao": "shadowstep → Amnesianvii", "porque": "trocou de alvo com Zebedeuvi a 4% e sem defensivos"},
+  {"t": 100.6, "quem": "Heshoiv", "acao": "ice lance → Heshovi", "porque": "dano fraco no mago enquanto o próprio curador era aberto; o certo era peel"},
+  {"t": 46.2, "quem": "Zebedeuii", "acao": "sprint → Zebedeuvi", "porque": "já tinha dado shadowstep aos 44.2 e estava em cima do alvo; sprint gasto sem necessidade"}
+ ]}

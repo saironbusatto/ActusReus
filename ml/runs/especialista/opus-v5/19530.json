@@ -1,0 +1,19 @@
+{"resumo": "A destruição de Ominousdesix (conflagrate e chaos bolt) matou Omasconii. Depois, o bladestorm e os cleaves de Celianeyii mataram de uma vez a druida e o shaman, que estavam colados nele, antes do próprio warrior cair. No fim, ficou o warlock contra o paladino.",
+ "momento_decisivo": {"t": 45.7, "descricao": "Bladestorm de Celianeyii no meio de Pehdibalii e Kwongwegaxx. Os dois estavam ao alcance de corpo a corpo e morreram quase juntos (52.6 e 52.9) por cleave e sweeping strikes."},
+ "erros": [
+  {"t": 36.6, "quem": "Celianeyii", "fez": "every man for himself com vida cheia, logo depois do charge", "devia": "aguentar a seduction (que quebra com dano) e guardar o trinket para fear ou cyclone mais tarde", "porque": "Ele ainda levou fear aos 40.2 e cyclone aos 47.9 e 49.6 sem ter trinket", "gravidade": "media"},
+  {"t": 42.8, "quem": "Pehdibalii", "fez": "trocar de forma sem parar (moonkin, caster, moonkin, caster)", "devia": "ficar em moonkin e kitar o warrior, usando os rootings, ou ficar em caster e curar de verdade", "porque": "Cada troca custa um GCD e mana. A druida não se protegeu nem curou o suficiente, e morreu colada no warrior", "gravidade": "media"},
+  {"t": 40.9, "quem": "Kwongwegaxx", "fez": "lava burst e flame shock no DK em vez de curar", "devia": "earth shield e riptide em Pehdibalii, que estava sob pressão, e afastar-se do warrior", "porque": "O shaman é o healer e terminou com 6916 de cura. Ficar parado lançando feitiço deixou ele no alcance do bladestorm", "gravidade": "alta"},
+  {"t": 47.8, "quem": "Heruvii", "fez": "nenhuma cura em Omasconii entre 45.4 e 48.1 (estava em stun e não usou trinket até 51.9)", "devia": "usar every man for himself no stun dos 38.4 ou dos 48.9 para curar o DK que estava sendo destruído", "porque": "O DK morreu aos 48.1 com 44% de vida sob icebound. O paladino terminou com 8986 de cura", "gravidade": "alta"},
+  {"t": 53.2, "quem": "Celianeyii", "fez": "victory rush no warlock sem nenhum defensivo, com pouca vida", "devia": "spell reflect ou intercept para interromper o warlock, ou se juntar ao paladino para receber cura", "porque": "O warrior morreu aos 53.9 para o incinerate. Ele era o único que podia matar o warlock", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 46.7, "quem": "Ominousdesix", "descricao": "Immolate, conflagrate e chaos bolt em Omasconii enquanto ele estava em icebound com 44%, quebrando o DK."},
+  {"t": 36.1, "quem": "Ominousdesix", "descricao": "Seduction do pet no warrior logo depois do charge, forçando o trinket logo no começo."},
+  {"t": 45.7, "quem": "Celianeyii", "descricao": "Bladestorm com os dois inimigos no alcance, resultando em duas mortes."}
+ ],
+ "erros_da_rede": [
+  {"t": 35.1, "quem": "Kwongwegaxx", "acao": "bloodlust → Heruvii", "porque": "Bloodlust usado por um healer antes de qualquer alvo estar sob pressão. O ganho para o time foi pequeno."},
+  {"t": 43.6, "quem": "Omasconii", "acao": "pestilence → Kwongwegaxx", "porque": "Segunda pestilence em 3 s, gastando runa sem aplicar nada novo. Ele estava com 44% e precisava de defesa e dano focado."},
+  {"t": 44.0, "quem": "Kwongwegaxx", "acao": "cleanse spirit disease on party → Omasconii", "porque": "Limpar doença de um DK que reaplica na hora gasta um GCD que o shaman precisava para curar e se afastar do warrior."}
+ ]}

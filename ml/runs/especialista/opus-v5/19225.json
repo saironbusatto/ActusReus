@@ -1,0 +1,20 @@
+{"resumo": "O RMP IV matou o Celianeyvii em 49 s com counterspell no paladino, psychic scream e kidney; o warrior nunca usou mortal strike e o Heruxii queimou defensivos fora de hora, e depois paladino e shaman caíram em sequência.",
+ "momento_decisivo": {"t": 39.6, "descricao": "Heshovi deu counterspell no Heruxii justo quando ele foi curar; sem cura, o Celianeyvii caiu de 97% para 42%, levou psychic scream (42.9) e kidney (44.0) e morreu aos 49.2."},
+ "erros": [
+  {"t": 35.9, "quem": "Celianeyvii", "fez": "cleave e heroic strike sem parar (35.9-48.0) sem usar mortal strike, overpower ou hamstring nenhuma vez", "devia": "manter mortal strike no alvo, hamstring e trocar para o curador com intercept", "porque": "sem o redutor de cura do MS o Amnesianvii curava à vontade, e o warrior ficou parado num rogue com shield", "gravidade": "alta"},
+  {"t": 36.2, "quem": "Celianeyvii", "fez": "bladestorm com 97% de vida na abertura", "devia": "guardar o bladestorm para quebrar CC e pressionar quando o curador inimigo estivesse controlado", "porque": "o principal botão de imunidade ficou em recarga quando ele levou fear e kidney aos 43-44", "gravidade": "media"},
+  {"t": 48.9, "quem": "Heruxii", "fez": "divine sacrifice só no instante da morte do warrior, cancelando 0,3 s depois", "devia": "usar sacrifice/hand of protection quando o Celianeyvii entrou no kidney a 36% (44.0)", "porque": "o redirecionamento chegou tarde e não salvou ninguém", "gravidade": "media"},
+  {"t": 37.8, "quem": "Heruxii", "fez": "every man for himself para sair de um stun com 93% de vida logo na abertura", "devia": "guardar para o kidney/deep freeze com vida baixa", "porque": "gastou a saída de CC sem pressão; morreu depois em cadeia de stuns", "gravidade": "media"},
+  {"t": 62.2, "quem": "Heruxii", "fez": "divine protection a ~60%, o que aplica forbearance e impede o divine shield", "devia": "guardar e usar divine shield no kidney a 6% (66.1)", "porque": "chegou a 6% sem bolha disponível e morreu aos 70.7", "gravidade": "alta"},
+  {"t": 52.2, "quem": "Naminii", "fez": "purge, chain lightning e thunderstorm (52.2-70.5) enquanto o Heruxii era treinado até 6%", "devia": "healing wave/riptide de apoio no paladino, grounding contra o deep freeze e wind shear no Amnesianvii", "porque": "o curador morreu sem apoio; depois o shaman ficou sozinho 1v3", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 39.6, "quem": "Heshovi", "descricao": "counterspell on enemy healer no Heruxii no meio do flash of light: cortou a cura do warrior"},
+  {"t": 42.9, "quem": "Amnesianvii", "descricao": "psychic scream no Celianeyvii, emendado em kidney do Zebedeuvi aos 44.0 para fechar a kill"},
+  {"t": 54.0, "quem": "Heshovi", "descricao": "deep freeze no Heruxii seguido de cold snap/icy veins/ice barrier, mantendo a pressão em segurança"}
+ ],
+ "erros_da_rede": [
+  {"t": 35.9, "quem": "Celianeyvii", "acao": "cleave no Zebedeuvi", "porque": "AoE de rage em vez de mortal strike: não aplica redutor de cura"},
+  {"t": 48.9, "quem": "Heruxii", "acao": "divine sacrifice", "porque": "usado tarde demais, com o warrior já morrendo; cancelado 0,3 s depois"},
+  {"t": 45.8, "quem": "Naminii", "acao": "chain lightning no Zebedeuvi", "porque": "com o warrior a 31% em kidney, devia ajudar na cura/grounding, não fazer dano espalhado"}
+ ]}

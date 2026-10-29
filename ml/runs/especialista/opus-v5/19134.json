@@ -1,0 +1,20 @@
+{"resumo": "O Zebedeuxi caiu cedo porque o Kwongwegavi ficou jogando lava burst em vez de curá-lo; depois, em vantagem, o Fireplay deixou o Ominousxxiv solto (sem counterspell, com o Ominousdesii fazendo healthstone e life tap) e o lock virou a luta matando o shaman e o mage.",
+ "momento_decisivo": {"t": 70.6, "descricao": "Com o Zebedeuxi a ~33% sob drain soul e fears, o Kwongwegavi conjurou lava burst (70.6 e 73.5) em vez de curar; o rogue morreu aos 73.8 e o RLS ficou 2v3."},
+ "erros": [
+  {"t": 70.6, "quem": "Kwongwegavi", "fez": "lava burst e flame shock (51.4, 70.6, 73.5) enquanto o Zebedeuxi estava abaixo de 35%", "devia": "riptide + healing wave/lesser healing wave no rogue e grounding/tremor contra os fears dos locks", "porque": "um curador que bate com o parceiro em vida de morte entrega a kill; o rogue morreu 0,3 s depois do último lava burst", "gravidade": "alta"},
+  {"t": 48.8, "quem": "Zebedeuxi", "fez": "vanish 0,3 s depois do trinket e saiu do stealth com kick logo em seguida (49.4)", "devia": "usar o trinket ou o vanish, não os dois; guardar o vanish para escapar dos DoTs/curar ou para um reabrir com cheap shot", "porque": "queimou os dois botões de escape em 0,3 s sem ganho; aos 57-73 s, a 33%, não tinha mais saída", "gravidade": "media"},
+  {"t": 68.5, "quem": "Zebedeuxi", "fez": "shadow dance + cheap shot no Kwongwegaix estando a ~33% de vida, sem defensivos", "devia": "recuar para o pilar, deixar o curador recuperá-lo e só depois abrir a janela", "porque": "foi para o ataque sem vida para aguentar os dois locks e morreu 5 s depois", "gravidade": "media"},
+  {"t": 111.4, "quem": "Ominousdesii", "fez": "create healthstone e life tap ×2 (114.5-116.2) logo após a morte do Kwongwegavi, com o próprio curador apanhando do Ominousxxiv", "devia": "fear/death coil e spell lock no Ominousxxiv e dano para fechar o último inimigo", "porque": "o time estava 3v1 e deixou o lock inimigo livre para spell lock e DoTs no Kwongwegaix, que morreu aos 121.0", "gravidade": "alta"},
+  {"t": 107.8, "quem": "Heshoix", "fez": "evocation enquanto o Kwongwegaix estava a 36% em stun e sendo trabalhado pelo Ominousxxiv", "devia": "counterspell no UA/haunt do Ominousxxiv e polymorph nele; o mage não usou counterspell nenhuma vez contra dois warlocks", "porque": "um warlock sozinho só vence 3 inimigos se ninguém interrompe; ele conjurou UA e haunt à vontade", "gravidade": "alta"},
+  {"t": 103.2, "quem": "Kwongwegaix", "fez": "cleanse spirit curse e purge seguidos (103.2-107.9, de novo 119.5) caindo de 54% a 17%", "devia": "riptide/healing wave em si mesmo, tremor totem para os fears e pilar contra o lock", "porque": "curses e corruption são reaplicadas a cada GCD pelo lock; o shaman morreu limpando em vez de curar", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 74.8, "quem": "Heshoix", "descricao": "ice block a 21% de vida em stun, sobrevivendo à pressão do RLS"},
+  {"t": 115.0, "quem": "Ominousxxiv", "descricao": "spell lock no Kwongwegaix a 17% quando ele foi curar, garantindo a kill do curador"},
+  {"t": 56.3, "quem": "Ominousdesii", "descricao": "howl of terror pegando Zebedeuxi e Kwongwegavi juntos, isolando o rogue de cura"}
+ ],
+ "erros_da_rede": [
+  {"t": 48.8, "quem": "Ominousdesii", "acao": "toggle pet spell", "porque": "gastou GCD mexendo no pet no exato momento em que o Zebedeuxi a 29% gastava trinket/vanish; era hora de death coil/fear de novo ou dano"},
+  {"t": 94.1, "quem": "Ominousdesii", "acao": "life tap", "porque": "life tap no meio da pressão dupla de warlocks, gastando vida e GCD sem necessidade aparente de mana"},
+  {"t": 111.9, "quem": "Heshoix", "acao": "mana shield (repetido aos 113.5)", "porque": "em 3v1 contra um lock, o mage devia counterspell/poly no Ominousxxiv para salvar o shaman, não se escudar"}
+ ]}

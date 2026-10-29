@@ -1,0 +1,75 @@
+{
+ "resumo": "O Zebedeuvi sobreviveu ao opener do Zebedeuxvi com trinket/vanish/evasion e depois abriu blind + shadow dance no Kwongwegaxvi, que morreu aos 59.9 sem peel do Amnesianxxix.",
+ "momento_decisivo": {
+  "t": 52.7,
+  "descricao": "Zebedeuvi dá blind e depois shadow dance + cheap shot + kidney no Kwongwegaxvi; o shaman trinketa o cheap shot e morre no kidney seguinte."
+ },
+ "erros": [
+  {
+   "t": 36.6,
+   "quem": "Zebedeuxvi",
+   "fez": "shadow dance + cheap shot no Zebedeuvi (outro rogue)",
+   "devia": "abrir no healer/mage",
+   "porque": "rogue tem vanish/evasion/trinket e saiu vivo; a maior CD do RPS foi gasta à toa",
+   "gravidade": "media"
+  },
+  {
+   "t": 34.5,
+   "quem": "Zebedeuvi",
+   "fez": "fan of knives ×3 no início",
+   "devia": "shadowstep e controle no healer",
+   "porque": "AoE de dano baixo, quebra stealth e CC",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 54.8,
+   "quem": "Kwongwegaxvi",
+   "fez": "pvp trinket no cheap shot a 33% dentro do shadow dance",
+   "devia": "guardar pro kidney/blind ou pedir peel",
+   "porque": "o rogue ainda tinha kidney (56.9) e o shaman morreu sem trinket",
+   "gravidade": "media"
+  },
+  {
+   "t": 54.1,
+   "quem": "Amnesianxxix",
+   "fez": "mind blast/mind flay no Amnesianvii com o próprio healer morrendo",
+   "devia": "psychic scream/shield/heal no Kwongwegaxvi",
+   "porque": "ninguém tirou o rogue de cima do shaman de 52.7 a 59.9",
+   "gravidade": "alta"
+  },
+  {
+   "t": 48.8,
+   "quem": "Amnesianxxix",
+   "fez": "entrar e sair do shadowform (48.8, 50.6, 68.9, 73.2, 76.3)",
+   "devia": "ficar numa função",
+   "porque": "cada troca gasta GCD",
+   "gravidade": "media"
+  },
+  {
+   "t": 46.2,
+   "quem": "Kwongwegaxvi",
+   "fez": "purge ×3 (46.2-48.4)",
+   "devia": "curar e pôr totens de proteção",
+   "porque": "GCDs de baixo valor com o time sob pressão",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 39.6,
+   "quem": "Zebedeuvi",
+   "descricao": "A 25% usou trinket, vanish e evasion e sobreviveu ao opener do outro rogue."
+  },
+  {
+   "t": 50.7,
+   "quem": "Zebedeuvi",
+   "descricao": "Blind no healer pra abrir a janela da kill."
+  },
+  {
+   "t": 86.3,
+   "quem": "Amnesianvii",
+   "descricao": "Psychic scream no Zebedeuxvi a 6%, garantindo a última kill."
+  }
+ ],
+ "erros_da_rede": []
+}

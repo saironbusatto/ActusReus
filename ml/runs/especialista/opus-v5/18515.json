@@ -1,0 +1,86 @@
+{
+ "resumo": "Celianeyii deu EMFH no fear, soltou bladestorm no Kwongwegavii e o shaman morreu aos 50.6 sem curar. Depois o Ominousdes caiu na sequência.",
+ "momento_decisivo": {
+  "t": 45.6,
+  "descricao": "Celianeyii usa EMFH no fear e solta bladestorm no Kwongwegavii, que é stunado aos 45.9 e não recebe peel."
+ },
+ "erros": [
+  {
+   "t": 34.7,
+   "quem": "Heshovii",
+   "fez": "combustion e berserking (34.7-35.1) antes de ter alvo no alcance",
+   "devia": "guardar as CDs pro contato (charge aos 42.8)",
+   "porque": "as CDs de dano acabaram sem dano nenhum",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.6,
+   "quem": "Ominousdes",
+   "fez": "death coil no Heruvii",
+   "devia": "death coil/fear no Celianeyii antes do bladestorm",
+   "porque": "o warrior era a ameaça ao healer; CC no paladino não salvou o shaman",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.5,
+   "quem": "Kwongwegavii",
+   "fez": "wind shear e totens (48.7 wrath of air) sem se curar debaixo do warrior",
+   "devia": "riptide/healing wave/earth shield em si mesmo",
+   "porque": "o shaman curou 327 na luta e morreu em 6 s",
+   "gravidade": "alta"
+  },
+  {
+   "t": 41.8,
+   "quem": "Omasconii",
+   "fez": "every man for himself num stun a 99%",
+   "devia": "guardar o trinket",
+   "porque": "foi stunado de novo aos 42.8 e 44.8; trinket perdido",
+   "gravidade": "media"
+  },
+  {
+   "t": 47.1,
+   "quem": "Celianeyii",
+   "fez": "cleave/heroic strike a luta toda, sem mortal strike",
+   "devia": "MS pra cortar a cura",
+   "porque": "mesmo ganhando, sem o debuff de cura a kill demora",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 45.6,
+   "quem": "Celianeyii",
+   "descricao": "Trinket no fear e bladestorm direto no healer: virou a luta."
+  },
+  {
+   "t": 51.7,
+   "quem": "Heshovii",
+   "descricao": "Ice block a 20% pra sair do execute."
+  },
+  {
+   "t": 55.2,
+   "quem": "Omasconii",
+   "descricao": "Mind freeze no Ominousdes pra fechar a segunda kill."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 34.4,
+   "quem": "Heshovii",
+   "acao": "mirror image antes do contato",
+   "porque": "CD defensiva/de dano gasta sem inimigo no alcance"
+  },
+  {
+   "t": 45.2,
+   "quem": "Kwongwegavii",
+   "acao": "flame shock no Heruvii",
+   "porque": "com o warrior em cima, o GCD do shaman tinha que ser cura"
+  },
+  {
+   "t": 64.1,
+   "quem": "Heruvii",
+   "acao": "divine sacrifice cancelado aos 64.4",
+   "porque": "GCD sem efeito"
+  }
+ ]
+}

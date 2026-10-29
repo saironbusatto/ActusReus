@@ -1,0 +1,20 @@
+{"resumo": "O RMP encadeou CC no curador Kwongwegaiv: Blind aos 76.0, Kidney aos 78.8 e um segundo Deep Freeze, liberado pelo Cold Snap, aos 81.2. O Shaman, que gastou os GCDs livres em Purge/Water Shield, morreu aos 89.7, e Zebedeuix, já sem defensivos, caiu logo depois.",
+ "momento_decisivo": {"t": 76.0, "descricao": "Zebedeuvi deu Blind em Kwongwegaiv com 44% de vida e emendou Kidney Shot, e Heshovi completou com Deep Freeze aos 81.2. O curador ficou mais de 8 s em CC, com 32% de vida e sem trinket, e não se recuperou."},
+ "erros": [
+  {"t": 85.9, "quem": "Kwongwegaiv", "fez": "nos intervalos entre CCs, com 32-52% de vida, usou Purge e Water Shield (71.4, 78.8, 80.6, 85.9, 88.4)", "devia": "se curar com Riptide/Healing Wave/Nature's Swiftness e se afastar do rogue", "porque": "cada GCD fora de CC era a única chance de cura, e ele morreu aos 89.7", "gravidade": "alta"},
+  {"t": 69.1, "quem": "Zebedeuix", "fez": "usou trinket, Vanish, Evasion e Cloak of Shadows em 1.7 s (68.0-69.7)", "devia": "trinketar o Deep Freeze só se houvesse burst e guardar Vanish/Cloak para depois", "porque": "ficou sem saída nenhuma, tomou dois Cheap Shot (72.6, 77.2) e morreu aos 95.3", "gravidade": "alta"},
+  {"t": 68.6, "quem": "Ominousxxi", "fez": "aplicou Corruption em Zebedeuvi quatro vezes (68.6-80.0) logo depois do Cloak of Shadows dele, enquanto o próprio curador era encadeado em CC", "devia": "dar Fear/Death Coil em Zebedeuvi ou Spell Lock em Heshovi para aliviar Kwongwegaiv", "porque": "DoT num rogue em Cloak não faz nada, e o curador precisava de peel", "gravidade": "alta"},
+  {"t": 69.7, "quem": "Heshovi", "fez": "lançou Arcane Intellect e Focus Magic (70.8) em pleno combate", "devia": "aplicar buffs antes dos portões e usar o GCD em Frostbolt/Polymorph", "porque": "foram dois GCDs perdidos na hora da troca de kill", "gravidade": "media"},
+  {"t": 61.4, "quem": "Ominousxxi", "fez": "deu hardcast de Shadow Bolt em Zebedeuvi (61.4, 89.7)", "devia": "usar instantâneos (Corruption/Curse/Death Coil) com um rogue em cima", "porque": "cast longo em frente a rogue é chute certo", "gravidade": "baixa"},
+  {"t": 53.6, "quem": "Amnesianvii", "fez": "lançou Holy Fire e cobalt frag bomb (70.8) como curador", "devia": "manter Shield/Penance e Dispel nos aliados", "porque": "o dano é baixo e o cast de Holy Fire expõe o priest a interrupt", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 68.6, "quem": "Heshovi", "descricao": "Deep Freeze seguido de Cold Snap, o que liberou o segundo Deep Freeze no curador aos 81.2."},
+  {"t": 72.6, "quem": "Zebedeuvi", "descricao": "Shadow Dance com Cheap Shot no rogue inimigo, depois Blind e Kidney no curador: uma cadeia de CC limpa."},
+  {"t": 51.8, "quem": "Amnesianvii", "descricao": "Psychic Scream tirando Zebedeuix de cima logo depois de sair do Blind."}
+ ],
+ "erros_da_rede": [
+  {"t": 85.9, "quem": "Kwongwegaiv", "acao": "purge → Zebedeuvi", "porque": "Purge num rogue com 32% de vida, quando precisava se curar"},
+  {"t": 80.6, "quem": "Kwongwegaiv", "acao": "water shield → Zebedeuvi", "porque": "reaplicou escudo de mana na única brecha entre CCs, com 32% de vida"},
+  {"t": 70.8, "quem": "Ominousxxi", "acao": "corruption on attacker → Zebedeuvi", "porque": "DoT num alvo que tinha acabado de usar Cloak of Shadows"}
+ ]}

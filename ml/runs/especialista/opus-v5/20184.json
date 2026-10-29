@@ -1,0 +1,21 @@
+{"resumo": "O RPS passou 100 s batendo no Warrior Celianeyxi, que tinha um Paladino curando, sem nenhum CC no curador. Enquanto isso, Celianeyxi ficou o tempo todo em cima de Zebedeuxiv, que gastou Evasion, Vanish e Cloak nos primeiros 3 s e morreu aos 134.1; Amnesianxxv caiu logo depois, aos 186.2.",
+ "momento_decisivo": {"t": 36.5, "descricao": "Zebedeuxiv gastou Evasion, Vanish e Cloak of Shadows em 2.4 s (36.5-38.9) para fugir do primeiro Bladestorm. Depois ficou sem defensivo e, como alvo fixo de Celianeyxi, foi derretendo até morrer aos 134.1."},
+ "erros": [
+  {"t": 36.5, "quem": "Zebedeuxiv", "fez": "usou Evasion, Vanish e Cloak of Shadows quase juntos na abertura", "devia": "usar um defensivo por vez (Evasion para o Bladestorm) e guardar Vanish/Cloak", "porque": "passou a luta inteira como alvo do Warrior sem ter mais nenhuma saída", "gravidade": "alta"},
+  {"t": 60.9, "quem": "Zebedeuxiv", "fez": "deu Kidney Shot e manteve Hemorrhage/Kick em Celianeyxi durante 100 s", "devia": "dar Kidney/Blind no curador Heruxvi para abrir janela de kill", "porque": "um Warrior curado por Paladino sem CC no curador não morre, e o dano do RPS sumia nas curas", "gravidade": "alta"},
+  {"t": 49.5, "quem": "Amnesianxxv", "fez": "usou Silence em Celianeyxi (49.5 e 95.5)", "devia": "usar Silence/Psychic Horror no curador Heruxvi durante um burst", "porque": "silenciar um Warrior quase não tem efeito; no Paladino tiraria a cura na hora do kill", "gravidade": "alta"},
+  {"t": 47.6, "quem": "Celianeyxi", "fez": "passou de 47 a 172 s em Slam/Heroic Strike sem usar Mortal Strike", "devia": "manter Mortal Strike no alvo (redução de cura) e usar Slam/Heroic só como complemento", "porque": "sem o efeito de cura reduzida, o Shaman Resto curava Zebedeuxiv quase de graça e a kill demorou 100 s", "gravidade": "alta"},
+  {"t": 83.1, "quem": "Kwongwegaxiv", "fez": "usou Wind Shear e Purge em Celianeyxi (73.1, 83.1, 89.3, 104.4)", "devia": "usar Wind Shear no Paladino ou no Shaman Elemental e curar Zebedeuxiv", "porque": "Warrior não lança feitiço; o interrupt foi jogado fora", "gravidade": "media"},
+  {"t": 141.8, "quem": "Amnesianxxv", "fez": "usou Dispersion com 75% de vida, logo no começo do 2v3", "devia": "guardar Dispersion para quando o Warrior entrasse em execute", "porque": "morreu aos 186.2 sem defensivo para o burst final", "gravidade": "media"},
+  {"t": 36.3, "quem": "Naminvi", "fez": "usou Chain Lightning e Thunderstorm o tempo todo, espalhando dano", "devia": "focar Lava Burst/Lightning Bolt com Flame Shock no alvo do Warrior", "porque": "o dano em alvo único em Zebedeuxiv teria terminado a kill bem antes", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.5, "quem": "Celianeyxi", "descricao": "Charge + Sweeping Strikes + Bladestorm na abertura, que forçou o rogue a queimar todos os defensivos."},
+  {"t": 36.4, "quem": "Heruxvi", "descricao": "Limpou os venenos de Celianeyxi a luta inteira (Wound Poison) e manteve o Warrior vivo sozinho, com Divine Plea e Divine Illumination bem encaixados."},
+  {"t": 136.1, "quem": "Celianeyxi", "descricao": "Logo depois do kill, Charge no priest e outro Bladestorm, emendando a segunda morte."}
+ ],
+ "erros_da_rede": [
+  {"t": 60.9, "quem": "Zebedeuxiv", "acao": "kidney shot → Celianeyxi", "porque": "stun longo gasto num Warrior curado, em vez de prender o curador"},
+  {"t": 83.1, "quem": "Kwongwegaxiv", "acao": "wind shear → Celianeyxi", "porque": "interrupt num Warrior, que não lança feitiço"},
+  {"t": 40.4, "quem": "Amnesianxxv", "acao": "shadowform → Celianeyxi", "porque": "voltou para Shadowform logo depois de sair dela aos 38.7: GCD gasto em troca de forma"}
+ ]}

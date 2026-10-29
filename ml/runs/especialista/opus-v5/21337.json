@@ -1,0 +1,20 @@
+{"resumo": "RPS matou Zebedeuix aos 109.9, mas não conseguiu fechar o 3v2: Ominousxxi segurou o rogue com death coil/fear e o priest com spell lock, e o rogue Zebedeuxvi ficou parado; os DoTs e os spell locks seguidos acabaram matando o xamã Kwongwegaxvi e o rogue.",
+ "momento_decisivo": {"t": 113.2, "descricao": "Logo depois da morte do parceiro, Ominousxxi dá spell lock no Amnesianxxix e emenda death coil (115.6) e fear (119.1) no Zebedeuxvi, travando o avanço do 3v2 e virando a luta numa guerra de DoTs que ele venceu."},
+ "erros": [
+  {"t": 123.5, "quem": "Zebedeuxvi", "fez": "ficou sem atacar entre 123.5 e 148.4 no 3v2", "devia": "voltar ao Ominousxxi ou ao Kwongwegaiv e manter pressão com kidney/blind", "porque": "era o único melee; sem ele o warlock sozinho levou a luta no dano contínuo", "gravidade": "alta"},
+  {"t": 107.3, "quem": "Kwongwegaiv", "fez": "cleanse spirit poison duas vezes até 112.3 com Zebedeuix a 21% em cheap shot", "devia": "riptide + healing wave no rogue", "porque": "limpar veneno não salva rogue em stun sob burst; ele morreu aos 109.9", "gravidade": "alta"},
+  {"t": 123.8, "quem": "Amnesianxxix", "fez": "dispersion com 100% de vida", "devia": "guardar para pressão real ou para sair de fear/root", "porque": "defensivo maior gasto sem dano nenhum sobre ele", "gravidade": "media"},
+  {"t": 128.7, "quem": "Amnesianxxix", "fez": "saiu e voltou do shadowform várias vezes (128.7/131.2, 166.3/169.0, 173.0)", "devia": "ficar em shadowform e dar dano no warlock, ou ficar fora e curar o xamã sob DoTs", "porque": "cada troca de forma custa GCD e mana sem decidir nada", "gravidade": "media"},
+  {"t": 47.7, "quem": "Zebedeuix", "fez": "trinket no cheap shot a 33%", "devia": "guardar o trinket para o kidney que vinha (48.3)", "porque": "saiu do stun curto e levou o kidney logo depois, sem trinket", "gravidade": "media"},
+  {"t": 51.7, "quem": "Ominousxxi", "fez": "trinket num stun com 88% de vida", "devia": "deixar o stun passar e guardar o trinket", "porque": "não havia risco; ficou sem trinket nos CCs depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 107.4, "quem": "Zebedeuxvi", "descricao": "shadow dance + cheap shot em Zebedeuix a 21% e eviscerate para a morte"},
+  {"t": 113.2, "quem": "Ominousxxi", "descricao": "spell lock no priest e death coil/fear no rogue logo após perder o parceiro"},
+  {"t": 175.6, "quem": "Ominousxxi", "descricao": "spell lock no xamã Kwongwegaxvi a 1% durante o healing wave, garantindo a morte"}
+ ],
+ "erros_da_rede": [
+  {"t": 39.8, "quem": "Zebedeuix", "acao": "hemorrhage → Kwongwegaxvi", "porque": "golpe que tira do stealth antes do shadow dance + cheap shot da abertura"},
+  {"t": 54.4, "quem": "Zebedeuix", "acao": "hemorrhage → Zebedeuxvi", "porque": "atacou no mesmo instante do vanish, desfazendo o defensivo"},
+  {"t": 125.9, "quem": "Kwongwegaiv", "acao": "lifeblood → Zebedeuxvi", "porque": "GCD numa curinha de herbalismo enquanto o parceiro lutava o 2v3"}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "No espelho RMP, o Zebedeuii queimou trinket, Evasion, Vanish e Cloak em 2 s e o Amnesianii não o protegeu, e ele morreu aos 52.8; o Zebedeuvi guardou os resets e ganhou depois com kidney + blind no mago e no priest.",
+ "momento_decisivo": {"t": 39.3, "descricao": "Zebedeuii usou pvp trinket, Evasion, Vanish e Cloak entre 39.3 e 41.6, todos juntos; sem defensivos para depois, caiu na sequência cheap shot/ambush do Zebedeuvi aos 50.9-52.8."},
+ "erros": [
+  {"t": 39.3, "quem": "Zebedeuii", "fez": "pvp trinket, evasion (39.6), vanish (40.8) e cloak of shadows (41.6) quase ao mesmo tempo", "devia": "escalonar: trinket saindo do kidney, Evasion contra o rogue, e guardar Vanish/Cloak para o próximo burst", "porque": "ficou sem nenhuma saída quando o Zebedeuvi voltou com shadow dance e cheap shot aos 50.9", "gravidade": "alta"},
+  {"t": 47.6, "quem": "Amnesianii", "fez": "smite e depois dispel/cobalt frag bomb (52.1-52.5) com o Zebedeuii caindo", "devia": "Power Word: Shield, Penance e Pain Suppression no Zebedeuii", "porque": "o rogue estava sem defensivos e em stun a 22%; o discipline tinha cura e Pain Suppression disponíveis e o deixou morrer", "gravidade": "alta"},
+  {"t": 49.8, "quem": "Heshoiv", "fez": "icy veins com o alvo trocado para o Amnesianvii", "devia": "manter o foco no Zebedeuvi, que tinha caído para 30-35% após deep freeze", "porque": "o rogue inimigo estava sem trinket e quase morto; trocar de alvo deu tempo para ele dar vanish e cloak", "gravidade": "media"},
+  {"t": 71.4, "quem": "Heshoiv", "fez": "evocation em pleno 2v3", "devia": "Blink/Frost Nova e kitar, ou ficar perto do priest para dispel", "porque": "canalizar Evocation com rogue inimigo em cima é pedir kick/kidney; o mago depois foi morto em stun", "gravidade": "media"},
+  {"t": 75.2, "quem": "Heshovi", "fez": "arcane intellect (e focus magic aos 102.8) no meio da luta", "devia": "Frostbolt/Polymorph para pressionar o 2v3", "porque": "buff de fora de combate gasta GCD quando o time podia acelerar o kill", "gravidade": "baixa"},
+  {"t": 30.1, "quem": "Heshoiv", "fez": "mirror image no portão", "devia": "guardar para o burst do rogue/mago inimigo", "porque": "as imagens expiraram sem absorver dano; o mago morreu mais tarde sem defensivo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 49.1, "quem": "Zebedeuvi", "descricao": "vanish + cloak + shadow dance após o deep freeze, reabrindo com cheap shot e ambush e matando o Zebedeuii sem defesas."},
+  {"t": 85.1, "quem": "Zebedeuvi", "descricao": "kidney shot no Heshoiv e blind no Amnesianii logo em seguida, isolando o mago para o kill."},
+  {"t": 61.0, "quem": "Amnesianvii", "descricao": "psychic scream no Amnesianii logo depois de ele gastar o trinket, mantendo o curador inimigo fora da luta."}
+ ],
+ "erros_da_rede": [
+  {"t": 98.5, "quem": "Amnesianii", "acao": "renew on party → Amnesianvii", "porque": "sozinho contra três, um HoT pequeno não segura o burst; Penance/Flash Heal ou fear eram mais urgentes."},
+  {"t": 56.3, "quem": "Heshoiv", "acao": "spellsteal → Zebedeuvi", "porque": "rogue não tem buff mágico relevante para roubar; GCD perdido logo após a morte do parceiro."}
+ ]}

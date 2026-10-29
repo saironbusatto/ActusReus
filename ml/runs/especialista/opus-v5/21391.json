@@ -1,0 +1,20 @@
+{"resumo": "Espelho longo de RPS com muita troca de stuns; decidiu quando Zebedeuxii trocou para o xamã Kwongwegaxiv e o trancou em kidneys enquanto o rogue e o priest do outro lado não deram peel, e Amnesianxxv caiu logo depois.",
+ "momento_decisivo": {"t": 131.0, "descricao": "Zebedeuxii dá shadowstep no curador Kwongwegaxiv e passa a trabalhar nele com kidney (141.0, 162.0) e kicks; sem peel do time, o xamã morre aos 167.0."},
+ "erros": [
+  {"t": 133.1, "quem": "Zebedeuxiv", "fez": "seguiu em hemorrhage no Amnesianix até 180.0", "devia": "blind/kidney/gouge no Zebedeuxii para tirar o rogue de cima do próprio curador", "porque": "o xamã parceiro morreu em cadeia de stuns sem nenhum peel; o Amnesianix tinha dispersion e cura e não ia morrer", "gravidade": "alta"},
+  {"t": 155.8, "quem": "Kwongwegaxiv", "fez": "healing wave lento três vezes até 165.3 com o rogue em cima", "devia": "riptide, andar até o pilar ou nature's swiftness, para não ser kickado", "porque": "o cast longo levou kick aos 156.5 e 166.7 e ele morreu sem se curar", "gravidade": "alta"},
+  {"t": 155.0, "quem": "Amnesianxxv", "fez": "saiu e voltou do shadowform (155.0/159.8/161.5) e hymn of hope durante a pressão no xamã", "devia": "psychic scream/psychic horror no Zebedeuxii e flash heal no Kwongwegaxiv", "porque": "o curador estava a caminho de 6% em kidney; hymn of hope não salva ninguém", "gravidade": "alta"},
+  {"t": 100.1, "quem": "Kwongwegaxiv", "fez": "purge três vezes até 106.5", "devia": "curar/limpar o próprio time durante a troca de CC", "porque": "Zebedeuxiv estava em fear e psychic horror a 31%; os GCDs de purge não ajudaram", "gravidade": "media"},
+  {"t": 110.0, "quem": "Amnesianxxv", "fez": "dispersion com 63% de vida", "devia": "guardar para uma janela de kill sobre ele", "porque": "defensivo maior gasto sem perigo real", "gravidade": "media"},
+  {"t": 57.5, "quem": "Kwongwegaxii", "fez": "purge em sequência (57.5-59.0, 62.7-64.9) com Zebedeuxii a 43%", "devia": "healing wave/riptide no rogue", "porque": "o parceiro seguia sob pressão e acabou forçando trinket aos 70.3", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 131.0, "quem": "Zebedeuxii", "descricao": "troca para o curador e controle em cadeia com kidneys e kicks até a morte"},
+  {"t": 100.4, "quem": "Amnesianix", "descricao": "fear e psychic horror (102.0) em Zebedeuxiv a 31%, salvando o time na abertura do rogue no priest"},
+  {"t": 55.1, "quem": "Zebedeuxii", "descricao": "vanish e cloak of shadows a 43% depois do kidney, sobrevivendo à primeira pressão"}
+ ],
+ "erros_da_rede": [
+  {"t": 68.2, "quem": "Kwongwegaxii", "acao": "purge → Amnesianxxv", "porque": "terceiro purge seguido (66.0/68.2/69.3) com o parceiro caindo para 34% em kidney"},
+  {"t": 61.0, "quem": "Amnesianix", "acao": "shadow word: death → Amnesianxxv", "porque": "SW:D num priest com vida cheia, tirando vida de si mesmo sem valor de execute"},
+  {"t": 133.1, "quem": "Zebedeuxiv", "acao": "hemorrhage → Amnesianix", "porque": "ficou no alvo errado enquanto o próprio curador era trancado pelo rogue inimigo"}
+ ]}

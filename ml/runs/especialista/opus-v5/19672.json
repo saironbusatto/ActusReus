@@ -1,0 +1,20 @@
+{"resumo": "O Wild ganhou o duelo de interrupts no healer: o pet de Ominoustres e o silencing shot de Beteraniv deixaram Heruiv sem conseguir curar até morrer aos 90.5. Depois, Amnesianxxi, ficando entrando e saindo da shadowform com pouca vida, morreu aos 115.6.",
+ "momento_decisivo": {"t": 84.6, "descricao": "Silencing shot de Beteraniv em Heruiv com 23% de vida, seguido do spell lock do pet de Ominoustres aos 88.2. O paladino nunca mais conseguiu se curar e morreu aos 90.5."},
+ "erros": [
+  {"t": 32.8, "quem": "Heruiv", "fez": "every man for himself logo na abertura, sem nenhum CC visível nele", "devia": "guardar o trinket para fear ou para o burst do hunter", "porque": "Depois ele tomou fear aos 55.1 e vários silences sem ter como sair, e morreu na cadeia de interrupts", "gravidade": "alta"},
+  {"t": 86.8, "quem": "Heruiv", "fez": "holy light (cura lenta) com 23% de vida entre um silence e outro", "devia": "divine shield na janela livre e se curar dentro da bolha", "porque": "Holy light tem tempo de lançamento e o time inimigo tinha dois spell locks e o silencing shot. Ele morreu aos 90.5 sem ter usado divine shield", "gravidade": "alta"},
+  {"t": 78.4, "quem": "Heruiv", "fez": "divine sacrifice cancelado 0.3 s depois", "devia": "manter o sacrifice para proteger o priest ou usar o GCD em cura", "porque": "Ativar e cancelar gastou dois GCDs sem efeito nenhum, num momento de pressão de dois warlocks", "gravidade": "media"},
+  {"t": 100.0, "quem": "Amnesianxxi", "fez": "entrar e sair da shadowform várias vezes (92.5, 100.0, 102.6, 106.6, 110.8) com 21-27% de vida", "devia": "ficar em forma normal e só se curar (flash heal, shield, prayer of mending), usando dispersion e linha de visão", "porque": "Cada troca gasta GCD e mana, e a shadowform reduz a cura recebida e feita. Sozinho, ele morreu aos 115.6", "gravidade": "media"},
+  {"t": 109.3, "quem": "Ominousx", "fez": "life tap com o próprio priest a ponto de morrer", "devia": "fear ou death coil no hunter ou em Ominoustres para dar espaço ao priest", "porque": "Life tap custa vida e não protege o healer. O priest morreu 6 s depois", "gravidade": "media"},
+  {"t": 37.1, "quem": "Amnesianxxi", "fez": "mind sear na abertura", "devia": "vampiric touch e mind blast num alvo, ou dispel no druida", "porque": "Mind sear é dano em área ao redor do alvo e não acerta o próprio alvo. Contra inimigos espalhados, quase não causa dano", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 84.6, "quem": "Beteraniv", "descricao": "Silencing shot no paladino com 23% de vida, cortando a última chance de cura."},
+  {"t": 53.4, "quem": "Ominoustres", "descricao": "Spell lock do pet em Heruiv no meio do flash of light, emendado com fear aos 53.8."},
+  {"t": 48.0, "quem": "Pehdicouii", "descricao": "Barkskin com 65% sob pressão dos dois warlocks, garantindo que continuaria curando."}
+ ],
+ "erros_da_rede": [
+  {"t": 48.7, "quem": "Amnesianxxi", "acao": "shadow word: death → Pehdicouii", "porque": "SW:D num druida com 65% e barkskin dá pouco dano e devolve dano ao priest. Mind blast seria melhor."},
+  {"t": 52.5, "quem": "Ominousx", "acao": "pet spell lock → Beteraniv", "porque": "Spell lock num hunter quase não tem efeito, já que o dano dele é físico. O interrupt devia ir para Pehdicouii, o healer."},
+  {"t": 98.0, "quem": "Pehdicouii", "acao": "remove curse on party ×2 até 103.8", "porque": "Tirar curse de dois warlocks inimigos que reaplicam na hora gasta GCD. Com o priest inimigo a 24%, valia mais a pena manter os aliados com cura cheia."}
+ ]}

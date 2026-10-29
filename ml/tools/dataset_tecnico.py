@@ -262,17 +262,107 @@ def main_v4() -> int:
     return 0
 
 
+# V5: as duas causas que a V4 mostrou nas respostas de treino (o Gemini as escreveu sabendo o resultado):
+# (1) erro que contradiz a mecânica do glossário sai; (2) erro em situação desconhecida não depende mais de quem
+# perdeu (na V3/V4 só ficava se o time perdeu: o filtro amplificava o viés de 82% em quem perdeu). E até 7 erros.
+# Mais 100 lutas analisadas por subagentes Opus sem o vencedor (opus-v5/), com peso PESO_OPUS.
+MAX_ERROS_V5, PESO_OPUS = 7, 3
+CONTRADIZ = {"wind shear", "kick", "counterspell", "mind freeze", "pummel", "silencing shot", "spell lock",
+             "divine sacrifice", "cancel divine sacrifice", "victory rush", "deterrence", "judgement of light",
+             "bloodlust", "heroism", "nature's swiftness"}  # o glossário diz que a jogada é certa ou normal
+TRINKETS = {"pvp trinket", "every man for himself", "will of the forsaken"}
+
+
+def _vida_em(l: dict, nome: str, t: float) -> float:
+    antes = [hp for ts, hp in (l.get("vida") or {}).get(nome, []) if ts <= t]
+    return float(antes[-1]) if antes else 100.0
+
+
+def _contradiz(l: dict, x: dict) -> bool:
+    """O erro aponta uma jogada que o glossário diz ser certa (ou trinket abaixo de 50% de vida)."""
+    ev = caderno.casa([e for e in l["eventos"] if e.get("tipo") == "acao"], x, x.get("fez", ""))
+    if not ev:
+        return False
+    acao = glossario.nome(ev["acao"])
+    return acao in CONTRADIZ or (acao in TRINKETS and _vida_em(l, ev["quem"], ev["t"]) < 50)
+
+
+def erro_confirmado_v5(l: dict, x: dict, usos: dict) -> bool:
+    s = _sit(l, x)
+    if s and usos.get(s, [0])[0] >= MIN_USOS:
+        return usos[s][1] / usos[s][0] >= 0.5 + FOLGA
+    return True  # situação desconhecida: neutra (antes só ficava se o time de quem errou perdeu)
+
+
+def _enxuga(l: dict, a: dict, erros: list[dict]) -> dict:
+    erros = [x for x in erros if not _do_fato(l, x) and not _contradiz(l, x)]
+    erros = sorted(sorted(erros, key=lambda x: GRAV.get(str(x.get("gravidade")), 1))[:MAX_ERROS_V5],
+                   key=lambda x: float(x.get("t") or 0))
+    return {"resumo": a.get("resumo", ""), "momento_decisivo": a.get("momento_decisivo", {}), "erros": erros,
+            "acertos": a.get("acertos", [])[:MAX_LISTA], "erros_da_rede": a.get("erros_da_rede", [])[:MAX_LISTA]}
+
+
+def alvo_v5(l: dict, usos: dict) -> dict:
+    a = l["analise"]
+    erros = [{k: v for k, v in x.items() if k not in INTERNOS} for x in a.get("erros", [])
+             if erro_confirmado_v5(l, x, usos) and not _rotina(l, x)]
+    return _enxuga(l, {**a, "acertos": [x for x in a.get("acertos", []) if _perdeu(l, x.get("quem")) is False]}, erros)
+
+
+def exemplo_v5(l: dict, alvo: dict) -> dict:
+    return {"luta": l["luta"], "fatos_erros": erros_dos_fatos(l, []), "messages": [
+        {"role": "system", "content": SISTEMA_V4.replace("No máximo 5 erros", "No máximo 7 erros")},
+        {"role": "user", "content": entrada_v4(l)},
+        {"role": "assistant", "content": json.dumps(alvo, ensure_ascii=False)}]}
+
+
+def main_v5() -> int:
+    """treino-v5.jsonl (Gemini limpo + Opus x PESO_OPUS) e cego2-v5.jsonl (o teste cego novo, referência de
+    subagentes em cego2-opus/). Validação igual à da V4; os dois testes cegos e o teste fixo ficam fora."""
+    fora = set(json.loads((SAIDA / "teste_cego_ids.json").read_text())) | \
+        set(json.loads((SAIDA / "teste_cego2_ids.json").read_text())) | set(json.loads((SAIDA / "teste_ids.json").read_text()))
+    val = {json.loads(x)["luta"] for x in (SAIDA / "validacao-v4.jsonl").open()}
+    opus = {int(f.stem): json.loads(f.read_text()) for f in (SAIDA / "opus-v5").glob("*.json")}
+    todas = lutas_analisadas()
+    lutas = [l for l in todas if l["luta"] not in fora]
+    usos = base(lutas)
+    random.Random(7).shuffle(lutas)
+    treino, n_opus = [], 0
+    for l in lutas:
+        if l["luta"] in val:
+            continue
+        if l["luta"] in opus:
+            treino += [exemplo_v5(l, _enxuga(l, opus[l["luta"]], opus[l["luta"]].get("erros", [])))] * PESO_OPUS
+            n_opus += 1
+        else:
+            treino.append(exemplo_v5(l, alvo_v5(l, usos)))
+    random.Random(8).shuffle(treino)
+    cego2 = set(json.loads((SAIDA / "teste_cego2_ids.json").read_text()))
+    for nome, parte in (("treino-v5", treino),
+                        ("validacao-v5", [exemplo_v5(l, alvo_v5(l, usos)) for l in lutas if l["luta"] in val]),
+                        ("cego2-v5", [exemplo_v5(l, {}) for l in todas if l["luta"] in cego2])):
+        with (SAIDA / f"{nome}.jsonl").open("w") as f:
+            for ex in parte:
+                f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+        print(f"{nome}: {len(parte)}")
+    print(f"opus: {n_opus} lutas x {PESO_OPUS}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--compacto", action="store_true", help="V4: grava {treino,teste}-compacto.jsonl")
     ap.add_argument("--v4", action="store_true", help="grava {treino,validacao,teste,cego}-v4.jsonl")
+    ap.add_argument("--v5", action="store_true", help="grava treino-v5/validacao-v5/cego2-v5.jsonl")
     a = ap.parse_args()
     if a.selftest:
         selftest()
         return 0
     if a.v4:
         return main_v4()
+    if a.v5:
+        return main_v5()
     lutas = lutas_analisadas()
     usos = base(lutas)
     random.Random(7).shuffle(lutas)
@@ -345,6 +435,16 @@ def selftest() -> None:
     assert [x["quem"] for x in v4["erros"]] == ["W"] and "conselho_por_time" not in v4, v4  # o X ausente é fato
     j = junta_fatos(v4, erros_dos_fatos(l, []))
     assert any(x["quem"] == "X" for x in j["erros"]) and len(j["erros"]) == 2, j
+    # V5: erro em situação desconhecida não depende de quem perdeu; erro que contradiz o glossário sai
+    assert erro_confirmado_v5(lutas[35], {"t": 30, "quem": "W", "fez": "ficou parado"}, usos)
+    l2 = {**l, "vida": {"R": [[0, 100], [30, 40]]},
+          "eventos": l["eventos"] + [{"tipo": "acao", "t": 50.0, "quem": "R", "acao": "wind shear on enemy healer",
+                                      "alvo": "", "rede": False, "prob": None},
+                                     {"tipo": "acao", "t": 60.0, "quem": "R", "acao": "pvp trinket", "alvo": "",
+                                      "rede": False, "prob": None}]}
+    assert _contradiz(l2, {"t": 50, "quem": "R", "fez": "wind shear no healer"})
+    assert _contradiz(l2, {"t": 60, "quem": "R", "fez": "trinket cedo"})  # a 40% de vida o trinket é certo
+    assert not _contradiz(l2, {"t": 10, "quem": "W", "fez": "fear"})
     print("ok dataset_tecnico")
 
 

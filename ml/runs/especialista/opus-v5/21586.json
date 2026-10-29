@@ -1,0 +1,20 @@
+{"resumo": "A RPS focou Heruxi com o rogue: o paladino trinketou o primeiro kidney a 64% e, sem trinket, morreu no segundo kidney aos 82.3-88.2; sem curador, Omasconvi e Celianeyvi caíram em sequência para o rogue com o shaman curando livre.",
+ "momento_decisivo": {"t": 51.0, "descricao": "Heruxi gasta every man for himself num kidney shot com 64% de vida; no kidney seguinte (82.3) estava a 10%, sem trinket nem bubble, e morreu aos 88.2."},
+ "erros": [
+  {"t": 51.0, "quem": "Heruxi", "fez": "every man for himself no kidney shot aos 64%", "devia": "aguentar o kidney a 64% (com aliados batendo/peelando) e guardar o trinket para um stun em vida baixa", "porque": "precisou de Divine Shield a 8% aos 60.6 e, no kidney de 82.3, a 10%, não tinha mais saída", "gravidade": "alta"},
+  {"t": 52.8, "quem": "Heruxi", "fez": "holy light on party com o rogue colado", "devia": "usar holy shock/flash of light e kitar com hand of freedom antes de castar longo", "porque": "foi silenciado logo em seguida (53.2) e ficou travado justamente quando a pressão começou", "gravidade": "media"},
+  {"t": 94.5, "quem": "Celianeyvi", "fez": "sunder armor, thunder clap e cleave em loop até 115.4", "devia": "manter Mortal Strike no alvo e fazer charge/intercept/hamstring no rogue ou pressionar o curador", "porque": "o shaman curou mais de 100k na luta; sem Mortal Strike constante as curas dele não sofrem a redução de 50% e o 2v3 virou atrito perdido", "gravidade": "alta"},
+  {"t": 58.4, "quem": "Heruxi", "fez": "divine sacrifice cancelado aos 58.8", "devia": "manter o Divine Sacrifice ou não usá-lo", "porque": "o cooldown foi queimado em 0.4 s sem absorver dano e, dois segundos depois, ele estava a 8%", "gravidade": "baixa"},
+  {"t": 61.8, "quem": "Omasconvi", "fez": "empower rune weapon e golpes de dano enquanto o paladino do time era focado", "devia": "usar strangulate no shaman ou chains of ice/hungering cold no rogue para aliviar o Heruxi", "porque": "o DK não peelou o rogue em nenhum momento até o paladino morrer, e não trancou o curador inimigo", "gravidade": "media"},
+  {"t": 47.8, "quem": "Celianeyvi", "fez": "bladestorm a 100% de vida aos 7 s de luta, sem alvo baixo", "devia": "guardar Bladestorm para uma janela de kill (curador em CC ou alvo baixo) ou para escapar de controle", "porque": "o cooldown principal foi gasto sem nenhum alvo em perigo e não estava disponível quando o time precisou", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 82.3, "quem": "Zebedeuxiv", "descricao": "Kidney shot em Heruxi a 10% com trinket e bubble gastos, fechando o kill com eviscerate aos 88.2."},
+  {"t": 116.5, "quem": "Zebedeuxiv", "descricao": "Kidney shot em Omasconvi a 18%, forçando o trinket e matando aos 118.9."},
+  {"t": 62.8, "quem": "Amnesianxxv", "descricao": "Psychic scream que tirou o trinket do warrior, deixando-o sem resposta para os controles seguintes."}
+ ],
+ "erros_da_rede": [
+  {"t": 76.7, "quem": "Zebedeuxiv", "acao": "eviscerate → Omasconvi", "porque": "gastou combo num DK com bone shield enquanto o kill estava no paladino sem trinket; voltou para Heruxi em seguida."},
+  {"t": 104.5, "quem": "Amnesianxxv", "acao": "apply oil → Omasconvi", "porque": "aplicar óleo no meio do combate desperdiça GCD e tempo; o DK estava a 39% e precisava de pressão."},
+  {"t": 110.6, "quem": "Zebedeuxiv", "acao": "slice and dice → Omasconvi", "porque": "com o DK caindo, os combos deviam ir para kidney/eviscerate, não para renovar buff."}
+ ]}

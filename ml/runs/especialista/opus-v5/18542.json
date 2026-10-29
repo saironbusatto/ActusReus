@@ -1,0 +1,21 @@
+{"resumo": "O RMP abriu em cima do xamã: Zebedeu fez shadowstep + kick aos 39.7 e kidney shot aos 46.5, e Kwongwegaxxv morreu aos 59.0 sem que o druida ou o warlock aliviassem a pressão. Depois disso o 3v2 caiu em sequência: o druida morreu aos 73.4 e o warlock aos 84.1.",
+ "momento_decisivo": {"t": 46.5, "descricao": "Zebedeu deu kidney shot em Kwongwegaxxv (51%) logo depois do kick dos 39.7. O xamã ficou preso sob dano do mago, do priest e do rogue, sem cyclone nem fear do time dele no rogue."},
+ "erros": [
+  {"t": 41.3, "quem": "Pehdibalv", "fez": "trocou de forma entre moonkin e caster sem parar (35.0, 38.2, 41.3, 44.1, 47.3, 49.1, 54.3, 58.2)", "devia": "ficar numa forma por vez: caster para segurar o xamã ou moonkin para pressionar", "porque": "cada troca gasta GCD e mana; com o parceiro sob kidney shot, esses GCDs eram curas ou um cyclone em Zebedeu", "gravidade": "media"},
+  {"t": 46.5, "quem": "Pehdibalv", "fez": "deixou Zebedeu livre no xamã e só usou cyclone aos 59.2, depois que Kwongwegaxxv já tinha morrido", "devia": "dar cyclone em Zebedeu ou em Heshoii durante o kidney shot dos 46.5 e curar o xamã", "porque": "um peel no rogue durante o kill window era a única forma de quebrar a pressão; cyclone depois da morte não salva ninguém", "gravidade": "alta"},
+  {"t": 57.7, "quem": "Ominousdesxi", "fez": "lançou drain soul e death coil sem alvo de peel enquanto o xamã caía, e passou a luta em corruption/curse", "devia": "usar fear em Zebedeu ou Heshoii, ou death coil no rogue, para tirar a pressão de Kwongwegaxxv", "porque": "o warlock tinha ferramentas de controle que não usou; 9.7k de dano em 88 s mostra que nem a pressão nem o peel apareceram", "gravidade": "alta"},
+  {"t": 38.5, "quem": "Kwongwegaxxv", "fez": "lançou flame shock e lightning bolt na abertura enquanto já era o alvo", "devia": "jogar na defensiva: riptide, earth shield e totens, e ficar perto do druida", "porque": "o xamã era o foco desde o shadowstep e fez só 5.3k de cura na luta; dano dele não mudava nada", "gravidade": "media"},
+  {"t": 41.7, "quem": "Amnesian", "fez": "lançou mind sear várias vezes (37.9, 41.7, 48.0, 53.2)", "devia": "usar mind blast, dispel ofensivo nos HoTs do druida ou psychic scream no druida/warlock", "porque": "mind sear é canalizado, fácil de interromper e dá pouco dano em arena; esses canais tiraram tempo de cura e de controle", "gravidade": "media"},
+  {"t": 54.8, "quem": "Heshoii", "fez": "lançou flamestrike e blizzard durante o kill no xamã e nunca usou polymorph", "devia": "dar polymorph em Pehdibalv para deixar o xamã sem cura e seguir com frostbolt/frostfire no alvo", "porque": "AoE dá pouco dano em 3v3; polymorph no outro curandeiro garante o kill", "gravidade": "media"},
+  {"t": 72.9, "quem": "Pehdibalv", "fez": "usou o trinket no kidney shot com 9% de vida e lançou entangling roots logo depois", "devia": "curar a si mesmo de imediato (regrowth/nourish), ou fugir em forma de urso/viagem", "porque": "com 9%, o trinket só vale se o próximo GCD for sobrevivência; roots não para hemorrhage, e ele morreu aos 73.4", "gravidade": "alta"}
+ ],
+ "acertos": [
+  {"t": 39.7, "quem": "Zebedeu", "descricao": "Shadowstep + kick no xamã logo no começo, cortando a cura dele e abrindo o kill."},
+  {"t": 50.0, "quem": "Heshoii", "descricao": "Counterspell em Pehdibalv no meio da pressão, deixando o time inimigo sem cura por alguns segundos."},
+  {"t": 72.4, "quem": "Zebedeu", "descricao": "Kidney shot no druida a 9%, que forçou o trinket e terminou no kill aos 73.4."}
+ ],
+ "erros_da_rede": [
+  {"t": 39.4, "quem": "Zebedeu", "acao": "sprint", "porque": "gastou um GCD e o sprint 0.3 s antes de um shadowstep que já fechava a distância"},
+  {"t": 42.8, "quem": "Heshoii", "acao": "remove curse on party", "porque": "parou o próprio burst (icy veins/bloodlust ativos) para dispelar uma maldição sem urgência"},
+  {"t": 49.3, "quem": "Zebedeu", "acao": "slice and dice", "porque": "renovou o slice and dice aplicado aos 40.1, que ainda estava ativo, gastando combo points que cabiam num finisher/kidney no xamã"}
+ ]}

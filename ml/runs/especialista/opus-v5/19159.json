@@ -1,0 +1,19 @@
+{"resumo": "O Wild IV matou o Ominous em 50 s com o Beteranvi usando deterrence, readiness e rapid fire e fechando com silencing shot + kill shot, enquanto o Ominous não fez nada defensivo nem recebeu peel; em 2v3, o Pehdicouve caiu aos 80.",
+ "momento_decisivo": {"t": 48.6, "descricao": "Beteranvi silenciou o Ominous a 21% (silencing shot) e emendou kill shot aos 48.9, enquanto o Pehdicouve estava preso em stun/fear: o warlock morreu aos 49.6."},
+ "erros": [
+  {"t": 42.2, "quem": "Ominous", "fez": "seguiu com howl of terror, pet spell lock e devour magic enquanto caía para 21%, sem death coil (gasto aos 40.0 sem pressão), healthstone ou shadowfury defensivo", "devia": "guardar o death coil para o caçador, usar a healthstone e se afastar do Beteranvi atrás de pilar", "porque": "foi o alvo desde o início e morreu com apenas 7 mil de dano feito, sem usar nenhum recurso de sobrevivência", "gravidade": "alta"},
+  {"t": 48.0, "quem": "Beteranii", "fez": "readiness + rapid fire + kill command no Pehdicouiv enquanto o próprio warlock estava a 21%", "devia": "scatter shot ou freezing trap no Beteranvi para tirar a pressão do Ominous, e só depois a ofensiva", "porque": "o Pehdicouiv tinha barkskin e cura; o Ominous morreu 1,6 s depois sem nenhum peel", "gravidade": "media"},
+  {"t": 34.2, "quem": "Pehdicouve", "fez": "hurricane no Ominousvii logo nos portões", "devia": "ficar em tree e curar/pré-hotar o Ominous, que era o alvo", "porque": "canal de dano de curador levou spell lock aos 34.8 e o time começou atrás na cura", "gravidade": "media"},
+  {"t": 40.1, "quem": "Beteranii", "fez": "volley (também aos 33.8)", "devia": "chimera/aimed shot e silencing shot num alvo só", "porque": "volley é canal AoE de dano baixo em arena 3v3; desperdiça o tempo de dano da abertura", "gravidade": "baixa"},
+  {"t": 52.7, "quem": "Pehdicouve", "fez": "shadowmeld seguido de caster form ×2 com o time já em 2v3", "devia": "voltar para tree e curar o Beteranii ou usar cyclone/roots para controlar", "porque": "shadowmeld em combate não remove os DoTs e só gasta tempo; o druida ficou sem curar", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 43.4, "quem": "Beteranvi", "descricao": "deterrence a 42% e logo readiness + rapid fire + kill command: sobreviveu e transformou a defesa em janela de burst"},
+  {"t": 48.6, "quem": "Beteranvi", "descricao": "silencing shot no Ominous a 21% seguido de kill shot: kill sem chance de reação"},
+  {"t": 42.3, "quem": "Pehdicouiv", "descricao": "a 24% em fear: trinket, nature's swiftness + healing touch e barkskin em sequência, salvando a si mesmo"}
+ ],
+ "erros_da_rede": [
+  {"t": 33.8, "quem": "Beteranii", "acao": "volley no Pehdicouiv", "porque": "abertura com canal AoE em vez de dano focado e silêncio no curador"},
+  {"t": 37.7, "quem": "Ominous", "acao": "pet autocast setup", "porque": "gastou GCD configurando o pet em plena luta, já sob pressão do caçador"},
+  {"t": 49.2, "quem": "Beteranii", "acao": "steady shot no Pehdicouiv", "porque": "com o Ominous a segundos de morrer, a jogada era peel (scatter/trap) no Beteranvi, não um tiro de conjuração no druida"}
+ ]}

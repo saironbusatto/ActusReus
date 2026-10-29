@@ -1,0 +1,21 @@
+{"resumo": "O LSD controlou o Zebedeuxiv com roots do Pehdibalv e fear/DoTs do Ominousdesxi até ele gastar Evasion, Cloak e Vanish e morrer sem pico de cura; depois o Ominousdesxi venceu na pressão de DoTs contra uma dupla que gastava GCD com dispel e purge.",
+ "momento_decisivo": {"t": 54.4, "descricao": "Zebedeuxiv, enraizado e comendo DoTs/fear de warlock, gastou Evasion (inútil contra feitiço) aos 38% e só soltou o Cloak aos 31%; a partir daí ficou sem defensivo, e o curador não fez pico de cura até a morte aos 76.7."},
+ "erros": [
+  {"t": 54.4, "quem": "Zebedeuxiv", "fez": "evasion aos 38% de vida", "devia": "usar Cloak of Shadows na hora para limpar Corruption/Immolate/curses e sair do root", "porque": "o dano nele vinha de feitiço e DoT do warlock e de root do druida; Evasion só evita golpe físico, então queimou um defensivo sem efeito", "gravidade": "alta"},
+  {"t": 61.4, "quem": "Zebedeuxiv", "fez": "fan of knives logo depois de vanish + premeditation", "devia": "abrir com Cheap Shot/Garrote no Kwongwegaxxv para aproveitar os pontos do Premeditation", "porque": "Fan of Knives quebra a furtividade sem controle, desperdiçando o Vanish que era a última janela de reset do rogue", "gravidade": "media"},
+  {"t": 65.7, "quem": "Zebedeuxiv", "fez": "slice and dice (de novo aos 75.3) com vida baixa e sem pressão", "devia": "usar os pontos em Kidney Shot no curador ou recuar para o próprio curador/pilar", "porque": "SnD só aumenta dano branco; com o rogue morrendo e o time sem matar ninguém, era GCD e combo jogados fora", "gravidade": "media"},
+  {"t": 75.3, "quem": "Kwongwegaxiv", "fez": "flame shock e lava burst (76.7) enquanto o Zebedeuxiv morria", "devia": "Nature's Swiftness + Healing Wave ou Riptide/Healing Wave no Zebedeuxiv", "porque": "o rogue estava preso em root e já sem defensivos; o curador fez dano de baixo valor no lugar do pico de cura que salvaria o parceiro", "gravidade": "alta"},
+  {"t": 74.7, "quem": "Amnesianxxv", "fez": "remove shadowform e voltou ao shadowform aos 77.3 sem curar ninguém", "devia": "ficar em Shadowform aplicando pressão ou, se saiu da forma, curar o Zebedeuxiv (Flash Heal/Penance não existe para shadow, mas Flash Heal sim)", "porque": "sair e voltar da forma custa dois GCDs e mana; sem a cura no meio, foi tempo morto exatamente quando o rogue morreu", "gravidade": "media"},
+  {"t": 60.5, "quem": "Amnesianxxv", "fez": "pvp trinket num stun estando com 76% de vida", "devia": "segurar o trinket para um fear/seduction no momento de matar ou de salvar parceiro", "porque": "a 76% sem burst nele não havia ameaça; logo depois (64.4) tomou fear e não tinha mais trinket", "gravidade": "baixa"},
+  {"t": 36.3, "quem": "Kwongwegaxxv", "fez": "purge ×2 logo na abertura e longas sequências de purge (129-145)", "devia": "usar esses GCDs em Earth Shield/cura preventiva ou Wind Shear em cast importante", "porque": "o priest reaplicava escudos/buffs na hora; trocar purge por buff é empate de GCD para o curador, que tinha pouco dano e mana finita", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 46.8, "quem": "Pehdibalv", "descricao": "entangling roots no Zebedeuxiv para kitar o rogue enquanto o warlock aplicava DoTs, tirando o principal dano físico do RPS da luta."},
+  {"t": 42.1, "quem": "Ominousdesxi", "descricao": "death coil e fear no Zebedeuxiv logo após ele chegar, cortando a abertura do rogue e mantendo-o sob controle."},
+  {"t": 164.9, "quem": "Kwongwegaxxv", "descricao": "mana tide totem numa luta longa de atrito, sustentando a mana do time contra a dupla priest/shaman."}
+ ],
+ "erros_da_rede": [
+  {"t": 59.2, "quem": "Zebedeuxiv", "acao": "premeditation → Kwongwegaxxv", "porque": "seguido de Fan of Knives em vez de um abridor de stealth; os pontos do Premeditation e o Vanish foram desperdiçados."},
+  {"t": 111.3, "quem": "Amnesianxxv", "acao": "shadow word: death → Pehdibalv", "porque": "druida a ~95% de vida; SW:D é finalizador/quebra de controle e ainda devolve dano ao priest, sem valor nesse momento."},
+  {"t": 168.2, "quem": "Kwongwegaxiv", "acao": "flame shock → Kwongwegaxxv", "porque": "último companheiro (Amnesianxxv) morreu em seguida, aos 173.8; o curador gastou GCD em dano em vez de cura."}
+ ]}

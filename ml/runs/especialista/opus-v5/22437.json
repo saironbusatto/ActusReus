@@ -1,0 +1,21 @@
+{"resumo": "O Celianeyiv deu charge no Ominousdes e soltou Sweeping Strikes + Bladestorm no meio do Fireplay I agrupado; o Kwongwegavii não curou e morreu aos 50, e o warlock caiu logo depois com execute.",
+ "momento_decisivo": {"t": 44.6, "descricao": "Bladestorm do Celianeyiv com Sweeping Strikes ativo sobre curador, warlock e mago juntos; o Fireplay respondeu com fear e frost nova (imunes durante o Bladestorm) em vez de se separar e curar."},
+ "erros": [
+  {"t": 42.7, "quem": "Kwongwegavii", "fez": "purge com o warrior já em cima do time em Sweeping Strikes", "devia": "curar preventivamente (Riptide/Earth Shield) e soltar Earthbind/Frost Shock no Celianeyiv", "porque": "o dano em cleave ia pegar todos agrupados; o curador só curou aos 50.5, já morrendo", "gravidade": "alta"},
+  {"t": 44.6, "quem": "Ominousdes", "fez": "fear no Celianeyiv no mesmo instante do Bladestorm", "devia": "Fear antes do Bladestorm ou, já com ele ativo, recuar com Demonic Circle e dar distância", "porque": "Bladestorm deixa o warrior imune a controle e movimento; o fear foi desperdiçado e o warlock continuou no raio", "gravidade": "media"},
+  {"t": 47.0, "quem": "Heshovii", "fez": "frost nova no Celianeyiv durante o Bladestorm", "devia": "Blink para fora do Bladestorm e guardar a Frost Nova para depois dele", "porque": "durante Bladestorm o warrior é imune a root; o mago perdeu o controle e ficou no alcance até cair a 18%", "gravidade": "media"},
+  {"t": 49.5, "quem": "Kwongwegavii", "fez": "bloodlust e lifeblood enquanto morria", "devia": "Nature's Swiftness + Healing Wave em si mesmo", "porque": "Bloodlust não salva ninguém; o curador morreu meio segundo depois sem soltar uma cura grande", "gravidade": "alta"},
+  {"t": 49.6, "quem": "Heshovii", "fez": "pvp trinket dentro do Ice Block (e de novo aos 52.3)", "devia": "guardar o trinket para depois do Ice Block, para sair do próximo stun", "porque": "no Ice Block o mago já está imune; o trinket foi gasto sem efeito", "gravidade": "media"},
+  {"t": 60.3, "quem": "Heshovii", "fez": "combustion e berserking estando sozinho e quase morto", "devia": "Blink/Frost Nova/Polymorph para fugir do execute", "porque": "cooldown ofensivo com os dois parceiros mortos e o warrior em melee não muda nada; morreu 3 s depois", "gravidade": "baixa"},
+  {"t": 55.6, "quem": "Heruix", "fez": "cast greater blessing assignment no meio da luta", "devia": "curar ou dar Hand of Freedom ao Celianeyiv preso na Frost Nova", "porque": "buff de fora de combate gasta GCD na luta; o paladino terminou com 0 de cura", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.5, "quem": "Celianeyiv", "descricao": "charge no Ominousdes cortando o fear do warlock logo no portão."},
+  {"t": 41.5, "quem": "Celianeyiv", "descricao": "sweeping strikes + thunder clap + bladestorm contra o Fireplay agrupado — dano em área no momento certo."},
+  {"t": 52.8, "quem": "Celianeyiv", "descricao": "execute no Ominousdes logo após a morte do curador, convertendo a vantagem em 3v1."}
+ ],
+ "erros_da_rede": [
+  {"t": 61.0, "quem": "Heshovii", "acao": "mana shield → Heruix", "porque": "reaplicou Mana Shield (de novo aos 62.3) em vez de usar Blink/Frost Nova para escapar do execute do warrior."},
+  {"t": 62.3, "quem": "Heshovii", "acao": "mana shield → Heruix", "porque": "terceiro Mana Shield seguido sob execute: o escudo não aguenta o dano e não tira o warrior do alcance."},
+  {"t": 46.2, "quem": "Celianeyiv", "acao": "cleave → Kwongwegavii", "porque": "durante o Bladestorm o warrior já está girando; o cleave nessa janela não adiciona nada e só gasta raiva."}
+ ]}

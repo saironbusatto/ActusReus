@@ -1,0 +1,20 @@
+{"resumo": "Zebedeuxvi abriu com shadow dance, cheap shot, ambush e kidney shot em Heruxii, que já tinha gasto o trinket no primeiro stun. O paladino morreu aos 61.0 e o Thunder, sem cura, perdeu o shaman e depois o warrior.",
+ "momento_decisivo": {"t": 41.1, "descricao": "Cheap shot de Zebedeuxvi em Heruxii dentro do shadow dance. O paladino gastou o trinket nele (41.4), então levou outro stun aos 42.2 e o kidney shot aos 48.2 sem escapatória, e morreu aos 61.0."},
+ "erros": [
+  {"t": 41.4, "quem": "Heruxii", "fez": "every man for himself no cheap shot da abertura, com 94% de vida", "devia": "aguentar o cheap shot e guardar o trinket para o kidney shot ou para um CC na hora do burst", "porque": "Com o shadow dance ativo, o rogue tinha outro cheap shot logo em seguida (42.2). Depois veio o kidney aos 48.2, e o paladino ficou sem saída", "gravidade": "alta"},
+  {"t": 40.7, "quem": "Celianeyvii", "fez": "every man for himself logo depois de quebrar o fear com berserker rage", "devia": "esperar o silence acabar e guardar o trinket para um stun ou fear durante a pressão", "porque": "Silence não impede o warrior de bater. O trinket fez falta aos 95.9, quando ele precisou dele com 13% de vida", "gravidade": "media"},
+  {"t": 56.3, "quem": "Celianeyvii", "fez": "cleave e execute no shaman healer enquanto o rogue matava Heruxii", "devia": "intercept, hamstring ou intimidating shout em Zebedeuxvi para tirar o rogue do paladino", "porque": "O healer do Thunder morreu aos 61.0 sem nenhum peel. Sem cura, a luta virou 2v3", "gravidade": "alta"},
+  {"t": 60.0, "quem": "Naminii", "fez": "purge ×3 até 65.0 enquanto Heruxii morria", "devia": "frost shock e earthbind no rogue, thunderstorm para tirar ele do paladino, ou cura direta", "porque": "Tirar buffs do priest não salvou o healer. O shaman elemental era o único com ferramentas de controle à distância", "gravidade": "media"},
+  {"t": 68.1, "quem": "Kwongwegaxvi", "fez": "purge ×2 até 70.3 durante o bladestorm do warrior", "devia": "correr do bladestorm, usar earth shield e riptide em si mesmo e nature's swiftness com healing wave", "porque": "O shaman estava no alcance do bladestorm e morreu aos 71.4 dando purge em vez de se salvar", "gravidade": "alta"},
+  {"t": 54.6, "quem": "Heruxii", "fez": "divine sacrifice e cancel 0.4 s depois", "devia": "hand of protection em si mesmo contra o rogue, ou divine shield", "porque": "Foram dois GCDs perdidos enquanto morria sob dano físico. Hand of protection cancelava todo o dano do rogue", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 40.2, "quem": "Zebedeuxvi", "descricao": "Shadow dance com cheap shot, ambush e kidney shot no healer inimigo, abrindo e fechando a primeira morte."},
+  {"t": 77.7, "quem": "Zebedeuxvi", "descricao": "Vanish, premeditation e cloak of shadows com 40% para resetar e logo matar o shaman com eviscerate."},
+  {"t": 84.1, "quem": "Amnesianxxix", "descricao": "Psychic scream no warrior logo depois do enraged regeneration, cortando o dano dele."}
+ ],
+ "erros_da_rede": [
+  {"t": 56.3, "quem": "Celianeyvii", "acao": "cleave → Kwongwegaxvi", "porque": "Cleave para gastar rage no shaman enquanto o próprio healer morria para o rogue. O momento pedia peel."},
+  {"t": 62.3, "quem": "Naminii", "acao": "flame shock → Kwongwegaxvi", "porque": "O rogue tinha acabado de mudar de alvo para Naminii (61.2). Frost shock ou thunderstorm para se proteger valeriam mais do que um DoT."},
+  {"t": 89.0, "quem": "Celianeyvii", "acao": "thunder clap → Zebedeuxvi", "porque": "Em 1v2, thunder clap dá pouco dano. Mortal strike ou hamstring no rogue seriam melhores."}
+ ]}

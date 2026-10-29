@@ -1,0 +1,19 @@
+{"resumo": "Heshoiv usou cold snap e icy veins para estourar Ominousx, que seguiu jogando DoT sem se defender, e o warlock morreu aos 84.2. Em 3v2, Zebedeuii encadeou stuns no shadow priest enquanto o mago controlava o paladino. Amnesianxxi morreu aos 132.5 e Heruiv, sozinho, morreu no fim.",
+ "momento_decisivo": {"t": 67.4, "descricao": "Cold snap e icy veins de Heshoiv com frostbolt e ice lance em Ominousx. Sem defensivo nem cura do paladino, o warlock morreu aos 84.2 e a luta virou 3v2."},
+ "erros": [
+  {"t": 78.9, "quem": "Ominousx", "fez": "curse of agony, UA e haunt no meio do burst do mago, sem nenhuma defesa", "devia": "fear ou death coil em Heshoiv, sair da linha de visão atrás do pilar e pedir cura", "porque": "Ele seguiu parado lançando DoT enquanto levava frostbolts desde 69.3, e morreu aos 84.2 sem reagir", "gravidade": "alta"},
+  {"t": 79.5, "quem": "Heruiv", "fez": "exorcism em Zebedeuii com o warlock morrendo", "devia": "holy light ou flash of light em Ominousx, ou hand of sacrifice e divine sacrifice", "porque": "O paladino é o healer e passou o burst do mago dando judgement (77.9) e exorcism. A única cura veio aos 84.2, quando o warlock já tinha morrido", "gravidade": "alta"},
+  {"t": 113.5, "quem": "Amnesianxxi", "fez": "vampiric touch repetido (104.5, 110.7, 113.5, 121.0, 124.5) durante a cadeia de stuns do rogue", "devia": "usar dispersion, power word: shield e psychic scream mais cedo, e se curar entre os stuns", "porque": "VT tem tempo de lançamento e o rogue tinha kick. O priest nunca usou dispersion e morreu aos 132.5", "gravidade": "alta"},
+  {"t": 132.2, "quem": "Heruiv", "fez": "divine sacrifice cancelado 0.3 s depois, com Amnesianxxi morrendo", "devia": "hand of protection em Amnesianxxi contra o rogue durante os stuns de 107-115, ou manter o divine sacrifice ativo", "porque": "O priest era morto por dano físico do rogue, e hand of protection anulava esse dano. Ao cancelar o sacrifice, o paladino perdeu a ferramenta na hora em que ela servia", "gravidade": "alta"},
+  {"t": 79.6, "quem": "Amnesianxxi", "fez": "sair e voltar da shadowform várias vezes (76.1, 78.0, 79.6, 83.6, 85.1, 87.6), com smite no meio", "devia": "escolher curar Ominousx em forma normal até ele estar a salvo, ou ficar em shadowform pressionando", "porque": "Cada troca gasta GCD e mana. Enquanto isso, o warlock morreu sem receber cura de nenhum dos dois healers", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 67.4, "quem": "Heshoiv", "descricao": "Cold snap e icy veins seguidos de frostbolt e ice lance, matando o warlock que estava sem defensivo."},
+  {"t": 106.5, "quem": "Zebedeuii", "descricao": "Shadow dance em Amnesianxxi com cheap shot, ambush e kidney shot, travando o priest por quase 10 s."},
+  {"t": 128.5, "quem": "Heshoiv", "descricao": "Counterspell e polymorph no paladino logo depois do trinket, isolando o priest para a morte."}
+ ],
+ "erros_da_rede": [
+  {"t": 37.9, "quem": "Amnesianxxi", "acao": "shadow word: death → Amnesianii", "porque": "SW:D no priest com vida cheia e escudo logo na abertura dá pouco dano e devolve dano ao próprio priest. Foi um GCD desperdiçado."},
+  {"t": 69.0, "quem": "Ominousx", "acao": "life tap → Amnesianii", "porque": "Life tap troca vida por mana justo quando o mago começava o burst no warlock. Isso acelerou a morte dele."},
+  {"t": 107.8, "quem": "Heruiv", "acao": "shield of righteousness → Zebedeuii", "porque": "Um holy paladin batendo no rogue enquanto o aliado estava em stun. A hora pedia cura ou hand of protection."}
+ ]}

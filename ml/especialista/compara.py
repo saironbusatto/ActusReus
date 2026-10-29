@@ -42,9 +42,10 @@ def cego(pastas: list[str]) -> None:
     junta (junta_fatos), então os fatos graves dela são do programa, e o que mede o modelo são os erros próprios:
     quantos por luta, quantos batem com a referência (achou), quantos não batem (ler à mão) e o viés de resultado
     (fração das críticas próprias em quem perdeu; a referência dá a régua)."""
-    ids = json.loads((RUNS / "teste_cego_ids.json").read_text())
+    n = "2" if "--cego2" in sys.argv else ""  # --cego2: o teste cego da V5 (referência de subagentes sem vencedor)
+    ids = json.loads((RUNS / f"teste_cego{n}_ids.json").read_text())
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}
-    refs = {i: json.loads((RUNS / "cego-opus" / f"{i}.json").read_text()) for i in ids}
+    refs = {i: json.loads((RUNS / f"cego{n}-opus" / f"{i}.json").read_text()) for i in ids}
 
     def proprios(l: dict, erros: list) -> list:
         return [x for x in erros if not _do_fato(l, x)]
@@ -52,7 +53,7 @@ def cego(pastas: list[str]) -> None:
     def perdeu(l: dict, x: dict) -> bool:
         return bool(_perdeu(l, x.get("quem")))
 
-    for pasta in ["cego-opus", *pastas, "gemini"]:
+    for pasta in [f"cego{n}-opus", *pastas, "gemini"]:
         ns, sem_par = [], []
         for i in ids:
             l, ref = lutas[i], refs[i]
@@ -90,13 +91,13 @@ def cego(pastas: list[str]) -> None:
               f"achou {soma('achou', 0)}/{soma('achou', 1)} | sem par/luta {sum(x['fora'] for x in ok) / n:.1f} | "
               f"em quem perdeu {soma('perdeu', 0) / max(soma('perdeu', 1), 1):.0%} | "
               f"s/luta {sum(seg) / len(seg) if seg else 0:.0f}")
-        if pasta != "cego-opus" and "--lista" in sys.argv:
+        if not pasta.endswith("-opus") and "--lista" in sys.argv:
             for i, x in sem_par:
                 print(f"   {i} {x.get('t')} {x.get('quem')} | {str(x.get('fez'))[:80]} | {str(x.get('porque'))[:90]}")
 
 
 def main() -> None:
-    if "--cego" in sys.argv:
+    if "--cego" in sys.argv or "--cego2" in sys.argv:
         return cego([x for x in sys.argv[1:] if not x.startswith("--")])
     ids = json.loads((RUNS / "teste_ids.json").read_text())[:10]
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}

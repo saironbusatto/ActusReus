@@ -1,0 +1,21 @@
+{"resumo": "Os dois Warriors gastaram a abertura em cleave/heroic strike sem Mortal Strike e queimaram todos os cooldowns cedo, morrendo quase juntos (60.7 e 64.4); no 2v2 DK+Paladin que sobrou, Omasconii foi derrubado aos 137.9 sem defensivo de DK disponível e com o curador em Divine Plea.", 
+ "momento_decisivo": {"t": 134.7, "descricao": "Com Omasconii já sem Icebound Fortitude (usado aos 49.0) e tomando dano de Omasconvi, Heruvii ativou Divine Plea, que corta a cura pela metade, e Omasconii morreu aos 137.9; a partir daí o 2v1 ficou do lado do TSG IV."},
+ "erros": [
+  {"t": 42.2, "quem": "Celianeyii", "fez": "passou a abertura em cleave/heroic strike/thunder clap e trocando de alvo (Celianeyvi, Omasconvi)", "devia": "abrir com Mortal Strike num alvo só e manter o efeito de cura reduzida", "porque": "contra Paladino Holy, sem Mortal Strike a cura passa inteira; cleave e heroic strike são só despejo de raiva", "gravidade": "alta"},
+  {"t": 36.8, "quem": "Celianeyii", "fez": "usou Every Man for Himself logo no stun do charge com 100% de vida", "devia": "aguentar o stun do charge (1.5 s) e guardar o racial para um stun longo ou um CC com burst", "porque": "ficou sem saída de CC para o resto da luta e morreu aos 60.7", "gravidade": "media"},
+  {"t": 44.2, "quem": "Celianeyvi", "fez": "usou Enraged Regeneration e o trinket (44.8) logo no começo da troca", "devia": "guardar Enraged Regeneration para quando estivesse em vida baixa", "porque": "quando foi focado depois, morreu aos 64.4 sem nenhum defensivo", "gravidade": "media"},
+  {"t": 59.0, "quem": "Heruvii", "fez": "gastou GCDs em cleanse disease (42.5-49.1, 59.0, 60.3) enquanto Celianeyii era focado", "devia": "dar Holy Shock/Flash of Light ou Hand of Protection em Celianeyii", "porque": "doença de DK volta logo; cada GCD de dispel é uma cura a menos no aliado que estava morrendo", "gravidade": "alta"},
+  {"t": 38.5, "quem": "Omasconii", "fez": "usou Every Man for Himself sem estar em CC visível, logo depois do stun de 36.2", "devia": "guardar o racial para um stun com burst ou para o Hammer of Justice", "porque": "foi stunado aos 102.5 e morreu aos 137.9 sem ter como sair de CC", "gravidade": "media"},
+  {"t": 100.3, "quem": "Omasconii", "fez": "gastou GCDs em toggle pet spell/pet autocast setup no meio do 2v2", "devia": "usar runas em Death Coil/Icy Touch ou ativar Anti-Magic Shell", "porque": "num 2v2 de pressão constante, GCD gasto em configurar pet é dano e defesa perdidos", "gravidade": "baixa"},
+  {"t": 61.6, "quem": "Heruxi", "fez": "Divine Sacrifice → cancelado em 0.4 s logo depois de Celianeyii morrer", "devia": "fazer isso um pouco antes, enquanto Celianeyvi tomava o burst", "porque": "o redutor de dano de Divine Guardian chegou tarde demais para salvar o Warrior", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 49.0, "quem": "Omasconii", "descricao": "Icebound Fortitude com 44% de vida no pico do burst dos warriors, e Gargoyle logo em seguida."},
+  {"t": 56.4, "quem": "Omasconvi", "descricao": "Icebound Fortitude com 36% de vida no momento em que estava sendo focado."},
+  {"t": 156.0, "quem": "Heruvii", "descricao": "Divine Protection quando ficou sozinho contra o DK, prolongando a luta."}
+ ],
+ "erros_da_rede": [
+  {"t": 42.2, "quem": "Celianeyii", "acao": "cleave → Celianeyvi", "porque": "cleave num alvo só, quando Mortal Strike era o golpe prioritário contra o Paladino que curava"},
+  {"t": 100.3, "quem": "Omasconii", "acao": "pet autocast setup → Omasconvi", "porque": "GCD gasto em configurar pet no meio de um 2v2 apertado"},
+  {"t": 70.5, "quem": "Heruvii", "acao": "cleanse disease on party → Omasconvi", "porque": "dispel de doença que o DK reaplica na hora, em vez de curar"}
+ ]}

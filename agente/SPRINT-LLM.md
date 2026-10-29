@@ -135,6 +135,17 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
   kill" era 76% das 44 notas/luta e o alvo é escolhido pelas regras, não pela rede → **desligado** (`FOCO = False`,
   volta na fase B). Sobram ~10 notas/luta, com peso extra 0,3 (`PLANO_PESO`). Auditoria do manual: só 2v2 e 4
   classes, Silence/Psychic Horror listados no Disc, DR incompleto e contraditório (Fear 8 ou 10 s).
+- **V5 do especialista — dados (29/10 ~11:30):** 100 lutas analisadas por 10 subagentes Opus sem vencedor
+  (`ml/runs/especialista/opus-v5/`, 5,8 erros/luta; ~1,5 M tokens; pararam no limite da sessão às 10:3x e foram
+  retomados às 10:55). Dataset `--v5`: Gemini limpo (sai erro que contradiz o glossário; situação desconhecida
+  neutra) + Opus x3, até 7 erros. Viés do alvo de treino: 90% → 86% em quem perdeu.
+- **Teste cego 2 (V5), congelado antes do treino:** 20 lutas de hoje (R0422+, nunca vistas), referência de 2
+  subagentes sem vencedor em `cego2-opus/`, sha256 `7f6605a9…`; régua `compara.py --cego2`. A referência também põe
+  85% em quem perdeu → boa parte é sinal real (quem perde erra mais). Gemini: momento 16/20, achou 35/115,
+  1,9 sem par/luta, 87% em quem perdeu.
+- **Critério da V5 (registrado antes do resultado):** no cego 2, JSON 20/20; fatos graves 11/11 (código); momento
+  ≥ 16/20 e achou ≥ 35/115 (≥ Gemini); crítica errada ≤ 0,5/luta e ≤ a do Gemini, as duas julgadas pelo juiz cego
+  (subagente que não sabe qual técnico escreveu cada crítica); ≤ 60 s/luta.
 - **A/B no ar 29/10 09:44 (SP):** terceira rede no C++ (build 20 min, ccache), cópia III nas rodadas (35 trios),
   `ia-ao-vivo` (A, plano) e `ia-ao-vivo-b` (B, fatos + momento), especialista V4 de dia em `servidor.py` só para o
   momento. Versões V9A/V9B no `versoes.json`.

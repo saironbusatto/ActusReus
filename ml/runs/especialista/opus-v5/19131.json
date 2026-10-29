@@ -1,0 +1,20 @@
+{"resumo": "O RPS II matou o Zebedeu depois que ele queimou evasion, vanish e cloak em 2 s logo no começo, e então pegou o Heshoii com kidney + blind no curador + shadow dance/cheap shot, sem que o mage usasse ice block.",
+ "momento_decisivo": {"t": 48.2, "descricao": "Zebedeu, a 38-49%, empilhou evasion (46.4), vanish (48.2) e cloak of shadows (48.6) em dois segundos; ficou sem nenhum defensivo e sem cura forte do Amnesian, e morreu ao segundo ataque (kidney 65.0, morte 73.4)."},
+ "erros": [
+  {"t": 48.2, "quem": "Zebedeu", "fez": "vanish e cloak logo após a evasion, todos entre 46.4 e 48.6 s", "devia": "usar um defensivo por vez (evasion contra o rogue já bastava) e guardar vanish/cloak para a próxima janela", "porque": "no kidney shot de 65.0 ele não tinha mais nada e morreu aos 73.4 com o trinket só adiando", "gravidade": "alta"},
+  {"t": 38.0, "quem": "Amnesian", "fez": "holy fire, smite e mind sear (38.0-41.1) enquanto o Zebedeu caía para 54%", "devia": "curar/escudar o parceiro focado e dispelar; o disc priest cura e controla, não bate", "porque": "o time perdeu o primeiro duelo de pressão e o rogue entrou na luta já sem vida", "gravidade": "media"},
+  {"t": 99.4, "quem": "Heshoii", "fez": "trinket do kidney com 33% e, 0,9 s depois, comeu o cheap shot do shadow dance; morreu aos 103.7 sem ter usado ice block nenhuma vez", "devia": "ice block ao sair do kidney (ou no cheap shot), esperando o curador voltar do blind", "porque": "frost mage com ice block disponível não pode morrer para um rogue sozinho em 6 s", "gravidade": "alta"},
+  {"t": 40.6, "quem": "Heshoii", "fez": "flamestrike (e blizzard em 48.3) com os rogues fora de stealth", "devia": "frostbolt/poly no curador ou nova + ice lance no rogue", "porque": "AoE de fogo de mage frost sem alvo furtivo é dano mínimo e tempo de conjuração perdido", "gravidade": "baixa"},
+  {"t": 91.3, "quem": "Amnesian", "fez": "shoot e mana burn (91.0-91.3, de novo em 104.2) com o Heshoii a 49% sendo treinado", "devia": "escudar/curar o mage e guardar psychic scream para tirar o Zebedeuxiv", "porque": "mana burn no shaman não ameaça nada nesse momento; o mage caiu em seguida", "gravidade": "media"},
+  {"t": 74.1, "quem": "Heshoii", "fez": "evocation logo após a morte do parceiro, com o Zebedeuxiv livre por perto", "devia": "kitar com frost nova/blink e só evocar protegido", "porque": "canalizar 8 s em 2v3 aberto convida o rogue; foi interrompido e virou alvo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 97.0, "quem": "Zebedeuxiv", "descricao": "kidney no Heshoii, blind no Amnesian (98.1) e shadow dance + cheap shot (99.7-100.3) depois do trinket: sequência de kill limpa"},
+  {"t": 43.7, "quem": "Amnesianxxv", "descricao": "psychic scream no Zebedeu emendado no kidney do parceiro, segurando o rogue inimigo"},
+  {"t": 49.4, "quem": "Amnesianxxv", "descricao": "silence on enemy healer no Amnesian durante a pressão no Zebedeu"}
+ ],
+ "erros_da_rede": [
+  {"t": 48.6, "quem": "Zebedeu", "acao": "cloak of shadows logo depois do vanish", "porque": "cloak não reduz o dano físico do rogue e foi gasto 0,4 s depois do vanish; desperdiçou o defensivo"},
+  {"t": 47.1, "quem": "Zebedeu", "acao": "fan of knives no Zebedeuxiv", "porque": "a 38% e sob foco, FoK é dano baixo; devia buscar controle (blind/gouge) ou escapar"},
+  {"t": 80.5, "quem": "Kwongwegaxiv", "acao": "mana spring totem", "porque": "em pleno avanço sobre o mage, gastou GCD num totem de mana em vez de pressionar com purge/wind shear ou curar"}
+ ]}

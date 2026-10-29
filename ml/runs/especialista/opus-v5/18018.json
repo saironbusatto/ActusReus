@@ -1,0 +1,72 @@
+{
+ "resumo": "O Ominous travou o Kwongwegaxvi com spell locks enquanto o Beteranii pressionava. O xamã morreu limpando veneno em vez de se curar, e o rogue foi abatido depois.",
+ "momento_decisivo": {
+  "t": 65.5,
+  "descricao": "Ominous usa pet spell lock no Kwongwegaxvi a 41%: o curador fica sem curas, e o Beteranii o mata com kill shot aos 78.9."
+ },
+ "erros": [
+  {
+   "t": 77.8,
+   "quem": "Kwongwegaxvi",
+   "fez": "cleanse spirit poison a vida baixa",
+   "devia": "se curar com riptide ou healing wave",
+   "porque": "morreu aos 79.2 sem cura em si",
+   "gravidade": "alta"
+  },
+  {
+   "t": 84.4,
+   "quem": "Amnesianxxix",
+   "fez": "smite e mind blast com o Zebedeuxvi baixo",
+   "devia": "curar o rogue",
+   "porque": "ele morreu aos 86.5",
+   "gravidade": "alta"
+  },
+  {
+   "t": 48.2,
+   "quem": "Zebedeuxvi",
+   "fez": "kidney shot no Pehdicouve",
+   "devia": "usar o kidney no Ominous para tirar a pressão do curador",
+   "porque": "o druida não estava sob ameaça de abate",
+   "gravidade": "media"
+  },
+  {
+   "t": 71.8,
+   "quem": "Amnesianxxix",
+   "fez": "alterna remove shadowform e shadowform (48.7, 54.6, 71.8, 75.7)",
+   "devia": "escolher um papel e ficar nele",
+   "porque": "GCDs e mana gastos sem efeito",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 65.5,
+   "quem": "Ominous",
+   "descricao": "Spell lock no curador, que prepara o abate"
+  },
+  {
+   "t": 57.2,
+   "quem": "Beteranii",
+   "descricao": "Silencing shot no Kwongwegaxvi"
+  },
+  {
+   "t": 41.4,
+   "quem": "Pehdicouve",
+   "descricao": "Barkskin sob o stun"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 43.8,
+   "quem": "Pehdicouve",
+   "acao": "caster form → Zebedeuxvi",
+   "porque": "troca de forma redundante"
+  },
+  {
+   "t": 83.6,
+   "quem": "Beteranii",
+   "acao": "serpent sting → Zebedeuxvi",
+   "porque": "o rogue estava baixo e pedia dano direto"
+  }
+ ]
+}

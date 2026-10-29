@@ -1,0 +1,19 @@
+{"resumo": "Espelho de rogue/priest/shaman resolvido pela cura: Kwongwegaxiv curou mais que o dobro de Kwongwegaxii, que gastou a luta em purge e cleanse poison. Zebedeuxii, sem cooldowns desde os 68 s, morreu aos 111.1 sob mind flay/mind blast de Amnesianxxv, e o healer Kwongwegaxii caiu aos 143.0.",
+ "momento_decisivo": {"t": 103.4, "descricao": "Com Zebedeuxii já sem evasion, cloak, vanish e trinket e recebendo mind flay de Amnesianxxv (102.8-105.1), o healer Kwongwegaxii usa purge e cleanse poison em vez de curar; quando as healing waves começam (106.3) ele é stunado (107.9) e o rogue morre."},
+ "momento_aceitos": [90.6, 102.8, 103.4, 107.9],
+ "erros": [
+  {"t": 103.4, "quem": "Kwongwegaxii", "fez": "purge e, aos 104.9, cleanse spirit poison com Zebedeuxii sendo derretido por mind flay", "devia": "riptide + healing wave em Zebedeuxii, ou grounding totem/wind shear em Amnesianxxv", "porque": "o rogue estava sem nenhum defensivo; só a cura salvava, e ela veio tarde, interrompida pelo stun dos 107.9", "gravidade": "alta"},
+  {"t": 108.7, "quem": "Amnesianix", "fez": "voltou para a shadowform depois de um único flash heal, com Zebedeuxii prestes a morrer", "devia": "continuar curando (power word: shield, flash heal) até o rogue se estabilizar, ainda mais com o shaman stunado", "porque": "o único outro curador estava em stun aos 107.9 e Zebedeuxii morreu 2.4 s depois", "gravidade": "alta"},
+  {"t": 86.9, "quem": "Kwongwegaxii", "fez": "purge em sequência (75.8, 78.0, 82.4, 86.9, 91.3, 95.7, 100.1)", "devia": "usar os GCDs em cura e em wind shear nos priests inimigos", "porque": "terminou com 43 mil de cura contra 92 mil do healer inimigo, e o time perdeu justamente na diferença de cura", "gravidade": "media"},
+  {"t": 102.8, "quem": "Zebedeuxii", "fez": "continuou com hemorrhage em Kwongwegaxiv (102.8-105.8, 111.8) sem cooldown nenhum e com a vida caindo", "devia": "sair de linha de visão atrás de pilar ou usar kidney/gouge para se afastar até a cura chegar", "porque": "evasion (56.5), trinket (62.4), vanish (65.4) e cloak (68.4) já tinham sido usados, e ficar no meio do dano de dois priests foi fatal", "gravidade": "media"},
+  {"t": 136.9, "quem": "Kwongwegaxii", "fez": "cleanse spirit poison seguido (133.5, 136.9, 141.3) enquanto Zebedeuxiv e Amnesianxxv o atacavam", "devia": "se curar com healing wave/riptide e usar o earth shield/totem para sobreviver no 1v3", "porque": "tirar veneno não impede o dano direto de hemorrhage, SW:D e mind blast, e ele morreu aos 143.0", "gravidade": "media"},
+  {"t": 132.7, "quem": "Amnesianix", "fez": "dispersion com 95% de vida", "devia": "guardar a dispersion para quando estivesse sob pressão ou usá-la para escapar dos stuns do rogue", "porque": "o maior cooldown defensivo do shadow priest foi gasto sem ameaça, e o time dele estava perdendo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 62.1, "quem": "Amnesianxxv", "descricao": "Psychic scream com Zebedeuxii a 31%, forçando o trinket dele"},
+  {"t": 63.2, "quem": "Zebedeuxiv", "descricao": "Shadow dance + cheap shot em Amnesianix, forçando o trinket do priest"},
+  {"t": 67.3, "quem": "Zebedeuxii", "descricao": "Blind no healer inimigo Kwongwegaxiv quando ele estava a 46%"},
+  {"t": 78.7, "quem": "Amnesianxxv", "descricao": "Psychic horror em Zebedeuxii, segurando o rogue"},
+  {"t": 111.2, "quem": "Amnesianxxv", "descricao": "Silence no healer inimigo logo depois do kill, deixando o 3v2 sem resposta"},
+  {"t": 128.6, "quem": "Kwongwegaxiv", "descricao": "Mana tide totem para manter a cura na parte longa da luta"}
+ ]}

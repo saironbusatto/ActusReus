@@ -1,0 +1,20 @@
+{"resumo": "Celianeyvi deu charge e bladestorm em Naminii e Omasconvi entrou com empower rune weapon. O xamã morreu aos 46.3 enquanto o paladino aliado limpava doenças, e no 2v3 Celianeyvii caiu aos 67.9.",
+ "momento_decisivo": {"t": 37.3, "descricao": "Heruxii passou de 37.3 a 40.5 lançando cleanse disease (×3) enquanto Naminii levava o burst de bladestorm + DK. Só voltou a curar com holy light aos 51.2, depois que o xamã já tinha morrido."},
+ "erros": [
+  {"t": 37.3, "quem": "Heruxii", "fez": "lançou cleanse disease três vezes e hand of freedom enquanto Naminii era o alvo", "devia": "curar Naminii com holy light/flash of light e usar hand of protection nele durante o bladestorm", "porque": "o xamã caiu de cheio a 3% em 10 s; limpar doenças do DK não segura burst físico", "gravidade": "alta"},
+  {"t": 54.8, "quem": "Heruxii", "fez": "usou divine plea com o time em 2v3 e Celianeyvii sob pressão", "devia": "guardar o divine plea para um momento calmo, ou usar antes da luta", "porque": "divine plea corta 50% da cura, e o warrior dele morreu aos 67.9", "gravidade": "media"},
+  {"t": 57.9, "quem": "Celianeyvii", "fez": "spamou heroic strike e cleave (57.9-65.4), quase sem mortal strike", "devia": "manter mortal strike em Heruxi ou no DK e gastar rage com slam/overpower", "porque": "contra um time com curandeiro, o -50% de cura do mortal strike é a ferramenta mais importante; o rage foi para golpes fracos", "gravidade": "media"},
+  {"t": 60.0, "quem": "Celianeyvii", "fez": "não usou nenhum defensivo (shield wall, spell reflect, intimidating shout) durante o foco do DK", "devia": "usar shield wall ou trocar para defensive stance quando a vida caiu, e dar intimidating shout no DK/warrior", "porque": "ele morreu aos 67.9 com um paladino curando, então um defensivo teria segurado a luta", "gravidade": "alta"},
+  {"t": 41.7, "quem": "Naminii", "fez": "lançou chain lightning e purge sob bladestorm e foco do DK", "devia": "se defender: earthbind/frost shock no warrior, se curar, ir para perto do paladino", "porque": "o xamã era o alvo e caiu a 3% sem ter tentado sobreviver", "gravidade": "media"},
+  {"t": 45.7, "quem": "Naminii", "fez": "usou o trinket a 3% de vida sem estar em CC", "devia": "usar antes, para escapar de um controle, ou se curar", "porque": "o trinket não cura nem reduz dano; a 3% fora de CC ele não serviu de nada, e o xamã morreu 0.6 s depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 36.6, "quem": "Celianeyvi", "descricao": "Charge em Naminii e bladestorm logo depois, burst que abriu o kill no xamã."},
+  {"t": 42.8, "quem": "Omasconvi", "descricao": "Empower rune weapon na pressão e icebound fortitude a 41%, sobreviveu ao contra-ataque."},
+  {"t": 45.0, "quem": "Heruxi", "descricao": "Divine shield a 8%: salvou o paladino curandeiro no auge do bladestorm inimigo."}
+ ],
+ "erros_da_rede": [
+  {"t": 35.8, "quem": "Celianeyvii", "acao": "execute", "porque": "execute só funciona com o alvo abaixo de 20%, e Heruxi estava cheio aos 35.8"},
+  {"t": 42.7, "quem": "Naminii", "acao": "elemental mastery", "porque": "usou o cooldown de dano enquanto era o alvo e estava caindo, quando a prioridade era sobreviver"},
+  {"t": 62.6, "quem": "Heruxii", "acao": "divine sacrifice", "porque": "cancelou o divine sacrifice 0.4 s depois (63.0), e o cooldown foi gasto sem efeito"}
+ ]}

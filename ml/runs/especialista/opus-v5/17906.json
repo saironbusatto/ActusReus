@@ -1,0 +1,80 @@
+{
+ "resumo": "O Ominousxxiv travou os curadores e o druida com spell lock. O Kwongwegaxix, que gastou a abertura dando dano, morreu tentando uma cura longa; o moonkin caiu depois.",
+ "momento_decisivo": {
+  "t": 63.0,
+  "descricao": "Ominousxxiv usa pet spell lock no Kwongwegaxix, que conjurava healing wave a 8%; ele morre aos 63.9."
+ },
+ "erros": [
+  {
+   "t": 63.0,
+   "quem": "Kwongwegaxix",
+   "fez": "healing wave (cura longa) a 8%",
+   "devia": "usar riptide e nature's swiftness, ou trinket e fuga antes de chegar tão baixo",
+   "porque": "a conjuração longa é exatamente o que o spell lock pune",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.8,
+   "quem": "Kwongwegaxix",
+   "fez": "lightning bolt e flame shock na abertura (41.3, 45.8, 48.8)",
+   "devia": "curar e pôr totens contra o affliction e o rogue",
+   "porque": "a equipe dele levou dano pesado enquanto o xamã jogava de DPS",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.5,
+   "quem": "Pehdicouv",
+   "fez": "cyclone enquanto o curador estava a 8%",
+   "devia": "sair do moonkin e curar o Kwongwegaxix",
+   "porque": "o curador morreu sem nenhuma ajuda do druida",
+   "gravidade": "alta"
+  },
+  {
+   "t": 46.0,
+   "quem": "Zebedeuxi",
+   "fez": "evasion contra dano de caster (starfall, DoTs)",
+   "devia": "usar cloak of shadows, que bloqueia magia",
+   "porque": "a evasion só esquiva de golpes físicos; o rogue seguiu caindo",
+   "gravidade": "media"
+  },
+  {
+   "t": 39.2,
+   "quem": "Ominousxxiv",
+   "fez": "demonic circle: summon de novo aos 39.2, já tinha feito aos 37.4",
+   "devia": "pôr o círculo uma vez e preparar a abertura",
+   "porque": "GCD gasto à toa",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 42.4,
+   "quem": "Ominousxxiv",
+   "descricao": "Pet spell lock no Pehdicouv para cortar o druida no começo"
+  },
+  {
+   "t": 55.0,
+   "quem": "Zebedeuxi",
+   "descricao": "Kick no curador enquanto o time aplicava pressão"
+  },
+  {
+   "t": 66.9,
+   "quem": "Zebedeuxi",
+   "descricao": "Vanish e cloak a 23% para sair vivo do foco"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 48.8,
+   "quem": "Kwongwegaxix",
+   "acao": "flame shock → Zebedeuxi",
+   "porque": "o curador causando dano em vez de curar"
+  },
+  {
+   "t": 67.9,
+   "quem": "Ominousdesvi",
+   "acao": "curse of the elements → Zebedeuxi",
+   "porque": "o alvo estava no cloak of shadows, imune a magia"
+  }
+ ]
+}

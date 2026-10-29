@@ -1,0 +1,20 @@
+{"resumo": "O felhunter de Ominous trancou Kwongwegaxx duas vezes seguidas e o hunter terminou o curador aos 76.7; sem cura, Pehdibalii (silenciado pelo hunter) caiu aos 90.1 e Ominousdesix ficou sozinho.",
+ "momento_decisivo": {"t": 67.2, "descricao": "Spell lock de Ominous no Kwongwegaxx, repetido aos 71.7; o shaman fica sem conseguir curar e morre aos 76.7 sem que o druid do time o ajudasse."},
+ "erros": [
+  {"t": 75.4, "quem": "Kwongwegaxx", "fez": "purge um segundo antes de morrer", "devia": "usar nature's swiftness/healing wave em si, grounding totem contra o lock ou sair de linha de visão", "porque": "estava sendo focado e saindo de dois silences; o GCD em purge não fez nada pela sobrevivência dele", "gravidade": "alta"},
+  {"t": 36.3, "quem": "Kwongwegaxx", "fez": "purge em sequência na abertura (36.3 e 38.6)", "devia": "colocar tremor/grounding e pré-curar sob bloodlust", "porque": "na abertura contra hunter e warlock o curador precisa se posicionar e se proteger do fear/spell lock, não remover buffs", "gravidade": "media"},
+  {"t": 76.4, "quem": "Pehdibalii", "fez": "entangling roots no Pehdicouve com o próprio curador morrendo", "devia": "trocar para cura (rejuvenation, regrowth) no Kwongwegaxx ou cyclonar o hunter", "porque": "o shaman morreu 0.3 s depois; root num druida curador quase não muda nada", "gravidade": "alta"},
+  {"t": 47.9, "quem": "Pehdibalii", "fez": "entangling roots no Beteranii (repetido aos 67.8)", "devia": "usar cyclone no hunter ou no curador inimigo", "porque": "hunter atira de longe; enraizá-lo não reduz o dano dele e gasta GCD do moonkin", "gravidade": "media"},
+  {"t": 57.5, "quem": "Pehdibalii", "fez": "barkskin com 81% de vida", "devia": "guardar Barkskin para quando o hunter abrisse burst com ele baixo", "porque": "morreu aos 90.1, a 52% silenciado e sem defensivo disponível", "gravidade": "media"},
+  {"t": 35.3, "quem": "Pehdibalii", "fez": "hurricane cancelado aos 37.4", "devia": "usar dano de alvo único (wrath/starfire, insect swarm) no alvo do time", "porque": "canal cancelado logo depois só desperdiça mana e tempo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 67.2, "quem": "Ominous", "descricao": "Spell lock do felhunter no curador seguido de spell lock aos 71.7, abrindo o kill do shaman."},
+  {"t": 40.0, "quem": "Beteranii", "descricao": "Silencing shot no moonkin logo após ele entrar em caster form, cortando cura e controle."},
+  {"t": 89.8, "quem": "Beteranii", "descricao": "Kill shot para finalizar o Pehdibalii baixo."}
+ ],
+ "erros_da_rede": [
+  {"t": 37.6, "quem": "Beteranii", "acao": "tranquilizing shot → Ominousdesix", "porque": "logo na abertura com rapid fire e kill command ativos, gastar GCD num dispel quase sem valor desperdiça a janela de burst."},
+  {"t": 54.1, "quem": "Beteranii", "acao": "hunter's mark → Ominousdesix", "porque": "trocou de alvo no meio da segunda janela de rapid fire/kill command, dispersando o dano que estava no curador."},
+  {"t": 47.0, "quem": "Ominousdesix", "acao": "life tap", "porque": "o hunter abria burst nele; trocar vida por mana a essa altura só facilita o kill inimigo."}
+ ]}

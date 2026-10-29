@@ -1,0 +1,90 @@
+{
+ "resumo": "Ominous tirou o curador Pehdicouii da luta (spell lock aos 81.1 e fear aos 82.0) e Beteranii trocou para Beteraniv aos 83.4; sem cura, Beteraniv caiu e o Ominoustres, já baixo e sem curador, morreu logo depois.",
+ "momento_decisivo": {
+  "t": 81.1,
+  "descricao": "Ominous silencia Pehdicouii com o felhunter e emenda fear aos 82.0; com o curador do Wild II preso, Beteranii marca Beteraniv aos 83.4 e o mata sem resposta."
+ },
+ "momento_aceitos": [
+  81.1,
+  82.0,
+  83.4,
+  91.6
+ ],
+ "erros": [
+  {
+   "t": 71.9,
+   "quem": "Beteraniv",
+   "fez": "volley (os dois caçadores usaram volley ao mesmo tempo)",
+   "devia": "manter dano em alvo único (aimed/chimera/steady) ou usar a janela para silencing shot/CC",
+   "porque": "volley é canalizado, fraco em arena e o dano em área quebrou as entangling roots que os druidas acabavam de lançar (71.5/72.1)",
+   "gravidade": "media"
+  },
+  {
+   "t": 83.7,
+   "quem": "Pehdicouii",
+   "fez": "ficou em fear (vida 100%) sem usar o trinket enquanto Beteraniv era focado",
+   "devia": "usar o pvp trinket no fear para voltar a curar o Beteraniv",
+   "porque": "o trinket só saiu aos 129.4 com 13% de vida; Beteraniv morreu aos 92.8 com o curador preso no CC",
+   "gravidade": "alta"
+  },
+  {
+   "t": 92.8,
+   "quem": "Beteraniv",
+   "fez": "morreu sem usar deterrence nem nenhum defensivo",
+   "devia": "deterrence quando o Beteranii trocou para ele aos 83.4 com o curador em fear",
+   "porque": "deterrence anula o dano do caçador inimigo por 5 s e dava tempo para o Pehdicouii sair do fear",
+   "gravidade": "media"
+  },
+  {
+   "t": 92.9,
+   "quem": "Ominoustres",
+   "fez": "após a morte do parceiro seguiu com curse of agony/corruption no Ominous",
+   "devia": "defensivo/healthstone ou fear no Beteranii e kitar até o curador voltar",
+   "porque": "estava em 43% desde 84.3 e foi o próximo a morrer (98.2) sem usar nenhum recurso de sobrevivência",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.7,
+   "quem": "Ominoustres",
+   "fez": "espalhou DoTs trocando de alvo (Pehdicouve, Ominous, Beteranii) ao longo da luta",
+   "devia": "manter pressão num alvo só junto com o Beteraniv",
+   "porque": "o Beteraniv batia no Ominous e o Ominoustres dividia o dano, sem nunca forçar cooldowns do outro time",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 80.5,
+   "quem": "Pehdicouii",
+   "fez": "shadowmeld no meio da luta com o parceiro sob pressão",
+   "devia": "manter a cura/HoTs no Beteraniv ou se posicionar fora da linha de visão do warlock",
+   "porque": "shadowmeld não evita spell lock/fear já em curso; 0.6 s depois veio o silence e logo o fear",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 81.1,
+   "quem": "Ominous",
+   "descricao": "Spell lock + fear no curador inimigo abriram a janela de abate."
+  },
+  {
+   "t": 83.4,
+   "quem": "Beteranii",
+   "descricao": "Trocou para o Beteraniv no instante em que o curador dele ficou preso."
+  },
+  {
+   "t": 72.6,
+   "quem": "Ominoustres",
+   "descricao": "Howl of terror pôs o Beteranii em fear, aliviando o próprio time."
+  },
+  {
+   "t": 125.3,
+   "quem": "Pehdicouii",
+   "descricao": "Nature's swiftness + healing touch para se salvar no fim."
+  },
+  {
+   "t": 76.8,
+   "quem": "Pehdicouve",
+   "descricao": "Innervate no meio da luta longa para manter a mana."
+  }
+ ]
+}

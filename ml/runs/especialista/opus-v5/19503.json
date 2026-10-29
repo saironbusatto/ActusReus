@@ -1,0 +1,19 @@
+{"resumo": "O RMP travou Omasconii com frost nova, deep freeze, cold snap e um segundo deep freeze, enquanto Heruvii quase não curava. O DK morreu aos 65.3 e o warrior ficou isolado, levou psychic scream, kidney shot e morreu.",
+ "momento_decisivo": {"t": 49.5, "descricao": "Heshovi deu deep freeze em Omasconii, que já tinha gasto o every man for himself num root, e emendou cold snap para ter um segundo deep freeze aos 57.9. O DK ficou preso sem resposta e sem cura do paladino até morrer."},
+ "erros": [
+  {"t": 45.7, "quem": "Omasconii", "fez": "every man for himself para sair do root do frost nova", "devia": "segurar o trinket para o deep freeze ou o kidney shot e tratar o root com death grip ou Hand of Freedom do paladino", "porque": "Root não impede o DK de bater nem de usar defensivos. Sem trinket, ele levou dois deep freeze aos 49.5 e 57.9 sem poder sair, e foi daí que morreu", "gravidade": "alta"},
+  {"t": 63.5, "quem": "Heruvii", "fez": "cleanse poison com Omasconii abaixo de 20% de vida e preso no root, depois de passar de 49 a 63 s sem nenhuma cura", "devia": "flash of light e holy light no DK, divine sacrifice ou hand of sacrifice no burst do mago", "porque": "O paladino terminou com 2052 de cura numa luta que se decidiu por dano em um alvo só. Tirar veneno não segurava os frostbolts que estavam matando o DK", "gravidade": "alta"},
+  {"t": 49.2, "quem": "Celianeyii", "fez": "heroic strike e cleave sem parar em Heshovi, que estava com ice barrier", "devia": "mortal strike no alvo da equipe ou no priest e hamstring ou intercept para tirar o mago de cima do DK", "porque": "Bater no escudo de gelo não tira vida do mago. Sem mortal strike, o efeito de redução de cura caía e o priest curava o RMP sem dificuldade", "gravidade": "media"},
+  {"t": 65.0, "quem": "Omasconii", "fez": "summon gargoyle só aos 65 s, com o DK quase morto", "devia": "invocar a gargoyle junto com o empower rune weapon aos 48.1, quando o rogue estava em evasion e com 44%", "porque": "A gargoyle precisa de 30 s para dar dano. Invocada na hora da morte, ela não contribuiu para nenhuma morte", "gravidade": "media"},
+  {"t": 46.2, "quem": "Celianeyii", "fez": "bladestorm em Heshovi enquanto Omasconii batia em Zebedeuvi", "devia": "usar o bladestorm no mesmo alvo do DK (Zebedeuvi estava com 44% aos 48.0) ou guardar para pressionar o healer", "porque": "O dano se dividiu entre dois alvos e nenhum dos dois morreu. O rogue se salvou com evasion e o mago com ice barrier", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 49.8, "quem": "Heshovi", "descricao": "Cold snap logo depois do deep freeze para ter ice barrier e um segundo deep freeze no mesmo DK, transformando o controle em morte."},
+  {"t": 67.4, "quem": "Amnesianvii", "descricao": "Psychic scream no warrior logo depois da morte do DK, forçando o every man for himself e deixando o caminho livre para o polymorph no paladino."},
+  {"t": 91.9, "quem": "Heruvii", "descricao": "Divine shield com 1% de vida no cheap shot e ambush, evitando a morte imediata."}
+ ],
+ "erros_da_rede": [
+  {"t": 43.1, "quem": "Celianeyii", "acao": "cleave → Zebedeuvi", "porque": "Cleave é só para gastar rage. Com rage disponível, o warrior devia usar mortal strike para aplicar a redução de cura no rogue em stun."},
+  {"t": 65.7, "quem": "Celianeyii", "acao": "cleave → Heshovi", "porque": "Logo depois da morte do DK, o warrior seguiu gastando rage no mago em vez de procurar o priest ou se defender. Pouco depois levou o fear."},
+  {"t": 104.1, "quem": "Heruvii", "acao": "divine sacrifice → Zebedeuvi", "porque": "Sozinho, sem nenhum aliado vivo, divine sacrifice não protege ninguém e foi cancelado em seguida. Foi um GCD perdido."}
+ ]}

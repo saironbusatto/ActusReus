@@ -1,0 +1,19 @@
+{"resumo": "Na abertura morreram Kwongwegavi (71.9), Zebedeuxiv (74.8) e Zebedeuxi (90.4). Ominousxxiv ficou sozinho contra Kwongwegaxiv e Amnesianxxv e venceu os dois por desgaste com Spell Lock, Fear, Devour Magic e DoTs, porque a dupla do RPS nunca montou pressão de verdade nele.",
+ "momento_decisivo": {"t": 92.1, "descricao": "No 2v1 que começou aos 90.4, Amnesianxxv foi para uma troca de DoTs (Vampiric Touch) com um Warlock que tinha Felhunter, e Kwongwegaxiv quase não deu dano. Com o Devour Magic e o Spell Lock de Ominousxxiv, o RPS nunca levou o Warlock perto da morte e perdeu por desgaste."},
+ "erros": [
+  {"t": 49.1, "quem": "Zebedeuxiv", "fez": "usou Evasion, Vanish e Cloak of Shadows em 5 s (49.1-54.5)", "devia": "usar um defensivo por vez e guardar Cloak para os DoTs do Warlock", "porque": "aos 67-74 tomou Haunt/UA de Ominousxxiv sem Cloak e morreu aos 74.8", "gravidade": "alta"},
+  {"t": 56.4, "quem": "Kwongwegavi", "fez": "como curador focado (79% aos 47.2), gastou quatro Purge seguidos (56.4-64.2) e Chain Lightning na abertura", "devia": "se curar (Riptide/Healing Wave), usar Nature's Swiftness e ficar atrás de pilar", "porque": "o Shaman foi morto pelo rogue aos 71.9 sem ter feito quase nenhuma cura", "gravidade": "alta"},
+  {"t": 80.5, "quem": "Ominousxxiv", "fez": "lançou Life Tap três vezes (80.5-83.6) com o Kidney Shot de Zebedeuxi em Amnesianxxv, que estava com 18% de vida", "devia": "dar Haunt/Shadow Bolt/Drain Soul no Priest stunado para fechar o kill", "porque": "era a janela para ganhar a luta com 2v2; o Priest sobreviveu e Zebedeuxi morreu aos 90.4", "gravidade": "alta"},
+  {"t": 140.4, "quem": "Amnesianxxv", "fez": "usou Dispersion com 100% de vida", "devia": "guardar Dispersion para escapar de Fear/DoT em vida baixa", "porque": "foi um cooldown de 2 minutos sem efeito nenhum", "gravidade": "media"},
+  {"t": 122.7, "quem": "Amnesianxxv", "fez": "no 2v1, gastou os GCDs em Vampiric Touch/Dispel contra um Warlock com Felhunter", "devia": "dar dano direto (Mind Blast, Mind Flay, Shadow Word: Death) e encaixar Psychic Horror/Silence no burst", "porque": "o Devour Magic e as rodadas de dispel apagavam os DoTs, e o Warlock nunca passou de 77% de vida", "gravidade": "media"},
+  {"t": 137.7, "quem": "Kwongwegaxiv", "fez": "no 2v1, só curou e usou Wind Shear/Purge, sem quase nenhum dano", "devia": "somar Flame Shock/Lava Burst ao dano do Priest", "porque": "dois contra um precisa de dano dos dois para vencer o Warlock que se cura com Drain/Life Tap", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 71.9, "quem": "Zebedeuxiv", "descricao": "Kidney Shot no curador Kwongwegavi já baixo, fechando o primeiro kill."},
+  {"t": 94.9, "quem": "Ominousxxiv", "descricao": "Howl of Terror e Fear em rodízio entre os dois inimigos, com Spell Lock no Priest, segurando o 1v2."},
+  {"t": 83.5, "quem": "Zebedeuxi", "descricao": "Cloak of Shadows com 21% de vida e logo depois Kidney Shot em Amnesianxxv com 18%, criando uma janela de kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 71.6, "quem": "Amnesianxxv", "acao": "shadowform → Zebedeuxi", "porque": "com 32% de vida e o curador aliado morrendo, entrou em forma de dano em vez de curar"},
+  {"t": 36.2, "quem": "Amnesianxxv", "acao": "shadowform → Ominousxxiv", "porque": "escolheu forma de dano na abertura sendo o segundo curador do time, e logo depois saiu da forma para curar (56.8)"}
+ ]}

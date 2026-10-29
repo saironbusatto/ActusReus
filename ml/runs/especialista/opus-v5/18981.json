@@ -1,0 +1,20 @@
+{"resumo": "Celianeyiv treinou o druida curandeiro com bladestorm e cleave, e Pehdicouii gastou os GCDs finais em cyclone até morrer aos 68.4. Na troca seguinte, Beteraniv matou Celianeyiv com kill shot, mas o TSG matou Ominoustres e depois o hunter sozinho.",
+ "momento_decisivo": {"t": 47.1, "descricao": "Bladestorm de Celianeyiv em cima de Pehdicouii sem nenhum peel do Wild. O druida caiu para 32% aos 53.7 e nunca se recuperou."},
+ "erros": [
+  {"t": 63.5, "quem": "Pehdicouii", "fez": "lançou cyclone (59.6, 63.5, 67.9) enquanto era o alvo com a vida baixa, e morreu 0.5 s depois do último", "devia": "se curar (HoTs, regrowth) ou entrar em bear form e se afastar do warrior", "porque": "o druida era o único curandeiro e o alvo do kill; cada cyclone de 1.5 s parado era um GCD a menos de sobrevivência", "gravidade": "alta"},
+  {"t": 50.8, "quem": "Ominoustres", "fez": "lançou fear três vezes em Heruix (42.4, ~44.3, 50.8), já no DR, enquanto o warrior estava livre no druida", "devia": "dar fear ou death coil em Celianeyiv assim que o bladestorm acabasse", "porque": "o paladino estava a 100% e não era a ameaça; o warrior era quem matava o curandeiro", "gravidade": "media"},
+  {"t": 53.1, "quem": "Beteraniv", "fez": "usou raptor strike e mend pet enquanto o druida aliado caía para 32%", "devia": "usar freezing trap ou scatter shot em Celianeyiv no fim do bladestorm, ou concussive para tirá-lo do druida", "porque": "o hunter tinha o melhor peel do time e não usou nenhum até o silencing shot aos 65.5", "gravidade": "alta"},
+  {"t": 70.1, "quem": "Heruix", "fez": "lançou cleanse magic e hand of freedom enquanto Celianeyiv caía para a faixa de kill shot", "devia": "curar Celianeyiv ou dar hand of protection nele contra o hunter", "porque": "o warrior morreu aos 72.3, com o paladino a 100% e sem pressão", "gravidade": "alta"},
+  {"t": 55.1, "quem": "Celianeyiv", "fez": "usou every man for himself num root com 85% de vida", "devia": "guardar o trinket para fear ou stun durante o kill no druida", "porque": "0.5 s depois levou fear (55.6) e depois stun (60.8), já sem trinket", "gravidade": "media"},
+  {"t": 41.8, "quem": "Beteraniv", "fez": "abriu com tranquilizing shot e rapid fire antes do contato", "devia": "guardar rapid fire para uma janela de dano real e abrir com um trap ou scatter em quem viesse no druida", "porque": "o burst e o GCD da abertura foram gastos antes de haver alvo controlado", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 47.1, "quem": "Celianeyiv", "descricao": "Bladestorm no curandeiro inimigo depois do charge, pressão que forçou barkskin a 32%."},
+  {"t": 65.5, "quem": "Beteraniv", "descricao": "Silencing shot e chimera/kill shot que acabaram com o warrior aos 72.3."},
+  {"t": 70.9, "quem": "Ominoustres", "descricao": "Howl of terror no DK durante o burst dele com empower rune weapon."}
+ ],
+ "erros_da_rede": [
+  {"t": 56.9, "quem": "Ominoustres", "acao": "curse of agony on attacker", "porque": "lançou um DoT lento no warrior enquanto o druida aliado estava a ~32%, quando o certo era fear nesse warrior"},
+  {"t": 70.1, "quem": "Heruix", "acao": "cleanse magic on party", "porque": "dispelou em vez de curar o próprio warrior, que morreu 2 s depois; repetiu aos 72.8"},
+  {"t": 71.5, "quem": "Heruix", "acao": "hand of freedom on party", "porque": "usou freedom em vez de hand of protection, a ferramenta que salvaria o warrior do hunter"}
+ ]}

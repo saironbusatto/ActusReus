@@ -1,0 +1,86 @@
+{
+ "resumo": "O warrior da Thunder derrubou o druida, mas o paladino gastou a vida em divine sacrifice e morreu logo atrás. Sem curador, o Celianeyvii foi abatido pelo hunter.",
+ "momento_decisivo": {
+  "t": 51.7,
+  "descricao": "Heruxii usa divine sacrifice já machucado; o dano redirecionado o mata aos 53.3, e a Thunder perde o curador."
+ },
+ "erros": [
+  {
+   "t": 51.7,
+   "quem": "Heruxii",
+   "fez": "divine sacrifice com a vida baixa",
+   "devia": "usar divine protection ou bubble e se curar",
+   "porque": "o redirecionamento de dano o matou",
+   "gravidade": "alta"
+  },
+  {
+   "t": 46.3,
+   "quem": "Heruxii",
+   "fez": "holy light (cura longa) sob o hunter",
+   "devia": "usar flash of light ou holy shock",
+   "porque": "foi silenciado no meio da conjuração",
+   "gravidade": "media"
+  },
+  {
+   "t": 38.1,
+   "quem": "Heruxii",
+   "fez": "every man for himself para sair de um root a 100%",
+   "devia": "guardar o trinket para stun ou fear",
+   "porque": "CC leve que não pedia trinket",
+   "gravidade": "media"
+  },
+  {
+   "t": 38.4,
+   "quem": "Ominous",
+   "fez": "death coil no Heruxii",
+   "devia": "guardar o death coil para o Celianeyvii depois do bladestorm",
+   "porque": "o warrior seguiu batendo no druida até matá-lo",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.4,
+   "quem": "Beteranii",
+   "fez": "dano no paladino sem peel no warrior",
+   "devia": "usar scatter shot ou trap no Celianeyvii",
+   "porque": "o druida morreu para o warrior",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 36.7,
+   "quem": "Celianeyvii",
+   "descricao": "Charge e bladestorm na abertura"
+  },
+  {
+   "t": 50.6,
+   "quem": "Naminii",
+   "descricao": "Wind shear no druida baixo"
+  },
+  {
+   "t": 61.6,
+   "quem": "Beteranii",
+   "descricao": "Kill shot para matar o Celianeyvii"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 51.7,
+   "quem": "Heruxii",
+   "acao": "divine sacrifice → Pehdicouve",
+   "porque": "o paladino estava baixo e o dano redirecionado o matou"
+  },
+  {
+   "t": 38.4,
+   "quem": "Ominous",
+   "acao": "death coil → Heruxii",
+   "porque": "o único peel instantâneo foi gasto no curador"
+  },
+  {
+   "t": 48.4,
+   "quem": "Heruxii",
+   "acao": "judgement of light → Pehdicouve",
+   "porque": "GCD sem cura com o parceiro sob pressão"
+  }
+ ]
+}

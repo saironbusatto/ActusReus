@@ -1,0 +1,19 @@
+{"resumo": "LSD I pôs no healer Kwongwegaix um Shadowfury e depois um cobalt frag bomb com hurricane e shadow bolt; o shaman, aos 45%, preferiu purge a se curar e morreu aos 62.6. Fireplay ficou 2v3 e perdeu Ominousdesii (96.2) e Heshoix (99.9).",
+ "momento_decisivo": {"t": 56.0, "descricao": "Cobalt frag bomb stuna Kwongwegaix aos 45% logo depois do Shadowfury (52.5), e o dano de hurricane + shadow bolt cai nele sem nenhum peel do time."},
+ "momento_aceitos": [52.5, 56.0, 59.0, 59.5],
+ "erros": [
+  {"t": 59.0, "quem": "Kwongwegaix", "fez": "purge → Kwongwegaxix saindo de um stun com 45% de vida e sob hurricane", "devia": "se curar (riptide + healing wave) ou sair do hurricane", "porque": "o dano estava todo nele, ele era o único healer, e morreu 3.6 s depois", "gravidade": "alta"},
+  {"t": 48.9, "quem": "Kwongwegaix", "fez": "purge em Ominousdesvi e bloodlust (50.3) na abertura, enquanto já era alvo de fear e de dano", "devia": "se manter cheio de vida e posicionado atrás de pilar, sem gastar GCD com purge em warlock", "porque": "quem foi abrir o jogo era o warlock inimigo, e o healer não se preparou para o burst que veio em seguida", "gravidade": "baixa"},
+  {"t": 61.7, "quem": "Ominousdesii", "fez": "pet seduction no healer inimigo Kwongwegaxix enquanto o próprio healer estava a 45% e morrendo", "devia": "fazer peel: death coil/fear em Pehdicouv (que canalizava hurricane) ou seduction em Ominousdesvi", "porque": "o death coil só veio aos 63.4, quando Kwongwegaix já tinha morrido", "gravidade": "media"},
+  {"t": 59.2, "quem": "Heshoix", "fez": "flamestrike em área (59.2, 63.3, 88.5) enquanto o time tinha fear e seduction ativos (fear em Kwongwegaxix aos 64.6, seduction em Ominousdesvi aos 88.5)", "devia": "usar dano de alvo único ou polymorph, sem acertar os alvos sob CC do time", "porque": "dano em área quebra fear e seduction, e o time perdia o CC que estava prendendo o inimigo", "gravidade": "media"},
+  {"t": 51.5, "quem": "Heshoix", "fez": "combustion sem ter feitiço de fogo para usar em seguida (o próximo dano foi só o flamestrike aos 59.2)", "devia": "guardar o combustion para uma janela de kill com fireball/pyroblast", "porque": "o cooldown de dano foi desperdiçado na abertura", "gravidade": "baixa"},
+  {"t": 85.5, "quem": "Pehdicouv", "fez": "pvp trinket num Shadowfury com 78% de vida, no 3v2", "devia": "esperar o stun curto passar e guardar o trinket", "porque": "o stun dura 3 s, ele não corria perigo, e o time já tinha vantagem numérica", "gravidade": "baixa"},
+  {"t": 76.1, "quem": "Ominousdesvi", "fez": "drain soul em Ominousdesii, que ainda estava com bastante vida", "devia": "fazer pressão com chaos bolt/incinerate/conflagrate e deixar o drain soul para quando o alvo estivesse abaixo de 25%", "porque": "o drain soul só tem dano alto em alvo com menos de 25% de vida", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 52.5, "quem": "Ominousdesvi", "descricao": "Shadowfury pegando os três inimigos, entre eles o healer"},
+  {"t": 56.0, "quem": "Pehdicouv", "descricao": "Cobalt frag bomb no healer em seguida, com hurricane aos 59.9 em cima dele"},
+  {"t": 67.6, "quem": "Heshoix", "descricao": "Ice block com 19% de vida, saindo do burst"},
+  {"t": 91.8, "quem": "Heshoix", "descricao": "Counterspell no healer inimigo, silenciando Kwongwegaxix"},
+  {"t": 93.4, "quem": "Ominousdesvi", "descricao": "Drain soul na hora certa para executar Ominousdesii, e death coil em Heshoix aos 96.9"}
+ ]}

@@ -1,0 +1,86 @@
+{
+ "resumo": "O Ominousx manteve o Pehdibalii e o Kwongwegaxx silenciados com o felhunter, e a LSD nunca cuidou do druida baixo; ele morreu e o Ominousdesix caiu depois sem cura.",
+ "momento_decisivo": {
+  "t": 107.0,
+  "descricao": "Ominousx usa pet spell lock no Pehdibalii a 8%: o druida perde as curas de nature e morre aos 109.5, e o Kwongwegaxx também é silenciado no mesmo instante."
+ },
+ "erros": [
+  {
+   "t": 106.3,
+   "quem": "Pehdibalii",
+   "fez": "cyclone com vida muito baixa (8% aos 107.0)",
+   "devia": "se curar com instantâneos (rejuvenation, swiftmend, regrowth com nature's swiftness) ou pedir peel",
+   "porque": "o cyclone tem conjuração longa e não resolve a ameaça; foi silenciado com a cura por fazer",
+   "gravidade": "alta"
+  },
+  {
+   "t": 104.0,
+   "quem": "Pehdibalii",
+   "fez": "moonkin form aos 104.0 e caster form aos 105.6 sob pressão",
+   "devia": "ficar numa forma só e usar o GCD em cura",
+   "porque": "duas trocas de forma em 1.6 s, quando estava perto de morrer",
+   "gravidade": "media"
+  },
+  {
+   "t": 105.1,
+   "quem": "Kwongwegaxx",
+   "fez": "mana tide totem enquanto o Pehdibalii afundava",
+   "devia": "usar riptide ou nature's swiftness com healing wave no druida",
+   "porque": "a mana não importa se o parceiro morre em 4 s",
+   "gravidade": "media"
+  },
+  {
+   "t": 119.5,
+   "quem": "Ominousdesix",
+   "fez": "a 25% de vida continua com corruption e shoot",
+   "devia": "usar defensivos ou a fuga (nunca colocou demonic circle) e quebrar a linha de visão",
+   "porque": "sem curador vivo, ficou parado no alcance da equipe inimiga até morrer",
+   "gravidade": "media"
+  },
+  {
+   "t": 151.6,
+   "quem": "Amnesianxxi",
+   "fez": "dispersion com 100% de vida",
+   "devia": "guardar para quando tomar pressão real",
+   "porque": "defensivo gasto sem ameaça",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 56.2,
+   "quem": "Ominousx",
+   "descricao": "Howl of terror que pega o Pehdibalii e o Ominousdesix de uma vez"
+  },
+  {
+   "t": 41.9,
+   "quem": "Heruiv",
+   "descricao": "Cleanse constante contra corruption, UA e seduction, o que mantém a Shadowplay de pé contra dois bruxos"
+  },
+  {
+   "t": 107.0,
+   "quem": "Ominousx",
+   "descricao": "Spell lock no druida que estava baixo, a jogada que fecha o abate"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 112.5,
+   "quem": "Ominousx",
+   "acao": "toggle pet spell",
+   "porque": "GCD gasto em configuração do pet no meio da luta"
+  },
+  {
+   "t": 83.6,
+   "quem": "Heruiv",
+   "acao": "judgement of light → Ominousdesix",
+   "porque": "o curador gasta GCD em judgement contra bruxos com DoTs no time"
+  },
+  {
+   "t": 93.6,
+   "quem": "Heruiv",
+   "acao": "judgement of light → Ominousdesix",
+   "porque": "de novo judgement em vez de cleanse ou cura sob pressão de affliction"
+  }
+ ]
+}

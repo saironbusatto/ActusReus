@@ -1,0 +1,21 @@
+{"resumo": "Espelho de fire mage + warlock + xamã decidido no Ominousdesii: o dragon's breath do Heshoix gastou o trinket do Heshoxi, mas o frost nova logo depois prendeu o warlock a 26% e o xamã Kwongwegaix gastou GCDs em lifeblood/purge em vez de curar.",
+ "momento_decisivo": {"t": 80.7, "descricao": "Heshoxi usa trinket para sair do dragon's breath e na hora dá frost nova, enraizando Ominousdesii a 26% no meio do burst de conflagrate/chaos bolt do Ominousdesv; o warlock morre aos 87.6."},
+ "erros": [
+  {"t": 86.1, "quem": "Kwongwegaix", "fez": "lifeblood e purge com o parceiro Ominousdesii a 26%", "devia": "riptide + healing wave/lesser healing wave no warlock", "porque": "o warlock estava enraizado e morrendo; os dois GCDs sem cura custaram a primeira morte", "gravidade": "alta"},
+  {"t": 81.2, "quem": "Ominousdesii", "fez": "curse of tongues e cobalt frag bomb enraizado a 26%", "devia": "death coil/fear no mago que o caçava e pedir cura, ou usar shadowfury para fugir do alcance", "porque": "com vida baixa, o GCD em maldição não salva nada; ele morreu 6 s depois", "gravidade": "media"},
+  {"t": 36.3, "quem": "Heshoix", "fez": "combustion, berserking e mirror image logo ao abrir os portões", "devia": "guardar os cooldowns para quando houvesse alvo em controle/abertura de kill", "porque": "ninguém estava em alcance nem controlado; os cooldowns expiraram em flamestrike/blizzard", "gravidade": "media"},
+  {"t": 36.1, "quem": "Heshoxi", "fez": "combustion, mirror image e berserking nos portões", "devia": "segurar para a janela de CC/kill", "porque": "mesmo desperdício: só houve flamestrike em seguida", "gravidade": "media"},
+  {"t": 57.0, "quem": "Heshoix", "fez": "arcane intellect no meio da luta (e focus magic aos 96.8)", "devia": "polymorph no curador ou dano no alvo", "porque": "buffs se põem antes dos portões; no combate é GCD perdido", "gravidade": "baixa"},
+  {"t": 71.3, "quem": "Kwongwegaxi", "fez": "purge em sequência até 76.9", "devia": "wind shear/cura e só purgar buffs importantes", "porque": "o curador gastou vários GCDs e mana em purge com pouco ganho", "gravidade": "baixa"},
+  {"t": 83.2, "quem": "Ominousdesv", "fez": "trinket num stun com 78% de vida", "devia": "guardar o trinket para um CC que ameaçasse morte", "porque": "não havia perigo; ficou sem trinket para o resto da luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 79.9, "quem": "Heshoix", "descricao": "dragon's breath no Heshoxi forçando o trinket do mago inimigo"},
+  {"t": 80.7, "quem": "Heshoxi", "descricao": "frost nova logo depois do trinket, prendendo Ominousdesii a 26% para a morte"},
+  {"t": 74.2, "quem": "Ominousdesv", "descricao": "will of the forsaken para sair do fear e emendar conflagrate + chaos bolt"}
+ ],
+ "erros_da_rede": [
+  {"t": 36.3, "quem": "Heshoix", "acao": "combustion → Heshoxi", "porque": "cooldown ofensivo nos portões, sem alvo em alcance"},
+  {"t": 44.6, "quem": "Ominousdesii", "acao": "corruption → Kwongwegaxi", "porque": "a corruption já tinha sido aplicada no xamã aos 38.8; GCD repetido"},
+  {"t": 88.6, "quem": "Kwongwegaix", "acao": "purge → Kwongwegaxi", "porque": "logo depois da morte do parceiro, sozinho contra três, purgar o curador inimigo não ajudava a sobreviver"}
+ ]}

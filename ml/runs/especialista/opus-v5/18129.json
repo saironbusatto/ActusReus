@@ -1,0 +1,94 @@
+{
+ "resumo": "Thunder II jogou com Celianeyix espalhando dano em área sem mortal strike e sem proteger o curador; a pressão de DoTs e spell locks de Shadowplay deixou Heruxiv a 10% e o warrior morreu depois do psychic scream.",
+ "momento_decisivo": {
+  "t": 68.5,
+  "descricao": "Psychic scream de Amnesianxxiv em Celianeyix a 28% enquanto Heruxiv estava em divine shield: o warrior gasta o trinket e morre aos 72.8 sem cura."
+ },
+ "erros": [
+  {
+   "t": 37.3,
+   "quem": "Celianeyix",
+   "fez": "cleave, thunder clap, sweeping strikes e heroic strike quase a luta toda; mortal strike só aos 61.7",
+   "devia": "manter mortal strike no curador Heruvi (ou no alvo) e usar o rage em dano focado",
+   "porque": "sem o -50% de cura do MS, Heruvi curou 53 mil sem problema; dano em área não mata ninguém em arena",
+   "gravidade": "alta"
+  },
+  {
+   "t": 36.9,
+   "quem": "Celianeyix",
+   "fez": "every man for himself no primeiro fear a 94%",
+   "devia": "aguentar o fear inicial e guardar o racial/trinket para o burst",
+   "porque": "no psychic scream aos 68.5 a 28% ele teve que usar o trinket, e não tinha mais nada",
+   "gravidade": "media"
+  },
+  {
+   "t": 52.4,
+   "quem": "Heruxiv",
+   "fez": "holy light ×3 até 62.1 contra um warlock de felhunter",
+   "devia": "usar flash of light/holy shock e só castar holy light com o spell lock em recarga",
+   "porque": "o holy light foi travado pelo spell lock aos 52.4; com a escola Holy trancada ele chegou a 10%",
+   "gravidade": "media"
+  },
+  {
+   "t": 39.5,
+   "quem": "Heruxiv",
+   "fez": "every man for himself para sair do silence",
+   "devia": "guardar para o fear (veio aos 42.4 a 65%)",
+   "porque": "gastou o racial num silence curto e foi feared 3 s depois sem resposta",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.2,
+   "quem": "Heruxiv",
+   "fez": "divine sacrifice e cancelou aos 63.5",
+   "devia": "não usar ou deixar ativo durante o burst",
+   "porque": "GCD e recarga gastos sem efeito, logo antes de precisar de divine shield a 10%",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 42.4,
+   "quem": "Naminiv",
+   "fez": "não baixou tremor totem contra priest e warlock",
+   "devia": "tremor totem para o curador e o warrior",
+   "porque": "os fears em Heruxiv (42.4) e Celianeyix (36.8, 68.5) decidiram a luta e o tremor anula todos",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 51.1,
+   "quem": "Amnesianxxiv",
+   "descricao": "Psychic horror no warrior, cortando o dano dele."
+  },
+  {
+   "t": 37.6,
+   "quem": "Ominousxii",
+   "descricao": "Spell locks seguidos em Naminiv e Heruxiv, travando cura e dano inimigo a luta toda."
+  },
+  {
+   "t": 66.4,
+   "quem": "Heruxiv",
+   "descricao": "Divine shield a 10% salvou a própria vida."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 38.7,
+   "quem": "Celianeyix",
+   "acao": "cleave → Amnesianxxiv",
+   "porque": "durante o bladestorm iniciado aos 38.4 não se usa outras habilidades; GCD sem efeito"
+  },
+  {
+   "t": 67.7,
+   "quem": "Naminiv",
+   "acao": "purge → Amnesianxxiv",
+   "porque": "com o warrior a 28% e o curador em bubble, o GCD devia ir para cura ou tremor"
+  },
+  {
+   "t": 67.9,
+   "quem": "Heruxiv",
+   "acao": "judgement of light → Ominousxii",
+   "porque": "dentro do divine shield ele podia curar livremente o warrior a 28%; judgement não ajuda"
+  }
+ ]
+}

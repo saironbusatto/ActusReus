@@ -1,0 +1,20 @@
+{"resumo": "Thunder perdeu o curador Heruxiv aos 66.1: ele gastou o trinket num shadowfury sem perigo e se matou com divine sacrifice sob DoTs; o warrior, sem mortal strike, morreu logo depois e Naminiv ficou sozinho.",
+ "momento_decisivo": {"t": 64.7, "descricao": "Heruxiv usa divine sacrifice com a vida já baixa e sob corruption/immolate/conflagrate; passa a absorver o dano dos parceiros e morre 1.4 s depois."},
+ "erros": [
+  {"t": 64.7, "quem": "Heruxiv", "fez": "divine sacrifice estando ele mesmo sob pressão", "devia": "divine shield ou flash of light em si mesmo", "porque": "o sacrifice transfere para o paladino o dano dos parceiros; ele morreu aos 66.1", "gravidade": "alta"},
+  {"t": 42.4, "quem": "Heruxiv", "fez": "every man for himself no shadowfury com 87% de vida", "devia": "deixar passar os 2 s de stun e guardar o trinket para um poly/fear numa hora de perigo", "porque": "sem trinket, nada impediu o controle dos casters até a morte", "gravidade": "media"},
+  {"t": 52.9, "quem": "Celianeyix", "fez": "heroic strike/cleave em sequência até 65.0, sem mortal strike nenhuma vez", "devia": "mortal strike no alvo, hamstring e pressão no curador Kwongwegaxi", "porque": "sem o corte de cura do MS, o xamã curava tudo; o warrior tirou muito dano bruto mas nenhuma morte", "gravidade": "alta"},
+  {"t": 39.4, "quem": "Naminiv", "fez": "heroism antes de qualquer contato", "devia": "segurar para a janela de burst do warrior ou para o shadowfury/poly do curador inimigo", "porque": "o efeito expirou no começo, com Naminiv sendo polimorfizado logo em seguida", "gravidade": "media"},
+  {"t": 67.3, "quem": "Naminiv", "fez": "purge duas vezes e chain lightning depois da morte do curador", "devia": "curar Celianeyix (que caiu de 63% até morrer aos 80.6)", "porque": "era o único com cura no time; só usou gift of the naaru aos 80.4", "gravidade": "alta"},
+  {"t": 42.4, "quem": "Celianeyix", "fez": "every man for himself no shadowfury logo após o charge", "devia": "berserker rage para o fear e guardar o trinket", "porque": "o stun era curto; depois o warrior foi feared (47.5, 71.7) sem trinket", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.1, "quem": "Ominousdesv", "descricao": "shadowfury pegando três inimigos e forçando dois trinkets logo no início"},
+  {"t": 66.9, "quem": "Heshoxi", "descricao": "frost nova no warrior logo depois da morte do curador, seguido do howl do Ominousdesv aos 69.6"},
+  {"t": 47.0, "quem": "Ominousdesv", "descricao": "death coil e fear no warrior para se livrar do melee"}
+ ],
+ "erros_da_rede": [
+  {"t": 46.7, "quem": "Celianeyix", "acao": "battle shout → Ominousdesv", "porque": "buff no meio do combate em vez de golpe no alvo"},
+  {"t": 51.4, "quem": "Celianeyix", "acao": "sunder armor → Ominousdesv", "porque": "sunder em warlock de tecido não tem valor; devia ser mortal strike"},
+  {"t": 69.0, "quem": "Celianeyix", "acao": "sunder armor → Heshoxi", "porque": "enraizado e sem curador, GCD em sunder num mago em vez de dano/interrupt"}
+ ]}

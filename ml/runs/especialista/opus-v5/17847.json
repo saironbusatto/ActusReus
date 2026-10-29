@@ -1,0 +1,86 @@
+{
+ "resumo": "Troca de abates: o Zebedeuxiv morreu sem defensivos, mas o Amnesianxxv silenciou o Kwongwegaix baixo e matou o curador da Fireplay. Sem cura, o Ominousdesii e o Heshoix foram desgastados.",
+ "momento_decisivo": {
+  "t": 90.6,
+  "descricao": "Amnesianxxv silencia o Kwongwegaix a 7%, que tentava se curar com healing wave; ele morre aos 92.6 e a Fireplay fica sem curador."
+ },
+ "erros": [
+  {
+   "t": 135.8,
+   "quem": "Heshoix",
+   "fez": "pvp trinket logo depois do ice block",
+   "devia": "usar só o ice block, que já remove o stun, ou só o trinket",
+   "porque": "os dois juntos gastam o trinket; o ice block sozinho resolvia",
+   "gravidade": "alta"
+  },
+  {
+   "t": 55.5,
+   "quem": "Kwongwegaix",
+   "fez": "purge seguido na Amnesianxxv (55.5, 57.3, 58.4, 61.7)",
+   "devia": "um purge no shield e voltar a curar o mage ou o bruxo",
+   "porque": "o priest reaplica o shield; foi um ciclo de purge e mana gasta",
+   "gravidade": "media"
+  },
+  {
+   "t": 67.3,
+   "quem": "Zebedeuxiv",
+   "fez": "depois de evasion, vanish e cloak, volta com hemorrhage na mesma posição",
+   "devia": "reposicionar-se perto do curador e esperar a cura antes de reabrir",
+   "porque": "sem defensivos, tomou kidney e foco até morrer aos 81.1",
+   "gravidade": "media"
+  },
+  {
+   "t": 116.5,
+   "quem": "Amnesianxxv",
+   "fez": "dispersion com 86% de vida",
+   "devia": "guardar para quando estivesse em perigo real",
+   "porque": "gasta o defensivo principal sem ameaça",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 53.4,
+   "quem": "Amnesianxxv",
+   "fez": "dispel magic on party com o próprio time sem ameaça grave",
+   "devia": "usar o GCD em dano ou num silence no curador",
+   "porque": "GCD gasto contra corruption que já seria tratado pelo xamã",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 90.6,
+   "quem": "Amnesianxxv",
+   "descricao": "Silence no curador a 7%, que decide a luta"
+  },
+  {
+   "t": 43.0,
+   "quem": "Ominousdesii",
+   "descricao": "Death coil e seduction no Zebedeuxiv logo na abertura, o que neutraliza o rogue"
+  },
+  {
+   "t": 43.6,
+   "quem": "Heshoix",
+   "descricao": "Frost nova no rogue no momento certo de peel"
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 80.1,
+   "quem": "Heshoix",
+   "acao": "spellsteal → Zebedeuxiv",
+   "porque": "o rogue estava morrendo; devia ser fire blast ou scorch para garantir o abate"
+  },
+  {
+   "t": 81.4,
+   "quem": "Ominousdesii",
+   "acao": "life tap",
+   "porque": "no momento de abate do Kwongwegaix a 30%, gastou GCD em mana"
+  },
+  {
+   "t": 57.3,
+   "quem": "Kwongwegaix",
+   "acao": "purge → Amnesianxxv",
+   "porque": "purge repetido no shield em vez de cura"
+  }
+ ]
+}

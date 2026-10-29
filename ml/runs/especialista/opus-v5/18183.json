@@ -1,0 +1,94 @@
+{
+ "resumo": "Celianeyvii deu charge no curador Kwongwegavi e bateu nele sem ser descolado; o curador gastou a luta em purge e quase não curou (1475), e RLS IV perdeu curador e warlock em 5 s.",
+ "momento_decisivo": {
+  "t": 41.6,
+  "descricao": "Charge de Celianeyvii em Kwongwegavi: o warrior ficou em cima do curador sem fear nem kite, e o curador nunca se curou até morrer aos 57.2."
+ },
+ "erros": [
+  {
+   "t": 43.2,
+   "quem": "Kwongwegavi",
+   "fez": "purge ×3 até 49.7, depois purge em Celianeyvii (52.7) e em Naminii (55.2)",
+   "devia": "curar a si mesmo, earthbind/frost shock no warrior e se afastar",
+   "porque": "era o alvo do warrior desde 41.6 e terminou a luta com 1475 de cura; morreu aos 57.2",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.4,
+   "quem": "Kwongwegavi",
+   "fez": "bloodlust com o warrior em cima dele",
+   "devia": "GCD em cura própria ou controle do warrior",
+   "porque": "o bloodlust acelera o próprio time, mas o curador morrendo não aproveita nada",
+   "gravidade": "media"
+  },
+  {
+   "t": 42.4,
+   "quem": "Ominousxxiv",
+   "fez": "corruption e unstable affliction ×2 até 47.1 enquanto o warrior batia no curador",
+   "devia": "fear/death coil em Celianeyvii logo depois do charge",
+   "porque": "o primeiro fear no warrior só saiu aos 52.7; até lá o curador já estava perdido",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.5,
+   "quem": "Naminii",
+   "fez": "water shield, heroism, cure toxins e water shield de novo; zero cura e quase zero dano",
+   "devia": "curar ou pressionar com o rogue chegando nele",
+   "porque": "fez 1068 de dano e 0 de cura; morreu aos 56.5 sem contribuir",
+   "gravidade": "media"
+  },
+  {
+   "t": 51.8,
+   "quem": "Heruxii",
+   "fez": "holy light (cast longo) com Naminii em kidney a 41%",
+   "devia": "flash of light/holy shock em Naminii",
+   "porque": "o rogue deu kick em Heruxii aos 52.6 e Naminii morreu aos 56.5 sem cura",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.0,
+   "quem": "Heruxii",
+   "fez": "every man for himself sem estar em CC",
+   "devia": "guardar para o fear (veio aos 54.3 e 59.4)",
+   "porque": "gastou o racial à toa e ficou sem resposta nos dois fears seguintes",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 41.6,
+   "quem": "Celianeyvii",
+   "descricao": "Charge no curador inimigo e pressão contínua até matá-lo."
+  },
+  {
+   "t": 50.1,
+   "quem": "Zebedeuxi",
+   "descricao": "Blind e kidney shot em Naminii, controle que levou à morte dele."
+  },
+  {
+   "t": 70.0,
+   "quem": "Heruxii",
+   "descricao": "Divine shield a 19% contra o rogue, sobrevivendo ao final."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 48.0,
+   "quem": "Heruxii",
+   "acao": "seal of wisdom",
+   "porque": "trocar de seal no meio da luta é GCD perdido enquanto Naminii era atacado"
+  },
+  {
+   "t": 45.5,
+   "quem": "Naminii",
+   "acao": "water shield → Kwongwegavi",
+   "porque": "buff de mana com o rogue chegando; não protege nem cura"
+  },
+  {
+   "t": 50.9,
+   "quem": "Celianeyvii",
+   "acao": "cleave → Ominousxxiv",
+   "porque": "cleave em vez de mortal strike/execute no curador quase morto"
+  }
+ ]
+}

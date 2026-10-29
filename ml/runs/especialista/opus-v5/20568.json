@@ -1,0 +1,19 @@
+{"resumo": "Neste espelho de RLS, cada lado perdeu um rogue (Zebedeuix aos 83.9, Zebedeuxi aos 175.6). O que decidiu foi o curador Kwongwegavi, que ficou gastando Purge em vida baixa e morreu aos 140.9 no Fear + Howl of Terror de Ominousxxi; antes disso, RLS IV ainda desperdiçou Ominousxxi com 11% de vida aos 150.8.",
+ "momento_decisivo": {"t": 133.2, "descricao": "Ominousxxi deu Fear em Kwongwegavi, que voltou com 33% de vida e usou Purge em vez de se curar; o Howl of Terror aos 140.5 o prendeu de novo e o curador morreu sob os DoTs, deixando RLS IV sem cura."},
+ "erros": [
+  {"t": 133.7, "quem": "Kwongwegavi", "fez": "lançou Purge em série (114.1-118.0, 127.6, 133.7-138.6) enquanto caía para 33% sob DoTs", "devia": "se curar com Riptide/Healing Wave, limpar os DoTs e usar Tremor Totem contra os Fears", "porque": "o curador morreu de DoT e Fear, que é exatamente o que o Tremor e a cura própria resolvem", "gravidade": "alta"},
+  {"t": 151.1, "quem": "Ominousxxiv", "fez": "com Ominousxxi em Kidney Shot e 11% de vida, lançou UA e depois usou Spell Lock no próprio Ominousxxi (154.5)", "devia": "usar Spell Lock em Kwongwegaiv para cortar a cura e dar Death Coil/Haunt para matar", "porque": "o Healing Wave de Kwongwegaiv aos 151.7 levou o Warlock de volta a 58% e salvou a luta para RLS II", "gravidade": "alta"},
+  {"t": 102.1, "quem": "Ominousxxiv", "fez": "lançou Life Tap duas vezes durante o Shadow Dance + Cheap Shot de Zebedeuxi em Ominousxxi", "devia": "somar Haunt/Shadow Bolt/Death Coil ao burst do rogue", "porque": "o burst coordenado no stun é a principal janela de kill de um RLS", "gravidade": "media"},
+  {"t": 68.0, "quem": "Ominousxxi", "fez": "lançou Create Healthstone e Create Soul Shard (70.5) em pleno combate", "devia": "fazer isso antes dos portões e, na luta, pressionar com DoTs/Fear", "porque": "GCDs e tempo de cast gastos com Zebedeuxi apanhando", "gravidade": "media"},
+  {"t": 52.5, "quem": "Zebedeuix", "fez": "usou Shadow Dance aos 51.2 e Vanish + Evasion juntos aos 52.5, e Cloak aos 62.0", "devia": "usar Evasion antes de chegar a 27% e guardar Vanish/Cloak para escapar dos DoTs mais tarde", "porque": "sem nenhum defensivo depois dos 62 s, morreu aos 83.9", "gravidade": "media"},
+  {"t": 35.0, "quem": "Kwongwegaiv", "fez": "na abertura, usou Purge em Zebedeuxi e logo foi cegado (36.6)", "devia": "se posicionar e manter Earth Shield/Riptide no rogue aliado", "porque": "Purge num rogue tira pouco ou nada", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 36.6, "quem": "Zebedeuxi", "descricao": "Blind no curador Kwongwegaiv logo na abertura, depois Kidney Shot em Zebedeuix aos 44.0, criando a primeira vantagem."},
+  {"t": 140.5, "quem": "Ominousxxi", "descricao": "Howl of Terror pegando Kwongwegavi, Zebedeuxi e Ominousxxiv juntos, o que fechou o kill do curador."},
+  {"t": 151.7, "quem": "Kwongwegaiv", "descricao": "Healing Wave em Ominousxxi, que estava com 11% depois de um Kidney Shot, e salvou o Warlock."}
+ ],
+ "erros_da_rede": [
+  {"t": 51.2, "quem": "Zebedeuix", "acao": "shadow dance → Zebedeuxi", "porque": "Shadow Dance logo antes de Vanish/Evasion, com 27% de vida: o cooldown de dano foi jogado fora na fuga"},
+  {"t": 35.0, "quem": "Kwongwegaiv", "acao": "purge → Zebedeuxi", "porque": "Purge num rogue, que não tem buff mágico relevante, na abertura"}
+ ]}

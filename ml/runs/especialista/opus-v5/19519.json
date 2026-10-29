@@ -1,0 +1,19 @@
+{"resumo": "Celianeyvi deu bladestorm direto no shaman, que só tinha o próprio dano para usar e nenhum defensivo. Com stun e cleaves, Kwongwegaii morreu aos 49.1, e o RLS sem healer caiu em seguida.",
+ "momento_decisivo": {"t": 39.8, "descricao": "Bladestorm de Celianeyvi em Kwongwegaii sem nenhum peel do RLS. O shaman levou stun aos 43.3 e morreu aos 49.1."},
+ "erros": [
+  {"t": 35.2, "quem": "Kwongwegaii", "fez": "chain lightning no paladino logo depois de o warrior abrir a luta", "devia": "earth shield ou riptide no rogue em stun, ou ficar fora de alcance do warrior com o totem de grounding", "porque": "Um resto shaman em arena perde o GCD dando dano. Ele terminou com 196 de dano e nenhum defensivo usado antes de morrer", "gravidade": "media"},
+  {"t": 43.5, "quem": "Ominousv", "fez": "life tap com o próprio healer em stun e com 43%", "devia": "fear ou howl of terror em Celianeyvi, ou o death coil que tinha gasto no paladino aos 37.2", "porque": "O warlock é quem mais pode tirar um warrior de cima do healer. Life tap custa vida e não ajuda em nada", "gravidade": "alta"},
+  {"t": 40.4, "quem": "Zebedeuvii", "fez": "cobalt frag bomb em Celianeyvi durante o bladestorm", "devia": "esperar o bladestorm acabar e então usar kidney shot ou blind no warrior", "porque": "Durante o bladestorm o warrior fica imune a stun e não sofre controle. A bomba foi gasta à toa e o healer continuou sem peel", "gravidade": "media"},
+  {"t": 47.1, "quem": "Heruxi", "fez": "cast greater blessing assignment no meio da luta, com Omasconvi com 37% e em icebound", "devia": "flash of light ou holy light no DK, que estava em pressão", "porque": "Distribuir blessing é preparação para antes dos portões. No meio da luta, isso tirou o GCD de cura e o DK morreu aos 56.0", "gravidade": "alta"},
+  {"t": 58.2, "quem": "Heruxi", "fez": "apply oil com um rogue inimigo vivo", "devia": "cleanse, cura ou hand of protection no warrior", "porque": "Óleo de arma não serve para nada em combate e ocupa ação no meio da luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.8, "quem": "Celianeyvi", "descricao": "Bladestorm direto no healer inimigo, seguido de execute para fechar a morte."},
+  {"t": 47.3, "quem": "Omasconvi", "descricao": "Icebound fortitude com 37%, enquanto levava UA, haunt e o rogue, segurando o DK vivo até a morte do shaman."},
+  {"t": 56.7, "quem": "Celianeyvi", "descricao": "Charge no rogue com 16% logo depois da morte do warlock, sem dar tempo para ele escapar."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.8, "quem": "Kwongwegaii", "acao": "bloodlust → Celianeyvi", "porque": "Bloodlust antes de qualquer contato: o charge só veio aos 33.9. Sem um alvo de burst, os 40 s de buff foram perdidos."},
+  {"t": 35.9, "quem": "Ominousv", "acao": "corruption on attacker → Heruxi", "porque": "DoT num paladino que tinha acabado de limpar magia com cleanse ×3. A rede repetiu aos 38.5, desperdiçando GCD em vez de focar o DK."},
+  {"t": 43.5, "quem": "Ominousv", "acao": "life tap → Omasconvi", "porque": "Com o próprio healer em stun e quase morrendo, a rede escolheu recuperar mana em vez de fear ou peel."}
+ ]}

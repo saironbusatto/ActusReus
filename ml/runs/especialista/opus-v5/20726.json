@@ -1,0 +1,20 @@
+{"resumo": "Shadowplay travou o xamã Kwongwegavi em CC em cadeia (howl, stuns, silence) enquanto os DoTs e o priest derretiam Zebedeuxi, que gastou evasion/vanish/cloak cedo e morreu aos 70.2; depois o 3v2 foi só questão de tempo.",
+ "momento_decisivo": {"t": 59.0, "descricao": "Amnesianxxi silencia o curador Kwongwegavi logo depois do howl e dos stuns, deixando Zebedeuxi sem cura; na sequência o psychic scream aos 63.4 pega o rogue a 5% e força o trinket, e o psychic horror fecha a morte."},
+ "erros": [
+  {"t": 41.1, "quem": "Zebedeuxi", "fez": "evasion com 41% de vida", "devia": "segurar a evasion e usar cloak of shadows para limpar os DoTs dos dois warlocks", "porque": "o dano vinha de corruption/UA/curses e mind flay; evasion só evita golpe físico e o paladino quase não batia", "gravidade": "media"},
+  {"t": 45.2, "quem": "Zebedeuxi", "fez": "vanish e logo depois cloak of shadows (46.8), abrindo com premeditation + slice and dice", "devia": "usar o vanish como defensivo só depois do cloak acabar, ou reabrir com cheap shot num alvo para controlar", "porque": "queimou os três defensivos em 6 s; aos 63 s, a 5% de vida, não tinha mais nada além do trinket", "gravidade": "alta"},
+  {"t": 62.3, "quem": "Zebedeuxi", "fez": "shadowstep no Amnesianxxi com vida muito baixa e sem defensivos", "devia": "recuar para o pilar/curador e esperar a cura do xamã sair do CC", "porque": "entrou no alcance do psychic scream e do psychic horror, que o mataram", "gravidade": "alta"},
+  {"t": 37.2, "quem": "Kwongwegavi", "fez": "purge duas vezes no Ominousx enquanto Zebedeuxi caía de 73% para 41%", "devia": "curar o rogue (riptide/healing wave) e guardar mana", "porque": "o purge num warlock não reduzia a pressão; o rogue era o alvo e estava sangrando", "gravidade": "media"},
+  {"t": 64.1, "quem": "Ominousxxiv", "fez": "death coil no Ominousx", "devia": "death coil no Amnesianxxi para impedir o psychic horror e dar tempo ao rogue", "porque": "o priest estava fechando a morte de Zebedeuxi; o coil no warlock inimigo não salvou ninguém", "gravidade": "media"},
+  {"t": 114.0, "quem": "Heruiv", "fez": "apply oil três vezes até 128.9 no 3v1", "devia": "ajudar no dano (judgement, exorcism, hammer of wrath) ou travar Kwongwegavi", "porque": "a luta já estava 3v1 e o xamã sozinho segurou mais de 30 s", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 50.9, "quem": "Ominousx", "descricao": "howl of terror no curador Kwongwegavi abrindo a janela de CC em cadeia"},
+  {"t": 63.4, "quem": "Amnesianxxi", "descricao": "psychic scream no rogue a 5% forçando o trinket e emendando psychic horror aos 65.0 para a morte"},
+  {"t": 41.2, "quem": "Ominousx", "descricao": "spell lock no Ominousxxiv cortando o warlock inimigo no início da pressão"}
+ ],
+ "erros_da_rede": [
+  {"t": 44.3, "quem": "Ominousx", "acao": "pet autocast setup", "porque": "GCD de configuração no meio da luta, sem efeito em combate"},
+  {"t": 46.2, "quem": "Ominousx", "acao": "pet spell lock → Ominousxxiv", "porque": "o spell lock do felhunter já tinha sido usado aos 41.2 (recarga de 24 s); a ação não tinha como sair"},
+  {"t": 106.4, "quem": "Amnesianxxi", "acao": "power word: shield → Ominousxxiv", "porque": "com o warlock inimigo a 22% o certo era dano/silence, não gastar GCD em escudo"}
+ ]}

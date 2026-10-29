@@ -1,0 +1,86 @@
+{
+ "resumo": "Os dois warlocks do Shadowplay II, com o Ominousx no comando, revezaram spell lock e devour magic nos healers do LSD. O Kwongwegaxix, travado e sem defensivo, caiu aos 88.4, e o Pehdicouv sozinho caiu aos 98.8.",
+ "momento_decisivo": {
+  "t": 76.2,
+  "descricao": "Ominousx dá spell lock no Kwongwegaxix a 49% e cola UA; dali pra frente o shaman não cura direito e cai em 12 s."
+ },
+ "erros": [
+  {
+   "t": 64.8,
+   "quem": "Ominousdesvi",
+   "fez": "shoot (wand) aos 64.8, 70.1 e 71.1",
+   "devia": "corruption/UA/fear ou death coil no Ominousx",
+   "porque": "wand num warlock é um dano quase nulo; GCDs perdidos no meio da luta",
+   "gravidade": "media"
+  },
+  {
+   "t": 51.1,
+   "quem": "Ominousdesvi",
+   "fez": "corruption/curse of tongues seguidos no Amnesianxxi",
+   "devia": "pôr os dots e o CC no Ominousx, que travava os healers dele",
+   "porque": "o priest dispela e tem dispersion; dot nele não vira kill e não tira pressão",
+   "gravidade": "media"
+  },
+  {
+   "t": 58.5,
+   "quem": "Kwongwegaxix",
+   "fez": "purge em sequência (58.5, 59.6, 62.9, 65.1, 71.9, 78.9, 81.9) enquanto apanhava",
+   "devia": "priorizar cura e se mexer fora da linha de visão do felhunter",
+   "porque": "cada purge é um GCD sem cura; ele chegou a 49% aos 76.2 e a 21% aos 85.4",
+   "gravidade": "alta"
+  },
+  {
+   "t": 84.8,
+   "quem": "Kwongwegaxix",
+   "fez": "healing wave (cast longo) a 21% contra dois felhunters",
+   "devia": "riptide/nature's swiftness + healing wave instantâneo",
+   "porque": "cast longo na escola nature contra spell lock = lockout; aos 85.4 ele foi silenciado e morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 89.2,
+   "quem": "Pehdicouv",
+   "fez": "entangling roots logo depois de perder o shaman, com 37%",
+   "devia": "curar a si mesmo ou entrar em bear form/kitar",
+   "porque": "2v3 com 37%, root no inimigo não muda nada; precisava ganhar tempo",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 39.6,
+   "quem": "Ominousx",
+   "descricao": "Spell lock do pet no Pehdicouv no início e depois em ciclo nos healers (53.7, 57.4, 85.4), travando a cura do LSD."
+  },
+  {
+   "t": 47.6,
+   "quem": "Amnesianxxi",
+   "descricao": "Silence no Kwongwegaxix pra encaixar com o lockout dos warlocks."
+  },
+  {
+   "t": 41.3,
+   "quem": "Heruiv",
+   "descricao": "Cleanse constante dos dots e curses dos warlocks inimigos, mantendo o time em pé."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 51.1,
+   "quem": "Ominousdesvi",
+   "acao": "corruption no Amnesianxxi",
+   "porque": "dot num priest que dispela e tem dispersion; o alvo certo era o Ominousx"
+  },
+  {
+   "t": 51.3,
+   "quem": "Kwongwegaxix",
+   "acao": "water shield em plena pressão",
+   "porque": "GCD de buff com o time levando dots e lockouts; era hora de curar"
+  },
+  {
+   "t": 65.8,
+   "quem": "Ominousx",
+   "acao": "shadow bolt no Pehdicouv",
+   "porque": "cast longo em alvo que fica se curando; instant/lockout rendia mais (e ele próprio já estava fazendo isso)"
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+{
+ "resumo": "Celianeyvii gastou o trinket no death coil e emendou psychic horror + scream. Depois o bladestorm e os cleaves dele foram curados e ele caiu aos 52.9, e o Naminii sozinho caiu aos 71.6.",
+ "momento_decisivo": {
+  "t": 34.8,
+  "descricao": "Celianeyvii usa EMFH no death coil a 82% e na hora toma psychic horror (35.2) e psychic scream (36.7); a abertura do Thunder morre ali."
+ },
+ "erros": [
+  {
+   "t": 34.8,
+   "quem": "Celianeyvii",
+   "fez": "every man for himself no death coil (horror de 3 s) a 82%",
+   "devia": "guardar o trinket ou usar berserker rage",
+   "porque": "sem trinket, o priest emendou psychic horror e scream e o warrior ficou fora de 34 a 38 s",
+   "gravidade": "alta"
+  },
+  {
+   "t": 40.9,
+   "quem": "Celianeyvii",
+   "fez": "spam de cleave/heroic strike (40.9-51.6) sem mortal strike",
+   "devia": "MS no Heruiv",
+   "porque": "sem o debuff de cura, o paladino se curou do bladestorm e o warrior gastou a rage à toa",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.3,
+   "quem": "Naminii",
+   "fez": "purge e wind shear (51.3-52.6) com o Celianeyvii a 14%",
+   "devia": "healing wave/lesser no warrior",
+   "porque": "o warrior morreu aos 52.9 sem nenhuma cura do shaman",
+   "gravidade": "alta"
+  },
+  {
+   "t": 46.4,
+   "quem": "Heruxii",
+   "fez": "divine sacrifice cancelado aos 47.2",
+   "devia": "hand of protection/curar",
+   "porque": "GCD sem efeito sob pressão",
+   "gravidade": "media"
+  },
+  {
+   "t": 68.6,
+   "quem": "Heruxii",
+   "fez": "pvp trinket e every man for himself com o Naminii stunado",
+   "devia": "hand of protection/freedom ou cura no Naminii",
+   "porque": "o shaman morreu aos 71.6 enquanto o paladino se livrava do próprio CC",
+   "gravidade": "media"
+  },
+  {
+   "t": 37.0,
+   "quem": "Naminii",
+   "fez": "elemental mastery gasta num flame shock (instantâneo)",
+   "devia": "EM antes de lava burst/chain lightning",
+   "porque": "EM é desperdiçado em feitiço instantâneo",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 34.1,
+   "quem": "Ominousx",
+   "descricao": "Spell lock no Heruxii logo de cara e de novo aos 40.6, deixando o Thunder sem cura."
+  },
+  {
+   "t": 35.2,
+   "quem": "Amnesianxxi",
+   "descricao": "Psychic horror + psychic scream logo depois do trinket do warrior."
+  },
+  {
+   "t": 68.6,
+   "quem": "Amnesianxxi",
+   "descricao": "Pressão contínua no Naminii, que fechou a segunda kill com o stun."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 48.7,
+   "quem": "Celianeyvii",
+   "acao": "heroic strike/cleave no Heruiv (48.7-49.8)",
+   "porque": "despejo de rage em vez de mortal strike no alvo da kill"
+  },
+  {
+   "t": 51.3,
+   "quem": "Naminii",
+   "acao": "purge no Amnesianxxi",
+   "porque": "com o warrior a 14%, o GCD tinha que ser cura"
+  },
+  {
+   "t": 47.3,
+   "quem": "Naminii",
+   "acao": "thunderstorm no Amnesianxxi",
+   "porque": "knockback sem valor de kill nem de peel naquele momento"
+  }
+ ]
+}

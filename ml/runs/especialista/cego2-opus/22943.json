@@ -1,0 +1,98 @@
+{
+ "resumo": "No espelho de rogues, Zebedeuxi gastou o trinket num cheap shot aos 51.1 e levou kidney shot do Zebedeuix logo depois; com o Kwongwegavi fazendo purge/wind shear em vez de curar, morreu aos 66.3. No fim, Zebedeuix fechou o Ominousxxiv com shadow dance e blind no curador.",
+ "momento_decisivo": {
+  "t": 51.1,
+  "descricao": "Zebedeuxi (30%) usa o trinket para sair do cheap shot e leva kidney shot 0.8 s depois (51.9, 27%), sem saída para o resto da pressão."
+ },
+ "momento_aceitos": [
+  48.4,
+  51.1,
+  51.9,
+  63.9
+ ],
+ "erros": [
+  {
+   "t": 51.1,
+   "quem": "Zebedeuxi",
+   "fez": "trinket num cheap shot com o Zebedeuix ainda com energia e combo",
+   "devia": "segurar o trinket para o kidney shot e responder com evasion/vanish no tempo",
+   "porque": "o kidney veio em seguida (51.9) e ele ficou sem saída",
+   "gravidade": "alta"
+  },
+  {
+   "t": 40.7,
+   "quem": "Zebedeuxi",
+   "fez": "fan of knives ×2 logo após o próprio blind no Kwongwegaiv (39.5)",
+   "devia": "manter o blind e dar dano em alvo único no warlock/curador",
+   "porque": "fan of knives em área quebra o blind; o Kwongwegaiv já estava curando aos 41.3",
+   "gravidade": "media"
+  },
+  {
+   "t": 62.3,
+   "quem": "Kwongwegavi",
+   "fez": "cleanse spirit curse, purge (63.9) e wind shear (64.2) com o Zebedeuxi morrendo",
+   "devia": "healing wave/lesser healing wave/riptide no Zebedeuxi",
+   "porque": "o parceiro estava em 27% desde 51.9 e morreu aos 66.3 sem cura séria",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.3,
+   "quem": "Ominousxxiv",
+   "fez": "pvp trinket num stun com 68% de vida",
+   "devia": "guardar o trinket para a abertura do rogue",
+   "porque": "no fim (106.4-109.7) levou cheap shot e kidney sem trinket e morreu aos 114.9",
+   "gravidade": "media"
+  },
+  {
+   "t": 81.1,
+   "quem": "Ominousxxiv",
+   "fez": "death coil ofensivo no Ominousxxi",
+   "devia": "guardar o death coil para descolar o Zebedeuix",
+   "porque": "o rogue voltou com shadow dance aos 103.9 e o warlock não tinha mais resposta",
+   "gravidade": "media"
+  },
+  {
+   "t": 34.0,
+   "quem": "Zebedeuxi",
+   "fez": "shadowstep e abertura no rogue Zebedeuix",
+   "devia": "abrir no warlock ou no curador",
+   "porque": "bater no rogue (evasion, cloak, vanish) é a troca menos eficiente do jogo",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 37.6,
+   "quem": "Kwongwegavi",
+   "fez": "chain lightning no Zebedeuix como curador",
+   "devia": "totens e cura",
+   "porque": "o curador sem dano gastou GCD enquanto os rogues trocavam stuns",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 51.9,
+   "quem": "Zebedeuix",
+   "descricao": "Kidney shot logo depois do trinket do inimigo."
+  },
+  {
+   "t": 47.9,
+   "quem": "Zebedeuix",
+   "descricao": "Trinket + evasion em 34% para sobreviver."
+  },
+  {
+   "t": 38.5,
+   "quem": "Ominousxxi",
+   "descricao": "Spell lock no curador Kwongwegavi."
+  },
+  {
+   "t": 103.9,
+   "quem": "Zebedeuix",
+   "descricao": "Shadow dance + blind no curador (107.5) para fechar o Ominousxxiv."
+  },
+  {
+   "t": 92.2,
+   "quem": "Ominousxxiv",
+   "descricao": "Howl of terror para afastar o rogue."
+  }
+ ]
+}

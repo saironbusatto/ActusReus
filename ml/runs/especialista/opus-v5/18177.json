@@ -1,0 +1,94 @@
+{
+ "resumo": "Fireplay II pegou Pehdicouv com fears em sequência e o curador inimigo travado; o druid ficou trocando de forma e lançando roots em vez de se defender e caiu aos 73.3. Depois Ominousdesvi morreu sem cura.",
+ "momento_decisivo": {
+  "t": 60.2,
+  "descricao": "Fear de Ominousdesii em Pehdicouv seguido do fear no curador Kwongwegaxix aos 61.3: o druid ficou sem defesa e sem cura e não se recuperou até morrer no conflagrate."
+ },
+ "erros": [
+  {
+   "t": 65.4,
+   "quem": "Pehdicouv",
+   "fez": "moonkin form, caster form e remove curse em sequência (65.4-67.5)",
+   "devia": "ficar numa forma e curar a si mesmo/se posicionar perto do curador",
+   "porque": "cada shift é GCD e mana; ele era o alvo do foco e morreu 6 s depois",
+   "gravidade": "media"
+  },
+  {
+   "t": 72.1,
+   "quem": "Pehdicouv",
+   "fez": "entangling roots → Heshoix com a vida baixa",
+   "devia": "cura própria ou fugir de linha de visão",
+   "porque": "root no mage não para warlocks com DoTs; morreu 1 s depois",
+   "gravidade": "media"
+  },
+  {
+   "t": 66.2,
+   "quem": "Kwongwegaxix",
+   "fez": "purge aos 66.2 e 67.7 em Ominousdesii",
+   "devia": "curar Pehdicouv",
+   "porque": "o druid estava no foco e morreu aos 73.3; os GCDs do curador foram em dispel ofensivo",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.6,
+   "quem": "Kwongwegaxix",
+   "fez": "sem tremor totem contra dois warlocks (feared aos 42.6 e 61.3)",
+   "devia": "tremor totem cedo e reposto",
+   "porque": "os fears no curador e no druid foram a causa da morte de Pehdicouv",
+   "gravidade": "media"
+  },
+  {
+   "t": 80.7,
+   "quem": "Ominousdesvi",
+   "fez": "pvp trinket no stun a 16%, sem plano depois",
+   "devia": "gastar o trinket antes (78.8, a 45%) para fugir ou usar death coil/healthstone",
+   "porque": "stunado de novo aos 81.9, o trinket não salvou nada e ele morreu aos 96.2",
+   "gravidade": "media"
+  },
+  {
+   "t": 56.9,
+   "quem": "Heshoix",
+   "fez": "blizzard ×2 até 62.0",
+   "devia": "dano focado (frostbolt/fireball) ou polymorph no curador durante os fears",
+   "porque": "blizzard em arena é pouco dano espalhado e o canal ocupa 5+ s da janela de morte",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 66.2,
+   "quem": "Ominousdesii",
+   "descricao": "Will of the forsaken para sair do fear e voltar a pressionar."
+  },
+  {
+   "t": 56.6,
+   "quem": "Heshoix",
+   "descricao": "Counterspell no curador inimigo no início da pressão em Pehdicouv."
+  },
+  {
+   "t": 73.3,
+   "quem": "Ominousdesii",
+   "descricao": "Conflagrate para finalizar Pehdicouv."
+  }
+ ],
+ "erros_da_rede": [
+  {
+   "t": 46.1,
+   "quem": "Pehdicouv",
+   "acao": "starfall → Ominousdesii",
+   "porque": "starfall dura 10 s e bate em inimigos próximos, quebrando a pet seduction do aliado em Ominousdesii aos 47.6 e 51.2"
+  },
+  {
+   "t": 71.1,
+   "quem": "Kwongwegaxix",
+   "acao": "purge → Heshoix",
+   "porque": "2 s antes de Pehdicouv morrer, o GCD devia ser cura no druid"
+  },
+  {
+   "t": 64.9,
+   "quem": "Ominousdesvi",
+   "acao": "life tap",
+   "porque": "no meio da pressão no aliado, life tap tira vida e não ajuda; podia dar fear/death coil em quem batia"
+  }
+ ]
+}

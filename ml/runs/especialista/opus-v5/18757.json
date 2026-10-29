@@ -1,0 +1,20 @@
+{"resumo": "Ominousdesvi deu dois shadowfury que pegaram os três inimigos (38.5 e 58.5), e Pehdicouv jogou muito dano de moonkin. O segundo shadowfury derrubou Pehdibalv, que morreu aos 64.5, e o resto do LSD IV caiu em seguida.",
+ "momento_decisivo": {"t": 58.5, "descricao": "O shadowfury de Ominousdesvi pegou Pehdibalv (43%), Ominousdesxi e Kwongwegaxxv juntos. Pehdibalv ficou sem cura, usou o trinket a 33% e morreu no fear seguinte."},
+ "erros": [
+  {"t": 62.1, "quem": "Pehdibalv", "fez": "canalizou hurricane com uns 33% de vida, logo depois do trinket", "devia": "se curar (regrowth/nourish/lifebloom) ou fugir em forma de viagem para fora da linha de visão", "porque": "hurricane prende o druida parado dando pouco dano; com a vida baixa e sem barkskin, o GCD tinha que ir para sobrevivência. Ele morreu aos 64.5", "gravidade": "alta"},
+  {"t": 52.3, "quem": "Pehdibalv", "fez": "trocou para moonkin e canalizou hurricane com 49% de vida, sob pressão de dois casters", "devia": "ficar em caster form segurando HoTs em si mesmo e no time", "porque": "ele era o alvo e também curava o time; ficar parado em canal com a vida caindo acelerou o kill", "gravidade": "media"},
+  {"t": 49.9, "quem": "Kwongwegaxxv", "fez": "passou de 49.9 a 57.8 alternando purge e cleanse spirit enquanto Pehdibalv caía de 49% para 43%", "devia": "curar Pehdibalv com riptide/healing wave e deixar o cleanse para quando sobrasse GCD", "porque": "o druida era o alvo do kill; limpar maldição repetida não segura dano", "gravidade": "alta"},
+  {"t": 43.3, "quem": "Ominousdesxi", "fez": "gastou os GCDs em curse e corruption e nunca deu fear em Pehdicouv", "devia": "dar fear em Pehdicouv (moonkin com 82k de dano) e manter o controle nele", "porque": "o moonkin inimigo era a maior fonte de dano da luta e ficou livre o tempo todo", "gravidade": "alta"},
+  {"t": 31.7, "quem": "Pehdibalv", "fez": "lançou starfall antes de qualquer contato", "devia": "guardar starfall para a hora do burst, com alvos parados por stun/root", "porque": "starfall tem cooldown longo; usar na abertura sem alvo controlado desperdiça o maior burst do druida", "gravidade": "baixa"},
+  {"t": 64.8, "quem": "Pehdicouv", "fez": "lançou remove curse quatro vezes entre 64.8 e 71.3, com o inimigo restante a 41%", "devia": "fechar o kill em Ominousdesxi com starsurge/wrath/moonfire ou um cyclone no curandeiro", "porque": "as maldições eram pequenas; o dano do moonkin acabava a luta mais cedo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 38.5, "quem": "Ominousdesvi", "descricao": "Shadowfury que pegou os três inimigos de uma vez, abrindo a pressão."},
+  {"t": 58.5, "quem": "Ominousdesvi", "descricao": "Segundo shadowfury nos três, que definiu o kill em Pehdibalv."},
+  {"t": 64.2, "quem": "Kwongwegaxix", "descricao": "Wind shear no curandeiro inimigo no momento do kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 60.6, "quem": "Ominousdesvi", "acao": "life tap", "porque": "life tap logo depois do trinket de Pehdibalv (33%), em vez de pressionar o alvo que estava caindo"},
+  {"t": 77.4, "quem": "Ominousdesvi", "acao": "life tap", "porque": "o único inimigo vivo tinha 6% aos 73.9; perder vida e GCD com life tap atrasou o golpe final"},
+  {"t": 57.0, "quem": "Pehdicouv", "acao": "remove curse on party", "porque": "dispelou uma maldição pequena no meio do burst do próprio time, quando seu dano era o que mais rendia"}
+ ]}

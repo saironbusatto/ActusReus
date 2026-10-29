@@ -1,0 +1,19 @@
+{"resumo": "Zebedeuxii abriu com shadow dance, cheap shot e kidney shot em Pehdicouve, que trocava de forma sem curar ninguém. A druida morreu aos 50.6, e depois o warlock e o hunter caíram um a um.",
+ "momento_decisivo": {"t": 39.3, "descricao": "Shadow dance e cheap shot de Zebedeuxii em Pehdicouve, seguidos de kidney shot e de outro cheap shot. A druida ficou presa e sem curar, e morreu aos 50.6."},
+ "erros": [
+  {"t": 39.2, "quem": "Pehdicouve", "fez": "caster form repetida (×2 até 45.7) sem lançar cura nenhuma", "devia": "ficar em forma de árvore ou caster e usar rejuvenation, lifebloom e swiftmend em si mesma e nos aliados", "porque": "A druida terminou com 0 de cura. Trocar de forma não desfaz stun, só gasta GCD e mana", "gravidade": "alta"},
+  {"t": 48.1, "quem": "Pehdicouve", "fez": "healing touch logo depois de usar o trinket com 32% de vida", "devia": "usar cura instantânea (swiftmend ou nature's swiftness) ou correr para o pilar", "porque": "Ao lado de um rogue, uma cura longa leva kick (48.4). A druida morreu 2 s depois", "gravidade": "alta"},
+  {"t": 41.4, "quem": "Ominous", "fez": "shoot com varinha sem estar silenciado, enquanto a druida era focada", "devia": "fear ou death coil em Zebedeuxii para dar peel, ou ao menos usar os DoTs e o dano normal", "porque": "O warlock causou só 11847 de dano e deixou o rogue livre para encadear stuns na druida", "gravidade": "media"},
+  {"t": 71.4, "quem": "Beteranii", "fez": "ficou no corpo a corpo com o rogue usando mongoose bite, raptor strike e wing clip", "devia": "dar disengage para se afastar e kitar com o frost trap, atirando de longe", "porque": "O hunter perde quase todo o dano no corpo a corpo e fica no alcance de kick e kidney shot. Morreu com 4% aos 87.4", "gravidade": "media"},
+  {"t": 59.6, "quem": "Amnesianix", "fez": "sair e voltar da shadowform várias vezes (59.6, 61.4, 65.1)", "devia": "ficar em shadowform e usar dano e dispel, ou sair uma vez só se fosse curar de verdade", "porque": "Cada troca custa GCD e mana. As curas feitas fora da forma foram renew pequeno", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.0, "quem": "Zebedeuxii", "descricao": "Shadow dance com cheap shot no healer inimigo, seguido de stuns e kick até a morte."},
+  {"t": 37.2, "quem": "Amnesianix", "descricao": "Silence no warlock no começo da luta, cortando o fear e o dano dele."},
+  {"t": 40.1, "quem": "Beteranii", "descricao": "Silencing shot no shaman para impedir a cura enquanto o RPS era pressionado."}
+ ],
+ "erros_da_rede": [
+  {"t": 40.9, "quem": "Amnesianix", "acao": "shadow word: death → Ominous", "porque": "SW:D num warlock com vida cheia dá pouco dano e devolve dano ao priest. Mind blast ou o fear seriam melhores."},
+  {"t": 48.1, "quem": "Pehdicouve", "acao": "healing touch on party → Zebedeuxii", "porque": "Cura longa com o rogue ao lado logo depois do trinket. Levou kick e a druida morreu sem curar."},
+  {"t": 79.9, "quem": "Amnesianix", "acao": "shadowform → Beteranii", "porque": "Entrou na forma para sair de novo aos 83.0 para dar flash heal. Foram dois GCDs perdidos com o hunter quase morto."}
+ ]}

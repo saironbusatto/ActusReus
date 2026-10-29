@@ -1,0 +1,19 @@
+{"resumo": "Os dois rogues morreram cedo (Zebedeuix aos 52.4, Zebedeuii aos 67.8) e sobrou um 2v2 warlock/shaman contra mage/priest; as DoTs e os spell locks de Ominousxxi desgastaram Heshoiv, que nunca usou ice block e ficou sem cura de Amnesianii no fim, morrendo aos 173.5.",
+ "momento_decisivo": {"t": 170.6, "descricao": "Pet spell lock silencia Heshoiv a ~23% (170.9), já cheio de UA, haunt e corruption, sem ter usado ice block e sem cura de Amnesianii; o segundo spell lock (172.7) e o drain soul (173.0) fecham o kill."},
+ "momento_aceitos": [166.1, 169.1, 170.6, 172.7],
+ "erros": [
+  {"t": 169.2, "quem": "Heshoiv", "fez": "shoot e frostbolt caindo de 83% para 23% sob UA, haunt e corruption, sem usar ice block na luta inteira", "devia": "ice block ao passar de 40% para tirar as DoTs e esperar a cura, antes do spell lock", "porque": "o ice block remove os efeitos mágicos e o deixaria imune durante o silence; sem isso ele morreu preso no spell lock aos 173.5", "gravidade": "alta"},
+  {"t": 163.1, "quem": "Amnesianii", "fez": "hyperspeed accelerators e inner fire, sem curar de 158.1 até a morte de Heshoiv", "devia": "power word: shield, penance e flash heal em Heshoiv, e dispel em UA/haunt (com cuidado com o backlash do UA)", "porque": "o mago perdeu 60% da vida em 16 s com o healer inteiro do lado sem lançar uma cura", "gravidade": "alta"},
+  {"t": 63.0, "quem": "Amnesianii", "fez": "renew 2 vezes até 64.9 com Zebedeuii caindo de 40% para 28%", "devia": "penance + flash heal + power word: shield em Zebedeuii", "porque": "renew cura devagar demais contra as DoTs e o seed; o rogue chegou a 4% no howl of terror (65.7) e morreu aos 67.8", "gravidade": "alta"},
+  {"t": 46.3, "quem": "Zebedeuix", "fez": "saiu do vanish com premeditation e cheap shot no mago e usou fan of knives (48.4), com 22% de vida", "devia": "usar o vanish para se resetar e ficar fora de alcance até a cura subir", "porque": "evasion e cloak já tinham sido usados; voltar ao melee sem vida deixou ele exposto a Zebedeuii, e ele morreu aos 52.4", "gravidade": "media"},
+  {"t": 44.9, "quem": "Kwongwegaiv", "fez": "cleanse spirit poison, purge (46.1) e wind shear enquanto Zebedeuix estava entre 25% e 22%", "devia": "riptide + healing wave em Zebedeuix logo depois do trinket", "porque": "a primeira cura de verdade só veio aos 52.1, junto com a morte do rogue", "gravidade": "media"},
+  {"t": 95.8, "quem": "Heshoiv", "fez": "cold snap para usar um segundo deep freeze (97.0) em Ominousxxi, que ainda estava no stun do primeiro, e depois só um frostbolt", "devia": "aproveitar o primeiro deep freeze com dano (frostbolt + ice lance/fire blast) e guardar o cold snap para um segundo ice block/frost nova", "porque": "o segundo deep freeze por cima do stun não acrescenta nada e o cold snap foi gasto, faltando depois para a defesa", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 38.9, "quem": "Zebedeuii", "descricao": "Shadow dance com cheap shot e ambush no rogue inimigo, forçando trinket, vanish, evasion e cloak dele"},
+  {"t": 40.0, "quem": "Heshoiv", "descricao": "Frost nova no rogue que abriu nele"},
+  {"t": 65.7, "quem": "Ominousxxi", "descricao": "Howl of terror com Zebedeuii a 4%, forçando o trinket antes do kill"},
+  {"t": 95.5, "quem": "Heshoiv", "descricao": "Deep freeze no warlock para segurá-lo no 2v2"},
+  {"t": 170.6, "quem": "Ominousxxi", "descricao": "Spell locks seguidos (170.6, 172.7) no mago com pouca vida, e drain soul para o kill"},
+  {"t": 202.4, "quem": "Zebedeuix", "descricao": "Shadow dance + cheap shot + ambush no priest, forçando o trinket dele a 29%"}
+ ]}

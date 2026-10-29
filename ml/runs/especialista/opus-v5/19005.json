@@ -1,0 +1,19 @@
+{"resumo": "Heshoiv abriu com icy veins, mirror image e uma sequência de frostbolts que matou Celianeyvii aos 48.9, enquanto o paladino inimigo só fazia dispel. Depois, deep freeze + cold snap + deep freeze queimaram o trinket e o bubble de Heruxii, e o RMP fechou xamã e paladino.",
+ "momento_decisivo": {"t": 35.6, "descricao": "Heshoiv lançou frostbolt ×4 (35.6-44.2) em Celianeyvii dentro do icy veins sem ser interrompido nem controlado. O warrior morreu aos 48.9 e a luta virou 3v2."},
+ "erros": [
+  {"t": 36.0, "quem": "Heruxii", "fez": "passou de 36.0 a 43.5 lançando cleanse magic/poison quatro vezes enquanto Celianeyvii caía sob os frostbolts", "devia": "curar o warrior com holy light/flash of light e usar hand of protection ou divine sacrifice nele", "porque": "o warrior morreu aos 48.9; o dano de gelo não se resolvia com dispel", "gravidade": "alta"},
+  {"t": 36.8, "quem": "Naminii", "fez": "usou elemental mastery, chain lightning e purge sem controlar o mago que estava matando o warrior", "devia": "usar wind shear no frostbolt de Heshoiv e baixar grounding totem", "porque": "o mago soltou quatro frostbolts seguidos sem nenhum interrupt; um wind shear trava a escola frost por 2 s", "gravidade": "alta"},
+  {"t": 37.6, "quem": "Celianeyvii", "fez": "usou bladestorm e heroic strike no rogue enquanto o mago o matava à distância, sem mortal strike nem defensivo", "devia": "trocar para Heshoiv (intercept/charge) ou usar spell reflect/shield wall contra os frostbolts", "porque": "ficou parado no rogue com evasion enquanto tomava o burst do mago", "gravidade": "media"},
+  {"t": 53.2, "quem": "Heruxii", "fez": "lançou cleanse três vezes (53.2-55.3) enquanto o rogue e o mago trocavam para ele, a 54%", "devia": "se curar e se posicionar atrás de um pilar antes do deep freeze", "porque": "caiu para 34% em seguida, gastou o trinket e o bubble em 5 s", "gravidade": "media"},
+  {"t": 74.7, "quem": "Heruxii", "fez": "usou divine sacrifice com a própria vida perto de 10%", "devia": "se curar com holy shock/flash of light ou ajudar o xamã com uma cura direta", "porque": "o divine sacrifice passa dano para o paladino, que já estava no limite; nenhum dos dois se salvou", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 31.8, "quem": "Heshoiv", "descricao": "Icy veins, mirror image e frostbolts seguidos: o burst que matou o warrior."},
+  {"t": 56.5, "quem": "Heshoiv", "descricao": "Deep freeze, cold snap e outro deep freeze no paladino, que forçou o trinket e o divine shield."},
+  {"t": 51.2, "quem": "Zebedeuii", "descricao": "Vanish com CC no xamã e kick no paladino, isolando o curandeiro."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.0, "quem": "Heshoiv", "acao": "berserking", "porque": "usou o cooldown de dano antes de qualquer contato, e ele acabou antes do burst real"},
+  {"t": 31.0, "quem": "Amnesianii", "acao": "shoot", "porque": "varinha no lugar de um GCD útil (shield, fear ward, renew) logo na abertura"},
+  {"t": 51.6, "quem": "Heshoiv", "acao": "ice lance", "porque": "ice lance num alvo que não estava congelado dá pouco dano; frostbolt ou polymorph rendiam mais"}
+ ]}

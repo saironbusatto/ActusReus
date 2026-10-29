@@ -1,0 +1,21 @@
+{"resumo": "A shadowfury do Ominousdesxi no portão tirou o trinket do Celianeyix e do Heruxiv; o warrior foi kitado em roots sem nunca usar Mortal Strike e morreu aos 64, e depois o LSD venceu o atrito contra paladino e shaman elemental.",
+ "momento_decisivo": {"t": 37.7, "descricao": "Shadowfury do Ominousdesxi atingiu os três inimigos e fez Celianeyix e Heruxiv gastarem o trinket a mais de 90%; sem trinket, o warrior ficou preso em roots/seduction e caiu com pouca cura."},
+ "erros": [
+  {"t": 37.7, "quem": "Celianeyix", "fez": "every man for himself saindo da shadowfury com 94% de vida", "devia": "aguentar o stun de 2 s e guardar o trinket para fear/seduction", "porque": "a shadowfury é curta; depois ele foi seduzido, enraizado e stunado várias vezes sem saída", "gravidade": "media"},
+  {"t": 49.2, "quem": "Celianeyix", "fez": "heroic strike e cleave em sequência, sem nenhum mortal strike na luta", "devia": "Mortal Strike no alvo de kill para cortar a cura de druida/shaman", "porque": "contra dois curadores híbridos, o debuff de cura do MS é a principal pressão do warrior; heroic strike só gasta raiva", "gravidade": "alta"},
+  {"t": 55.3, "quem": "Celianeyix", "fez": "battle shout aos 46% de vida e enraizado", "devia": "usar Intimidating Shout/Spell Reflect ou recuar até o paladino", "porque": "buff de AP não muda a luta para um warrior que estava morrendo e preso no root", "gravidade": "baixa"},
+  {"t": 56.3, "quem": "Heruxiv", "fez": "cleanse magic on party ×2 até 61.8 com o Celianeyix a 46%", "devia": "Holy Light/Flash of Light no warrior ou Hand of Freedom nele", "porque": "o warrior morreu aos 64.3 sem receber cura grande; o paladino só curou de novo aos 67.9", "gravidade": "alta"},
+  {"t": 136.8, "quem": "Naminiv", "fez": "chain lightning e flame shock a 42% e enraizado sob DoTs", "devia": "Healing Wave em si mesmo e pedir cura/Hand of Freedom ao Heruxiv", "porque": "o shaman tinha cura própria e sabia que era o próximo alvo; seguiu fazendo dano até morrer aos 149.6", "gravidade": "media"},
+  {"t": 102.8, "quem": "Ominousdesxi", "fez": "create healthstone no meio da luta", "devia": "usar o GCD em DoT/fear no Naminiv ou Heruxiv", "porque": "criar healthstone é preparo de fora de combate; tempo perdido de pressão", "gravidade": "baixa"},
+  {"t": 191.2, "quem": "Heruxiv", "fez": "divine sacrifice estando sozinho", "devia": "Divine Shield/cura própria e tentar sobreviver", "porque": "Divine Sacrifice só protege membros do grupo; sem parceiros vivos não faz nada", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 37.7, "quem": "Ominousdesxi", "descricao": "shadowfury pegando os três inimigos no portão e queimando dois trinkets."},
+  {"t": 48.5, "quem": "Pehdibalv", "descricao": "barkskin contra o bladestorm e roots no Celianeyix, kitando o warrior enquanto o warlock aplicava dano."},
+  {"t": 92.5, "quem": "Kwongwegaxxv", "descricao": "mana tide totem numa luta longa de atrito, garantindo mana para o LSD."}
+ ],
+ "erros_da_rede": [
+  {"t": 97.9, "quem": "Naminiv", "acao": "chain lightning → Kwongwegaxxv", "porque": "com o time sem kill e o shaman sob DoTs e roots, dano espalhado no curador não converte; precisava de controle ou cura."},
+  {"t": 140.8, "quem": "Naminiv", "acao": "chain lightning → Kwongwegaxxv", "porque": "a menos de 10 s de morrer, com pouca vida, gastou GCD em dano em vez de cura própria."},
+  {"t": 191.6, "quem": "Heruxiv", "acao": "cancel divine sacrifice → Ominousdesxi", "porque": "ativar e cancelar o Divine Sacrifice sozinho foram dois GCDs sem efeito."}
+ ]}
