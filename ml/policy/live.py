@@ -322,10 +322,11 @@ def _momento(luta: dict, analise: dict) -> dict | None:
     membros = luta.get("membros", [])
     membros = list(membros.values()) if isinstance(membros, dict) else membros
     desc = str(m.get("descricao", ""))
-    citados = sorted((desc.find(x["nome"]), x) for x in membros if x["nome"] in desc)
+    # empate na posição = um nome é prefixo de outro; fica o mais longo
+    citados = [x for x in membros if x["nome"] in desc]
     if m.get("t") is None or not citados:
         return None
-    quem = citados[0][1]
+    quem = min(citados, key=lambda x: (desc.find(x["nome"]), -len(x["nome"])))
     if int(quem["time"]) == int(luta.get("vencedor", -1)):
         return {"tipo": "acerto", "t": m["t"], "quem": quem["nome"], "descricao": desc}
     return {"tipo": "erro", "t": m["t"], "quem": quem["nome"], "fez": desc, "gravidade": "alta"}

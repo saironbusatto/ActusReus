@@ -74,6 +74,7 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4. Desafiante 47% (168/355) |
 | V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico. **Desafiante 52% (220/427)**, melhor até agora |
 | V8 | 29/10 07:21 | V7 + verificador corrigido (ação de trinket conta como uso: o fato "morreu sem trinket" era falso quando faltava o evento). Especialista V4 testado e reprovado no teste cego; técnico segue o Gemini |
+| V9 | 29/10 09:44 | A/B com terceira rede: braço A (desafiante) treina com o plano tático como shaping; braço B (cópia III, times 56,64…88) com os fatos do verificador juntados por código + o momento decisivo. O treinador do braço B caiu em loop até 11:18 (o sort comparava dicts num empate de nomes) — a contagem dele começa às 11:18. Regra: ~100 lutas por braço, +3 pontos espalha, −3 volta |
 
 ### Lições (não repetir)
 

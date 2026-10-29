@@ -100,11 +100,12 @@
  {
   "id": "V9B",
   "nome": "Braço B: fatos por código + momento decisivo",
-  "desde": "2026-10-29 12:45",
+  "desde": "2026-10-29 14:18",
   "mudancas": [
    "Cópia III (56,64,...,88, pesos arena-policy-live-b.txt, treinador ia-ao-vivo-b) treina com os fatos do verificador juntados por código com o horário exato e uma nota na jogada do momento decisivo (a do especialista V4 quando o servidor dele está no ar; senão a do Gemini): erro alta se o autor perdeu, acerto se venceu.",
    "A/B (decidido com o usuário em 29/10): terceira rede no C++ (Playerbots.ArenaMlChallengerB*, commit local fe77bac5 no mod-playerbots); a cópia III (56,64,68,72,76,80,84,88 — o 60 do usuário fora) entrou nas rodadas como segundo desafiante, começando da desafiante atual. 35 trios por rodada.",
-   "Regra: ~100 lutas por braço contra a campeã e as regras; +3 pontos → vai para os dois braços e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas; empate depois de 200 sai."
+   "Regra: ~100 lutas por braço contra a campeã e as regras; +3 pontos → vai para os dois braços e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas; empate depois de 200 sai.",
+   "Correção 29/10 11:18 SP: o treinador do braço B caía em loop desde as 09:44 (sorted comparava dicts quando dois nomes empatavam na posição da descrição do momento) e não treinou nada até aí; a contagem do braço B começa às 11:18 SP."
   ]
  }
 ]
