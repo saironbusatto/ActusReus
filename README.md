@@ -75,6 +75,7 @@ Every change that alters the game or the training becomes a version in [`agente/
 | V7 | 10/28 07:53 | verifier in the graph: log facts (missing bot, saved trinket, CC on DR, Divine Plea, Retaliation) in the coach's prompt. **Challenger 52% (220/427)**, best so far |
 | V8 | 10/29 07:21 | V7 + fixed verifier (a trinket action counts as use: the "died without trinket" fact was false when the event was missing). Specialist V4 tested and rejected on the blind test; the coach stays Gemini |
 | V9 | 10/29 09:44 | A/B with a third network: arm A (challenger) trains with the tactical plan as reward shaping; arm B (copy III, teams 56,64…88) trains with code-joined verifier facts + the decisive moment. Arm B's trainer crash-looped until 11:18 (sort compared dicts on a name tie) — its count starts at 11:18. Rule: ~100 fights per arm, +3 points spreads, −3 rolls back |
+| — | 10/29 18:10 | Specialist V5 (Qwen3-4B, + 100 fights labelled by Opus without the winner) failed blind test 2: decisive moment 15/20 (goal 16), found 31/115 errors (goal 35; Gemini 35). Gemini stays. A/B: arm A 52%, arm B 50% vs champion+rules (46% before) — both pass +3, so both changes go to both arms next (V10). Server paused |
 
 ### Lessons (do not repeat)
 

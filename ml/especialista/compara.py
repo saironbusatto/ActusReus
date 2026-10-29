@@ -67,7 +67,7 @@ def cego(pastas: list[str]) -> None:
             if "erro" in a:
                 ns.append({"json": False})
                 continue
-            if "v4" in pasta:
+            if "v4" in pasta or "v5" in pasta:  # V4+ não escreve os fatos: o código junta
                 a = junta_fatos(a, erros_dos_fatos(l, []))
             erros = a.get("erros", [])
             graves = [f for f in verificador.achados(l) if f["tipo"] in GRAVES]

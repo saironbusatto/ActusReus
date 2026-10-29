@@ -121,6 +121,16 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
   empate depois de 200 sai. Registro "V9A/V9B" no `versoes.json`.
 - **Treino de madrugada com o servidor ligado** (queda → `treina.py --retoma`).
 
+**Feito em 29/10 (tarde):**
+- **V5 do especialista: não passou** (teste cego 2, critério pré-registrado). JSON 20/20 ✅, fatos graves 11/11 ✅,
+  40 s/luta ✅; momento 15/20 ❌ (meta 16), achou 31/115 ❌ (meta 35; Gemini 35, V4 24); 95% das críticas em quem
+  perdeu (gabarito 85%, Gemini 87%). Juiz cego dispensado (reprovada em dois critérios de qualquer jeito). Fica o
+  Gemini. 5 lutas deram falta de memória na placa (os braços ainda usavam a GPU) e foram refeitas com ela livre.
+- **A/B (desde 11:18, quando o braço B começou a treinar de fato):** A x base (campeã+regras) 78/150 = 52%, B x base
+  54/109 = 50%, B x A 38/62 = 61%; desafiante antes do A/B 37/80 = 46%. Os dois passaram de +3 → pela regra, as duas
+  mudanças vão para os dois braços (V10) quando religar. Braços, rodadas e servidor parados às 18:05 a pedido do
+  usuário.
+
 **Feito em 29/10 (manhã):**
 - **Teste da morte neutra (Q12): não passou.** 10 lutas cegas analisadas por dois subagentes Opus sem contexto e
   sem vencedor: A (morte normal) 76% das críticas em quem perdeu, momento 10/10; B (morte = "saiu da luta", sem
