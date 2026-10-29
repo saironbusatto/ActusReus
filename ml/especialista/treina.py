@@ -25,6 +25,7 @@ def main() -> None:
     ap.add_argument("--epocas", type=float, default=1)
     ap.add_argument("--modelo", default=MODELO)
     ap.add_argument("--saida", default="lora", help="pasta em runs/especialista (lora = V1)")
+    ap.add_argument("--retoma", help="checkpoint em runs/especialista/ckpt-<saida>/ para continuar um treino morto")
     ap.add_argument("--dados", default="treino.jsonl", help="V4: treino-compacto.jsonl (dataset_tecnico --compacto)")
     a = ap.parse_args()
 
@@ -48,7 +49,7 @@ def main() -> None:
     trainer = train_on_responses_only(trainer, instruction_part="<|im_start|>user\n",
                                       response_part="<|im_start|>assistant\n")  # só a análise conta na perda
     t = time.time()
-    trainer.train()
+    trainer.train(resume_from_checkpoint=str(RUNS / f"ckpt-{a.saida}" / a.retoma) if a.retoma else None)
     print(f"{time.time() - t:.0f} s; pico da placa {torch.cuda.max_memory_allocated() / 2**30:.1f} GB", flush=True)
     if a.passos < 0:
         model.save_pretrained(RUNS / a.saida)
