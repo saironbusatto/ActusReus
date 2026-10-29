@@ -16,6 +16,7 @@ import datetime as dt
 import json
 import sys
 import time
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -24,6 +25,7 @@ sys.path.insert(0, str(ROOT / "ml" / "tools"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from espelho import sql  # noqa: E402
 from resumo_lutas import build, texto  # noqa: E402
+import dataset_tecnico  # noqa: E402
 import tecnico_grafo  # noqa: E402
 from rodada import (CAMPEA, DESAFIANTE, MOTOR_LUTA, REGRAS, RESERVA, RUNS, TIME_USUARIO, compacta,  # noqa: E402
                     composicao, papel, pergunta_motores)
@@ -38,6 +40,9 @@ GRATIS = ["openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "openrouter:googl
           "openrouter:google/gemma-4-26b-a4b-it:free"]
 MOTOR_BOT = ["agy:gemini-3.8-flash-medium", *GRATIS]
 SEM_LUTA_NOVA, MAX_RODADA = 240, 1200  # s
+# o especialista em casa (passou no teste cego) entra antes da fila: existe o arquivo = ligado
+ESPECIALISTA_ATIVO = ROOT / "ml" / "runs" / "especialista" / "ao-vivo.json"
+ESPECIALISTA_URL = "http://127.0.0.1:8765/analisa"
 
 
 def agora() -> dt.datetime:
@@ -58,12 +63,34 @@ def precisa_tecnico(luta: dict) -> bool:
     return bool((DESAFIANTE | {TIME_USUARIO}) & set(luta["times"]))
 
 
+def pergunta_especialista(luta: dict, url: str = ESPECIALISTA_URL) -> tuple[dict, str]:
+    """O técnico em casa (ml/especialista/servidor.py): entrada própria da V4 (sem vencedor, com glossário) e os fatos
+    do verificador juntados aqui com o horário exato (o modelo não os repete)."""
+    l = compacta(luta)
+    corpo = json.dumps({"sistema": dataset_tecnico.SISTEMA_V4, "entrada": dataset_tecnico.entrada_v4(l)}).encode()
+    pedido = urllib.request.Request(url, corpo, {"Content-Type": "application/json"})
+    with urllib.request.urlopen(pedido, timeout=900) as r:  # até 6 lutas na fila de uma placa só
+        a = json.loads(r.read())
+    if "erro" in a:
+        raise RuntimeError(a["erro"])
+    return dataset_tecnico.junta_fatos(a, dataset_tecnico.erros_dos_fatos(l, [])), f"local:{a.get('_versao')}"
+
+
 def analisa(luta: dict) -> dict:
     """Técnico com memória (tecnico_grafo, LangGraph): luta + caderno + lutas anteriores -> análise conferida."""
     usuario = TIME_USUARIO in luta["times"]
     motores = MOTOR_LUTA if usuario else MOTOR_BOT
+
+    def motor(t: str) -> tuple[dict, str]:
+        if not usuario and ESPECIALISTA_ATIVO.exists():  # o especialista que passou no teste cego entra primeiro
+            try:
+                return pergunta_especialista(luta)
+            except Exception as e:  # servidor fora do ar ou JSON inválido: a fila de sempre
+                print(f"especialista falhou na luta {luta['luta']}: {str(e)[:120]}", flush=True)
+        return pergunta_motores(SISTEMA, t, motores)
+
     try:
-        grafo = tecnico_grafo.montar(lambda t: pergunta_motores(SISTEMA, t, motores), texto, tecnico_grafo.tabela_caderno)
+        grafo = tecnico_grafo.montar(motor, texto, tecnico_grafo.tabela_caderno)
         analise, motor = tecnico_grafo.analisa_com_grafo(grafo, luta)
         return {**valida(analise, luta), "_motor": motor}
     except Exception as e:
@@ -213,6 +240,20 @@ def selftest() -> None:
     assert 60 not in TIMES_BOT and len(TIMES_BOT) == 27 and not TIMES_BOT & RESERVA
     assert precisa_tecnico({"times": {54: "a", 55: "b"}}) and precisa_tecnico({"times": {60: "a", 56: "b"}})
     assert not precisa_tecnico({"times": {54: "a", 56: "b"}})
+    # especialista: a entrada vai sem vencedor e com glossário; servidor fora do ar levanta (o motor cai na fila)
+    real = {"luta": 9, "inicio": dt.datetime(2026, 10, 29), "duracao": 60, "vencedor": 54,
+            "times": {54: "RMP I", 55: "RMP II"}, "vida": {}, "decisoes_rede": 0, "decisoes_total": 1,
+            "membros": {1: {"nome": "A", "classe": "Mage", "time": 54, "dano": 1, "cura": 0, "kills": 1},
+                        2: {"nome": "B", "classe": "Rogue", "time": 55, "dano": 0, "cura": 0, "kills": 0}},
+            "eventos": [{"tipo": "acao", "t": 40.0, "quem": "A", "acao": "polymorph", "alvo": "B", "rede": False,
+                         "prob": None}]}
+    entrada = dataset_tecnico.entrada_v4(compacta(real))
+    assert "Vencedor" not in entrada and "(venceu)" not in entrada and "polymorph: " in entrada, entrada
+    try:
+        pergunta_especialista(real, "http://127.0.0.1:9/analisa")
+        raise AssertionError("devia falhar sem servidor")
+    except OSError:
+        pass
     print("ok rodada_sync")
 
 

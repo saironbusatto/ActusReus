@@ -1,45 +1,31 @@
-"""Roda o técnico especialista (Qwen3-4B + LoRA de treina.py) nas lutas de teste e grava runs/especialista/qwen/<luta>.json.
+"""Roda o técnico especialista (Qwen3-4B + LoRA de treina.py) nas lutas de teste e grava runs/especialista/qwen-<versão>/<luta>.json.
 
-    .venv/bin/python analisa.py 18137 18666 ...      # sem números: as 50 do teste
+    .venv/bin/python analisa.py 18137 18666 ... --lora-v3                    # sem números: todas do arquivo
+    .venv/bin/python analisa.py --lora-v4 --arquivo=cego-v4.jsonl            # teste cego (V4: geração gulosa)
 """
 import json
 import sys
-import time
-from pathlib import Path
 
-from unsloth import FastLanguageModel
-
-RUNS = Path(__file__).resolve().parents[1] / "runs" / "especialista"
+from gerar import RUNS, carrega, gera
 
 
-def main() -> None:
-    args = [x for x in sys.argv[1:] if not x.startswith("--")]
-    versao = next((x[2:] for x in sys.argv[1:] if x.startswith("--")), "lora")  # --lora-v2 usa a V2
-    marca = RUNS / versao / "teste.txt"  # V4+: o LoRA treinado no texto compacto lê o teste compacto
-    teste = {json.loads(l)["luta"]: json.loads(l)
-             for l in (RUNS / (marca.read_text() if marca.exists() else "teste.jsonl")).open()}
-    lutas = [int(x) for x in args] or list(teste)
-    model, tok = FastLanguageModel.from_pretrained(str(RUNS / versao), max_seq_length=14336, load_in_4bit=True)
-    FastLanguageModel.for_inference(model)
+def main() -> int:
+    opcoes = dict(x[2:].split("=", 1) if "=" in x else (x[2:], "") for x in sys.argv[1:] if x.startswith("--"))
+    versao = next((k for k in opcoes if k.startswith("lora")), "lora")  # --lora-v2 usa a V2
+    marca = RUNS / versao / "teste.txt"  # V4+: o LoRA treinado no texto compacto lê o teste no mesmo formato
+    arquivo = opcoes.get("arquivo") or (marca.read_text() if marca.exists() else "teste.jsonl")
+    teste = {json.loads(l)["luta"]: json.loads(l) for l in (RUNS / arquivo).open()}
+    lutas = [int(x) for x in sys.argv[1:] if not x.startswith("--")] or list(teste)
+    model, tok = carrega(versao)
     saida = RUNS / ("qwen" if versao == "lora" else f"qwen-{versao}")
     saida.mkdir(exist_ok=True)
+    guloso = versao not in ("lora", "lora-v2", "lora-v3")  # as antigas foram medidas com amostragem 0,3
     for luta in lutas:
-        # a resposta já começa no "{": sem isso o modelo às vezes entra em laço de <tool_call> desde o 1º token
-        prompt = tok.apply_chat_template(teste[luta]["messages"][:2], tokenize=False, add_generation_prompt=True) + "{"
-        ids = tok(prompt, return_tensors="pt").to("cuda")
-        t = time.time()
-        out = model.generate(**ids, max_new_tokens=4096, temperature=0.3, do_sample=True,  # repetition_penalty fazia pular a lista de erros (repete "quem"/"t")
-                             bad_words_ids=[tok("<tool_call>", add_special_tokens=False).input_ids])
-        # 4096: com 2500 a V3 cortou a 19636 no meio (6% das respostas de treino passam de ~2500 tokens)
-        texto = "{" + tok.decode(out[0][ids.input_ids.shape[1]:], skip_special_tokens=True)
-        try:
-            analise = json.loads(texto[texto.find("{"):texto.rfind("}") + 1])
-        except ValueError:
-            analise = {"erro": "JSON inválido", "bruto": texto}
-        analise["_segundos"] = round(time.time() - t, 1)
+        analise = gera(model, tok, teste[luta]["messages"], guloso)
         (saida / f"{luta}.json").write_text(json.dumps(analise, ensure_ascii=False, indent=1))
         print(luta, analise["_segundos"], "s", "ok" if "erro" not in analise else "JSON inválido", flush=True)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

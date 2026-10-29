@@ -57,6 +57,25 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
       V3: Wind Shear no healer, culpa do Warrior na própria Retaliation, Victory Rush "cooldown", Divine Plea em 3v2.
       Próximo: horário dos fatos (o `t` do erro do fato = instante citado no texto) e resposta mais curta; a V4
       compacta acelera o treino, mas pouco a análise (a entrada não é o gargalo dela).
+- [ ] **V4** (29/10 01:25, treino rodando; `ml/especialista/v4.sh` foi substituído por isto): glossário de mecânica
+      na entrada (`tools/glossario.py`, 262 habilidades), vencedor escondido, fatos do verificador fora da resposta e
+      juntados por código com o horário exato (`junta_fatos`), resposta só com o que o treinador usa (≤ 5 erros),
+      entrada compacta, xformers, validação de 60 lutas com o checkpoint de menor perda, geração gulosa. Corte de
+      10.240 tokens por prazo: 2.753/3.640 lutas (as 24% mais longas ficaram fora). Verificador corrigido no caminho:
+      ação de trinket conta como uso (o fato "morreu sem trinket" era falso quando faltava o "** usou trinket").
+- [x] **Teste cego** (commit `3791403`, antes de qualquer saída da V4): 20 lutas sorteadas (semente 2910) que nenhuma
+      versão viu, analisadas à mão em `ml/runs/especialista/cego-opus/` com a lista de momentos aceitos fixada;
+      sha256 `34e742df…`. Régua: `compara.py --cego` (+ `--lista` para ler as críticas sem par). Limites da referência:
+      não é exaustiva (2-4 erros por luta) e é ela mesma enviesada pelo resultado (100% das minhas críticas em quem
+      perdeu: eu sabia o vencedor) — o viés só compara técnicos entre si.
+      Gemini no cego: JSON 20/20, momento 15/20, achou 24/48 dos meus erros, 2,5 críticas sem par/luta das quais li
+      as 50: 42 reais, 5 duvidosas, 3 erradas (trinket no Fear a 31% "errado", alvo de Innervate inventado, Divine
+      Sacrifice cancelado "suicídio") = **0,15-0,4 crítica errada/luta**; 78% das críticas em quem perdeu.
+- [ ] **Critério para entrar no ar (registrado antes do resultado da V4):** no teste cego, JSON 20/20; fatos graves
+      11/11 (do código); momento ≥ 15/20 e achou ≥ 24/48 (≥ Gemini); crítica errada (lida à mão, mesma régua)
+      ≤ 0,5/luta; ≤ 60 s/luta. Passou → `ml/runs/especialista/ao-vivo.json` + `servidor.py`: as lutas dos bots vão
+      primeiro para o especialista (o rodada_sync cai para a fila de sempre se ele falhar), versão nova no
+      `versoes.json`. Não passou → fica o Gemini e a próxima versão ataca o que falhou.
 - [ ] Modo sombra: o especialista analisa as lutas ao vivo em paralelo ao Gemini por algumas rodadas, sem ir para
       o treinador; comparar.
 
