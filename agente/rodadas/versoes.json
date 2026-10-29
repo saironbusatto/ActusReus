@@ -82,7 +82,29 @@
   "mudancas": [
    "Igual à V7 (técnico Gemini em LangGraph com verificador; treinador da V6), com uma correção no verificador: a ação de trinket (pvp trinket, every man for himself, will of the forsaken) conta como uso. Antes o fato dizia 'morreu sem usar o trinket' quando o servidor não gravava o '** usou trinket' (22743, 22771).",
    "O especialista V4 (Qwen3-4B em casa) foi testado no teste cego de 20 lutas e não passou no critério registrado antes (achou 17/45 contra 24/48 do Gemini; 0,53 crítica errada/luta contra 0,15-0,4): fica o Gemini. O caminho para o especialista entrar já existe (servidor.py + ao-vivo.json) e fica desligado.",
-   "Servidor religado 29/10 07:20 (SP) depois de ~13 h parado."
+   "Servidor religado 29/10 07:20 (SP) depois de ~13 h parado.",
+   "Encerrada em 29/10 09:43 (SP): restart para o A/B da V9."
+  ]
+ },
+ {
+  "id": "V9A",
+  "nome": "Braço A: plano tático por shaping",
+  "desde": "2026-10-29 12:45",
+  "mudancas": [
+   "Desafiante (55,59,...,87) treina com notas extras do plano por confronto (ml/policy/plano.py + planos.json, 81 planos escritos por subagente com pesquisa e revisados): CC no alvo de CC = acerto, no alvo de kill = erro; cooldown longo de burst na janela = acerto, fora = erro. Peso: escala do técnico x 0,3.",
+   "Revisão: o burst ficou só com cooldowns longos (a 1ª versão punia Conflagrate/Chaos Bolt/Bloodlust); o item 'foco no alvo de kill' ficou desligado porque o alvo é escolhido pelas regras, não pela rede (era 76% das notas). Volta na fase B (plano na entrada da rede).",
+   "A/B (decidido com o usuário em 29/10): terceira rede no C++ (Playerbots.ArenaMlChallengerB*, commit local fe77bac5 no mod-playerbots); a cópia III (56,64,68,72,76,80,84,88 — o 60 do usuário fora) entrou nas rodadas como segundo desafiante, começando da desafiante atual. 35 trios por rodada.",
+   "Regra: ~100 lutas por braço contra a campeã e as regras; +3 pontos → vai para os dois braços e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas; empate depois de 200 sai."
+  ]
+ },
+ {
+  "id": "V9B",
+  "nome": "Braço B: fatos por código + momento decisivo",
+  "desde": "2026-10-29 12:45",
+  "mudancas": [
+   "Cópia III (56,64,...,88, pesos arena-policy-live-b.txt, treinador ia-ao-vivo-b) treina com os fatos do verificador juntados por código com o horário exato e uma nota na jogada do momento decisivo (a do especialista V4 quando o servidor dele está no ar; senão a do Gemini): erro alta se o autor perdeu, acerto se venceu.",
+   "A/B (decidido com o usuário em 29/10): terceira rede no C++ (Playerbots.ArenaMlChallengerB*, commit local fe77bac5 no mod-playerbots); a cópia III (56,64,68,72,76,80,84,88 — o 60 do usuário fora) entrou nas rodadas como segundo desafiante, começando da desafiante atual. 35 trios por rodada.",
+   "Regra: ~100 lutas por braço contra a campeã e as regras; +3 pontos → vai para os dois braços e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas; empate depois de 200 sai."
   ]
  }
 ]

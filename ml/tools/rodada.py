@@ -88,7 +88,7 @@ def composicao(nome: str) -> str:
 
 def papel(team: int) -> str:
     return ("jogador" if team == TIME_USUARIO else "campea" if team in CAMPEA else
-            "desafiante" if team in DESAFIANTE else "regras" if team in REGRAS else "reserva")
+            "desafiante" if team in DESAFIANTE else "regras" if team in REGRAS else "desafiante_b" if team in RESERVA else "reserva")
 
 
 def compacta(luta: dict) -> dict:
@@ -162,6 +162,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     assert papel(60) == "jogador" and papel(54) == "campea" and papel(55) == "desafiante" and papel(57) == "regras"
-    assert papel(56) == "reserva" and len(CAMPEA | DESAFIANTE | REGRAS | RESERVA | {TIME_USUARIO}) == 36
+    assert papel(56) == "desafiante_b" and len(CAMPEA | DESAFIANTE | REGRAS | RESERVA | {TIME_USUARIO}) == 36
     assert composicao("RLS III") == "RLS" and composicao("Thunder II") == "Thunder"
     sys.exit(main())

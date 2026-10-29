@@ -1,0 +1,2017 @@
+{
+ "versao": 2,
+ "planos": {
+  "RMP vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "O TSG tem dificuldade em alcançar o RMP (Blink e mobilidade); CC no Paladin e matar o Warrior quando ele gastar os defensivos.",
+   "fontes": [
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/"
+   ]
+  },
+  "RMP vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RMP vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "polymorph",
+    "counterspell",
+    "psychic scream"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade",
+    "icy veins",
+    "mirror image",
+    "power infusion"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Polymorph/Blind no healer e Kidney Shot no alvo antes de gastar Shadow Dance e Icy Veins.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://warcrafttavern.com/wotlk/guides/pvp-discipline-priest-best-arena-comps",
+    "raciocínio"
+   ]
+  },
+  "RLS vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra TSG, o Warrior é o dano principal do TSG e tem menos defesa mágica que o DK; o Paladin tem Divine Shield. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RLS vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Sap/Blind ou Fear no healer e abrir forte no alvo com Shadow Dance e Haunt.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-08-02-the-colosseum-korgath-speaks-part-v.html",
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "raciocínio"
+   ]
+  },
+  "RPS vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra TSG, o Warrior é o dano principal do TSG e tem menos defesa mágica que o DK; o Paladin tem Divine Shield. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "RPS vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "blind",
+    "gouge",
+    "sap",
+    "kick",
+    "silence",
+    "psychic scream",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "shadow dance",
+    "premeditation",
+    "tricks of the trade"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Blind/Hex no healer e Psychic Horror no alvo dentro do Kidney Shot.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra TSG, o Warrior é o dano principal do TSG e tem menos defesa mágica que o DK; o Paladin tem Divine Shield. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Wild vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "freezing trap",
+    "scatter shot",
+    "silencing shot",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone"
+   ],
+   "burst": [
+    "rapid fire",
+    "readiness"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Freezing Trap no healer e Rapid Fire com Aimed Shot no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-marksmanship-hunter-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra TSG, o Warrior é o dano principal do TSG e tem menos defesa mágica que o DK; o Paladin tem Divine Shield. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Shadowplay vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "silence",
+    "psychic scream",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hammer of justice"
+   ],
+   "burst": [],
+   "burst_quando": "kill_abaixo_50",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: jogo de desgaste com DoTs em todos; o Psychic Horror e o Haunt ficam para quando o alvo cair abaixo de 50%.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "TSG vs RMP": {
+   "kill": "Priest",
+   "cc": "Mage",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "O RMP força o TSG para a defesa na abertura e kita com Blink; pressão no Disc Priest (frágil ao físico) com CC no Mage para quebrar o controle.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/"
+   ]
+  },
+  "TSG vs RLS": {
+   "kill": "Shaman",
+   "cc": "Warlock",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra RLS, o Resto Shaman sofre contra times físicos e é fácil de interromper. Nosso plano: pressão logo na abertura com Gargoyle e Bladestorm, encadeando Hammer of Justice, Strangulate e Gnaw.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "raciocínio"
+   ]
+  },
+  "TSG vs RPS": {
+   "kill": "Shaman",
+   "cc": "Priest",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra RPS, o Resto Shaman sofre contra times físicos e é fácil de interromper. Nosso plano: pressão logo na abertura com Gargoyle e Bladestorm, encadeando Hammer of Justice, Strangulate e Gnaw.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "raciocínio"
+   ]
+  },
+  "TSG vs Wild": {
+   "kill": "Druid",
+   "cc": "Warlock",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Wild, o Druid sem CC do time cai na pressão física contínua. Nosso plano: pressão logo na abertura com Gargoyle e Bladestorm, encadeando Hammer of Justice, Strangulate e Gnaw.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "raciocínio"
+   ]
+  },
+  "TSG vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: pressão logo na abertura com Gargoyle e Bladestorm, encadeando Hammer of Justice, Strangulate e Gnaw.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "raciocínio"
+   ]
+  },
+  "TSG vs TSG": {
+   "kill": "Paladin",
+   "cc": "DK",
+   "cc_acoes": [
+    "intimidating shout",
+    "pet gnaw",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "No espelho o time que protege mal o healer perde: ir no Paladin com Strangulate e Gnaw encadeados, CC no DK para ele não descascar.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html"
+   ]
+  },
+  "TSG vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: pressão logo na abertura com Gargoyle e Bladestorm, encadeando Hammer of Justice, Strangulate e Gnaw.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "raciocínio"
+   ]
+  },
+  "TSG vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Wizard cleave é o pior confronto do TSG por falta de CC próprio: pressionar cedo o Warlock (preso no cast), com Strangulate e HoJ no Shaman.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/"
+   ]
+  },
+  "TSG vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "intimidating shout",
+    "strangulate",
+    "pet gnaw",
+    "mind freeze",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "summon gargoyle",
+    "empower rune weapon"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Spell cleave com três CCs é o pior confronto do TSG: correr o Warlock Destro na abertura e travar o Shaman com Strangulate e HoJ.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/"
+   ]
+  },
+  "Thunder vs RMP": {
+   "kill": "Priest",
+   "cc": "Mage",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra RMP, o Disc Priest é derrubado por dano físico. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs RLS": {
+   "kill": "Shaman",
+   "cc": "Warlock",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra RLS, o Resto Shaman sofre contra times físicos e é fácil de interromper. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs RPS": {
+   "kill": "Shaman",
+   "cc": "Priest",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra RPS, o Resto Shaman sofre contra times físicos e é fácil de interromper. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs Wild": {
+   "kill": "Druid",
+   "cc": "Warlock",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Wild, o Druid sem CC do time cai na pressão física contínua. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra TSG, o Warrior é o dano principal do TSG e tem menos defesa mágica que o DK; o Paladin tem Divine Shield. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "raciocínio"
+   ]
+  },
+  "Thunder vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Com Mortal Strike e cura de Paladin, pressionar o Warlock Destro, que precisa de proteção para castar; HoJ no Shaman. Jogar a abertura antes que o CC deles encadeie.",
+   "fontes": [
+    "https://us.forums.blizzard.com/en/wow/t/what-were-the-top-3v3-comps-back-in-wotlk/1321974",
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/"
+   ]
+  },
+  "Thunder vs LSD": {
+   "kill": "Shaman",
+   "cc": "Warlock",
+   "cc_acoes": [
+    "intimidating shout",
+    "hex",
+    "wind shear",
+    "hammer of justice"
+   ],
+   "burst": [
+    "bladestorm",
+    "sweeping strikes",
+    "elemental mastery"
+   ],
+   "burst_quando": "abertura",
+   "porque": "Contra LSD, o Resto Shaman sofre contra times físicos e é fácil de interromper. Nosso plano: Bloodlust e Bladestorm na abertura com Hammer of Justice no alvo de CC.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Wizard cleave contra TSG é o confronto favorito: dois casters com CC de DR diferentes; Polymorph/Fear no Paladin sem trinket e burst junto no Warrior.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html"
+   ]
+  },
+  "Fireplay vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "Fireplay vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "polymorph",
+    "counterspell",
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "combustion",
+    "mirror image"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Polymorph/Fear no healer e Combustion com Chaos Bolt juntos no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.engadget.com/2010-06-28-blood-sport-3v3-archetypes-and-why-they-are-successful.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs RMP": {
+   "kill": "Mage",
+   "cc": "Priest",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RMP, o Mage sem Ice Block morre num global e é a peça de CC do RMP. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.breakflip.com/guides/116388.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "LSD vs RLS": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RLS, o Warlock é pano, só escapa com Demonic Circle e sustenta a pressão de DoT do RLS. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs RPS": {
+   "kill": "Priest",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra RPS, o Shadow Priest não tem como sair da luta além da Dispersion. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-shadow-priest-best-arena-comps/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs Wild": {
+   "kill": "Warlock",
+   "cc": "Druid",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Wild, o Warlock Affliction é o mais frágil e o Druid cura em movimento atrás do pilar. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs Shadowplay": {
+   "kill": "Warlock",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Shadowplay, o Warlock é pano sem imunidade, enquanto o Paladin tem Divine Shield e o Priest tem Dispersion. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/guides/pvp-healer-tier-list-rankings/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs TSG": {
+   "kill": "Warrior",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "TSG sofre contra três CCs de DR diferentes; Cyclone/Fear no Paladin e Starfall + Chaos Bolt no Warrior.",
+   "fontes": [
+    "https://www.engadget.com/2010-02-22-the-colosseum-aethros-of-cenarion-circle.html",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html"
+   ]
+  },
+  "LSD vs Thunder": {
+   "kill": "Shaman",
+   "cc": "Paladin",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Thunder, o Shaman Elemental é o mais frágil do Thunder e morre para pressão física. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2010-03-13-the-colosseum-athlete-paladin-of-mugthol.html",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  },
+  "LSD vs Fireplay": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra Fireplay, o Warlock Destro precisa ser protegido o tempo todo para conjurar e é o alvo natural. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "raciocínio"
+   ]
+  },
+  "LSD vs LSD": {
+   "kill": "Warlock",
+   "cc": "Shaman",
+   "cc_acoes": [
+    "fear",
+    "death coil",
+    "pet spell lock",
+    "cyclone",
+    "hex",
+    "wind shear"
+   ],
+   "burst": [
+    "starfall",
+    "force of nature"
+   ],
+   "burst_quando": "cc_no_healer",
+   "porque": "Contra LSD, o Warlock Destro é o alvo de sempre: sem imunidade e preso no cast. Nosso plano: Cyclone/Fear no healer e Starfall com Chaos Bolt no alvo.",
+   "fontes": [
+    "https://itemlevel.net/wotlk-pvp-class-picking-guide-world-of-warcraft/",
+    "https://www.warcrafttavern.com/wotlk/guides/pvp-elemental-shaman-best-arena-comps/",
+    "https://www.engadget.com/2009-11-17-the-colosseum-rheek-of-blackrock.html",
+    "raciocínio"
+   ]
+  }
+ },
+ "revisao": "2026-10-29: burst só com cooldowns longos (rotação e Bloodlust/Heroism saíram: o shaping puniria dano normal); Shadowplay fica sem item de burst"
+}

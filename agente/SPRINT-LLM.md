@@ -121,6 +121,24 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
   empate depois de 200 sai. Registro "V9A/V9B" no `versoes.json`.
 - **Treino de madrugada com o servidor ligado** (queda → `treina.py --retoma`).
 
+**Feito em 29/10 (manhã):**
+- **Teste da morte neutra (Q12): não passou.** 10 lutas cegas analisadas por dois subagentes Opus sem contexto e
+  sem vencedor: A (morte normal) 76% das críticas em quem perdeu, momento 10/10; B (morte = "saiu da luta", sem
+  golpes finais) 81%, 9/10. A diferença é ruído → fica o formato A (só sem vencedor). O subagente sem vencedor já
+  tem menos viés que o Gemini (78%) e que eu com vencedor (100%); parte dos 76% deve ser real (quem perde erra mais).
+- **Custo real: ~146 mil tokens por subagente de 10 lutas (~15 mil/luta)**, 2,5x a estimativa: 100 lutas ≈ 1,5 M.
+  As 100 lutas da V5 esperam a confirmação do usuário (100 / 50 / outro).
+- **Planos táticos (Q7):** 81 planos (`ml/policy/planos.json`, pesquisa e auditoria do manual em
+  `agente/planos-pesquisa.md`, 13 fontes; só 8 confrontos com fonte direta, o resto é a postura padrão). Revisão:
+  o burst tinha habilidades de rotação (Conflagrate, Chaos Bolt, Pyroblast...) e Bloodlust preso ao "healer em CC"
+  → ficou só cooldown longo; Shadowplay fica sem item de burst. Medido em 60 lutas reais: o item "foco no alvo de
+  kill" era 76% das 44 notas/luta e o alvo é escolhido pelas regras, não pela rede → **desligado** (`FOCO = False`,
+  volta na fase B). Sobram ~10 notas/luta, com peso extra 0,3 (`PLANO_PESO`). Auditoria do manual: só 2v2 e 4
+  classes, Silence/Psychic Horror listados no Disc, DR incompleto e contraditório (Fear 8 ou 10 s).
+- **A/B no ar 29/10 09:44 (SP):** terceira rede no C++ (build 20 min, ccache), cópia III nas rodadas (35 trios),
+  `ia-ao-vivo` (A, plano) e `ia-ao-vivo-b` (B, fatos + momento), especialista V4 de dia em `servidor.py` só para o
+  momento. Versões V9A/V9B no `versoes.json`.
+
 ### Passo 1b — a LLM escreve a recompensa (estratégia 1)
 
 Em vez de nota por luta, o especialista lê centenas de lutas e propõe **regras de recompensa em código** (ex.: "+x

@@ -7,7 +7,7 @@ Uso:
 
 Rodada R<n>: grava o id no arquivo da rodada -> os bots entram na fila uma vez -> cada luta que termina é
 remontada (resumo_lutas) e analisada na hora (agy Gemini 3.8 Flash; lutas do usuário com Claude Sonnet 4.6) ->
-fecha quando os 27 trios bot lutaram (ou 4 min sem luta nova, ou 20 min no total) e todas as análises saíram ->
+fecha quando os 35 trios bot lutaram (ou 4 min sem luta nova, ou 20 min no total) e todas as análises saíram ->
 grava ml/runs/rodadas/R<n>.json + index.json (lidos pelo artefato "Rodadas da Arena") -> espera o treinador ao vivo
 aplicar as notas do técnico e regravar a rede (aval em treinado.json) -> abre R<n+1>: todos voltam à fila juntos.
 """
@@ -33,7 +33,8 @@ from treinador_ia import SISTEMA, valida  # noqa: E402
 
 ARQ_RODADA = ROOT / "azerothcore-wotlk" / "env" / "dist" / "etc" / "arena-rodada.txt"
 ESTADO = RUNS / "sync-estado.json"
-TIMES_BOT = CAMPEA | DESAFIANTE | REGRAS  # 27 trios: 1 por composição em cada papel; a reserva não entra na fila
+# V9 (A/B): a cópia III (RESERVA) virou o segundo desafiante e entra na fila: 35 trios (o 60 do usuário fica fora)
+TIMES_BOT = CAMPEA | DESAFIANTE | REGRAS | RESERVA
 # fila de reserva, SÓ modelos gratuitos (pedido do usuário): o primeiro que responder. Se todos recusarem, a luta fica
 # sem análise e o treinador segue só com o resultado dela
 GRATIS = ["openrouter:nvidia/nemotron-3-ultra-550b-a55b:free", "openrouter:google/gemma-4-31b-it:free",
@@ -60,7 +61,7 @@ SEM_TECNICO = {"erro": "sem análise: luta sem a Desafiante/treino"}
 
 
 def precisa_tecnico(luta: dict) -> bool:
-    return bool((DESAFIANTE | {TIME_USUARIO}) & set(luta["times"]))
+    return bool((DESAFIANTE | RESERVA | {TIME_USUARIO}) & set(luta["times"]))
 
 
 def pergunta_especialista(luta: dict, url: str = ESPECIALISTA_URL) -> tuple[dict, str]:
@@ -92,9 +93,15 @@ def analisa(luta: dict) -> dict:
     try:
         grafo = tecnico_grafo.montar(motor, texto, tecnico_grafo.tabela_caderno)
         analise, motor = tecnico_grafo.analisa_com_grafo(grafo, luta)
-        return {**valida(analise, luta), "_motor": motor}
+        analise = {**valida(analise, luta), "_motor": motor}
     except Exception as e:
         return {"erro": str(e)[:300]}
+    if not usuario and not ESPECIALISTA_ATIVO.exists():
+        try:  # V9, braço B: o momento decisivo do especialista junto do Gemini (servidor.py de dia; fora do ar: nada)
+            analise["_especialista_momento"] = pergunta_especialista(luta)[0].get("momento_decisivo")
+        except Exception:
+            pass
+    return analise
 
 
 def ficha_trio(tid: int, luta: dict, analise: dict) -> dict:
@@ -180,7 +187,7 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
     # o próximo número já fica gravado: se o serviço cair no meio, volta com um id novo (a trava do servidor lembra
     # quem já entrou na fila com este id e não deixaria esses trios lutarem de novo)
     ESTADO.write_text(json.dumps({"proxima": n + 1}))
-    ARQ_RODADA.write_text(rid + "\n" + " ".join(map(str, sorted(RESERVA))) + "\n")  # id + times na reserva
+    ARQ_RODADA.write_text(rid + "\n\n")  # id + times na reserva (nenhum desde a V9: a cópia III joga o A/B)
     print(f"{t0:%H:%M:%S} {rid} aberta", flush=True)
     lutas, futuros, feitos, ultima = {}, {}, set(), time.time()
     while True:
@@ -232,14 +239,14 @@ def selftest() -> None:
                "acertos": [{"quem": "B", "descricao": "ok"}], "erros_da_rede": [],
                "conselho_por_time": {"RMP I": "c1"}, "_motor": "agy:x"}
     f54, f56 = ficha_trio(54, luta, analise), ficha_trio(56, luta, analise)
-    assert f54["vitorias"] == 1 and f56["derrotas"] == 1 and f54["papel"] == "campea" and f56["papel"] == "reserva"
+    assert f54["vitorias"] == 1 and f56["derrotas"] == 1 and f54["papel"] == "campea" and f56["papel"] == "desafiante_b"
     assert len(f54["analise"]["padroes_de_erro"]) == 1 and f54["analise"]["plano_proxima_rodada"] == ["c1"]
     assert f56["analise"]["o_que_funcionou"][0]["descricao"] == "B: ok" and f56["analise"]["plano_proxima_rodada"] == []
     sem_desc = ficha_trio(56, luta, {**analise, "acertos": [{"quem": "B", "fez": "kick"}]})
     assert sem_desc["analise"]["o_que_funcionou"][0]["descricao"] == "B: kick"
-    assert 60 not in TIMES_BOT and len(TIMES_BOT) == 27 and not TIMES_BOT & RESERVA
+    assert 60 not in TIMES_BOT and len(TIMES_BOT) == 35 and RESERVA <= TIMES_BOT
     assert precisa_tecnico({"times": {54: "a", 55: "b"}}) and precisa_tecnico({"times": {60: "a", 56: "b"}})
-    assert not precisa_tecnico({"times": {54: "a", 56: "b"}})
+    assert precisa_tecnico({"times": {54: "a", 56: "b"}}) and not precisa_tecnico({"times": {54: "a", 57: "b"}})
     # especialista: a entrada vai sem vencedor e com glossário; servidor fora do ar levanta (o motor cai na fila)
     real = {"luta": 9, "inicio": dt.datetime(2026, 10, 29), "duracao": 60, "vencedor": 54,
             "times": {54: "RMP I", 55: "RMP II"}, "vida": {}, "decisoes_rede": 0, "decisoes_total": 1,

@@ -28,7 +28,9 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(1, str(Path(__file__).resolve().parents[1] / "tools"))  # dataset_tecnico (braço dos fatos)
 import caderno  # noqa: E402
+import plano  # noqa: E402
 from espelho import sql, wilson  # noqa: E402
 from features import N_FEATURES_V2, features_v2, parse_v2  # noqa: E402
 from train_v2 import EMB, HIDDEN, PER_SLOT, PolicyV2, export  # noqa: E402
@@ -43,6 +45,14 @@ OBSIDIAN = Path.home() / "Documentos" / "Obsidian Vault" / "IA-Ao-Vivo.md"
 CHAMPION_TEAMS = {54, 58, 62, 66, 70, 74, 78, 82, 86}
 CHALLENGER_TEAMS = {55, 59, 63, 67, 71, 75, 79, 83, 87}
 IGNORE_TEAMS = {60}  # o usuário joga no RLS III
+# A/B (V9): o braço B roda outro processo deste arquivo (--braco b) com os times da cópia III, arquivos próprios, sem
+# promover nem liberar rodada; cada braço tira os times do outro do seu espelho (OUTRO). Os extras de cada braço:
+# PLANOS (plano tático, policy/plano.py) e FATOS_CODIGO (fatos do verificador com o horário exato + momento decisivo)
+OUTRO: set[int] = set()
+SUFIXO = ""
+PLANOS: dict | None = None
+PLANO_PESO = 0.3  # ~10 notas de plano por luta contra ~6 do técnico: o plano entra com 30% do peso de uma nota
+FATOS_CODIGO = False
 
 # BETA age sobre a vantagem normalizada no lote (média 0, desvio 1): com a vantagem crua (~0,035) e BETA 0,5 todo
 # peso ficava ~1,07 e a rede só imitava o que os bots faziam, bom ou ruim
@@ -305,6 +315,50 @@ def coach_notes(luta: dict, padroes: dict | None = None) -> dict[tuple[int, int]
 AVAL = RODADAS / "treinado.json"  # o orquestrador (rodada_sync.py) só abre a próxima rodada depois deste aval
 
 
+def _momento(luta: dict, analise: dict) -> dict | None:
+    """O item da jogada do momento decisivo (a do especialista quando houver): erro de quem perdeu, acerto de quem
+    venceu. O autor é o primeiro personagem da luta citado na descrição."""
+    m = analise.get("_especialista_momento") or analise.get("momento_decisivo") or {}
+    membros = luta.get("membros", [])
+    membros = list(membros.values()) if isinstance(membros, dict) else membros
+    desc = str(m.get("descricao", ""))
+    citados = sorted((desc.find(x["nome"]), x) for x in membros if x["nome"] in desc)
+    if m.get("t") is None or not citados:
+        return None
+    quem = citados[0][1]
+    if int(quem["time"]) == int(luta.get("vencedor", -1)):
+        return {"tipo": "acerto", "t": m["t"], "quem": quem["nome"], "descricao": desc}
+    return {"tipo": "erro", "t": m["t"], "quem": quem["nome"], "fez": desc, "gravidade": "alta"}
+
+
+def extras(luta: dict) -> dict:
+    """Os extras do braço deste processo, por cima da análise do técnico (os dois braços leem as mesmas rodadas)."""
+    a = luta.get("analise") or {}
+    if "erro" in a or not (PLANOS or FATOS_CODIGO):
+        return luta
+    erros, acertos = list(a.get("erros", [])), list(a.get("acertos", []))
+    if FATOS_CODIGO:
+        import dataset_tecnico  # só neste braço: a importação puxa o resto do técnico
+        erros = dataset_tecnico.junta_fatos({"erros": erros}, dataset_tecnico.erros_dos_fatos(luta, []))["erros"]
+        m = _momento(luta, a)
+        if m:
+            (erros if m.pop("tipo") == "erro" else acertos).append(m)
+    out = {**luta, "analise": {**a, "erros": erros, "acertos": acertos}}
+    if PLANOS:
+        pe, pa = plano.notas(luta, PLANOS)
+        out["_plano"] = {"erros": pe, "acertos": pa}
+    return out
+
+
+def notas_plano(luta: dict) -> dict[tuple[int, int], float]:
+    """As notas do plano, na escala do técnico x PLANO_PESO (somadas às do técnico em novas_analises)."""
+    p = luta.get("_plano")
+    if not p:
+        return {}
+    so_plano = {**luta, "analise": {"erros": p["erros"], "acertos": p["acertos"]}}
+    return {k: PLANO_PESO * v for k, v in coach_notes(so_plano).items()}
+
+
 def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int, int], float]:
     """Notas das rodadas gravadas/atualizadas desde a última leitura; 'lidas' recebe os ids dessas rodadas."""
     notas: dict[tuple[int, int], float] = {}
@@ -326,7 +380,10 @@ def novas_analises(vistos: dict[str, float], lidas: list[str]) -> dict[tuple[int
             padroes = caderno.padroes(tab)
         lutas = dados["lutas"]
         for luta in lutas.values():
+            luta = extras(luta)
             notas.update({k: COACH_ESCALA * v for k, v in coach_notes(luta, padroes).items()})
+            for k, v in notas_plano(luta).items():
+                notas[k] = notas.get(k, 0.0) + COACH_ESCALA * v
         lidas.append(f.stem)
     return notas
 
@@ -373,6 +430,8 @@ def finished_fights(since: dt.datetime) -> list[tuple[dt.datetime, dt.datetime, 
 
 
 def side(team: int) -> str:
+    if team in OUTRO:
+        return "x"
     return "ch" if team in CHALLENGER_TEAMS else "cp" if team in CHAMPION_TEAMS else "r"
 
 
@@ -416,7 +475,7 @@ def rate(wn) -> float:
 # ---------------------------------------------------------------- status
 def write_status(st: dict) -> None:
     RUNS.mkdir(parents=True, exist_ok=True)
-    with (RUNS / "live.jsonl").open("a") as f:
+    with (RUNS / f"live{SUFIXO}.jsonl").open("a") as f:
         f.write(json.dumps(st, default=str) + "\n")
     m = st["espelho"]
 
@@ -424,6 +483,8 @@ def write_status(st: dict) -> None:
         lo, hi = wilson(*wn)
         return f"| {nome} | {wn[0]}/{wn[1]} | {rate(wn):.0%} | {lo:.0%}–{hi:.0%} |"
 
+    if SUFIXO:  # a nota do Obsidian é a do braço principal
+        return
     hist = [json.loads(x) for x in (RUNS / "live.jsonl").read_text().splitlines()[-12:]]
     tabela = "\n".join(
         f"| {h['quando']} | {h['versao']} | {h['decisoes_total']:,} | {rate(h['espelho']['desafiante']):.0%} "
@@ -469,14 +530,29 @@ def main() -> int:
     ap.add_argument("--portao", type=int, default=600)
     ap.add_argument("--campea", type=Path, default=ETC / "arena-policy-v3.txt")
     ap.add_argument("--desafiante", type=Path, default=ETC / "arena-policy-live.txt")
+    ap.add_argument("--braco", default="", help="A/B: 'b' = segundo desafiante (arquivos -b, sem promover)")
+    ap.add_argument("--times", default="", help="times deste desafiante (padrão: CHALLENGER_TEAMS)")
+    ap.add_argument("--outro", default="", help="times do outro braço do A/B, fora do espelho deste")
+    ap.add_argument("--plano", type=Path, help="braço do plano tático: policy/planos.json")
+    ap.add_argument("--fatos-codigo", action="store_true", help="braço dos fatos por código + momento decisivo")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
+    global CHALLENGER_TEAMS, OUTRO, SUFIXO, CKPTS, PLANOS, FATOS_CODIGO
+    lista = lambda x: {int(t) for t in x.split(",") if t.strip()}  # noqa: E731
+    if a.times:
+        CHALLENGER_TEAMS = lista(a.times)
+    OUTRO = lista(a.outro)
+    SUFIXO = f"-{a.braco}" if a.braco else ""
+    CKPTS = RUNS / f"checkpoints{SUFIXO}"
+    CKPTS.mkdir(parents=True, exist_ok=True)
+    PLANOS = plano.carrega(a.plano) if a.plano else None
+    FATOS_CODIGO = a.fatos_codigo
     if a.selftest:
         selftest()
         return 0
 
     dev = "cuda" if torch.cuda.is_available() else "cpu"
-    ckpt = RUNS / "live-desafiante.pt"
+    ckpt = RUNS / f"live-desafiante{SUFIXO}.pt"
     model, actions = load_policy(a.campea)
     now = dt.datetime.now(dt.UTC).replace(tzinfo=None, microsecond=0)
     state = {"versao": 0, "desde": now}
@@ -501,7 +577,7 @@ def main() -> int:
         write_atomic(model.cpu(), actions, a.desafiante)
         model.to(dev)
 
-    buf, val, tail = Replay(), Replay(cap=VAL_CAP), LogTail(LOG, RUNS / "live.offset")
+    buf, val, tail = Replay(), Replay(cap=VAL_CAP), LogTail(LOG, RUNS / f"live{SUFIXO}.offset")
     melhor: float | None = None  # nota de validação da versão que está no servidor
     pending: dict[int, list[tuple[dt.datetime, dict]]] = {}
     last_fight = now - dt.timedelta(minutes=5)
@@ -540,7 +616,7 @@ def main() -> int:
             totals["atualizacoes"] += 1
             nota = avalia(model, val, dev)
             stats["nota_val"] = nota
-            guarda_ckpt(model.cpu(), actions, totals["atualizacoes"], nota)
+            guarda_ckpt(model.cpu(), actions, totals["atualizacoes"], nota, CKPTS)
             model.to(dev)
             # parada antecipada: só vai para o servidor se a validação não piorou; se piorou, volta à melhor versão
             if nota is None or melhor is None or nota >= melhor - VAL_TOL:
@@ -559,7 +635,7 @@ def main() -> int:
                 stats["publicada"] = False
             torch.save({"model": model.state_dict(), "actions": actions,
                         "state": {**state, "desde": state["desde"].isoformat()}}, ckpt)
-        if lidas:  # notas da rodada aplicadas e (se havia dados) rede regravada: libera a próxima rodada
+        if lidas and not SUFIXO:  # notas da rodada aplicadas e (se havia dados) rede regravada: libera a próxima rodada
             AVAL.write_text(json.dumps({"rodadas": lidas, "quando": f"{now:%Y-%m-%d %H:%M:%S}",
                                         "conselhos_aplicados": totals["conselhos_aplicados"]}))
 
@@ -568,7 +644,7 @@ def main() -> int:
             m = mirror(state["desde"])
             ch, cp = m["desafiante"], m["campea"]
             evento = "medindo"
-            if ch[1] >= GATE_MIN and cp[1] >= GATE_MIN:
+            if ch[1] >= GATE_MIN and cp[1] >= GATE_MIN and not SUFIXO:  # o braço B não promove (decisão do A/B)
                 if rate(ch) - rate(cp) >= PROMOTE and rate(ch) >= 0.5:
                     shutil.copyfile(a.desafiante, a.campea.with_suffix(".tmp"))
                     os.replace(a.campea.with_suffix(".tmp"), a.campea)
@@ -682,6 +758,31 @@ def selftest() -> None:
         write_atomic(model, actions, out)
         back, names = load_policy(out)
         assert names == actions and torch.allclose(back(x)[0], model(x)[0], atol=1e-4)
+    # A/B (V9): o outro braço sai do espelho; os extras só ligam no braço deles
+    global OUTRO, PLANOS, FATOS_CODIGO
+    OUTRO = {56}
+    assert side(56) == "x" and side(55) == "ch" and side(54) == "cp" and side(57) == "r"
+    OUTRO = set()
+    luta = {"vencedor": 2, "membros": [{"nome": "W", "classe": "Warlock", "time": 1, "guid": 1},
+                                       {"nome": "R", "classe": "Rogue", "time": 2, "guid": 2}],
+            "times": {"1": "RLS I", "2": "RMP I"}, "vida": {},
+            "eventos": [{"tipo": "acao", "t": 40.0, "quem": "W", "acao": "life tap", "alvo": "", "rede": False,
+                         "prob": None, "guid": 1, "ms": 40000}, {"tipo": "morte", "t": 45.0, "quem": "W"}],
+            "analise": {"resumo": "r", "erros": [], "acertos": [],
+                        "momento_decisivo": {"t": 40.0, "descricao": "W deu life tap e morreu"}}}
+    assert extras(luta) is luta  # sem extras: a mesma luta
+    FATOS_CODIGO = True
+    e = extras(luta)["analise"]["erros"]
+    assert any(x["quem"] == "W" and x["gravidade"] == "alta" and "life tap" in x["fez"] for x in e), e  # momento
+    assert any("manutenção" in x["porque"] or "GCD" in x["porque"] for x in e), e  # fato: manutenção perto da morte
+    FATOS_CODIGO = False
+    PLANOS = {"RMP vs RLS": {"kill": "Warlock", "cc": "Shaman", "cc_acoes": [], "burst": ["shadow dance"],
+                             "burst_quando": "abertura"}}
+    luta["eventos"].append({"tipo": "acao", "t": 80.0, "quem": "R", "acao": "shadow dance", "alvo": "W",
+                            "rede": True, "prob": 0.5, "guid": 2, "ms": 80000})
+    n = notas_plano(extras(luta))
+    assert n == {(2, 80000): PLANO_PESO * COACH_ERRO["media"]}, n  # burst fora da janela de abertura
+    PLANOS = None
     print("ok live")
 
 
