@@ -1,0 +1,20 @@
+{"resumo": "O felhunter de Ominousxxi trancou Heruxiv o tempo todo (silence 44.4/49.3 e stun 50.1) e Celianeyix morreu aos 53.6 batendo num rogue em evasion; depois Naminiv caiu no kidney shot + blind.",
+ "momento_decisivo": {"t": 49.3, "descricao": "Pet spell lock em Heruxiv seguido de stun (50.1) justo quando o bladestorm do warrior terminou e os DoTs/hemorrhage o derrubavam; sem cura nenhuma, Celianeyix morre aos 53.6."},
+ "erros": [
+  {"t": 44.5, "quem": "Celianeyix", "fez": "cleave/heroic strike em Zebedeuix até morrer, sem mortal strike, inclusive com o rogue em evasion (48.3)", "devia": "mortal strike, e trocar para o warlock ou o curandeiro quando o rogue usou evasion/vanish", "porque": "golpes num rogue em evasion erram muito; o rogue nunca chegou a cair", "gravidade": "alta"},
+  {"t": 53.0, "quem": "Celianeyix", "fez": "battle shout com pouca vida, meio segundo antes de morrer", "devia": "enraged regeneration ou um defensivo (shield wall/intimidating shout para sair)", "porque": "não usou nenhum defensivo na luta e morreu aos 53.6", "gravidade": "alta"},
+  {"t": 41.2, "quem": "Celianeyix", "fez": "abriu com charge no rogue (alvo com evasion/vanish/cloak)", "devia": "abrir no warlock Ominousxxi ou no curandeiro Kwongwegaiv", "porque": "o rogue tem a maior quantidade de defensivos e o felhunter do warlock era o que travava o próprio curandeiro", "gravidade": "media"},
+  {"t": 49.1, "quem": "Naminiv", "fez": "purge ×2 e purge em Kwongwegaiv (53.2) enquanto o warrior morria e Heruxiv estava em silence/stun", "devia": "healing wave em Celianeyix", "porque": "era a única cura livre do time naquela janela; Heruxiv curou só 1368 na luta", "gravidade": "alta"},
+  {"t": 48.7, "quem": "Heruxiv", "fez": "holy light (cast longo) com o felhunter do inimigo ativo e pronto", "devia": "holy shock/flash of light instantâneos ou rápidos, e pedir que o grounding/purge protegesse o cast", "porque": "foi travado pelo pet spell lock aos 49.3 e o warrior ficou sem cura", "gravidade": "media"},
+  {"t": 55.2, "quem": "Heruxiv", "fez": "holy light ×2 (até 59.8) enquanto Naminiv era focado", "devia": "holy shock/flash of light e hand of protection em Naminiv contra o rogue", "porque": "o dano em Naminiv era físico (hemorrhage); a BoP quebrava o kidney/blind que o matou", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 49.3, "quem": "Ominousxxi", "descricao": "pet spell lock em Heruxiv no momento exato em que o warrior precisava de cura, combinado com o stun seguinte"},
+  {"t": 48.3, "quem": "Zebedeuix", "descricao": "evasion a 43% e depois vanish + cloak of shadows, sobrevivendo ao bladestorm e aos dispels inimigos"},
+  {"t": 61.0, "quem": "Zebedeuix", "descricao": "kidney shot em Naminiv seguido de blind no curandeiro Heruxiv (62.0), mesma receita da primeira kill"}
+ ],
+ "erros_da_rede": [
+  {"t": 63.4, "quem": "Heruxiv", "acao": "judgement of light → Kwongwegaiv", "porque": "Naminiv estava a 32% e morreu aos 64.7; o GCD era para uma cura direta"},
+  {"t": 58.2, "quem": "Naminiv", "acao": "purge → Kwongwegaiv", "porque": "sendo focado no 2v3, purgar o curandeiro inimigo não resolvia; devia se curar/posicionar"},
+  {"t": 51.6, "quem": "Heruxiv", "acao": "cancel divine sacrifice → Zebedeuix", "porque": "cancelou logo depois de ativar, com o warrior morrendo; o redirecionamento de dano era o que ajudava ali"}
+ ]}

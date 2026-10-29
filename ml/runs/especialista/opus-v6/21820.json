@@ -1,0 +1,20 @@
+{"resumo": "O Beteraniv (com readiness para o segundo rapid fire) e os spell locks do Ominoustres derrubaram o Ominousdes aos 74.9 e o Heshovii aos 81.1. O Kwongwegavii passou a janela crítica dispelando curse e poison em vez de curar.",
+ "momento_decisivo": {"t": 63.5, "descricao": "Beteraniv usa readiness, rapid fire e silencing shot no Ominousdes enquanto o Heshovii está com 20-33% e o Kwongwegavii gasta quatro GCDs em cleanse spirit curse (63.5-67.8). Sem cura, o warlock cai aos 74.9 e o mage logo depois."},
+ "erros": [
+  {"t": 63.5, "quem": "Kwongwegavii", "fez": "cleanse spirit curse ×4 com o mage a 27-33% e o warlock indo a 36%", "devia": "nature's swiftness + healing wave, riptide e lesser healing wave nos aliados baixos", "porque": "curse of tongues/agony não mata ninguém; o healer fez só 14 mil de cura na luta e os dois parceiros caíram", "gravidade": "alta"},
+  {"t": 61.3, "quem": "Kwongwegavii", "fez": "cleanse spirit poison seguidos (61.3, 68.8, 71.0) contra serpent sting", "devia": "deixar o serpent sting e curar, porque o hunter reaplica de graça", "porque": "o Beteraniv reaplicou serpent sting ×2/×3 logo depois; foi troca de GCD perdida", "gravidade": "media"},
+  {"t": 41.7, "quem": "Kwongwegavii", "fez": "não pôs tremor totem contra dois warlocks com fear (41.7, 50.8, 72.7)", "devia": "tremor totem fixo enquanto houver warlock na arena", "porque": "o healer passou várias janelas em fear justamente quando os aliados apanhavam", "gravidade": "media"},
+  {"t": 42.0, "quem": "Heshovii", "fez": "spellsteal ×2 no Pehdicouii na abertura e nenhum polymorph a luta inteira", "devia": "polymorph no Pehdicouii para abrir janela de kill no Beteraniv ou num warlock", "porque": "o druida curou 53 mil sem ser controlado pelo mage; o polymorph é o CC principal da composição", "gravidade": "alta"},
+  {"t": 58.4, "quem": "Heshovii", "fez": "mana shield (58.4, 61.7) enquanto caía de 72% para 33%", "devia": "blink e frost nova para sair do alcance do hunter, ou ice block mais cedo", "porque": "mana shield absorve pouco contra o burst do hunter e queima mana; ele acabou indo a 20% e precisou de trinket e ice block juntos", "gravidade": "media"},
+  {"t": 70.6, "quem": "Ominousdes", "fez": "shoot (wand) com 31% de vida", "devia": "demonic circle, death coil no Beteraniv ou healthstone, e pedir dispel/cura", "porque": "estava sob o rapid fire do hunter e morreu 4 s depois sem usar nenhum defensivo", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 63.5, "quem": "Beteraniv", "descricao": "readiness para um segundo rapid fire na hora em que o time inimigo estava baixo, fechando dois kills"},
+  {"t": 53.2, "quem": "Ominoustres", "descricao": "spell locks seguidos no Heshovii (48.5, 53.2, 79.3) que tiraram o mage e garantiram o kill final"},
+  {"t": 60.9, "quem": "Pehdicouii", "descricao": "barkskin a 61% e depois shadowmeld para largar o foco e voltar a curar"}
+ ],
+ "erros_da_rede": [
+  {"t": 59.2, "quem": "Ominousdes", "acao": "curse of the elements → Pehdicouii", "porque": "CoE amplifica dano mágico e foi posto no healer, que nem era o alvo do time"},
+  {"t": 44.7, "quem": "Heshovii", "acao": "combustion → Ominoustres", "porque": "cooldown de burst sem janela de kill nem CC no healer"},
+  {"t": 42.4, "quem": "Heshovii", "acao": "berserking → Pehdicouii", "porque": "racial de dano gasto no começo, sem alvo controlado e enquanto fazia spellsteal"}
+ ]}

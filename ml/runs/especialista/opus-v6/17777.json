@@ -1,0 +1,20 @@
+{"resumo": "Wild I abriu com fear e silences no Kwongwegaix, que gastou o trinket sem CC visível aos 56.8 e morreu no fear seguinte aos 61.1; sem curador, o Heshoix caiu aos 76.1 sob dots e spell lock.",
+ "momento_decisivo": {"t": 56.8, "descricao": "Kwongwegaix gasta o PvP trinket aos 41% de vida sem nenhum CC ativo registrado; no fear dos 59.4 ele não tem mais como sair e morre aos 61.1."},
+ "erros": [
+  {"t": 56.8, "quem": "Kwongwegaix", "fez": "pvp trinket sem CC visível (último silence aos 53.2 já tinha acabado)", "devia": "guardar o trinket para o próximo fear/stun e se curar (riptide, healing wave) enquanto estava livre", "porque": "trinket tem 2 min de recarga; o fear dos 59.4 pegou ele sem saída e ele morreu 2 s depois", "gravidade": "alta"},
+  {"t": 49.5, "quem": "Kwongwegaix", "fez": "chain lightning, depois flame shock (52.1) e lava burst (53.1) como único curador", "devia": "usar os globais livres entre os CCs para curar e pôr shields/totem de grounding contra os locks", "porque": "ele estava sendo o alvo de fear e silence; cada global em dano é cura perdida e ele caiu de 100% para 41% nesse intervalo", "gravidade": "media"},
+  {"t": 44.2, "quem": "Heshoix", "fez": "living bomb no Ominous, flamestrike (48.7) e blizzard (52.3)", "devia": "usar counterspell/polymorph no Pehdicouve ou no Ominous para aliviar o curador do time", "porque": "dano em área não segura ninguém; o mago tinha as ferramentas de controle para quebrar a pressão no Kwongwegaix", "gravidade": "media"},
+  {"t": 63.1, "quem": "Heshoix", "fez": "pvp trinket aos 63.1 e de novo aos 64.1 sem CC registrado nele", "devia": "guardar o trinket para o spell lock/stun do kill (ele foi silenciado aos 71.3 com 15%)", "porque": "sem curador e com pouca vida, o trinket era a saída do CC que antecedeu a morte aos 76.1", "gravidade": "media"},
+  {"t": 72.3, "quem": "Ominousdesii", "fez": "seed of corruption duas vezes com o Heshoix a 15% sendo morto", "devia": "fazer peel: death coil/fear/shadowfury no Beteranii ou no Ominous", "porque": "dano lento em área não muda nada quando o parceiro morre em segundos; o peel podia ganhar o tempo do mago", "gravidade": "media"},
+  {"t": 69.4, "quem": "Heshoix", "fez": "mana sapphire com a vida a cerca de 15%", "devia": "blink/frost nova para sair do alcance e usar o global em defesa", "porque": "o problema era vida, não mana; o global gasto em mana não ajudou a sobreviver", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 48.7, "quem": "Ominous", "descricao": "pet spell lock no Heshoix, cortando o mago no início da pressão."},
+  {"t": 48.1, "quem": "Pehdicouve", "descricao": "remove curse no time logo depois do curse of tongues, mantendo os casts rápidos."},
+  {"t": 59.0, "quem": "Heshoix", "descricao": "ice block aos 14% de vida, sobrevivendo àquela janela de dano."}
+ ],
+ "erros_da_rede": [
+  {"t": 52.1, "quem": "Kwongwegaix", "acao": "flame shock → Pehdicouve (99%)", "porque": "curador sob fear/silence gastando global em dano em vez de cura/defesa."},
+  {"t": 75.7, "quem": "Heshoix", "acao": "mana shield (87%)", "porque": "a 15% de vida e sob dots, mana shield não segurava a morte; morreu 0.4 s depois."},
+  {"t": 76.7, "quem": "Ominous", "acao": "toggle pet spell (100%)", "porque": "global gasto em ajuste do pet em plena janela de kill, sem efeito no combate."}
+ ]}

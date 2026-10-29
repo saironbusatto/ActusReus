@@ -1,0 +1,21 @@
+{"resumo": "Thunder treinou o druida Pehdicouiv, que gastou os GCDs em CC (cyclone/roots/bomba) em vez de se curar e morreu aos 73.7; depois a troca de mortes ficou com o Wild porque Heruxiv curou pouco (só cleanse) e Ominousvii sobreviveu travando o shaman com spell lock.",
+ "momento_decisivo": {"t": 64.0, "descricao": "Pehdicouiv, já pressionado por Celianeyix e com HoTs/barkskin purgados por Naminiv, lança cyclone em vez de se curar; volta a lançar cyclone aos 73.7 e morre no execute."},
+ "erros": [
+  {"t": 64.0, "quem": "Pehdicouiv", "fez": "cyclone (e de novo aos 73.7) sob pressão de warrior e com 40% de vida minutos antes", "devia": "rejuvenation/regrowth/swiftmend em si, ou kitar com roots no warrior e se curar", "porque": "healer sendo treinado precisa garantir a própria vida; cyclone de 1.5 s parado deixa o warrior bater e chegar ao execute", "gravidade": "alta"},
+  {"t": 51.8, "quem": "Pehdicouiv", "fez": "cobalt frag bomb e roots no shaman (50.3) enquanto tomava dano", "devia": "manter HoTs nele e em Ominousvii", "porque": "o druida curou só 9.8k na luta; trocar cura por CC de baixo impacto acelerou a própria morte", "gravidade": "media"},
+  {"t": 81.9, "quem": "Heruxiv", "fez": "cleanse magic on party ×3 com Celianeyix em silence a 21%", "devia": "holy light/flash of light no warrior ou hand of protection", "porque": "dispel de DoT de warlock não salva aliado em 21%; o warrior morreu aos 87.0", "gravidade": "alta"},
+  {"t": 100.7, "quem": "Heruxiv", "fez": "divine sacrifice e cancelou em 0.4 s, deixando divine shield para 11% de vida (103.2)", "devia": "usar divine shield mais cedo e curar-se com holy light dentro da bolha", "porque": "gastou GCDs e entrou na bolha quase morto; sem cura dentro dela morreu aos 119.9", "gravidade": "media"},
+  {"t": 91.9, "quem": "Beteranvi", "fez": "hunter's mark ×2 (repetido também aos 32.1 e 51.8)", "devia": "aimed/chimera/arcane shot no alvo", "porque": "reaplicar marca já ativa só desperdiça GCD de dano na janela de kill", "gravidade": "baixa"},
+  {"t": 111.6, "quem": "Beteranvi", "fez": "aspect of the viper com Heruxiv a 11%", "devia": "ficar em dragonhawk e fechar a kill", "porque": "viper corta muito o dano justo na janela de matar o healer", "gravidade": "baixa"},
+  {"t": 79.4, "quem": "Celianeyix", "fez": "continuou batendo (victory rush, slam ×3) enquanto caía para 21%", "devia": "trocar para defensive stance/usar intervene ou se afastar até o paladino curar", "porque": "sem cura vindo, ficar no melee contra hunter+warlock levou à morte aos 87.0", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 58.9, "quem": "Naminiv", "descricao": "purge repetido em Pehdicouiv tirou barkskin/HoTs e abriu a kill no healer"},
+  {"t": 90.0, "quem": "Ominousvii", "descricao": "pet spell lock em Heruxiv e depois spell lock contínuo em Naminiv impediu cura/dano e garantiu o fim"},
+  {"t": 40.8, "quem": "Celianeyix", "descricao": "trocou para o healer Pehdicouiv com sweeping strikes, iniciando a pressão que matou o druida"}
+ ],
+ "erros_da_rede": [
+  {"t": 106.0, "quem": "Heruxiv", "acao": "judgement of light com 11% de vida durante divine shield", "porque": "dentro da bolha o certo era holy light em si mesmo"},
+  {"t": 47.8, "quem": "Celianeyix", "acao": "heroic strike em Ominousvii", "porque": "rage para dump com alvo ainda alto, em vez de mortal strike/rend; dano baixo"},
+  {"t": 72.0, "quem": "Naminiv", "acao": "chain lightning em Pehdicouiv", "porque": "no alvo isolado lava burst/lightning bolt rende mais; chain lightning é dano espalhado"}
+ ]}

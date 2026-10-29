@@ -1,0 +1,15 @@
+{"resumo": "O Fireplay não controlou o Celianeyix: a succubus seduziu o paladino, o shaman não curou e o mage gastou os GCDs em spellsteal; o bladestorm deixou o Heshoxi a 1%, e o warrior matou o Kwongwegaxi e depois o Ominousdesv.",
+ "momento_decisivo": {"t": 40.1, "descricao": "Seduction da succubus no Heruxiv em vez do Celianeyix: o único que causava dano ficou livre para o sweeping strikes e o bladestorm, que desmontaram o time."},
+ "erros": [
+  {"t": 40.1, "quem": "Ominousdesv", "fez": "pet seduction no Heruxiv (de novo aos 48.7)", "devia": "seduzir ou dar fear no Celianeyix assim que ele deu charge", "porque": "O warrior fez 69k de dano e o Heruxiv curou 0 na luta; controlaram a pessoa errada", "gravidade": "alta"},
+  {"t": 43.7, "quem": "Kwongwegaxi", "fez": "purge, bloodlust e lifeblood enquanto o bladestorm batia no Heshoxi, sem nenhuma cura", "devia": "riptide/healing wave/nature's swiftness no mage e earthbind/frost shock no warrior", "porque": "Healer com 576 de cura; o mage chegou a 1% e o próprio shaman morreu aos 52.5", "gravidade": "alta"},
+  {"t": 41.3, "quem": "Heshoxi", "fez": "spellsteal duas vezes no Heruxiv com o warrior chegando nele", "devia": "frost nova e blink para fugir do warrior antes do bladestorm, ou polymorph no healer", "porque": "Roubar seal/blessing não ajudava; o warrior colou e o mage caiu de 100 para 1% no bladestorm", "gravidade": "alta"},
+  {"t": 49.2, "quem": "Heshoxi", "fez": "pvp trinket logo depois de entrar no ice block", "devia": "usar só o ice block, que já remove o stun, e guardar o trinket", "porque": "O ice block já tirava todos os efeitos; o trinket foi desperdiçado", "gravidade": "baixa"},
+  {"t": 52.9, "quem": "Ominousdesv", "fez": "corruption no Heruxiv e curse of tongues com o warrior em cima depois da morte do shaman", "devia": "voltar pelo demonic circle, usar healthstone e fear no Celianeyix", "porque": "Sem healer e com o warrior em cima, DoT no paladino não salvava nada; morreu aos 56.9", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 43.3, "quem": "Celianeyix", "descricao": "Bladestorm com sweeping strikes sem CC nele, atingindo os três casters juntos."},
+  {"t": 48.9, "quem": "Heshoxi", "descricao": "Ice block com 1% evitou a morte imediata."},
+  {"t": 56.1, "quem": "Celianeyix", "descricao": "Victory rush para fechar o kill do Ominousdesv."}
+ ],
+ "erros_da_rede": []}

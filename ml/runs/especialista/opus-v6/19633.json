@@ -1,0 +1,16 @@
+{"resumo": "O Zebedeuvi abriu já com 24-29% e sem trinket, foi para o Kwongwegaxi e morreu aos 35.9 sem cura do Amnesianvii. Mesmo 3v2, o Fireplay levou mais de dois minutos em spellsteal e buffs até matar o Heshovi aos 166.1.",
+ "momento_decisivo": {"t": 31.4, "descricao": "Com o Zebedeuvi entre 24 e 29% e sob DoTs (corruption, living bomb), o Amnesianvii dá dispel magic em vez de shield/flash heal/pain suppression no rogue. O rogue morre aos 35.9 e o RMP passa a luta inteira em 2v3."},
+ "erros": [
+  {"t": 31.4, "quem": "Amnesianvii", "fez": "dispel magic com o próprio rogue entre 24 e 29%", "devia": "power word: shield e pain suppression no Zebedeuvi, depois flash heal/penance", "porque": "o rogue estava sendo focado com DoTs e fireballs e morreu 4,5 s depois; o primeiro gesto de cura (renew) só saiu depois da morte", "gravidade": "alta"},
+  {"t": 31.5, "quem": "Zebedeuvi", "fez": "hemorrhage e kidney shot no Kwongwegaxi com 24% de vida e sem trinket", "devia": "ficar fora de linha de visão no stealth/vanish ou junto do priest até ser curado", "porque": "com aquela vida e sob living bomb e corruption, atacar foi entregar o rogue", "gravidade": "alta"},
+  {"t": 45.0, "quem": "Heshoxi", "fez": "arcane intellect, apply oil ×2 e frost ward no meio da luta (45-65 s)", "devia": "pressionar o Heshovi ou o Amnesianvii com polymorph no priest e burst no mage", "porque": "em 3v2 a vantagem precisa virar kill rápido; cada GCD de buff dá tempo para a dupla se recuperar", "gravidade": "media"},
+  {"t": 67.5, "quem": "Ominousdesv", "fez": "só corruption e curses durante mais de 100 s em 3v2; o primeiro fear só sai aos 185.9", "devia": "fear/death coil no Amnesianvii para isolar o Heshovi e fechar o kill", "porque": "sem CC no healer, a dupla RMP segurou dano de DoT por dispel; o warlock tinha as ferramentas para travar o priest", "gravidade": "alta"},
+  {"t": 79.2, "quem": "Heshovi", "fez": "conjure mana gem no meio da luta", "devia": "polymorph no Kwongwegaxi ou frost nova/deep freeze para dar respiro ao priest", "porque": "conjurar gema é coisa de antes dos portões; em 2v3 cada GCD de controle vale tempo de vida", "gravidade": "baixa"},
+  {"t": 32.5, "quem": "Heshovi", "fez": "arcane intellect no começo do combate enquanto o rogue morria", "devia": "polymorph ou frost nova nos atacantes do Zebedeuvi, ou ice lance/frostbolt no alvo dele", "porque": "o rogue precisava de peel naquele instante; buff de intelecto não muda nada na luta", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 33.3, "quem": "Zebedeuvi", "descricao": "kidney shot no healer inimigo, a escolha certa de stun mesmo numa situação perdida"},
+  {"t": 97.9, "quem": "Heshoxi", "descricao": "evocation numa janela calma da luta longa para recuperar mana"},
+  {"t": 193.6, "quem": "Amnesianvii", "descricao": "pvp trinket para sair do fear com 24% e pain suppression com 6%, aproveitando bem os últimos recursos"}
+ ],
+ "erros_da_rede": []}

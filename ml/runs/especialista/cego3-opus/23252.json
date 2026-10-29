@@ -1,0 +1,18 @@
+{"resumo": "No espelho Thunder, Celianeyxi deu charge no warrior inimigo e morreu em 11 s para o bladestorm/cleave de Celianeyix com o lava burst de Naminiv (elemental mastery), sem nenhuma proteção de Heruxvi. Thunder II quase perdeu Heruxiv (1% com bubble) e depois arrastou o 3v2, cheio de purge e sunder, até matar Naminvi aos 139.3.",
+ "momento_decisivo": {"t": 43.3, "descricao": "Celianeyix, com sweeping strikes (42.6) em Celianeyxi, solta o bladestorm e emenda cleaves; somado ao elemental mastery (44.8) e ao lava burst (50.9) de Naminiv, o warrior inimigo morre aos 52.4 sem defensivo nem HoP."},
+ "momento_aceitos": [42.6, 43.3, 44.8, 50.9],
+ "erros": [
+  {"t": 44.5, "quem": "Heruxvi", "fez": "holy light/flash de cura comum enquanto Celianeyxi tomava bladestorm + cleave, sem Hand of Protection nem Divine Sacrifice", "devia": "Hand of Protection em Celianeyxi (dano quase todo físico) ou Divine Sacrifice + cancelar para ativar o Divine Guardian", "porque": "O warrior caiu de 88% a 0 em 8 s; o HoP anulava o bladestorm e os cleaves e invalidava a kill", "gravidade": "alta"},
+  {"t": 41.7, "quem": "Celianeyxi", "fez": "charge no warrior inimigo e bladestorm (44.7) trocando dano com ele", "devia": "charge em Heruxiv (healer) ou no caster, e guardar o bladestorm para escapar de controle/peel", "porque": "Ficou parado batendo no warrior que tinha sweeping/bladestorm ativos e foi o primeiro a morrer, sem ter pressionado o healer", "gravidade": "media"},
+  {"t": 51.7, "quem": "Heruxiv", "fez": "divine sacrifice sem cancelar, com o próprio paladino já sendo atacado", "devia": "cancelar na hora (só para o Divine Guardian) ou nem usar enquanto era alvo", "porque": "O DS puxou dano do time para ele e o deixou com 1% aos 53.1, obrigando a gastar o bubble", "gravidade": "media"},
+  {"t": 62.8, "quem": "Celianeyix", "fez": "sunder armor ×4 até 68.9, repetido ×4 aos 104.5 no 3v2", "devia": "mortal strike, slam e intercept/hamstring em Naminvi", "porque": "Sunder em arena é quase um GCD perdido; com a vantagem de 3v2 a kill em Naminvi levou mais 87 s", "gravidade": "alta"},
+  {"t": 74.6, "quem": "Naminiv", "fez": "purge ×4 até 87.7 e dezenas de purges no 3v2", "devia": "lava burst com flame shock, chain lightning e wind shear nas curas de Heruxvi", "porque": "Purgar water shield/buffs não mata ninguém; o shaman elemental deixou de pôr dano bem quando tinha vantagem numérica", "gravidade": "media"},
+  {"t": 75.9, "quem": "Heruxiv", "fez": "cast greater blessing assignment no meio da luta (de novo aos 86.2, 100.8 e 105.2)", "devia": "usar hammer of justice no healer inimigo ou curar", "porque": "Reaplicar bênçãos no meio da luta é GCD perdido; um HoJ em Heruxvi abriria a kill no shaman", "gravidade": "baixa"},
+  {"t": 41.9, "quem": "Celianeyix", "fez": "every man for himself no stun do charge com 96% de vida", "devia": "aguentar os 1.5 s do charge e guardar o EMFH", "porque": "Gastou a saída de controle sem nenhum perigo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 43.3, "quem": "Celianeyix", "descricao": "Sweeping strikes + bladestorm em Celianeyxi, matando o warrior inimigo em segundos."},
+  {"t": 50.9, "quem": "Naminiv", "descricao": "Elemental mastery (44.8) e lava burst no alvo da kill."},
+  {"t": 53.1, "quem": "Heruxiv", "descricao": "Divine shield com 1% de vida, salvando o healer e mantendo o 3v2."},
+  {"t": 165.4, "quem": "Heruxvi", "descricao": "Divine shield com 18% sozinho contra três, prolongando a luta."}
+ ]}

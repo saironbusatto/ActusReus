@@ -1,0 +1,20 @@
+{"resumo": "Celianeyvii abriu com charge no Pehdicouv, usou o trinket no fear e soltou bladestorm no druid, que morreu aos 52.8 sem receber cura. O LSD I quase não causou dano e Ominousdesvi e Kwongwegaxix caíram logo depois.",
+ "momento_decisivo": {"t": 44.2, "descricao": "Celianeyvii usa o trinket no fear do death coil (43.9) e emenda bladestorm em cima do Pehdicouv. Sem peel do Ominousdesvi e sem cura do Kwongwegaxix, o druid cai em 10 s."},
+ "erros": [
+  {"t": 41.5, "quem": "Pehdicouv", "fez": "entangling roots ×2 no Heruxii logo na abertura", "devia": "cyclone no Celianeyvii ou forma de urso/HoTs antes do charge", "porque": "root num paladino healer não impede cura e ele ainda tem cleanse/freedom; o warrior que chegou em 42.1 era a ameaça", "gravidade": "media"},
+  {"t": 45.9, "quem": "Pehdicouv", "fez": "nature's grasp e cyclone tardio (51.4) sem nenhuma cura em si mesmo durante o bladestorm", "devia": "forma de urso/barkskin + rejuv/lifebloom/regrowth em si mesmo e cyclone no warrior logo que o bladestorm acabasse", "porque": "terminou a luta com 267 de cura; um druid sob bladestorm sobrevive com HoTs e forma de urso", "gravidade": "alta"},
+  {"t": 43.3, "quem": "Kwongwegaxix", "fez": "purge no Heruxii, purge no Celianeyvii e lifeblood (43.3-51.7), nenhuma cura até o Pehdicouv morrer", "devia": "riptide, healing wave e nature's swiftness no Pehdicouv sob bladestorm", "porque": "a primeira cura do shaman veio aos 53.9, depois da morte; o parceiro morreu com o healer livre", "gravidade": "alta"},
+  {"t": 50.4, "quem": "Ominousdesvi", "fez": "demonic circle: teleport enquanto Pehdicouv morria, e fear no Heruxii de novo aos 53.2", "devia": "fear/seduction no Celianeyvii quando o bladestorm acabasse para tirar o warrior do druid", "porque": "o warrior já tinha gastado o trinket; um fear nele aos 50.2 salvava o Pehdicouv", "gravidade": "alta"},
+  {"t": 42.9, "quem": "Heruxii", "fez": "every man for himself no fear da abertura com 94% de vida", "devia": "aceitar o fear do começo e guardar o trinket para um CC durante um go", "porque": "não havia ninguém morrendo do lado dele; o trinket queimado deixou o healer exposto aos fears e seductions seguintes", "gravidade": "media"},
+  {"t": 44.6, "quem": "Celianeyvii", "fez": "cleave e heroic strike em loop, mortal strike só aos 63.1", "devia": "mortal strike no alvo para aplicar o -50% de cura", "porque": "o kill saiu, mas sem MS qualquer cura do Kwongwegaxix sobre o druid teria rendido o dobro", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 44.2, "quem": "Celianeyvii", "descricao": "trinket no fear e bladestorm direto no Pehdicouv, transformando o charge da abertura em kill"},
+  {"t": 46.8, "quem": "Naminii", "descricao": "heroism no meio do go, com o druid já sem barkskin, acelerando o kill"},
+  {"t": 59.2, "quem": "Celianeyvii", "descricao": "trocou para o Kwongwegaxix e usou execute assim que ele entrou na faixa"}
+ ],
+ "erros_da_rede": [
+  {"t": 43.5, "quem": "Celianeyvii", "acao": "cleave no Pehdicouv", "porque": "logo depois do charge, o certo era mortal strike/hamstring no druid; cleave gasta rage com pouco efeito no alvo único"},
+  {"t": 51.7, "quem": "Kwongwegaxix", "acao": "lifeblood com o alvo no Celianeyvii", "porque": "o parceiro morria; lifeblood só cura o próprio shaman, o GCD tinha que ir em riptide/healing wave no Pehdicouv"},
+  {"t": 56.5, "quem": "Kwongwegaxix", "acao": "purge no Heruxii", "porque": "Ominousdesvi estava morrendo (caiu aos 57.3); purgar o paladino não ajuda, a cura no warlock sim"}
+ ]}

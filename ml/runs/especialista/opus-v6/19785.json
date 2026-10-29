@@ -1,0 +1,20 @@
+{"resumo": "O RMP IV controlou o Heruxiv com polymorph, counterspell, deep freeze e blind e matou o Celianeyix em kidney shot aos 144.9; o warrior passou a luta jogando cleave/heroic strike/slam no rogue em vez de mortal strike num alvo que matasse.",
+ "momento_decisivo": {"t": 142.6, "descricao": "Kidney shot do Zebedeuvi no Celianeyix a 12% sem resposta do Heruxiv (sem cura nem hand of protection); o warrior morre aos 144.9 e o Thunder II fica 2v3."},
+ "erros": [
+  {"t": 47.8, "quem": "Celianeyix", "fez": "cleave e heroic strike alternados sem parar (47.8-52.4), sem mortal strike", "devia": "mortal strike no alvo e guardar rage para MS/overpower", "porque": "contra um disc priest, o corte de cura do MS é a condição para matar; o rage foi para golpes de enchimento", "gravidade": "alta"},
+  {"t": 57.1, "quem": "Celianeyix", "fez": "seguiu batendo no Zebedeuvi com evasion ativa (55.4) e depois slam em loop (73.6 ×7)", "devia": "trocar para o Heshovi/Amnesianvii com MS ou hamstring/peel no rogue", "porque": "evasion faz o melee errar e slam tem cast; o warrior perdeu dezenas de segundos de pressão útil", "gravidade": "alta"},
+  {"t": 142.6, "quem": "Heruxiv", "fez": "nenhuma resposta ao kidney no Celianeyix a 12% (sem ação de 134.8 a 146.7)", "devia": "hand of protection/holy shock/flash of light no warrior no stun", "porque": "o kidney é o momento do kill; um HoP ou cura instantânea ali segurava o parceiro", "gravidade": "alta"},
+  {"t": 56.4, "quem": "Heruxiv", "fez": "every man for himself para sair de polymorph com 89% de vida", "devia": "deixar o poly passar ou pedir ajuda do Naminiv e guardar o trinket para o kidney/deep freeze", "porque": "sem pressão naquela hora, o trinket foi gasto à toa e faltou nas janelas de kill", "gravidade": "media"},
+  {"t": 55.2, "quem": "Naminiv", "fez": "não usou grounding totem contra os polymorphs repetidos no Heruxiv", "devia": "pôr grounding totem quando o Heshovi castava poly no curador", "porque": "o grounding absorve um poly/counterspell e mantém o curador ativo", "gravidade": "media"},
+  {"t": 85.2, "quem": "Heruxiv", "fez": "divine sacrifice e cancel divine sacrifice (85.6), de novo aos 211.5", "devia": "usar o global em cura ou cleanse", "porque": "ativar e cancelar logo depois não protege ninguém e gasta o cooldown", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 50.0, "quem": "Heshovi", "descricao": "counterspell no curador inimigo enquanto o rogue segurava o warrior."},
+  {"t": 103.0, "quem": "Zebedeuvi", "descricao": "blind no Heruxiv, tirando o curador da luta durante a pressão no warrior."},
+  {"t": 119.9, "quem": "Heshovi", "descricao": "ice block aos 23%, sobrevivendo ao dano e voltando para o kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 57.1, "quem": "Celianeyix", "acao": "heroic strike → Zebedeuvi (61%)", "porque": "bater no rogue em evasion é dano que erra; devia trocar de alvo."},
+  {"t": 96.9, "quem": "Celianeyix", "acao": "sunder armor → Zebedeuvi (33%)", "porque": "sunder no rogue é global quase inútil em arena; MS/overpower eram melhores."},
+  {"t": 106.2, "quem": "Celianeyix", "acao": "sunder armor (20%)", "porque": "de novo global em sunder no meio da pressão, sem mortal strike."}
+ ]}

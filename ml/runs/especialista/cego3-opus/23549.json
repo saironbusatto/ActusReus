@@ -1,0 +1,82 @@
+{
+ "resumo": "O Celianeyxi deu Charge no druida e morreu em ~11 s para o burst do Ominousdesx (Conflagrate, Chaos Bolt, Incinerate), enquanto o Heruxvi só limpava magias. Em 2v3, Naminvi e depois o paladino caíram.",
+ "momento_decisivo": {
+  "t": 44.9,
+  "descricao": "Chaos Bolt do Ominousdesx no Celianeyxi, logo após o Conflagrate, sem cura do Heruxvi (que spamava Cleanse): o warrior cai de 87% a morto em 6 s."
+ },
+ "momento_aceitos": [
+  36.9,
+  40.5,
+  43.4,
+  44.9
+ ],
+ "erros": [
+  {
+   "t": 36.9,
+   "quem": "Heruxvi",
+   "fez": "Cleanse Magic três vezes (36.9-44.5) enquanto o warrior tomava o burst",
+   "devia": "Flash of Light/Holy Light no Celianeyxi e Hand of Protection/Divine Sacrifice",
+   "porque": "o warrior foi de 87% a morto em 6 s sem uma cura; tirar DoTs não cobre um Chaos Bolt",
+   "gravidade": "alta"
+  },
+  {
+   "t": 35.4,
+   "quem": "Celianeyxi",
+   "fez": "Charge no Pehdibaliv",
+   "devia": "ir no Ominousdesx, o warlock de destruição solto",
+   "porque": "o warlock terminou com 72k de dano sem pressão; o druida usou Barkskin (41.6) e o warrior gastou o Bladestorm no alvo errado",
+   "gravidade": "media"
+  },
+  {
+   "t": 39.1,
+   "quem": "Celianeyxi",
+   "fez": "Every Man for Himself logo após o Death Coil",
+   "devia": "aguentar o horror curto e guardar o racial",
+   "porque": "ficou sem quebra-CC durante o burst e morreu logo depois",
+   "gravidade": "media"
+  },
+  {
+   "t": 51.9,
+   "quem": "Naminvi",
+   "fez": "Purge seguido (51.9, 53.2) no 2v3",
+   "devia": "curar a si e ao paladino e usar Grounding contra o Chaos Bolt",
+   "porque": "no 2v3 o shaman precisava sustentar; purge de buffs não muda o resultado",
+   "gravidade": "media"
+  },
+  {
+   "t": 94.0,
+   "quem": "Heruxvi",
+   "fez": "cancelou o Divine Sacrifice (94.3) logo após usá-lo",
+   "devia": "manter ativo para dividir o dano do Naminvi",
+   "porque": "o Naminvi morreu aos 95.1, justo na janela que o cooldown cobriria",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 38.6,
+   "quem": "Ominousdesx",
+   "descricao": "Death Coil no warrior que acabava de dar Charge."
+  },
+  {
+   "t": 43.4,
+   "quem": "Ominousdesx",
+   "descricao": "Conflagrate + Chaos Bolt + Incinerate: burst que matou o warrior."
+  },
+  {
+   "t": 41.6,
+   "quem": "Pehdibaliv",
+   "descricao": "Barkskin no momento do Bladestorm."
+  },
+  {
+   "t": 57.1,
+   "quem": "Ominousdesx",
+   "descricao": "Howl of Terror pegando Naminvi e Heruxvi."
+  },
+  {
+   "t": 87.3,
+   "quem": "Kwongwegaxxi",
+   "descricao": "Wind Shear no healer inimigo."
+  }
+ ]
+}

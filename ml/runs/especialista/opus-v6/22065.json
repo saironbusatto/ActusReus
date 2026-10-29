@@ -1,0 +1,20 @@
+{"resumo": "No espelho Wild, o Beteranii focou o Ominoustres desde os 34.5 e, com readiness + rapid fire, fechou com kill shot aos 53.5. O warlock nunca usou defensivo nem quebrou linha de visão. Com 3x2, o Wild I trancou o Pehdicouii com spell lock e fear e matou o Beteraniv aos 80.1.",
+ "momento_decisivo": {"t": 46.1, "descricao": "Beteranii usa readiness e um segundo rapid fire (46.4) seguido de kill command e aimed shot no Ominoustres. Com o Pehdicouii stunado aos 53.2, o kill shot aos 53.5 mata o warlock."},
+ "erros": [
+  {"t": 49.9, "quem": "Ominoustres", "fez": "lifeblood e pet spell lock enquanto era focado pelo burst do Beteranii, sem healthstone, demonic circle nem pilar", "devia": "demonic circle: teleport para quebrar linha de visão, healthstone e death coil/fear no Beteranii", "porque": "warlock contra hunter em rapid fire precisa sair do alcance; ficou parado e morreu aos 53.8 sem usar nenhum defensivo", "gravidade": "alta"},
+  {"t": 35.3, "quem": "Ominoustres", "fez": "cobalt frag bomb e spell lock gastos no Beteranii (36.0, 43.6, 45.6)", "devia": "usar o felhunter no Pehdicouve (healer) e dar DoT/fear no druid", "porque": "spell lock num hunter só tranca as poucas magias dele; no druid ele cortaria a cura", "gravidade": "media"},
+  {"t": 45.5, "quem": "Beteraniv", "fez": "silencing shot no Beteranii", "devia": "silencing shot no Pehdicouve ou no Ominous durante uma conjuração", "porque": "silence quase não afeta um hunter, cujos tiros são físicos; o cooldown foi desperdiçado", "gravidade": "media"},
+  {"t": 49.8, "quem": "Beteraniv", "fez": "trocou de alvo várias vezes: Beteranii (46.1), Ominous (49.8), Pehdicouve (52.0/65.8), Ominous (68.9)", "devia": "escolher um alvo (Ominous, sem defensivo de hunter) e manter a pressão junto com o warlock", "porque": "o dano espalhado contra um druid curando com HoTs não matou ninguém, enquanto o outro time matava em alvo único", "gravidade": "media"},
+  {"t": 36.9, "quem": "Pehdicouii", "fez": "entangling roots logo na abertura e, depois, poucas curas no Ominoustres enquanto ele era focado", "devia": "manter lifebloom/rejuv e swiftmend no Ominoustres e cyclone no Beteranii", "porque": "o warlock foi alvo único desde os 34.5 e morreu sem nenhum swiftmend ou NS + healing touch nele", "gravidade": "alta"},
+  {"t": 57.8, "quem": "Pehdicouii", "fez": "shadowmeld em plena luta", "devia": "seguir curando ou usar o GCD em cyclone/HoT", "porque": "shadowmeld não tira do combate nem limpa os DoTs; foi um GCD perdido logo depois de perder o parceiro", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 46.1, "quem": "Beteranii", "descricao": "readiness para um segundo rapid fire e kill command no Ominoustres, fechando com kill shot aos 53.5"},
+  {"t": 62.8, "quem": "Ominous", "descricao": "pet spell lock repetido no Pehdicouii (62.8, 65.0, 69.5) enquanto o time batia no Beteraniv, cortando a cura do inimigo até o kill"},
+  {"t": 57.6, "quem": "Ominous", "descricao": "fear no Pehdicouii logo depois do barkskin, e fear no Beteraniv para descascar o próprio healer"}
+ ],
+ "erros_da_rede": [
+  {"t": 45.9, "quem": "Ominoustres", "acao": "curse of agony no Beteranii", "porque": "estava levando o burst do rapid fire; DoT lento não ajuda, precisava se defender (teleport/fear/death coil)"},
+  {"t": 65.8, "quem": "Beteraniv", "acao": "chimera shot no Pehdicouve", "porque": "trocou para o druid healer cheio de HoTs no 2x3, em vez de pressionar o warlock sem defensivo"},
+  {"t": 68.9, "quem": "Beteraniv", "acao": "aimed shot no Ominous", "porque": "mais uma troca de alvo 3 s depois, sem silencing shot nem pet no healer; dano espalhado não mata ninguém"}
+ ]}

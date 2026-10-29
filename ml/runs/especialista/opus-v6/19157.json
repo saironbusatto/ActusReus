@@ -1,0 +1,20 @@
+{"resumo": "O RLS abriu no Omasconii, mas trocou para o Heruvii depois que o paladino gastou o EMFH num silence curto; em cadeia de fear e stun ele morreu aos 70.2 e o DK caiu aos 77.1. O Celianeyii nunca usou mortal strike.",
+ "momento_decisivo": {"t": 53.6, "descricao": "O Heruvii gastou every man for himself (trinket) num silence de spell lock; logo veio fear (54.9, 59.5) e stuns (60.2, 63.6) sem escape, até o kidney shot final aos 69.9."},
+ "erros": [
+  {"t": 53.6, "quem": "Heruvii", "fez": "every man for himself para sair de um silence de 3 s", "devia": "esperar o silence e guardar o trinket para o fear do warlock ou para o kidney shot do rogue", "porque": "Contra warlock e rogue o healer vai ser preso em fear e stun; sem trinket ele ficou travado até morrer", "gravidade": "alta"},
+  {"t": 66.8, "quem": "Heruvii", "fez": "divine protection com 31% e o rogue em cima", "devia": "usar divine shield e se curar inteiro dentro da bolha", "porque": "Divine Protection só reduz o dano; a bolha dava imunidade e janela de cura. Morreu 3.4 s depois", "gravidade": "alta"},
+  {"t": 45.0, "quem": "Celianeyii", "fez": "a luta toda com cleave/heroic strike/thunder clap, sem nenhum mortal strike, trocando entre Kwongwegavi e Ominousxxiv", "devia": "manter mortal strike num alvo só (o warlock ou o healer)", "porque": "70k de dano espalhado e sem reduzir cura: o Kwongwegavi curou 46k sem esforço e ninguém do RLS ficou em perigo", "gravidade": "alta"},
+  {"t": 42.6, "quem": "Celianeyii", "fez": "bladestorm com 98% logo no começo, sem alvo baixo", "devia": "guardar o bladestorm para junto do burst num alvo ou para fugir de CC", "porque": "Gastou o maior cooldown espalhando dano; depois não tinha resposta quando o time apertou o Heruvii", "gravidade": "media"},
+  {"t": 42.8, "quem": "Omasconii", "fez": "every man for himself no primeiro cheap shot; o rogue deu outro cheap shot aos 43.8", "devia": "aguentar o opener e guardar o trinket para o kidney shot ou para proteger o healer", "porque": "O shadow dance permite repetir o cheap shot; o trinket não ganhou nada e ficou faltando depois", "gravidade": "media"},
+  {"t": 63.9, "quem": "Omasconii", "fez": "death and decay e icy touch enquanto o rogue dava shadowstep no Heruvii e o warlock dava fear nele", "devia": "fazer peel no Heruvii: chains of ice/death grip no Zebedeuxi, strangulate ou mind freeze nos fears do Ominousxxiv", "porque": "O healer foi morto em cadeia de CC sem nenhum peel do DK nem do warrior", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 49.7, "quem": "Ominousxxiv", "descricao": "Demonic circle: teleport para sair do warrior e voltar a castar."},
+  {"t": 54.9, "quem": "Ominousxxiv", "descricao": "Fear no Heruvii logo depois do trinket dele: aproveitou o healer sem escape."},
+  {"t": 63.9, "quem": "Zebedeuxi", "descricao": "Shadowstep no healer, kick aos 65.1 e kidney shot aos 69.9 fecharam o kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 65.8, "quem": "Heruvii", "acao": "divine sacrifice", "porque": "Com uns 31% de vida e o rogue em cima, puxar dano dos aliados para si apressou a própria morte; o certo era divine shield."},
+  {"t": 46.2, "quem": "Celianeyii", "acao": "cleave no Kwongwegavi", "porque": "Troca de alvo sem mortal strike, saindo do warlock; dano sem efeito no healer cheio."},
+  {"t": 62.1, "quem": "Celianeyii", "acao": "cleave no Ominousxxiv", "porque": "Com o Heruvii em fear/stun e caindo, o warrior seguiu batendo em vez de fazer peel (intervene, hamstring no rogue)."}
+ ]}

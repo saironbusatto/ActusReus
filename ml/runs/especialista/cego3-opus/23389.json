@@ -1,0 +1,82 @@
+{
+ "resumo": "No espelho RMP, o RMP II fechou o Amnesianvi com Kidney + Polymorph no rogue inimigo + Counterspell no mage, enquanto o Heshov dava Evocation em vez de aproveitar o Amnesianii a 38%. Sem healer, o RMP III caiu um a um.",
+ "momento_decisivo": {
+  "t": 87.6,
+  "descricao": "Zebedeuii dá Kidney Shot no Amnesianvi enquanto o Heshoiv tira o Zebedeuv com Polymorph (89.1) e dá Counterspell no Heshov (93.5): o priest fica sem ajuda e morre aos 100.7."
+ },
+ "momento_aceitos": [
+  87.5,
+  87.6,
+  89.1,
+  93.5
+ ],
+ "erros": [
+  {
+   "t": 91.0,
+   "quem": "Heshov",
+   "fez": "Evocation com o Amnesianii a 38% em Kidney Shot do Zebedeuv",
+   "devia": "Deep Freeze/Frostbolt/Ice Lance no priest inimigo para converter o stun",
+   "porque": "era a melhor janela de morte do RMP III; Evocation desligou o dano dele e ainda o deixou exposto ao Counterspell",
+   "gravidade": "alta"
+  },
+  {
+   "t": 99.4,
+   "quem": "Amnesianvi",
+   "fez": "Pain Suppression só com 10% de vida",
+   "devia": "usar ao sair do Kidney (≈93 s) quando a vida já despencava",
+   "porque": "com 10% um golpe já mata; ele morreu 1.3 s depois com o defensivo ativo",
+   "gravidade": "media"
+  },
+  {
+   "t": 71.2,
+   "quem": "Heshov",
+   "fez": "Cold Snap + segundo Deep Freeze no Amnesianii a 73% sem dano em seguida",
+   "devia": "guardar Deep Freeze para o priest em vida baixa (estava a 22% aos 58.5)",
+   "porque": "gastou dois stuns longos sem ameaça de morte; seguiu com Polymorph e Spellsteal",
+   "gravidade": "media"
+  },
+  {
+   "t": 82.3,
+   "quem": "Amnesianvi",
+   "fez": "Shoot e Mana Burn (81.9-82.3)",
+   "devia": "escudos/curas preventivas e Fear Ward/Psychic Scream para o próprio time",
+   "porque": "Mana Burn em healer com mana alta não ameaça; logo depois ele tomou o Kidney que o matou",
+   "gravidade": "media"
+  },
+  {
+   "t": 135.9,
+   "quem": "Zebedeuv",
+   "fez": "Hemorrhage logo depois do Vanish (135.3) com pouca vida",
+   "devia": "ficar em stealth e se afastar",
+   "porque": "quebrou o stealth sem healer; tomou dano, Cloak (137.0) não bastou e morreu aos 141.0",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 45.3,
+   "quem": "Heshoiv",
+   "descricao": "Ice Block com 4% na abertura de Shadow Dance."
+  },
+  {
+   "t": 58.5,
+   "quem": "Amnesianii",
+   "descricao": "Pain Suppression com 22% sob Kidney."
+  },
+  {
+   "t": 87.6,
+   "quem": "Zebedeuii",
+   "descricao": "Kidney Shot no priest inimigo para iniciar a morte."
+  },
+  {
+   "t": 93.5,
+   "quem": "Heshoiv",
+   "descricao": "Counterspell no Heshov durante a janela de morte."
+  },
+  {
+   "t": 41.2,
+   "quem": "Zebedeuv",
+   "descricao": "Abertura Shadowstep + Shadow Dance + Cheap Shot quase matando o mage."
+  }
+ ]
+}

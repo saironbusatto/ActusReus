@@ -1,0 +1,90 @@
+{
+ "resumo": "Celianeyv entrou com Charge + Bladestorm no grupo do Wild II, que levou Beteraniv e Pehdicouii a ~32%; o druida usou cyclones em vez de curar e o hunter ficou em melee até morrer. O warlock foi o próximo.",
+ "momento_decisivo": {
+  "t": 42.4,
+  "descricao": "Bladestorm do Celianeyv logo após o Charge, sobre o time agrupado: Beteraniv e Pehdicouii caem para ~33%, e o Wild II nunca se recupera."
+ },
+ "momento_aceitos": [
+  40.8,
+  42.4,
+  50.7,
+  55.3
+ ],
+ "erros": [
+  {
+   "t": 44.6,
+   "quem": "Ominoustres",
+   "fez": "Fear no Celianeyv durante o Bladestorm",
+   "devia": "Death Coil/Fear no Herux ou no DK",
+   "porque": "Bladestorm deixa o warrior imune a CC; o GCD foi perdido no auge do dano",
+   "gravidade": "media"
+  },
+  {
+   "t": 50.7,
+   "quem": "Pehdicouii",
+   "fez": "Cyclone com o Beteraniv a 33%",
+   "devia": "curar o hunter (Swiftmend/Rejuvenation/Nourish)",
+   "porque": "era o healer do time e o hunter estava em faixa de morte; CC ofensivo não salva o aliado",
+   "gravidade": "alta"
+  },
+  {
+   "t": 55.3,
+   "quem": "Beteraniv",
+   "fez": "Raptor Strike (55.3, 59.7) e Explosive Trap, ficando em melee",
+   "devia": "Disengage/Frost Trap e kitar",
+   "porque": "com vida baixa contra warrior e DK, ficar no corpo-a-corpo é morrer; ele morreu aos 61.6",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.4,
+   "quem": "Beteraniv",
+   "fez": "trinket de dano e Rapid Fire sob Bladestorm",
+   "devia": "Disengage/Deterrence antes de cair para 33%",
+   "porque": "priorizou dano enquanto levava o maior burst do warrior",
+   "gravidade": "media"
+  },
+  {
+   "t": 59.0,
+   "quem": "Pehdicouii",
+   "fez": "trinket no Gnaw do ghoul",
+   "devia": "guardar para Fear/stun do warrior",
+   "porque": "o Gnaw voltou logo (60.6) e ele ficou sem saída",
+   "gravidade": "media"
+  },
+  {
+   "t": 65.4,
+   "quem": "Ominoustres",
+   "fez": "trinket no Gnaw com 32%",
+   "devia": "usar Death Coil/Fear no DK ou guardar o trinket",
+   "porque": "foi atordoado de novo (66.4) e morreu aos 75.2",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 42.4,
+   "quem": "Celianeyv",
+   "descricao": "Bladestorm no grupo agrupado decidiu a luta."
+  },
+  {
+   "t": 52.3,
+   "quem": "Pehdicouii",
+   "descricao": "Nature's Swiftness + Healing Touch numa emergência."
+  },
+  {
+   "t": 58.7,
+   "quem": "Omasconv",
+   "descricao": "Gnaw no healer durante a janela de morte do hunter."
+  },
+  {
+   "t": 64.4,
+   "quem": "Celianeyv",
+   "descricao": "Troca imediata para o Ominoustres depois da primeira morte."
+  },
+  {
+   "t": 49.7,
+   "quem": "Beteraniv",
+   "descricao": "Deterrence com 33% de vida."
+  }
+ ]
+}

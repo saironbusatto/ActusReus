@@ -1,0 +1,19 @@
+{"resumo": "RMP II travou Zebedeuxi com frost nova + deep freeze e o burst de Zebedeuii o forçou a gastar trinket e todos os defensivos; Kwongwegavi passou a janela purgando em vez de curar, o rogue caiu aos 67.5 e o curandeiro morreu depois no 2v3.",
+ "momento_decisivo": {"t": 47.7, "descricao": "Heshoiv dá deep freeze em Zebedeuxi (já preso no frost nova) enquanto Zebedeuii entra com hemorrhage + kidney shot; o rogue do RLS cai para 26% e gasta trinket, vanish, evasion e cloak, ficando sem defesa para o resto da luta."},
+ "erros": [
+  {"t": 55.3, "quem": "Kwongwegavi", "fez": "purge (55.3, 57.5, 58.8) com Zebedeuxi a 22%", "devia": "riptide/healing wave em Zebedeuxi", "porque": "o rogue já tinha gastado todos os defensivos; só a cura segurava ele, e ele morreu aos 67.5", "gravidade": "alta"},
+  {"t": 46.9, "quem": "Zebedeuxi", "fez": "shadow dance + cheap shot em Amnesianii, preso no frost nova e prestes a levar deep freeze", "devia": "guardar shadow dance para quando estivesse livre, ou usar o CC para se salvar", "porque": "gastou o cooldown principal num priest a 92% e logo ficou em stun apanhando; a abertura não levou a nada", "gravidade": "media"},
+  {"t": 58.7, "quem": "Zebedeuxi", "fez": "slice and dice e hemorrhage colado no inimigo a ~22% depois de gastar cloak/evasion", "devia": "sair de linha de visão, voltar para perto do curandeiro e esperar a cura", "porque": "sem defensivos sobrando, ficar trocando golpes só apressou a morte", "gravidade": "media"},
+  {"t": 50.1, "quem": "Heshoiv", "fez": "frostbolt/fire blast sem nunca usar polymorph em Kwongwegavi na luta", "devia": "polymorph no curandeiro na janela de kill do rogue", "porque": "o RMP depende do sheep no curandeiro para fechar a kill; a kill de Zebedeuxi demorou 20 s com o shaman curando livre", "gravidade": "media"},
+  {"t": 55.6, "quem": "Ominousxxiv", "fez": "corruption on attacker repetida (55.6 ×2, 60.8, 63.2, 65.7, 66.9, 70.3)", "devia": "death coil/fear em Zebedeuii para salvar o parceiro, ou drain/haunt", "porque": "reaplicar um DoT que já está ativo é GCD perdido enquanto o rogue aliado morria", "gravidade": "media"},
+  {"t": 81.7, "quem": "Kwongwegavi", "fez": "water shield em sequência (81.7, 83.4, 86.6) sendo focado pelo rogue no 2v3", "devia": "se curar, usar totem/LoS e fugir do rogue", "porque": "o buff já estava ativo; os GCDs faltaram na cura de si mesmo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 46.4, "quem": "Heshoiv", "descricao": "frost nova e deep freeze em sequência em Zebedeuxi, e cold snap logo depois para ter os cooldowns de novo"},
+  {"t": 62.1, "quem": "Heshoiv", "descricao": "counterspell no curandeiro Kwongwegavi na janela de kill do rogue"},
+  {"t": 44.8, "quem": "Amnesianii", "descricao": "will of the forsaken para sair do fear no início, voltando logo a curar"}
+ ],
+ "erros_da_rede": [
+  {"t": 55.6, "quem": "Heshoiv", "acao": "spellsteal → Zebedeuxi", "porque": "rogue não tem buff mágico útil para roubar; era um GCD de dano ou de CC desperdiçado"},
+  {"t": 65.2, "quem": "Heshoiv", "acao": "ice lance → Zebedeuxi", "porque": "ice lance sem o alvo congelado (sem nova/fingers) dá pouco dano; frostbolt rendia mais"}
+ ]}

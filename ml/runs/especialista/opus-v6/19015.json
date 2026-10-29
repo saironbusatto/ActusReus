@@ -1,0 +1,20 @@
+{"resumo": "O RLS II abriu no Heruiv com kidney shot e dois felhunters; o paladino gastou o trinket na hora, usou divine sacrifice em vez de divine shield e morreu aos 54.3; o Amnesianxxi, trocando de forma sem curar, caiu depois.",
+ "momento_decisivo": {"t": 46.7, "descricao": "Heruiv, a cerca de 30% e já sem trinket, usa divine sacrifice (puxa dano do time para ele) e cancela, em vez de divine shield; é silenciado aos 48.5 e morre aos 54.3."},
+ "erros": [
+  {"t": 46.7, "quem": "Heruiv", "fez": "divine sacrifice e cancel divine sacrifice (47.0) com a vida baixa", "devia": "usar divine shield e se curar dentro do bubble", "porque": "divine sacrifice redireciona dano do time para o próprio paladino; com 30% de vida é o contrário do que precisava", "gravidade": "alta"},
+  {"t": 48.2, "quem": "Heruiv", "fez": "holy light (cast longo) contra dois warlocks com felhunter", "devia": "usar holy shock/flash of light instantâneo depois de gastar o spell lock, ou bubble antes", "porque": "foi silenciado aos 48.5 com 28% e a escola de cura travada; fez só 415 de cura na luta", "gravidade": "media"},
+  {"t": 48.3, "quem": "Amnesianxxi", "fez": "shadowform (e remove shadowform aos 45.5 e 52.7) com o Heruiv caindo", "devia": "ficar fora de shadowform curando o Heruiv (flash heal, PW:S, pain suppression não tinha; usar o que havia)", "porque": "cada troca de forma é global perdido no único curador que podia salvar o paladino", "gravidade": "alta"},
+  {"t": 49.9, "quem": "Amnesianxxi", "fez": "mind blast com o parceiro a 28% sob kidney e spell lock", "devia": "curar/pôr shield no Heruiv ou dar psychic scream no Zebedeuix", "porque": "o dano dele (2648 na luta) não ameaçava ninguém; o peel e a cura eram a única saída", "gravidade": "media"},
+  {"t": 41.4, "quem": "Ominousx", "fez": "pet spell lock no Ominousxxi (de novo aos 42.1)", "devia": "segurar o spell lock para o Kwongwegaiv ou para o fear do Ominousxxi no Heruiv", "porque": "o curador inimigo ficou livre e o kill no Heruiv seguiu sem resposta", "gravidade": "baixa"},
+  {"t": 72.5, "quem": "Amnesianxxi", "fez": "shadowform depois do trinket a 19% de vida", "devia": "se curar ou dar psychic scream/fade para sair do kill", "porque": "morreu meio segundo depois; o global foi desperdiçado na hora mais crítica", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 44.7, "quem": "Zebedeuix", "descricao": "kidney shot no Heruiv aos 39%, forçando o trinket e abrindo o kill."},
+  {"t": 50.0, "quem": "Ominousxxi", "descricao": "pet spell lock e depois spell lock (53.9) no Heruiv, travando a cura até a morte."},
+  {"t": 56.1, "quem": "Amnesianxxi", "descricao": "psychic horror e psychic scream (57.7) no Zebedeuix para tirar o rogue de cima."}
+ ],
+ "erros_da_rede": [
+  {"t": 46.7, "quem": "Heruiv", "acao": "divine sacrifice → Zebedeuix (54%)", "porque": "puxar o dano do time para si com a vida baixa e sem bubble acelerou a morte."},
+  {"t": 48.3, "quem": "Amnesianxxi", "acao": "shadowform (99%)", "porque": "global em troca de forma com o parceiro a 28% em vez de curar."},
+  {"t": 72.5, "quem": "Amnesianxxi", "acao": "shadowform → Kwongwegaiv (18%)", "porque": "a 19% e saindo de stun, devia se curar ou fugir; morreu logo depois."}
+ ]}

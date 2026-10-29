@@ -1,0 +1,20 @@
+{"resumo": "Celianeyix soltou bladestorm e depois cleave no Ominousdesv, que caiu no execute aos 61.5 sem usar o healthstone. Em seguida, o warrior executou o Kwongwegaxi aos 78.6 e o Fireplay perdeu a cura. Do lado do Thunder, o Naminiv passou a luta purgando.",
+ "momento_decisivo": {"t": 53.6, "descricao": "Celianeyix usa bladestorm no meio do Fireplay e depois cola no Ominousdesv com cleave/heroic strike até o execute aos 61.5. O warlock teleportou mas voltou ao alcance, e ninguém usou CC no warrior antes do kill."},
+ "erros": [
+  {"t": 58.3, "quem": "Ominousdesv", "fez": "morreu no execute sem usar o healthstone que criou aos 32.5, gastando death coil e cobalt frag bomb no lugar", "devia": "healthstone abaixo de 50% e fear no Celianeyix depois do bladestorm", "porque": "o warlock foi o primeiro a cair; o healthstone e um fear no warrior davam tempo para o Kwongwegaxi curar", "gravidade": "alta"},
+  {"t": 48.4, "quem": "Heshoxi", "fez": "flamestrike e blizzard (48.4-50.5) na abertura", "devia": "polymorph no Heruxiv ou frost nova/polymorph no Celianeyix", "porque": "AoE em arena faz pouco dano e não controla nada; o warrior ficou livre para o bladestorm", "gravidade": "media"},
+  {"t": 68.2, "quem": "Kwongwegaxi", "fez": "purge enquanto estava sendo executado pelo Celianeyix (68.6)", "devia": "nature's swiftness + healing wave em si mesmo, ou earthbind/frost shock e se afastar do warrior", "porque": "o healer estava na faixa de execute; gastar o GCD em purge acelerou a morte dele", "gravidade": "alta"},
+  {"t": 42.9, "quem": "Naminiv", "fez": "purge como ação principal a luta toda (mais de 10 vezes entre 42.9 e 75.4)", "devia": "dano elemental (flame shock/lava burst/lightning bolt) no alvo de kill e wind shear no Kwongwegaxi", "porque": "um shaman DPS fez só 12264 de dano; os purges ocuparam os GCDs que fariam pressão", "gravidade": "alta"},
+  {"t": 42.0, "quem": "Celianeyix", "fez": "every man for himself com 100% de vida na abertura", "devia": "guardar o trinket para polymorph/fear em uma janela de kill", "porque": "depois foi polimorfado várias vezes pelo Heshoxi e só tinha o trinket de volta aos 69.7", "gravidade": "media"},
+  {"t": 59.8, "quem": "Naminiv", "fez": "pvp trinket no fear com 65% de vida", "devia": "deixar o tremor totem/healer cuidar do fear e guardar o trinket", "porque": "não estava sendo focado; sem trinket, morreu logo depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 55.3, "quem": "Heshoxi", "descricao": "counterspell no Heruxiv enquanto ele conjurava flash of light, travando a cura do Thunder durante o bladestorm"},
+  {"t": 61.5, "quem": "Celianeyix", "descricao": "execute no Ominousdesv assim que ele entrou na faixa, e depois execute no Kwongwegaxi"},
+  {"t": 88.7, "quem": "Heshoxi", "descricao": "ice block com 22% e trinket logo em seguida, sobrevivendo sozinho contra dois"}
+ ],
+ "erros_da_rede": [
+  {"t": 42.9, "quem": "Naminiv", "acao": "purge no Kwongwegaxi", "porque": "no primeiro go, com o warrior em cima do shaman, o certo era dano ou wind shear, não purge"},
+  {"t": 61.3, "quem": "Naminiv", "acao": "purge no Ominousdesv", "porque": "o warlock estava na faixa de execute e caiu no mesmo segundo; um ataque de dano ajudava a fechar"},
+  {"t": 66.1, "quem": "Celianeyix", "acao": "heroic strike ×2 no Heshoxi", "porque": "o mage estava com mana shield e o healer Kwongwegaxi já entrava na faixa de execute; o rage devia ir em execute/mortal strike no shaman"}
+ ]}

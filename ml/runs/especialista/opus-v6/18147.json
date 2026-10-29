@@ -1,0 +1,21 @@
+{"resumo": "O Celianeyix (bladestorm, cleave, execute) com o Naminiv em suporte focou o Pehdicouve, que curou com healing touch longos sob wind shear e morreu aos 66.3 sem peel do hunter. Depois o Thunder matou o Beteranii e o Ominous sozinho.",
+ "momento_decisivo": {"t": 62.8, "descricao": "Celianeyix volta do fear para o Pehdicouve (barkskin já gasto aos 45.4) e ninguém do Wild faz peel: Beteranii estava em feed pet/hunter's mark e o Ominous em fear no paladino. Execute aos 64.9 e o druida morre aos 66.3."},
+ "erros": [
+  {"t": 34.2, "quem": "Beteranii", "fez": "rapid fire, kill command e use trinket no Heruxiv antes do contato", "devia": "guardar os cooldowns para quando o alvo estivesse no alcance e com o healer travado", "porque": "os primeiros danos só saem por volta dos 41 s; o burst inteiro rodou no vazio", "gravidade": "media"},
+  {"t": 59.5, "quem": "Beteranii", "fez": "feed pet no meio da luta enquanto o druida apanhava", "devia": "scatter shot/concussive no Celianeyix, explosive/freezing trap, ou pressionar o paladino", "porque": "o druida estava sendo focado pelo warrior e morreu 7 s depois; feed pet fora de combate é um GCD e uma canalização perdidos", "gravidade": "alta"},
+  {"t": 49.5, "quem": "Pehdicouve", "fez": "healing touch (cast longo) várias vezes sob pressão do warrior e com o Naminiv dando wind shear", "devia": "HoTs instantâneos, swiftmend, nourish e kitar com entangling roots/nature's grasp", "porque": "no WotLK o resto druida cura por HoTs em movimento; healing touch parado sob wind shear e mortal strike é fácil de interromper", "gravidade": "alta"},
+  {"t": 74.6, "quem": "Celianeyix", "fez": "sunder armor ×3 no Beteranii", "devia": "mortal strike, overpower e slam no alvo, guardando os GCDs para o dano", "porque": "sunder armor não ajuda numa luta de 2 min e ele usou mortal strike uma vez só (80.3); sem o efeito de cura reduzida a pressão cai", "gravidade": "media"},
+  {"t": 46.6, "quem": "Celianeyix", "fez": "matou o druida em cleave/heroic strike quase sem usar mortal strike", "devia": "manter o mortal strike ativo no Pehdicouve", "porque": "os 50% de cura reduzida do mortal strike são o trunfo do warrior contra healer; sem ele o druida segurou bem mais do que devia", "gravidade": "media"},
+  {"t": 103.5, "quem": "Heruxiv", "fez": "divine plea com o time perdendo e ele prestes a ir a 9% (105.1)", "devia": "holy shock/flash of light e hand of protection/bubble; divine plea só com folga", "porque": "divine plea corta 50% da cura do paladino exatamente quando ele precisava se curar", "gravidade": "alta"},
+  {"t": 100.6, "quem": "Heruxiv", "fez": "divine sacrifice e cancelou 0,4 s depois", "devia": "não usar ou deixar correr para absorver o dano no aliado", "porque": "gastou um cooldown longo sem efeito nenhum", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 46.6, "quem": "Celianeyix", "descricao": "bladestorm logo depois do root, saindo do controle e batendo em área em cima do druida"},
+  {"t": 98.4, "quem": "Ominous", "descricao": "howl of terror pegando o warrior e o paladino a 28%, forçando o trinket do Heruxiv"},
+  {"t": 58.2, "quem": "Ominous", "descricao": "fear no Heruxiv durante o kill do Thunder, cortando a cura deles"}
+ ],
+ "erros_da_rede": [
+  {"t": 103.5, "quem": "Heruxiv", "acao": "divine plea", "porque": "com pouca vida, divine plea reduz a cura pela metade; era hora de cura de emergência"},
+  {"t": 57.6, "quem": "Pehdicouve", "acao": "healing touch on party", "porque": "cast de 3 s sob melee e wind shear, quando HoTs instantâneos davam mais cura útil"},
+  {"t": 34.2, "quem": "Beteranii", "acao": "rapid fire → Heruxiv", "porque": "cooldown de burst usado fora do alcance, antes de o combate começar"}
+ ]}

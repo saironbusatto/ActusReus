@@ -1,0 +1,18 @@
+{"resumo": "Espelho de warlock/mage/shaman decidido pelo healer: Kwongwegaxi gastou a maior parte dos GCDs tirando curses que dois warlocks reaplicavam e purgando, curou menos da metade do rival e morreu aos 124.2 quando Heshoix e Ominousdesii trocaram para ele.",
+ "momento_decisivo": {"t": 104.3, "descricao": "Heshoix (scorch ×3) e Ominousdesii (conflagrate 104.2, chaos bolt 110.6, drain soul 121.1) trocam para Kwongwegaxi, que responde com cleanse spirit curse e purge em vez de curar e morre aos 124.2."},
+ "erros": [
+  {"t": 63.8, "quem": "Kwongwegaxi", "fez": "cleanse spirit curse em série (63.8 ×3, 74.8 ×5 e várias outras até 114.6)", "devia": "curar e tirar só curse of tongues/curse no healer quando atrapalha", "porque": "dois warlocks reaplicam curses de graça; o shaman curou 51k contra 114k do rival", "gravidade": "alta"},
+  {"t": 103.1, "quem": "Kwongwegaxi", "fez": "purge (103.1, 104.5, 112.4, 118.0 ×2) enquanto era o alvo", "devia": "riptide/healing wave em si e se esconder atrás de pilar", "porque": "purge não reduz o dano que estava levando; cada GCD aproximou a morte", "gravidade": "media"},
+  {"t": 121.4, "quem": "Kwongwegaxi", "fez": "mana tide totem com o drain soul em cima", "devia": "cura de emergência em si (nature's swiftness + healing wave, riptide)", "porque": "morreu 3 s depois; mana não era o problema", "gravidade": "media"},
+  {"t": 74.9, "quem": "Kwongwegaix", "fez": "cleanse spirit curse e purge enquanto caía a 11-29% em stuns (78.9-88.8)", "devia": "riptide/healing wave em si nas brechas", "porque": "o lado dele sobreviveu por pouco; os GCDs de dispel quase custaram o healer", "gravidade": "media"},
+  {"t": 50.6, "quem": "Heshoxi", "fez": "flamestrike/blizzard na abertura (50.6-59.8)", "devia": "dano em alvo único ou polymorph no healer", "porque": "AoE espalhado em time sem pets frágeis não cria kill", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 56.4, "quem": "Ominousdesv", "descricao": "shadowfury pegou mage e warlock inimigos ao mesmo tempo"},
+  {"t": 69.1, "quem": "Heshoix", "descricao": "counterspell no healer inimigo (e de novo na troca final) cortou a cura do Fireplay IV"},
+  {"t": 121.1, "quem": "Ominousdesii", "descricao": "drain soul no shaman baixo fechou a kill que decidiu a luta"}
+ ],
+ "erros_da_rede": [
+  {"t": 69.5, "quem": "Ominousdesii", "acao": "life tap", "porque": "o warlock caiu para 25% 2 s depois; trocar vida por mana sob pressão quase o matou"},
+  {"t": 68.1, "quem": "Kwongwegaix", "acao": "cleanse spirit curse", "porque": "estava a ~51% logo após counterspell; cura em si valia mais que tirar curse reaplicável"}
+ ]}

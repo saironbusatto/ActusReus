@@ -1,0 +1,20 @@
+{"resumo": "Espelho de comps: o Ominousdesv deu shadowfury nos três inimigos aos 58.8 e o Kwongwegaix, que gastou globais em purge e dispel em vez de se curar, morreu aos 65.9; o resto do Fireplay II caiu sem curador.",
+ "momento_decisivo": {"t": 58.8, "descricao": "Shadowfury do Ominousdesv pega os três do Fireplay II juntos, com o Kwongwegaix a 45%; sem cura nesse stun e nos CCs seguintes, o shaman morre aos 65.9."},
+ "erros": [
+  {"t": 52.6, "quem": "Kwongwegaix", "fez": "purge, bloodlust (54.5), cleanse spirit curse (56.6) e purge (58.1) caindo de vida", "devia": "se curar (riptide/healing wave) e pôr earth shield/grounding contra os locks", "porque": "era o curador e o alvo; fez só 4688 de cura e morreu sem nunca se estabilizar", "gravidade": "alta"},
+  {"t": 54.5, "quem": "Heshoix", "fez": "flamestrike, blizzard (54.9) e flamestrike (58.6)", "devia": "polymorph/counterspell no Kwongwegaxi ou no Ominousdesv para tirar a pressão do curador", "porque": "AoE não segura ninguém; o mago tinha o CC que faltava ao time", "gravidade": "alta"},
+  {"t": 64.6, "quem": "Kwongwegaix", "fez": "wind shear e purge (64.9) no Ominousdesv com a vida baixa", "devia": "usar o global para se curar ou guardar o wind shear para o fear", "porque": "morreu 1 s depois; interromper o warlock não salvava a própria vida", "gravidade": "media"},
+  {"t": 52.9, "quem": "Ominousdesii", "fez": "pet seduction trocando de alvo e curse of the elements (57.6) com o curador do time sob pressão", "devia": "usar fear/seduction no Ominousdesv ou no Heshoxi para fazer peel do Kwongwegaix", "porque": "o controle não protegeu o curador que estava sendo morto", "gravidade": "media"},
+  {"t": 83.8, "quem": "Heshoix", "fez": "flamestrike sozinho contra três e a 27%", "devia": "blink/frost nova para sair e kitar, guardar mana para defesa", "porque": "no 1v3 o AoE não muda nada; precisava sobreviver", "gravidade": "baixa"},
+  {"t": 48.9, "quem": "Ominousdesii", "fez": "nenhum spell lock/fear no Kwongwegaxi depois do fear de abertura (41.3)", "devia": "manter controle no curador inimigo enquanto o mago do time fazia dano", "porque": "o Kwongwegaxi ficou livre para purgar e curar a luta toda", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 58.8, "quem": "Ominousdesv", "descricao": "shadowfury pegando os três inimigos juntos e abrindo o kill no curador."},
+  {"t": 66.0, "quem": "Heshoix", "descricao": "ice block a 23% dentro do stun, sobrevivendo àquela janela."},
+  {"t": 48.9, "quem": "Ominousdesv", "descricao": "fear no Heshoix logo na abertura, tirando o mago do burst."}
+ ],
+ "erros_da_rede": [
+  {"t": 64.6, "quem": "Kwongwegaix", "acao": "wind shear → Ominousdesv (10%)", "porque": "com a vida baixa, devia se curar; morreu 1 s depois."},
+  {"t": 64.9, "quem": "Kwongwegaix", "acao": "purge → Ominousdesv (54%)", "porque": "purge no lugar de cura própria no último global antes de morrer."},
+  {"t": 72.1, "quem": "Ominousdesii", "acao": "curse of the elements → Heshoxi (98%)", "porque": "aplicar curse no último global antes de morrer, sem nenhum defensivo."}
+ ]}

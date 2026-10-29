@@ -1,4 +1,4 @@
-"""Juiz cego do teste cego 2: as críticas sem par (as que não batem com a referência) de cada técnico, embaralhadas e
+"""Juiz cego do teste cego 2 (ou 3, com --cego3): as críticas sem par (as que não batem com a referência) de cada técnico, embaralhadas e
 anônimas, com a entrada da luta (sem o vencedor). Grava runs/especialista/juiz-cego2/<luta>.txt para o juiz (subagente)
 e chave.json (id → técnico); depois `juiz.py --placar` lê veredito.json ({id: "certa"|"errada"|"incerta"}).
 
@@ -14,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from compara import RUNS, perto  # noqa: E402
 from dataset_tecnico import _do_fato, entrada_v4, erros_dos_fatos, junta_fatos, lutas_analisadas  # noqa: E402
 
-SAIDA = RUNS / "juiz-cego2"
+N = "3" if "--cego3" in sys.argv else "2"
+SAIDA = RUNS / f"juiz-cego{N}"
 
 
 def sem_par(l: dict, a: dict, ref: dict) -> list[dict]:
@@ -23,12 +24,12 @@ def sem_par(l: dict, a: dict, ref: dict) -> list[dict]:
 
 
 def prepara(pastas: list[str]) -> None:
-    ids = json.loads((RUNS / "teste_cego2_ids.json").read_text())
+    ids = json.loads((RUNS / f"teste_cego{N}_ids.json").read_text())
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}
     SAIDA.mkdir(exist_ok=True)
     chave, rnd = {}, random.Random(2910)
     for i in ids:
-        l, ref = lutas[i], json.loads((RUNS / "cego2-opus" / f"{i}.json").read_text())
+        l, ref = lutas[i], json.loads((RUNS / f"cego{N}-opus" / f"{i}.json").read_text())
         itens = []
         for pasta in pastas:
             if pasta == "gemini":

@@ -1,0 +1,20 @@
+{"resumo": "Zebedeuxii abriu com blind no curador e shadow dance no mage Heshoix, que caiu a 5%; a Fireplay não fez peel nem curou, e Kwongwegaix e Heshoix morreram até 62.9.",
+ "momento_decisivo": {"t": 39.6, "descricao": "Zebedeuxii dá blind em Kwongwegaix e emenda shadow dance com ambush e cheap shots em Heshoix (5% aos 46.6): o time perde o curador e o dano na abertura."},
+ "erros": [
+  {"t": 49.0, "quem": "Kwongwegaix", "fez": "bloodlust com Heshoix a 9% no ice block", "devia": "curar Heshoix (riptide/healing wave/nature's swiftness)", "porque": "o mage saía do block quase morto e o curador não converteu a janela em cura", "gravidade": "alta"},
+  {"t": 51.6, "quem": "Kwongwegaix", "fez": "purge e cleanse spirit poison ×2 até 55.2", "devia": "cura no mage e em si antes do kidney", "porque": "terminou a luta com 9k de cura e morreu aos 57.7", "gravidade": "media"},
+  {"t": 41.8, "quem": "Ominousdesii", "fez": "pet seduction e fear nos inimigos enquanto o rogue matava o mage (39.9-48.7)", "devia": "death coil ou howl of terror em Zebedeuxii para fazer peel", "porque": "o rogue ficou livre em cima do mage; o death coil só saiu aos 72.9", "gravidade": "alta"},
+  {"t": 58.9, "quem": "Heshoix", "fez": "mana shield, lifeblood, combustion e polymorph depois do ice block", "devia": "frost nova + blink para longe e pedir cura", "porque": "com vida baixíssima o mage ficou ao alcance e morreu aos 62.9", "gravidade": "media"},
+  {"t": 40.5, "quem": "Kwongwegaxii", "fez": "purge repetido em Heshoix e Kwongwegaix (40.5-60.8)", "devia": "wind shear/cura quando preciso, menos purge", "porque": "GCDs sem ganho real", "gravidade": "baixa"},
+  {"t": 43.4, "quem": "Kwongwegaxii", "fez": "ficou em fear (43.4, 65.2, 74.1) sem tremor totem", "devia": "baixar tremor totem contra warlock", "porque": "tremor quebra o fear e libera o curador", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.6, "quem": "Zebedeuxii", "descricao": "blind no curador e shadow dance no mage na mesma abertura"},
+  {"t": 56.0, "quem": "Zebedeuxii", "descricao": "kidney shot no curador e eviscerate de kill aos 57.7"},
+  {"t": 62.9, "quem": "Amnesianix", "descricao": "shadow word: death para finalizar o mage baixo"}
+ ],
+ "erros_da_rede": [
+  {"t": 47.7, "quem": "Zebedeuxii", "acao": "slice and dice com Heshoix a 5%", "porque": "eviscerate matava o mage antes do ice block de 48.7"},
+  {"t": 59.2, "quem": "Heshoix", "acao": "lifeblood", "porque": "cura mínima; com vida baixa precisava de frost nova/blink"},
+  {"t": 57.5, "quem": "Kwongwegaxii", "acao": "purge em Kwongwegaix", "porque": "GCD gasto em dispel no xamã que morreu 0.2 s depois"}
+ ]}

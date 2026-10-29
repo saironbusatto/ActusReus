@@ -1,0 +1,21 @@
+{"resumo": "Zebedeuxiv respondeu ao opener do Zebedeu com shadow dance + cheap shot e derrubou o rogue enquanto o Amnesian dava dano; o RMP I ficou 2v3 a partir dos 67 s e foi desgastado até o fim.",
+ "momento_decisivo": {"t": 42.7, "descricao": "Zebedeuxiv usa shadow dance e cheap shot no Zebedeu, que vai de 85% a 20% em 5 s e queima vanish, evasion e cloak; ele não se recupera mais."},
+ "erros": [
+  {"t": 42.8, "quem": "Amnesian", "fez": "holy fire (e smite aos 50.1) com o rogue aliado sob shadow dance inimigo", "devia": "PW:S, penance, flash heal e pain suppression no Zebedeu", "porque": "casts de dano de 2 s do healer na hora do burst inimigo; o rogue caiu para 20%", "gravidade": "alta"},
+  {"t": 49.4, "quem": "Zebedeu", "fez": "kidney shot no Kwongwegaxiv logo após vanish, a 20% de vida", "devia": "ficar em stealth e recuar para receber cura antes de reabrir", "porque": "o vanish serviu para sair do dano; voltar para a luta na hora deixou ele levar outro kidney em seguida", "gravidade": "alta"},
+  {"t": 63.6, "quem": "Zebedeu", "fez": "shadowstep no Amnesianxxv com pouca vida", "devia": "ficar perto do healer e sem dano até ter vida", "porque": "ir para cima do shadow priest o deixou no alcance do psychic scream e ele morreu logo depois", "gravidade": "media"},
+  {"t": 36.9, "quem": "Heshoii", "fez": "mirror image e berserking (36.6) antes de qualquer contato", "devia": "guardar os cooldowns para o primeiro go do time", "porque": "cooldowns gastos sem alvo não dão dano nem defesa", "gravidade": "baixa"},
+  {"t": 45.5, "quem": "Kwongwegaxiv", "fez": "purge ×3 sendo atacado pelo rogue inimigo", "devia": "riptide/healing wave em si e earthbind/grounding para se livrar do rogue", "porque": "o healer caiu para 41% enquanto gastava GCDs em purge", "gravidade": "media"},
+  {"t": 153.7, "quem": "Amnesianxxv", "fez": "remove shadowform / shadowform repetido (156.7, 163.5, 165.2, 166.8)", "devia": "escolher uma forma por janela", "porque": "cada troca custa um GCD sem efeito na luta", "gravidade": "media"},
+  {"t": 167.2, "quem": "Amnesianxxv", "fez": "apply oil em pleno combate", "devia": "aplicar antes dos portões", "porque": "o tempo de aplicação tira o shadow priest da luta numa janela de kill", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.7, "quem": "Zebedeuxiv", "descricao": "shadow dance + cheap shot e kidney (49.5) no rogue inimigo, ganhando a troca de openers."},
+  {"t": 65.0, "quem": "Amnesianxxv", "descricao": "psychic scream no Zebedeu a 5%, forçando o trinket e garantindo o kill."},
+  {"t": 127.8, "quem": "Amnesian", "descricao": "pain suppression a 23% seguido de desperate prayer, sobrevivendo a uma janela de kill."}
+ ],
+ "erros_da_rede": [
+  {"t": 36.0, "quem": "Heshoii", "acao": "icy veins → Amnesianxxv", "porque": "cooldown de burst usado antes de qualquer contato com o inimigo."},
+  {"t": 40.6, "quem": "Heshoii", "acao": "ice lance → Kwongwegaxiv", "porque": "ice lance sem alvo congelado ou fingers of frost causa dano mínimo; polymorph ou frostbolt rendiam mais no opener."},
+  {"t": 36.3, "quem": "Zebedeu", "acao": "berserking → Amnesianxxv", "porque": "cooldown de dano ativado ainda longe do alvo; acabou antes do opener aos 40.5."}
+ ]}

@@ -7,6 +7,8 @@
 # V9 (A/B): dois desafiantes. Braço A (55,59,...,87, unidade ia-ao-vivo) treina com o plano tático
 # (ml/policy/planos.json); braço B (a cópia III: 56,64,...,88, unidade ia-ao-vivo-b, pesos arena-policy-live-b.txt)
 # treina com os fatos do verificador por código + momento decisivo. Ver agente/SPRINT-LLM.md.
+# V10: os dois braços passaram de +3 → os dois treinam com plano + fatos por código + momento; o braço B testa a
+# fase B: no C++, o alvo de kill do plano vira o alvo dos DPS (Playerbots.ArenaPlanTeams/ArenaPlanFile).
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 CONF=$ROOT/azerothcore-wotlk/env/dist/etc/modules/playerbots.conf
@@ -18,7 +20,7 @@ subir_treinador() {
     systemctl --user stop ia-ao-vivo 2>/dev/null || true
     systemctl --user reset-failed ia-ao-vivo 2>/dev/null || true
     systemd-run --user --unit=ia-ao-vivo --working-directory="$ROOT/ml" --property=Restart=on-failure \
-        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --outro "$TIMES_B"
+        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --fatos-codigo --outro "$TIMES_B"
     echo "treinador A no ar: journalctl --user -u ia-ao-vivo -f"
     subir_braco_b
 }
@@ -31,7 +33,7 @@ subir_braco_b() {  # começa da desafiante atual (pesos, checkpoint e posição 
     systemctl --user reset-failed ia-ao-vivo-b 2>/dev/null || true
     systemd-run --user --unit=ia-ao-vivo-b --working-directory="$ROOT/ml" --property=Restart=on-failure \
         "$HOME/.local/bin/uv" run python -I policy/live.py --braco b --times "$TIMES_B" --outro "$TIMES_A" \
-        --desafiante "$ETC/arena-policy-live-b.txt" --fatos-codigo
+        --desafiante "$ETC/arena-policy-live-b.txt" --fatos-codigo --plano policy/planos.json
     echo "treinador B no ar: journalctl --user -u ia-ao-vivo-b -f"
 }
 
@@ -54,6 +56,9 @@ set_opt ArenaMlChallengerTeams "\"$TIMES_A\""
 set_opt ArenaMlChallengerBFile '"/azerothcore/env/dist/etc/arena-policy-live-b.txt"'
 set_opt ArenaMlChallengerBTeams "\"$TIMES_B\""
 set_opt ArenaMlControl 0.25
+(cd "$ROOT/ml/policy" && python3 plano.py --exporta "$ETC/arena-plan.txt")
+set_opt ArenaPlanFile '"/azerothcore/env/dist/etc/arena-plan.txt"'
+set_opt ArenaPlanTeams "\"$TIMES_B\""
 grep -E "^Playerbots.ArenaMl" "$CONF"
 
 python3 -c "import sys; sys.path.insert(0, '$ROOT/ml/tools'); import wsconsole; wsconsole.run(['.saveall'])"

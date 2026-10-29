@@ -1,0 +1,20 @@
+{"resumo": "A TSG matou Heruvi aos 82.8 s com gargoyle, DK e warrior depois que ele usou divine plea sob pressão e nunca deu bubble. Em seguida Omasconiv caiu para os DoTs de Ominousxii e o silence no healer. Amnesianxxiv foi executado entrando e saindo do shadowform, e Ominousxii fechou a luta.",
+ "momento_decisivo": {"t": 75.9, "descricao": "Heruvi usa divine plea (cura reduzida em 50%) bem quando Celianeyiv e Omasconiv o pressionam, e não usa divine shield. Morre aos 82.8 s e a Shadowplay fica com um healer só."},
+ "erros": [
+  {"t": 75.9, "quem": "Heruvi", "fez": "divine plea sob pressão do DK e do warrior, e morreu aos 82.8 s sem usar divine shield", "devia": "divine shield ou hand of protection ao cair, e divine plea só em momento calmo", "porque": "o divine plea corta a própria cura pela metade. O bubble estava disponível e teria salvado a luta", "gravidade": "alta"},
+  {"t": 65.4, "quem": "Heruvi", "fez": "divine sacrifice cancelado 0.4 s depois (65.8)", "devia": "manter o divine sacrifice durante o gargoyle ou não usar", "porque": "o cooldown foi gasto sem absorver dano", "gravidade": "media"},
+  {"t": 83.7, "quem": "Heruix", "fez": "divine sacrifice cancelado em seguida (84.0) com Omasconiv a 28%", "devia": "manter o divine sacrifice ativo para dividir o dano do DK, ou usar hand of protection e holy light nele", "porque": "Omasconiv morreu aos 93.1 s. O cooldown que podia segurá-lo foi desperdiçado", "gravidade": "media"},
+  {"t": 63.1, "quem": "Celianeyiv", "fez": "sunder armor, cleave, heroic strike e thunder clap, com um mortal strike só (90.0)", "devia": "manter o mortal strike no alvo de kill (Heruvi, depois Amnesianxxiv) e o hamstring no warlock", "porque": "sem o debuff de cura, dois healers seguraram o dano. Sunder armor é GCD perdido em arena", "gravidade": "alta"},
+  {"t": 94.5, "quem": "Amnesianxxiv", "fez": "ficou entrando e saindo do shadowform (94.5, 96.1, 97.7) enquanto era executado", "devia": "ficar fora de forma curando, dar psychic scream ou usar desperate prayer", "porque": "cada troca gasta GCD, e ele morreu aos 99.4 s sob execute sem nenhuma cura efetiva", "gravidade": "alta"},
+  {"t": 116.3, "quem": "Heruix", "fez": "cast greater blessing assignment no 1v1 contra Ominousxii", "devia": "cleanse nos DoTs, holy light e hammer of justice no warlock", "porque": "buff de preparação no meio da luta com UA, haunt e corruption rolando", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 89.4, "quem": "Amnesianxxiv", "descricao": "silence no healer inimigo (Heruix) com Omasconiv a 28%. O DK morreu aos 93.1 s"},
+  {"t": 75.8, "quem": "Amnesianxxiv", "descricao": "psychic scream em Celianeyiv e Omasconiv, seguido de psychic horror no DK"},
+  {"t": 92.8, "quem": "Amnesianxxiv", "descricao": "dispersion a 15% para sobreviver ao burst do warrior"}
+ ],
+ "erros_da_rede": [
+  {"t": 85.3, "quem": "Heruix", "acao": "divine plea", "porque": "o único healer da TSG cortou a própria cura em 50% com Omasconiv a 28% sob DoTs. O DK morreu logo depois"},
+  {"t": 84.4, "quem": "Celianeyiv", "acao": "heroic strike em Amnesianxxiv", "porque": "o priest estava em pressão e o certo era mortal strike para cortar a cura, não heroic strike"},
+  {"t": 42.2, "quem": "Omasconiv", "acao": "death and decay em Ominousxii", "porque": "AoE na abertura antes de doenças e alvo definido. Dá pouco dano e gasta runas"}
+ ]}

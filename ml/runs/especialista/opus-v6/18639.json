@@ -1,0 +1,21 @@
+{"resumo": "O Celianeyix matou o Ominousxii aos 79.0, mas o Heruxiv ficou dando cleanse em vez de curar e o Naminiv caiu aos 88.0; no 2v2 o Amnesianxxiv controlou e venceu o warrior com psychic horror e psychic scream.",
+ "momento_decisivo": {"t": 80.2, "descricao": "Depois da morte do Ominousxii, o Heruxiv trocou a cura por cleanse (80.2, 81.3, 87.7) e o Naminiv, que já estava baixo, morreu aos 88.0: o Thunder perdeu a vantagem numérica."},
+ "erros": [
+  {"t": 54.4, "quem": "Celianeyix", "fez": "heroic strike e cleave no Heruvi e no Ominousxii por mais de 20 s, e só usou mortal strike aos 72.3", "devia": "abrir com mortal strike no alvo de kill e mantê-lo o tempo todo", "porque": "Contra paladino e priest curando, sem Mortal Strike a cura inimiga cobre todo o dano espalhado", "gravidade": "alta"},
+  {"t": 76.9, "quem": "Heruvi", "fez": "divine sacrifice e cancelou 0.3 s depois, enquanto o warrior dava execute no Ominousxii", "devia": "usar hand of protection no Ominousxii (o dano era todo físico) ou manter o sacrifice", "porque": "HoP anulava o warrior; cancelado, o sacrifice não protegeu ninguém e o warlock morreu aos 79.0", "gravidade": "alta"},
+  {"t": 70.7, "quem": "Ominousxii", "fez": "shoot e fear com o warrior em cima, sem usar a healthstone que criou aos 30.3 e sem death coil", "devia": "usar a healthstone, death coil no Celianeyix e kitar com o demonic circle", "porque": "Tinha healthstone e o coil, que é o escape contra melee; morreu sem usar nenhum dos dois", "gravidade": "alta"},
+  {"t": 55.5, "quem": "Ominousxii", "fez": "corruption reaplicada cinco vezes seguidas até 61.9", "devia": "manter os DoTs uma vez e usar os GCDs em fear no healer, haunt/UA ou curse", "porque": "Reaplicar a mesma DoT não aumenta o dano; ele terminou com 13.7k de dano", "gravidade": "media"},
+  {"t": 80.2, "quem": "Heruxiv", "fez": "cleanse no Amnesianxxiv e no Heruvi (alvos inimigos) e cleanse em sequência enquanto o Naminiv estava baixo", "devia": "curar o Naminiv (holy light/flash of light) e se posicionar com ele", "porque": "O shaman morreu aos 88.0 sem receber cura; os cleanses não tiravam nada que importasse", "gravidade": "alta"},
+  {"t": 48.7, "quem": "Naminiv", "fez": "call of the elements e flame shock enquanto o Heruxiv era feared várias vezes", "devia": "plantar tremor totem perto do paladino contra o warlock e o priest", "porque": "O Heruxiv ficou em fear aos 48.3, 51.7, 73.4 e 76.4; o tremor anula essa estratégia toda", "gravidade": "media"},
+  {"t": 108.6, "quem": "Celianeyix", "fez": "pvp trinket no fim do psychic horror, com 33%", "devia": "guardar o trinket para o psychic scream e usar berserker rage antes do fear", "porque": "O horror quase tinha acabado; aos 115.9 veio o scream e ele ficou sem trinket", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 63.5, "quem": "Ominousxii", "descricao": "Demonic circle: teleport para escapar do warrior."},
+  {"t": 65.4, "quem": "Amnesianxxiv", "descricao": "Silence no healer inimigo, encaixado com o stun que veio em seguida."},
+  {"t": 107.4, "quem": "Amnesianxxiv", "descricao": "Psychic horror e depois psychic scream (115.9) no warrior: controlou o melee até matá-lo no 2v2."}
+ ],
+ "erros_da_rede": [
+  {"t": 56.2, "quem": "Heruxiv", "acao": "judgement of light no Heruvi", "porque": "Healer gastou GCD com julgamento enquanto o Naminiv tomava dano e o warlock dava fear."},
+  {"t": 69.1, "quem": "Heruxiv", "acao": "judgement of light no Heruvi", "porque": "De novo GCD de dano com o Naminiv a 45% de vida; devia curar."},
+  {"t": 66.6, "quem": "Celianeyix", "acao": "cleave no Heruvi", "porque": "Troca de alvo para o paladino cheio, longe do warlock que depois foi o kill; mais dano espalhado sem mortal strike."}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "Luta longa de controle; RPS II virou ao fazer blind no curandeiro Kwongwegaxxv e matar Ominousdesxi, que não usou nenhum defensivo, e depois matou o curandeiro com kidney shot.",
+ "momento_decisivo": {"t": 113.2, "descricao": "Zebedeuxiv dá blind em Kwongwegaxxv junto do stun em Pehdibalv e do shadowfiend de Amnesianxxv; sem curandeiro livre, Ominousdesxi derrete e morre aos 122.7."},
+ "erros": [
+  {"t": 115.7, "quem": "Ominousdesxi", "fez": "teleporta e segue com corruption/curse of tongues (122.6) até morrer, sem usar o healthstone criado aos 30.1 nem death coil", "devia": "usar o healthstone, death coil no rogue ou fear defensivo", "porque": "tinha cura própria e CC disponíveis e morreu sem gastar nada para se salvar", "gravidade": "alta"},
+  {"t": 133.1, "quem": "Pehdibalv", "fez": "entangling roots em Zebedeuxiv com Kwongwegaxxv a 22% no kidney shot", "devia": "nourish/regrowth/swiftmend em Kwongwegaxxv", "porque": "era o último curandeiro; root no rogue não para o dano que já estava nele, e ele morreu aos 137.5", "gravidade": "alta"},
+  {"t": 48.9, "quem": "Pehdibalv", "fez": "troca de forma moonkin/caster várias vezes (48.9, 51.7, 59.8, 62.2, 82.9)", "devia": "ficar numa função (cura em caster) e só trocar de forma com motivo", "porque": "cada troca é um GCD e mana sem efeito; os GCDs faltaram na hora de curar", "gravidade": "media"},
+  {"t": 49.5, "quem": "Amnesianxxv", "fez": "mind sear como principal dano a luta toda, sem vampiric touch nem shadow word: pain", "devia": "VT/SWP + mind blast/mind flay no alvo", "porque": "mind sear é AoE canalizado em volta do alvo e rende pouco em um alvo só; os DoTs também dariam mana ao time", "gravidade": "media"},
+  {"t": 78.3, "quem": "Pehdibalv", "fez": "entangling roots repetido em Zebedeuxiv (78.3, 81.5, 89.7, 109.6, 125.7)", "devia": "cyclone/bash ou focar a cura", "porque": "o root quebra com dano e não impede o rogue de usar ataques e stuns quando está colado; muitos GCDs com pouco resultado", "gravidade": "baixa"},
+  {"t": 115.6, "quem": "Pehdibalv", "fez": "gasta o pvp trinket com vida alta em vez de deixar o trinket para tirar o curandeiro aliado da janela", "devia": "segurar o trinket e lançar cura/cyclone no rogue", "porque": "o problema era o blind em Kwongwegaxxv e o burst em Ominousdesxi, não o stun no druid", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 113.2, "quem": "Zebedeuxiv", "descricao": "blind no curandeiro Kwongwegaxxv na janela de burst, que acabou decidindo a morte de Ominousdesxi"},
+  {"t": 113.6, "quem": "Amnesianxxv", "descricao": "shadowfiend no alvo da kill junto do blind, somando dano e mana na janela certa"},
+  {"t": 104.1, "quem": "Amnesianxxv", "descricao": "dispersion para sair da pressão e recuperar mana numa luta longa"}
+ ],
+ "erros_da_rede": [
+  {"t": 42.7, "quem": "Amnesianxxv", "acao": "shadow word: death → Kwongwegaxxv", "porque": "SW:D no início, com o alvo com vida cheia, só gera dano de volta e queima o cooldown que serviria de execute ou contra polimorfo/fear"},
+  {"t": 82.5, "quem": "Zebedeuxiv", "acao": "slice and dice → Ominousdesxi", "porque": "gastou o stun do cheap shot (81.3) num buff em vez de dano no warlock preso"},
+  {"t": 104.2, "quem": "Kwongwegaxiv", "acao": "cleanse spirit curse on party → Ominousdesxi", "porque": "limpar curse of the elements, que o warlock reaplicava sem parar, no meio do kidney shot no warlock trocava um GCD de pressão por nada"}
+ ]}

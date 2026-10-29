@@ -1,0 +1,20 @@
+{"resumo": "O Zebedeuvii entrou sozinho no Wild, gastou todos os defensivos ao mesmo tempo com 29% e voltou para a luta com 19%; Beteranvi (readiness, rapid fire, kill shot) matou o rogue aos 46.7. Com os spell locks e fears do Ominousvii no Kwongwegaii, o shaman morreu aos 57.1.",
+ "momento_decisivo": {"t": 43.1, "descricao": "Zebedeuvii, com 19% e o healer em silence (pet spell lock aos 41.3), usa shadow dance e cheap shot no Pehdicouiv em vez de recuar no vanish. O Beteranvi responde com readiness, rapid fire, kill command e kill shot e mata o rogue."},
+ "erros": [
+  {"t": 43.1, "quem": "Zebedeuvii", "fez": "shadow dance, kick e cheap shot no Pehdicouiv com 19% de vida", "devia": "sair do alcance do hunter, usar o vanish/stealth para recuar até o healer e esperar a cura", "porque": "o healer estava em silence e o hunter tinha mark nele; voltar a bater com 19% era oferecer o kill", "gravidade": "alta"},
+  {"t": 39.2, "quem": "Zebedeuvii", "fez": "vanish, premeditation, evasion e cloak of shadows quase juntos com 29%", "devia": "escalonar os defensivos: cloak contra o warlock, evasion contra o pet/hunter, vanish só para resetar e fugir", "porque": "gastando tudo de uma vez ele ficou sem nada 4 s depois, quando o burst do hunter veio", "gravidade": "media"},
+  {"t": 30.3, "quem": "Zebedeuvii", "fez": "sprint, berserking e shadowstep sozinho no Pehdicouiv logo na abertura", "devia": "abrir junto com o Ominousv e com o healer em alcance, de preferência com sap/cheap shot no healer inimigo", "porque": "levou root, fear e o foco do hunter antes de os parceiros entrarem; aos 39 s já estava com 29%", "gravidade": "alta"},
+  {"t": 36.5, "quem": "Ominousv", "fez": "pet spell lock no Beteranvi (36.5 e 39.1)", "devia": "spell lock no Pehdicouiv para cortar a cura do druida enquanto o rogue batia nele", "porque": "silence em hunter quase não tira dano (auto shot e várias habilidades continuam); o interrupt mais valioso era no healer", "gravidade": "alta"},
+  {"t": 41.2, "quem": "Kwongwegaii", "fez": "healing wave ×2 (cast longo) com o felhunter do Ominousvii em cima", "devia": "riptide e lesser healing wave curtos, ou cast falso para gastar o spell lock, e tremor/grounding totem", "porque": "levou silence aos 41.3 no meio do cast e o rogue ficou sem cura na hora crítica", "gravidade": "media"},
+  {"t": 47.7, "quem": "Kwongwegaii", "fez": "não pôs tremor totem contra a sequência de fears (47.7, 54.1)", "devia": "tremor totem logo depois da morte do rogue", "porque": "ficou travado em fear até gastar o trinket com 14% e ainda morreu em fear", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 41.3, "quem": "Ominousvii", "descricao": "pet spell lock no Kwongwegaii no momento em que o rogue precisava de cura"},
+  {"t": 45.1, "quem": "Beteranvi", "descricao": "readiness para reusar rapid fire e kill command e fechar o rogue com kill shot"},
+  {"t": 43.6, "quem": "Ominousvii", "descricao": "pvp trinket e escape artist para sair do stun e voltar logo a dar spell lock"}
+ ],
+ "erros_da_rede": [
+  {"t": 43.1, "quem": "Zebedeuvii", "acao": "shadow dance → Pehdicouiv", "porque": "cooldown ofensivo com 19% de vida e o healer em silence; a hora era de sobreviver"},
+  {"t": 39.2, "quem": "Zebedeuvii", "acao": "premeditation → Beteranvi", "porque": "usou premeditation no vanish que era de fuga, sinal de que ia voltar a atacar em vez de resetar"},
+  {"t": 38.8, "quem": "Kwongwegaii", "acao": "call of the elements", "porque": "baixou totens no meio da pressão quando o rogue estava indo a 29% e precisava de cura"}
+ ]}

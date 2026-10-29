@@ -1,0 +1,20 @@
+{"resumo": "A Fireplay manteve o paladino Heruxii em CC (seduction, polymorph, fear, stuns) e o matou aos 55.3 sem divine shield; o warrior sem curador e o shaman caíram em seguida.",
+ "momento_decisivo": {"t": 46.4, "descricao": "Heruxii gasta o every man for himself num fear a 71% e logo depois leva dois stuns (47.6 e 48.9) sem saída; dali cai até morrer aos 55.3."},
+ "erros": [
+  {"t": 54.9, "quem": "Heruxii", "fez": "divine protection e morreu 0.4 s depois", "devia": "divine shield, que dá imunidade total e limpa os DoTs", "porque": "divine protection só reduz o dano em 50% e não salvou contra a pressão dos dois casters", "gravidade": "alta"},
+  {"t": 46.4, "quem": "Heruxii", "fez": "every man for himself num fear com 71% de vida", "devia": "guardar para o stun da janela de kill ou para o polymorph seguinte", "porque": "sem o trinket, os stuns de 47.6 e 48.9 prenderam o curador no momento do burst", "gravidade": "media"},
+  {"t": 36.6, "quem": "Celianeyvii", "fez": "cleave/heroic strike e bladestorm na abertura; mortal strike só aos 52.2", "devia": "abrir com mortal strike e manter o efeito no alvo", "porque": "sem o efeito de -50% de cura, Kwongwegavii curou livre; HS/cleave gastam raiva sem pressão real", "gravidade": "alta"},
+  {"t": 46.9, "quem": "Celianeyvii", "fez": "sunder armor repetido (46.9, 55.0, 56.8, 69.6)", "devia": "mortal strike/overpower/hamstring no mage", "porque": "sunder é GCD de PvE; em arena não muda a luta", "gravidade": "media"},
+  {"t": 47.2, "quem": "Naminii", "fez": "purge em sequência (47.2, 50.2, 54.2, 55.5) enquanto Heruxii estava em CC e caindo", "devia": "curar Heruxii (healing wave) ou baixar grounding/tremor totem", "porque": "com o curador trancado o xamã era a única cura disponível; terminou com 5k de cura", "gravidade": "media"},
+  {"t": 62.1, "quem": "Celianeyvii", "fez": "slam ×4 (cast) no mage", "devia": "hamstring/mortal strike instantâneos e intercept", "porque": "slam tem tempo de lançamento e o mage se afasta com blink/frost nova", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 36.6, "quem": "Ominousdes", "descricao": "pet seduction no curador inimigo logo na abertura"},
+  {"t": 56.6, "quem": "Heshovii", "descricao": "frost nova e blink para fugir do warrior"},
+  {"t": 63.2, "quem": "Heshovii", "descricao": "blast wave para tirar o warrior de cima depois do charge"}
+ ],
+ "erros_da_rede": [
+  {"t": 56.8, "quem": "Celianeyvii", "acao": "sunder armor", "porque": "preso pelo frost nova, gastou o GCD num debuff de PvE"},
+  {"t": 69.6, "quem": "Celianeyvii", "acao": "sunder armor", "porque": "sozinho e sem curador, devia usar mortal strike no mage"},
+  {"t": 35.3, "quem": "Naminii", "acao": "call of the elements", "porque": "rebaixar totens no meio do contato gasta GCD e mana já com os totens no chão"}
+ ]}

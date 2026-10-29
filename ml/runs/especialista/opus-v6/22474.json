@@ -1,0 +1,19 @@
+{"resumo": "O Wild II silenciou o Kwongwegaxvi com o felhunter e o silencing shot e matou com kill shot aos 69.5; sem healer, o Zebedeuxvi caiu para o hunter aos 82.5.",
+ "momento_decisivo": {"t": 65.9, "descricao": "Spell lock do Ominoustres no Kwongwegaxvi com 38%, seguido do silencing shot do Beteraniv (66.1): o shaman não conseguiu se curar e morreu no kill shot."},
+ "erros": [
+  {"t": 46.6, "quem": "Zebedeuxvi", "fez": "cheap shot no Pehdicouii logo depois de dar blind nele (45.4), por cima do silence do priest", "devia": "deixar o blind correr e usar o tempo para matar alguém (o Ominoustres ou o Beteraniv)", "porque": "O cheap shot troca um blind de vários segundos por um stun curto e coloca DR; o CC empilhado não virou kill", "gravidade": "media"},
+  {"t": 54.4, "quem": "Kwongwegaxvi", "fez": "castar lesser healing wave e healing wave parado na linha de visão do felhunter (silence aos 54.6, 59.2, 65.9)", "devia": "plantar grounding totem para levar o spell lock, usar riptide instantâneo e curar atrás de pilar", "porque": "Foi silenciado três vezes sem defesa; com isso caiu de 68% para morto", "gravidade": "alta"},
+  {"t": 52.2, "quem": "Amnesianxxix", "fez": "mind sear como dano (52.2, 58.8, 66.9) enquanto o healer do time era silenciado", "devia": "ajudar a curar o Kwongwegaxvi e usar psychic scream/silence nos inimigos", "porque": "Mind Sear rende pouco num 3v3 espalhado, e o priest era a outra fonte de cura do time", "gravidade": "media"},
+  {"t": 47.5, "quem": "Beteraniv", "fez": "hunter's mark repetido (47.5, 49.1, 50.6, 72.0, 78.5)", "devia": "manter a marca uma vez só e usar os GCDs em tiros ou em scatter/silencing", "porque": "Recast de uma marca já ativa é GCD perdido", "gravidade": "baixa"},
+  {"t": 63.7, "quem": "Amnesianxxix", "fez": "saiu do shadowform aos 63.7 e voltou aos 68.3 com o Kwongwegaxvi caindo; repetiu a troca aos 86.5, 88.2 e 90.0", "devia": "ficar fora do shadowform e curar o shaman até ele se estabilizar", "porque": "A troca de forma gastou GCDs justamente nos 5 s antes da morte do healer", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 66.1, "quem": "Beteraniv", "descricao": "Silencing shot logo depois do spell lock e kill shot aos 68.9: kill bem encaixado no healer."},
+  {"t": 70.5, "quem": "Beteraniv", "descricao": "Explosive trap e disengage para sair do rogue."},
+  {"t": 84.7, "quem": "Amnesianxxix", "descricao": "Dispersion com 21% sob o kill shot evitou a morte."}
+ ],
+ "erros_da_rede": [
+  {"t": 53.7, "quem": "Beteraniv", "acao": "hunter's mark no Kwongwegaxvi", "porque": "Marca reaplicada; GCD perdido."},
+  {"t": 55.3, "quem": "Beteraniv", "acao": "hunter's mark no Kwongwegaxvi", "porque": "Mais uma vez a mesma marca, 1.6 s depois da anterior."},
+  {"t": 67.4, "quem": "Beteraniv", "acao": "multi-shot no Kwongwegaxvi", "porque": "Com o healer a 38% e silenciado, o certo era tiro de alvo único (aimed/chimera) para matar; o multi-shot espalha dano."}
+ ]}

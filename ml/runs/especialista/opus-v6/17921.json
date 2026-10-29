@@ -1,0 +1,20 @@
+{"resumo": "TSG IV abriu com charge + bladestorm em Zebedeuix e o curandeiro do RLS gastou dezenas de GCDs limpando doenças do DK; Zebedeuix e Kwongwegaiv caíram em sequência (60.3/62.1) e o warlock ficou sozinho.",
+ "momento_decisivo": {"t": 40.6, "descricao": "Com Zebedeuix a 34% após o bladestorm, Kwongwegaiv começa a sequência de cleanse spirit disease (até 59.2) em vez de curar; as doenças do DK voltam via pestilence e o rogue fica sem cura de verdade."},
+ "erros": [
+  {"t": 40.6, "quem": "Kwongwegaiv", "fez": "cleanse spirit disease repetido (40.6 a 59.2, ~8 vezes)", "devia": "curar Zebedeuix/Celianeyvi-alvo com riptide/healing wave e limpar doença só pontualmente", "porque": "Omasconvi reaplicava as doenças com pestilence/icy touch/plague strike; cada cleanse era um GCD sem cura com o rogue em 34%", "gravidade": "alta"},
+  {"t": 37.6, "quem": "Celianeyvi", "fez": "cleave/heroic strike em sequência a luta toda sem nenhuma mortal strike", "devia": "mortal strike no alvo e no curandeiro Kwongwegaiv", "porque": "MS é o principal golpe do warrior arms e corta a cura em 50%; heroic strike/cleave só drenam rage", "gravidade": "alta"},
+  {"t": 61.7, "quem": "Kwongwegaiv", "fez": "mana tide totem com o parceiro recém-morto e ele mesmo sob execute", "devia": "se curar (healing wave/riptide em si) ou usar o pvp trinket/defensivo", "porque": "mana não importa a meio segundo da morte; morreu aos 62.1 no execute de Celianeyvi", "gravidade": "alta"},
+  {"t": 45.0, "quem": "Kwongwegaiv", "fez": "water shield no meio da pressão do warrior", "devia": "healing wave em Zebedeuix ou em si", "porque": "era a janela de recuperação do rogue após evasion; GCD de buff numa hora de dano", "gravidade": "baixa"},
+  {"t": 67.8, "quem": "Heruxi", "fez": "cleanse magic com unstable affliction recém-aplicada no time", "devia": "não dispelar a UA ou só dispelar com vida alta", "porque": "dispelar UA dá dano e 5 s de silence no dispelador; ficou em silence com 28% de vida", "gravidade": "media"},
+  {"t": 38.9, "quem": "Zebedeuix", "fez": "cobalt frag bomb no meio do bladestorm, depois só evasion a 34% (40.2)", "devia": "sair do alcance do bladestorm ou usar evasion logo no início dele", "porque": "bladestorm é físico e o rogue ficou 5 s parado apanhando antes de reagir", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 42.0, "quem": "Ominousxxi", "descricao": "howl of terror pega Celianeyvi e Omasconvi juntos, forçando o trinket do warrior e aliviando o rogue"},
+  {"t": 40.2, "quem": "Zebedeuix", "descricao": "evasion a 34% sob o warrior e depois vanish + cloak of shadows (49.9/51.0) para limpar DoTs"},
+  {"t": 55.7, "quem": "Omasconvi", "descricao": "icebound fortitude a 42% e logo summon gargoyle para virar a pressão"}
+ ],
+ "erros_da_rede": [
+  {"t": 37.1, "quem": "Zebedeuix", "acao": "hemorrhage → Celianeyvi", "porque": "trocar golpes com um warrior em bladestorm é perder; era hora de evasion ou de sair do alcance"},
+  {"t": 46.5, "quem": "Zebedeuix", "acao": "slice and dice → Celianeyvi", "porque": "renovar SnD com pouca vida e apanhando do warrior não salva nem mata ninguém"},
+  {"t": 49.4, "quem": "Zebedeuix", "acao": "hyperspeed accelerators → Omasconvi", "porque": "buff ofensivo logo antes de vanish/cloak; foi para a defesa em seguida, então o GCD foi desperdiçado"}
+ ]}

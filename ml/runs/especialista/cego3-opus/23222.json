@@ -1,0 +1,17 @@
+{"resumo": "Shadowplay III matou Celianeyx com dots, spell locks e psychic horror enquanto Heruxv, depois de gastar o EMFH num fear com 100%, passou 16 s só dando cleanse em vez de curar o warrior. Depois venceu o 3v2 lento até derrubar Naminv e Heruxv.",
+ "momento_decisivo": {"t": 54.3, "descricao": "Com Celianeyx a 61% e silenciado (54.6) pelos dots de Ominousxi, Heruxv entra num ciclo de cleanse/cleanse magic (54.3-70.7) quase sem curar; o warrior morre aos 70.4 sem uma cura forte."},
+ "momento_aceitos": [39.5, 50.0, 51.4, 54.3, 54.6],
+ "erros": [
+  {"t": 54.3, "quem": "Heruxv", "fez": "cleanse e cleanse magic seguidos de 54.3 a 70.7 enquanto Celianeyx caía de 61% até morrer", "devia": "curar Celianeyx (holy shock, flash of light, holy light) e usar Hand of Protection/Divine Sacrifice no burst; limpar só o que for CC", "porque": "Os dots do warlock voltam na hora (corruption on attacker a cada 2-4 s); limpar dot por dot não segura vida, e ele curou só 19613 na luta", "gravidade": "alta"},
+  {"t": 51.4, "quem": "Heruxv", "fez": "every man for himself num fear com 100% de vida", "devia": "deixar o fear quebrar com dano ou esperar o cleanse e guardar o EMFH para um CC na janela de kill", "porque": "Com vida cheia e o time ainda bem, o fear não era perigoso; ele ficou sem saída para os fears de 71.3, 83.0 e 113.0", "gravidade": "media"},
+  {"t": 50.0, "quem": "Celianeyx", "fez": "cleave, thunder clap e heroic strike em sequência por toda a luta, sem nenhum mortal strike", "devia": "manter o Mortal Strike no alvo (Ominousxi ou Heruv) e usar intercept/hamstring", "porque": "Sem o -50% de cura, Heruv e as curas do warlock anulavam todo o dano; o warrior não teve pressão real e virou alvo fácil", "gravidade": "alta"},
+  {"t": 65.2, "quem": "Naminv", "fez": "purge (também aos 53.8) e chain lightning com Celianeyx caindo", "devia": "ajudar com healing wave/lesser healing wave no warrior ou grounding totem contra os spell locks", "porque": "Ele só começou a curar aos 70.3, 0.1 s antes da morte; o healer do time estava ocupado com cleanse e não havia mais ninguém curando", "gravidade": "media"},
+  {"t": 38.5, "quem": "Celianeyx", "fez": "bladestorm logo depois do charge, com 86%, no primeiro segundo da luta", "devia": "abrir com mortal strike no alvo e guardar o bladestorm para quando os casters estivessem juntos ou para escapar de CC", "porque": "Gastou a principal recarga sem efeito; levou psychic horror logo em seguida (39.5) e ficou fora até 48.2", "gravidade": "baixa"},
+  {"t": 80.5, "quem": "Heruv", "fez": "cast greater blessing assignment ×2 no meio da luta (repetido aos 107.0 e 142.8)", "devia": "usar os GCDs para judgement/hammer of justice no healer inimigo ou para curar", "porque": "Reaplicar bênção no meio da luta é GCD jogado fora; com vantagem de 3v2 era hora de controlar Heruxv", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.5, "quem": "Amnesianxxii", "descricao": "Psychic horror no warrior logo depois do bladestorm, tirando Celianeyx da luta por quase 9 s."},
+  {"t": 49.0, "quem": "Ominousxi", "descricao": "Pet spell lock em Naminv e spell locks seguidos em Celianeyx/Heruxv, controlando o ritmo."},
+  {"t": 83.0, "quem": "Ominousxi", "descricao": "Howl of terror pegando Naminv e Heruxv ao mesmo tempo."},
+  {"t": 134.3, "quem": "Amnesianxxii", "descricao": "Shadowfiend + inner focus + mind flay para fechar Naminv aos 137.2."}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "A RLS deu blind no curador Kwongwegaxx e pressionou o boomkin Pehdibalii, que morreu aos 62.8 gastando GCDs em dispel e troca de forma; depois o xamã sozinho caiu aos 93.2.",
+ "momento_decisivo": {"t": 49.8, "descricao": "Zebedeuix dá blind em Kwongwegaxx depois do kick, e o spell lock de Ominousxxi (56.2) prende o xamã de novo: Pehdibalii fica sem cura e morre aos 62.8."},
+ "erros": [
+  {"t": 43.5, "quem": "Kwongwegaxx", "fez": "chain lightning, lava burst e lightning bolt (43.5-50.3) na abertura", "devia": "curar e manter riptide/earth shield no druida", "porque": "o curador gastou o início dando dano baixo enquanto o time apanhava de warlock e rogue", "gravidade": "media"},
+  {"t": 45.8, "quem": "Pehdibalii", "fez": "abolish poison repetido (45.8, 50.0, 54.1, 58.2)", "devia": "dano em moonkin ou se curar sob pressão", "porque": "o rogue reaplica veneno a cada golpe; cada dispel foi um GCD perdido", "gravidade": "media"},
+  {"t": 42.0, "quem": "Pehdibalii", "fez": "entrou e saiu de forma várias vezes (42.0, 43.7, 48.2, 59.5)", "devia": "ficar em moonkin e usar os instantâneos", "porque": "cada troca gasta mana e GCD e tira a armadura da forma", "gravidade": "media"},
+  {"t": 47.4, "quem": "Zebedeuix", "fez": "fan of knives durante shadow dance", "devia": "ambush/cheap shot, que são os golpes que o dance libera", "porque": "desperdiça a janela de abertura do shadow dance", "gravidade": "media"},
+  {"t": 44.2, "quem": "Ominousdesix", "fez": "seed of corruption em 3v3", "devia": "unstable affliction/haunt no alvo", "porque": "seed é AoE de dano espalhado e o xamã inimigo dispela", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.7, "quem": "Ominousdesix", "descricao": "shadowfury pegando três inimigos de uma vez"},
+  {"t": 49.8, "quem": "Zebedeuix", "descricao": "kick e blind no curador inimigo antes da troca para o druida"},
+  {"t": 86.3, "quem": "Zebedeuix", "descricao": "vanish e cloak of shadows a 22% para sobreviver"}
+ ],
+ "erros_da_rede": [
+  {"t": 71.7, "quem": "Ominousxxi", "acao": "life tap", "porque": "perde vida e GCD em plena janela de pressão sobre o curador"},
+  {"t": 72.0, "quem": "Ominousxxi", "acao": "pet spell lock", "porque": "repetido logo antes do spell lock de 72.3, sem efeito extra"},
+  {"t": 74.7, "quem": "Zebedeuix", "acao": "slice and dice", "porque": "gastou combos em buff em vez de dano no xamã a 56% sem parceiros"}
+ ]}

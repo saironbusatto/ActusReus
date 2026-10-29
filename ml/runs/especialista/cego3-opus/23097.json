@@ -1,0 +1,17 @@
+{"resumo": "RMP matou Pehdicouii no primeiro go: poly no hunter, shadow dance + cheap shot + kidney no druida, que desperdiçou o nature's swiftness entrando em tree of life. Wild II levou Zebedeu, mas sem healer perdeu Beteraniv e Ominoustres para Heshoii.",
+ "momento_decisivo": {"t": 41.8, "descricao": "Com Heshoii polimorfando Beteraniv (41.5), Zebedeu abre shadow dance + cheap shot (42.1) e kidney (45.4) em Pehdicouii, prendendo o healer sem peel até a morte aos 52.2."},
+ "momento_aceitos": [41.5, 41.8, 45.4, 49.0, 50.0],
+ "erros": [
+  {"t": 49.0, "quem": "Pehdicouii", "fez": "nature's swiftness seguido de tree of life aos 49.4, sem cura instantânea", "devia": "NS + healing touch em si mesmo na hora (ou NS + cyclone em Zebedeu)", "porque": "A 34% e com o rogue em cima, o NS era a única cura grande instantânea; trocar de forma gastou o GCD e ele morreu aos 52.2 sem ter curado nada", "gravidade": "alta"},
+  {"t": 47.9, "quem": "Pehdicouii", "fez": "cyclone logo depois do trinket a 34%, sem curar a si mesmo", "devia": "usar o tempo livre do trinket para barkskin + rejuvenation/regrowth/swiftmend em si", "porque": "Zebedeu tinha energia e evasion; o cyclone não parou o dano de Heshoii e o druida não recuperou vida nenhuma", "gravidade": "media"},
+  {"t": 46.0, "quem": "Beteraniv", "fez": "readiness + rapid fire + aimed shot em Zebedeu enquanto o druida estava em kidney", "devia": "fazer peel: scatter shot em Zebedeu ou freezing trap, tirando o rogue do healer", "porque": "O dano não matou o rogue a tempo (evasion e cloak vieram), e o druida morreu no stun sem nenhuma ajuda", "gravidade": "media"},
+  {"t": 34.8, "quem": "Beteraniv", "fez": "explosive trap em Zebedeu no começo", "devia": "freezing trap no rogue ou no mage para cortar o go do RMP", "porque": "Explosive trap só dá dano; um freeze no Zebedeu teria impedido o shadow dance no druida", "gravidade": "baixa"},
+  {"t": 55.9, "quem": "Amnesian", "fez": "holy fire e mind blast (58.0) com Zebedeu caindo e Beteraniv batendo nele de perto", "devia": "curar Zebedeu (flash heal, PoM, renew) e dar shield nele, além de psychic scream no hunter", "porque": "Zebedeu morreu aos 66.3 e Amnesian só deu um shield nesse período; cada GCD de dano foi cura que faltou", "gravidade": "alta"},
+  {"t": 92.6, "quem": "Heshoii", "fez": "summon water elemental só aos 92.6", "devia": "invocar o elemental antes dos portões", "porque": "O freeze do pet (root) e o dano extra teriam ajudado a segurar Beteraniv longe de Zebedeu", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 41.5, "quem": "Heshoii", "descricao": "Polymorph em Beteraniv tirando o único peel do druida na hora do go."},
+  {"t": 50.0, "quem": "Zebedeu", "descricao": "Vanish + premeditation + cloak of shadows com 40%, saindo do dano e voltando para o eviscerate que matou Pehdicouii."},
+  {"t": 47.7, "quem": "Ominoustres", "descricao": "Pet spell lock seguidos em Heshoii e Amnesian, cortando o mage e o healer várias vezes."},
+  {"t": 88.5, "quem": "Heshoii", "descricao": "Deep freeze em Ominoustres no 1v1 final, segurando o warlock no burst."}
+ ]}

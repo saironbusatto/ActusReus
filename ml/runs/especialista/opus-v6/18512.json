@@ -1,0 +1,20 @@
+{"resumo": "A RMP matou Pehdibalv e Ominousdesxi até 72 s, mas depois Amnesian e Heshoii ficaram parados passando óleo e Zebedeu duelou sozinho o xamã por 90 s até morrer.",
+ "momento_decisivo": {"t": 57.9, "descricao": "Zebedeu dá shadowstep em Pehdibalv e as frag bombs (58.2) prendem o druida a 30%; ele queima o trinket e morre aos 64.1, deixando o time 2v3."},
+ "erros": [
+  {"t": 87.7, "quem": "Amnesian", "fez": "apply oil repetido (×12 até 159.2) durante o duelo de Zebedeu contra o xamã", "devia": "curar Zebedeu e atacar/dispelar Kwongwegaxxv", "porque": "com 3v1 a luta era ganha; o priest parado deixou o rogue morrer aos 164.4", "gravidade": "alta"},
+  {"t": 92.5, "quem": "Heshoii", "fez": "apply oil e drink em vez de atacar Kwongwegaxxv", "devia": "frostbolt/deep freeze no xamã sozinho junto do rogue", "porque": "o mago só voltou a lutar aos 171; Kwongwegaxxv curou-se por 90 s", "gravidade": "alta"},
+  {"t": 63.8, "quem": "Kwongwegaxxv", "fez": "purge com Pehdibalv a 30% prestes a morrer", "devia": "riptide/healing wave/nature's swiftness em Pehdibalv", "porque": "o druida morreu 0.3 s depois; o purge não salvava ninguém", "gravidade": "alta"},
+  {"t": 102.0, "quem": "Zebedeu", "fez": "um só eviscerate em quase 90 s de hemorrhage, gastando pontos em slice and dice e kidney", "devia": "fechar combos em eviscerate/rupture com o xamã fora de CC", "porque": "hemorrhage sozinho não vence a cura de um xamã; sem finalizador de dano a luta virou atrito", "gravidade": "media"},
+  {"t": 36.1, "quem": "Heshoii", "fez": "flamestrike e blizzard (36.1, 44.2, 54.6) em 3v3", "devia": "polymorph no curador e frostbolt no alvo", "porque": "AoE com dano espalhado e sem nenhum polymorph na luta toda", "gravidade": "media"},
+  {"t": 59.1, "quem": "Pehdibalv", "fez": "cyclone a 30% com o rogue em cima", "devia": "se curar (regrowth/healing touch) ou forma de urso", "porque": "barkskin já tinha sido usado aos 39.9; o druida morreu aos 64.1", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 50.6, "quem": "Amnesian", "descricao": "pain suppression a 24% sob o burst, sobreviveu"},
+  {"t": 51.9, "quem": "Zebedeu", "descricao": "kidney shot no curador inimigo depois do kick"},
+  {"t": 182.1, "quem": "Heshoii", "descricao": "deep freeze, cold snap e segundo deep freeze levando o xamã a 21%"}
+ ],
+ "erros_da_rede": [
+  {"t": 82.0, "quem": "Zebedeu", "acao": "hemorrhage ×4 até 145.5", "porque": "só construiu combos sem finalizar com dano; não matou o xamã sozinho"},
+  {"t": 135.6, "quem": "Zebedeu", "acao": "slice and dice", "porque": "combos gastos em buff de velocidade em vez de eviscerate num duelo longo"},
+  {"t": 30.0, "quem": "Amnesian", "acao": "power infusion", "porque": "lançado na abertura antes do contato, perdendo o cooldown de 2 min"}
+ ]}

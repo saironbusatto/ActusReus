@@ -1,0 +1,19 @@
+{"resumo": "O RLS I estourou o Zebedeuii com DoTs do Ominousv e stuns do Zebedeuvii; o rogue deu vanish com DoTs ativos em vez de cloak e morreu, depois o mago caiu sem ice block.",
+ "momento_decisivo": {"t": 45.8, "descricao": "Zebedeuii trinketa a 29% e usa vanish com corruption/UA/seed ativos em vez de cloak of shadows; os DoTs continuam e ele morre aos 49.4."},
+ "erros": [
+  {"t": 45.8, "quem": "Zebedeuii", "fez": "vanish com DoTs do Ominousv ativos", "devia": "cloak of shadows para limpar os DoTs e só depois sair", "porque": "vanish não remove DoTs e o dano continuou até a morte", "gravidade": "alta"},
+  {"t": 47.0, "quem": "Amnesianii", "fez": "CC no Kwongwegaii com o próprio rogue a 29%", "devia": "PW:S + penance/flash heal no Zebedeuii e dispel nos DoTs", "porque": "o aliado estava morrendo; o CC não reduziu o dano que já estava nele", "gravidade": "alta"},
+  {"t": 56.2, "quem": "Heshoiv", "fez": "fireball com o rogue em cima (shadowstep aos 53.2) e sem usar ice block", "devia": "ice block/blink/frost nova antes do kidney shot", "porque": "caiu de 37% em stun e morreu aos 58.6 com o ice block disponível", "gravidade": "alta"},
+  {"t": 30.6, "quem": "Heshoiv", "fez": "mirror image nos portões", "devia": "guardar para a primeira janela de burst/stun do inimigo", "porque": "o cooldown defensivo/ofensivo foi gasto antes de existir pressão", "gravidade": "baixa"},
+  {"t": 49.7, "quem": "Amnesianii", "fez": "mind blast logo após a morte do rogue", "devia": "PW:S e cura preventiva no Heshoiv, próximo alvo óbvio", "porque": "2v3 o priest precisa manter o mago vivo; dano dele não muda nada", "gravidade": "media"},
+  {"t": 67.9, "quem": "Amnesianii", "fez": "pain suppression só com 9% de vida", "devia": "usar entre 30-40% antes do burst final", "porque": "a 9% qualquer tick mata; a redução de dano chega tarde demais", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 34.3, "quem": "Heshoiv", "descricao": "frost nova no Zebedeuvii que tinha acabado de dar shadowstep."},
+  {"t": 43.8, "quem": "Ominousv", "descricao": "pet spell lock no priest durante a pressão no Zebedeuii, impedindo a cura."},
+  {"t": 58.9, "quem": "Zebedeuvii", "descricao": "stealth + premeditation logo após o kill para reabrir no último inimigo."}
+ ],
+ "erros_da_rede": [
+  {"t": 30.3, "quem": "Heshoiv", "acao": "berserking → Kwongwegaii", "porque": "cooldown de dano usado nos portões sem nenhum alvo ao alcance."},
+  {"t": 36.7, "quem": "Heshoiv", "acao": "ice lance → Zebedeuvii", "porque": "ice lance sem alvo congelado ou fingers of frost causa dano mínimo; frostbolt ou polymorph eram melhores."}
+ ]}

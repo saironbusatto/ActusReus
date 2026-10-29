@@ -1,0 +1,20 @@
+{"resumo": "Desgaste entre dois times com warlock e shaman, todos trocando curse e dispel. O Heshoix passou a segunda metade da luta em wand e mana shield, sobreviveu a duas quase-mortes (ice block a 24%, fear a 14%) e caiu aos 145.0 enquanto o Kwongwegaix dispelava curse. Em 2v3 o Ominousdesii caiu aos 166.0.",
+ "momento_decisivo": {"t": 135.7, "descricao": "Com o Heshoix já sem ice block e sendo pressionado, o Kwongwegaix gasta GCDs seguidos em cleanse spirit curse (135.7-141.1), curses que os dois warlocks reaplicam na hora, em vez de curar o mage. O Heshoix morre aos 145.0 e o Fireplay perde a luta de desgaste."},
+ "erros": [
+  {"t": 135.7, "quem": "Kwongwegaix", "fez": "cleanse spirit curse ×2 (e várias outras entre 58 e 141 s) enquanto o mage estava baixo", "devia": "riptide, healing wave e nature's swiftness no Heshoix; dispelar curse só quando não houver ninguém em risco", "porque": "com dois warlocks reaplicando curse of the elements/tongues sem parar, cada cleanse dura segundos; o mage morreu sem cura", "gravidade": "alta"},
+  {"t": 42.6, "quem": "Heshoix", "fez": "polymorph no Ominousdesix (42.6, 125.3), deixando o Pehdibalii livre", "devia": "polymorph no Pehdibalii, que curou 117 mil, para abrir janela de kill", "porque": "em luta de desgaste entre times com dois curadores, tirar o healer é o que cria o kill; polymorph no dps não muda a balança da cura", "gravidade": "media"},
+  {"t": 30.4, "quem": "Heshoix", "fez": "combustion, mirror image e berserking antes do contato (30.4-31.8)", "devia": "guardar os cooldowns para o shadowfury do Ominousdesii (38.1) ou para uma janela de CC no healer", "porque": "o primeiro dano dele só sai aos 34.5; os cooldowns foram jogados fora antes da luta começar", "gravidade": "media"},
+  {"t": 47.2, "quem": "Kwongwegaxx", "fez": "purge ×5 seguidos no Heshoix (47.2-52.8)", "devia": "um purge para tirar o mana shield ou o buff roubado e depois voltar a curar ou pôr tremor/grounding", "porque": "o mage reaplica mana shield de graça; cinco GCDs em purge são cinco curas a menos sob dois warlocks", "gravidade": "media"},
+  {"t": 164.3, "quem": "Ominousdesii", "fez": "incinerate com 17% de vida e em root", "devia": "death coil, demonic circle: teleport ou healthstone e se afastar para o healer", "porque": "estava sozinho com o shaman contra três e morreu 1,7 s depois sem nenhum defensivo", "gravidade": "media"},
+  {"t": 41.3, "quem": "Pehdibalii", "fez": "alternou moonkin e caster form várias vezes (41.3-52.1)", "devia": "escolher um papel por janela: moonkin para pressionar, ou ficar em caster e curar", "porque": "cada troca de forma custa um GCD e mana, e ainda tira o druida dos HoTs/roots do momento", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 95.2, "quem": "Ominousdesix", "descricao": "death coil e logo depois fear no Heshoix a 14%, travando o mage sem ice block"},
+  {"t": 83.4, "quem": "Heshoix", "descricao": "ice block a 24% para escapar do kill e resetar a pressão"},
+  {"t": 54.2, "quem": "Heshoix", "descricao": "counterspell no healer inimigo, cortando o lesser healing wave do Kwongwegaxx"}
+ ],
+ "erros_da_rede": [
+  {"t": 30.4, "quem": "Heshoix", "acao": "combustion → Kwongwegaxx", "porque": "cooldown de burst ativado antes de qualquer contato ou janela de CC"},
+  {"t": 132.4, "quem": "Kwongwegaix", "acao": "cleanse spirit curse on party", "porque": "dispel de curse que seria reaplicada logo, quando o mage precisava de cura"},
+  {"t": 87.6, "quem": "Pehdibalii", "acao": "rejuvenation on party ×2", "porque": "reaplicou rejuvenation duas vezes em seguida; o HoT não acumula e o segundo GCD foi perdido"}
+ ]}

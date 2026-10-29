@@ -1,0 +1,20 @@
+{"resumo": "O Wild abriu em cima do Amnesianvii com hunter's mark, rapid fire, kill command e silencing shot, encadeando os spell locks do Ominous; o priest gastou GCDs em mind sear e holy fire em vez de se manter vivo e morreu aos 51.3. Sem healer, o RMP perdeu o Zebedeuvi e depois o Heshovi ficou sozinho.",
+ "momento_decisivo": {"t": 37.0, "descricao": "Beteranii usa silencing shot no Amnesianvii já com hunter's mark, rapid fire, kill command e trinket ativos, e o Ominous emenda pet spell lock (40.6, 45.1). O priest fica preso em silences sob burst do hunter e o RMP nunca tira a pressão de cima dele."},
+ "erros": [
+  {"t": 36.9, "quem": "Amnesianvii", "fez": "mind sear no Pehdicouve logo na abertura", "devia": "power word: shield/renew em si mesmo e se posicionar atrás de pilar, longe da linha do hunter", "porque": "o hunter acabara de marcar o priest e ativar rapid fire; mind sear não faz nada útil e o deixa canalizando no aberto, pronto para o silencing shot", "gravidade": "alta"},
+  {"t": 46.7, "quem": "Amnesianvii", "fez": "mind sear ×2 enquanto era o alvo do hunter e do warlock (UA, corruption)", "devia": "dispel em si (UA/corruption), flash heal/penance e pedir peel do mage (frost nova/deep freeze no Beteranii)", "porque": "estava levando dano constante e morreu 4,6 s depois do segundo mind sear; cada GCD de dano aqui foi uma cura perdida", "gravidade": "alta"},
+  {"t": 44.9, "quem": "Amnesianvii", "fez": "holy fire", "devia": "curar a si mesmo ou dispelar os DoTs do Ominous", "porque": "acabara de sair de um silence e ia levar outro spell lock; o único cast que ele conseguiu foi de dano", "gravidade": "media"},
+  {"t": 40.2, "quem": "Heshovi", "fez": "ficou em spellsteal e só usou deep freeze aos 66.9, depois do priest morto", "devia": "deep freeze ou polymorph no Beteranii entre 37 e 50 s para tirar o hunter de cima do priest", "porque": "o Beteranii foi quem tirou 53 mil de dano e matou o priest; um stun de 5 s no hunter no meio do burst salvaria o healer", "gravidade": "alta"},
+  {"t": 41.9, "quem": "Zebedeuvi", "fez": "cheap shot no Pehdicouve 1 s depois de blind nele mesmo", "devia": "deixar o blind correr e abrir no Ominous ou no Beteranii, ou guardar blind para o druida em hora de kill", "porque": "cheap shot no alvo blindado joga fora o blind (12 s de CC) e queima DR de stun no druida que ia sofrer o kidney shot depois", "gravidade": "media"},
+  {"t": 66.9, "quem": "Heshovi", "fez": "deep freeze no Beteranii durante deterrence (ativo desde 65.8), depois cold snap e deep freeze de novo", "devia": "esperar o deterrence acabar ou fazer poly/kite até lá", "porque": "deterrence desvia magias vindas de frente; gastou o stun e o cold snap numa janela em que o hunter estava protegido", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 37.0, "quem": "Beteranii", "descricao": "silencing shot no priest em cima do burst de abertura, junto com os spell locks do Ominous: tirou o healer do jogo"},
+  {"t": 45.1, "quem": "Ominous", "descricao": "pet spell lock no Amnesianvii assim que ele saiu do silence anterior, prendendo a escola de cura dele"},
+  {"t": 55.0, "quem": "Zebedeuvi", "descricao": "evasion, vanish e cloak of shadows em sequência com 43% de vida estenderam a luta do rogue sem healer"}
+ ],
+ "erros_da_rede": [
+  {"t": 56.7, "quem": "Beteranii", "acao": "hunter's mark → Heshovi", "porque": "trocou de alvo com o Zebedeuvi a 43% e sem healer; devia manter a pressão no rogue até ele cair"},
+  {"t": 63.4, "quem": "Pehdicouve", "acao": "caster form → Zebedeuvi ×2", "porque": "já estava em caster form; GCDs perdidos quando podia curar ou fazer cyclone"},
+  {"t": 50.2, "quem": "Pehdicouve", "acao": "healing touch on party", "porque": "cast longo enquanto o rogue tinha kick disponível (kick aos 50.4); devia usar HoTs instantâneos/nourish rápido"}
+ ]}

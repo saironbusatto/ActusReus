@@ -1,0 +1,20 @@
+{"resumo": "O Wild IV trancou Amnesianii com fear do Ominousvii, spell lock e silencing shot, forçou trinket e pain suppression e matou o priest aos 78.6; sem healer, Zebedeuii caiu em seguida. O RMP nunca colocou CC duradouro no Pehdicouiv.",
+ "momento_decisivo": {"t": 63.1, "descricao": "Beteranvi usa silencing shot em Amnesianii (46%) e logo vem o fear do Ominousvii (63.7): o priest gasta o trinket aos 64.3, é silenciado de novo pelo pet aos 65.6 e precisa queimar pain suppression com 21%. Sem defensivos, morre no próximo go."},
+ "erros": [
+  {"t": 47.7, "quem": "Heshoiv", "fez": "deep freeze em Beteranvi logo depois do kidney shot do Zebedeuii (45.5)", "devia": "guardar o deep freeze para emendar quando o kidney acabasse, ou usar polymorph no Pehdicouiv", "porque": "deep freeze e kidney shot dividem o DR de stun controlado: sobrepostos, os dois stuns somem juntos e o segundo dura metade", "gravidade": "media"},
+  {"t": 43.7, "quem": "Zebedeuii", "fez": "kick em Beteranvi", "devia": "guardar o kick para o Pehdicouiv (nourish/healing touch) ou para o fear do Ominousvii", "porque": "hunter quase não conjura; kick no hunter não tranca escola útil e deixa o kick em recarga quando o druid ou o warlock conjuram", "gravidade": "media"},
+  {"t": 65.4, "quem": "Amnesianii", "fez": "mind sear com 27% de vida, logo depois do trinket", "devia": "flash heal/penance em si mesmo, ou pain suppression antes", "porque": "estava sendo focado pelos três e acabara de sair do CC; dano em área não ajuda em nada e gasta a janela curta sem silence", "gravidade": "alta"},
+  {"t": 71.9, "quem": "Amnesianii", "fez": "mind sear ×2 com 43-46% de vida, sem trinket nem pain suppression", "devia": "se curar e pedir peel (frost nova/blind) para o Heshoiv e o Zebedeuii", "porque": "canalizar dano em área enquanto é alvo de kill no fim dos defensivos foi o que deixou o priest morrer aos 78.6", "gravidade": "alta"},
+  {"t": 46.7, "quem": "Heshoiv", "fez": "não usou polymorph no Pehdicouiv em nenhum momento da luta (blind do Zebedeuii foi o único CC no druid)", "devia": "polymorph no Pehdicouiv quando o blind acabasse, emendando a janela de kill em Beteranvi (43%)", "porque": "Beteranvi chegou a 43% e a 32%, mas o druid nunca ficou fora do jogo tempo bastante para o kill sair", "gravidade": "alta"},
+  {"t": 83.2, "quem": "Zebedeuii", "fez": "vanish e volta direto para hemorrhage; cloak of shadows só aos 85.6 com 17%", "devia": "usar cloak de cara contra os DoTs do Ominousvii (UA/corruption) e reiniciar a luta com o vanish", "porque": "a pressão no rogue era majoritariamente de DoTs mágicos e do hunter; cloak tardio não salvou e ele morreu aos 91.5", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 46.7, "quem": "Zebedeuii", "descricao": "blind no Pehdicouiv junto com o kidney no Beteranvi: tirou o healer e forçou Beteranvi a deterrence com 43%"},
+  {"t": 52.0, "quem": "Beteranvi", "descricao": "deterrence com 43% no meio do go do RMP, depois de readiness/rapid fire, segurou a janela de kill"},
+  {"t": 63.7, "quem": "Ominousvii", "descricao": "emendou fear e spell lock do pet no Amnesianii junto com o silencing shot, o que tirou trinket e pain suppression do priest"}
+ ],
+ "erros_da_rede": [
+  {"t": 40.9, "quem": "Heshoiv", "acao": "spellsteal em Beteranvi", "porque": "hunter quase não tem buff mágico relevante para roubar; GCD perdido no meio do fear chain sobre o próprio time"},
+  {"t": 76.1, "quem": "Heshoiv", "acao": "ice lance em Ominousvii sem alvo congelado", "porque": "dano mínimo enquanto Amnesianii (43%) morria; era a hora de frost nova/polymorph/peel no Beteranvi ou no Pehdicouiv"},
+  {"t": 52.2, "quem": "Amnesianii", "acao": "power word: shield on party com o alvo em Ominousvii", "porque": "shield logo depois de outro shield (48.4) por cima do weakened soul, em vez de dispel no Beteranvi em deterrence ou de pressionar o warlock"}
+ ]}

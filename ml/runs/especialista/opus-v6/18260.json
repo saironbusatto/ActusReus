@@ -1,0 +1,20 @@
+{"resumo": "Espelho de warrior/paladino/shaman: os wind shears do Naminvi seguraram o Heruxii, que chegou a 18% e usou divine shield, mas dentro da bolha ele não curou o Celianeyvii, que morreu aos 84.3. O 3v2 acabou em seguida.",
+ "momento_decisivo": {"t": 76.4, "descricao": "Já em divine shield (75.0), o Heruxii gastou a janela em judgement of light e cleanse em vez de curar o Celianeyvii, que morreu 8 s depois sem receber nenhuma cura."},
+ "erros": [
+  {"t": 34.2, "quem": "Celianeyvii", "fez": "every man for himself para sair do stun curto do charge inimigo", "devia": "aguentar 1.5 s de charge e guardar o EMFH/trinket para um fear, hammer ou CC longo", "porque": "Gastou o único escape (EMFH divide cooldown com o trinket) num stun que já ia acabar e morreu depois sem nenhum escape", "gravidade": "media"},
+  {"t": 43.1, "quem": "Celianeyvii", "fez": "bladestorm com 75% e sem alvo pressionado nem CC no healer inimigo", "devia": "segurar o bladestorm para junto do heroism/hammer no alvo de kill ou para escapar de CC", "porque": "Cooldown principal gasto espalhando dano em quem estava cheio, sem matar ninguém", "gravidade": "media"},
+  {"t": 61.5, "quem": "Heruxii", "fez": "divine plea no meio da pressão, com o Naminvi dando wind shear nele", "devia": "usar o divine plea num momento calmo ou atrás de um pilar", "porque": "Divine Plea corta a cura pela metade por 15 s; ele chegou a 18% e precisou da bolha aos 75.0", "gravidade": "media"},
+  {"t": 76.4, "quem": "Heruxii", "fez": "dentro do divine shield usou judgement of light e cleanse e não curou o Celianeyvii", "devia": "aproveitar a bolha (imune a interrupt e dano) para curar o warrior em sequência com holy light/flash of light", "porque": "A bolha é a janela de cura livre; o parceiro morreu aos 84.3 dentro dessa janela", "gravidade": "alta"},
+  {"t": 51.4, "quem": "Naminii", "fez": "purge em sequência (51.4, 56.8, 65.8, 83.4) e water shield repetido (42.8, 46.4, 48.1, 49.8)", "devia": "usar os GCDs em wind shear no Heruxvi, em hex ou em cura no Celianeyvii", "porque": "O Heruxvi curou 139k sem ser controlado; reaplicar water shield e tirar buffs não mudava a luta", "gravidade": "media"},
+  {"t": 84.0, "quem": "Celianeyvii", "fez": "morreu atacando (mortal strike) sem pvp trinket, intervene ou recuo", "devia": "com vida baixa usar defensive stance/intervene no healer ou pelo menos sair da linha de dano", "porque": "Não usou nenhum defensivo nos últimos 10 s; o único escape já tinha ido no charge aos 34.2", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 38.3, "quem": "Naminvi", "descricao": "Wind shear repetido no Heruxii (38.3, 54.3, 62.6, 67.8, 73.3) cortando as curas do healer inimigo."},
+  {"t": 76.3, "quem": "Celianeyxi", "descricao": "Pvp trinket no charge com 27% e sobreviveu à investida."},
+  {"t": 78.9, "quem": "Heruxvi", "descricao": "Divine illumination e divine protection na hora da pressão; manteve o time inteiro de pé."}
+ ],
+ "erros_da_rede": [
+  {"t": 46.4, "quem": "Naminii", "acao": "water shield", "porque": "Tinha acabado de lançar water shield aos 42.8; GCD perdido."},
+  {"t": 45.1, "quem": "Heruxii", "acao": "judgement of light no Naminvi", "porque": "Healer gastou GCD com julgamento sob wind shear do shaman em vez de curar ou se posicionar."},
+  {"t": 73.0, "quem": "Celianeyvii", "acao": "sunder armor no Celianeyxi", "porque": "Com o alvo perto de 27% o certo era mortal strike/execute; sunder não ia matar ninguém."}
+ ]}

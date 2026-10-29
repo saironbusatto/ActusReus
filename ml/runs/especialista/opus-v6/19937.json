@@ -1,0 +1,20 @@
+{"resumo": "No espelho RLS, os dois rogues se pegaram. O RLS IV deixou o Kwongwegaii sob spell lock do pet e matou Zebedeuvii com DoTs mais o kidney do Zebedeuxi aos 60.5. O Ominousv ficou sozinho e caiu aos 71.3.",
+ "momento_decisivo": {"t": 54.8, "descricao": "Zebedeuxi usa kidney shot no Zebedeuvii (16%) com UA e haunt do Ominousxxiv rodando. O rogue gasta o trinket, mas o Kwongwegaii estava trancado pelo felhunter e não curou a tempo; Zebedeuvii morre aos 60.5."},
+ "erros": [
+  {"t": 45.1, "quem": "Kwongwegaii", "fez": "purge com Zebedeuvii a 26% em evasion", "devia": "riptide/lesser healing wave no Zebedeuvii logo depois do silence acabar", "porque": "o parceiro estava na zona de kill com DoTs; o GCD gasto em purge foi cura que faltou", "gravidade": "alta"},
+  {"t": 60.4, "quem": "Kwongwegaii", "fez": "purge ×2 enquanto Zebedeuvii morria (60.5)", "devia": "nature's swiftness + healing wave no Zebedeuvii", "porque": "último momento para salvar o rogue; purgar não muda nada nessa hora", "gravidade": "alta"},
+  {"t": 42.7, "quem": "Zebedeuvii", "fez": "vanish com 39% e voltou na hora para hemorrhage (44.5) no mesmo rogue", "devia": "usar o vanish para sair do combate, curar com o shaman e reabrir com cheap shot/sap no healer", "porque": "vanish usado só como defensivo e logo jogado fora ao voltar no meio dos DoTs; caiu para 26% em seguida", "gravidade": "media"},
+  {"t": 38.8, "quem": "Zebedeuvii", "fez": "a luta inteira batendo em Zebedeuxi com hemorrhage, sem blind/gouge no Kwongwegavi", "devia": "CC no shaman healer (blind/sap) e matar o warlock, ou trocar para o alvo sem evasion/cloak", "porque": "um rogue com evasion, cloak e vanish é o pior alvo possível; o dano saiu baixo (12382)", "gravidade": "media"},
+  {"t": 54.8, "quem": "Ominousv", "fez": "nenhum fear/death coil para descascar o Zebedeuxi do parceiro com 16%", "devia": "fear ou death coil no Zebedeuxi para tirar o kidney/hemorrhage do Zebedeuvii", "porque": "o death coil saiu na abertura (34.7) e o warlock não usou fear em toda a luta; o parceiro morreu sem peel", "gravidade": "media"},
+  {"t": 42.2, "quem": "Zebedeuvii", "fez": "cobalt frag bomb com 39%", "devia": "evasion/cloak contra os DoTs ou pedir cura saindo do alcance", "porque": "GCD gasto em dano mínimo bem no momento em que era alvo de kill", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 40.7, "quem": "Ominousxxiv", "descricao": "pet spell lock emendado no Kwongwegaii (40.7, 47.7, 52.0), trancando a cura enquanto os DoTs corriam no rogue"},
+  {"t": 54.8, "quem": "Zebedeuxi", "descricao": "kidney shot no Zebedeuvii a 16% para forçar o trinket na janela de kill"},
+  {"t": 46.6, "quem": "Zebedeuxi", "descricao": "evasion com 42% e depois vanish + premeditation + eviscerate: virou a troca de rogues a seu favor"}
+ ],
+ "erros_da_rede": [
+  {"t": 44.5, "quem": "Zebedeuvii", "acao": "hemorrhage no Zebedeuxi logo depois do vanish", "porque": "abriu mão da reinicialização do vanish com 26%; tinha que reposicionar e esperar cura"},
+  {"t": 50.8, "quem": "Zebedeuvii", "acao": "slice and dice no Zebedeuxi", "porque": "rogue aliado com pouca vida e o alvo inimigo em evasion; GCD para buff de velocidade de ataque não faz sentido nessa hora"},
+  {"t": 59.6, "quem": "Zebedeuvii", "acao": "hemorrhage no Zebedeuxi a 1 s de morrer", "porque": "com o trinket já usado e baixo de vida, faltava cloak/evasion ou sair do alcance; atacar não salva nada"}
+ ]}

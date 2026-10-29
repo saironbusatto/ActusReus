@@ -1,0 +1,82 @@
+{
+ "resumo": "Celianeyiv deu Charge + Bladestorm no Zebedeuix, que morreu em 7 s, enquanto o Kwongwegaiv plantava totem e limpava doença. O DK prendeu o shaman em Gnaw e o RLS caiu inteiro.",
+ "momento_decisivo": {
+  "t": 43.5,
+  "descricao": "Com o Zebedeuix a 44% sob Bladestorm, o Kwongwegaiv solta Mana Spring Totem (43.5) e Cleanse Spirit (44.7) em vez de curar, e o rogue morre aos 46.9."
+ },
+ "momento_aceitos": [
+  40.0,
+  41.6,
+  43.5,
+  45.8
+ ],
+ "erros": [
+  {
+   "t": 43.5,
+   "quem": "Kwongwegaiv",
+   "fez": "Mana Spring Totem (43.5) e Cleanse Spirit em doença (44.7)",
+   "devia": "Riptide/Healing Wave no Zebedeuix",
+   "porque": "o rogue estava em queda livre sob Bladestorm; a primeira cura só saiu aos 48.4, depois da morte",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.8,
+   "quem": "Zebedeuix",
+   "fez": "Cobalt Frag Bomb logo após o Vanish (45.1), com 15%",
+   "devia": "ficar em stealth e se afastar",
+   "porque": "o ataque quebrou o stealth, ele tomou Gnaw (45.9) e morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 42.7,
+   "quem": "Zebedeuix",
+   "fez": "Evasion só quando já estava a 44%",
+   "devia": "Evasion/Sprint no início do Bladestorm",
+   "porque": "o Bladestorm pode ser esquivado; o defensivo tardio não cobriu o pico de dano",
+   "gravidade": "media"
+  },
+  {
+   "t": 55.2,
+   "quem": "Ominousxxi",
+   "fez": "Corruption/Spell Lock no Celianeyiv enquanto o DK prendia o Kwongwegaiv no Gnaw",
+   "devia": "Fear/Death Coil no Omasconiv ou matar o ghoul",
+   "porque": "o shaman foi atordoado três vezes pelo ghoul e morreu aos 58.1 sem peel",
+   "gravidade": "media"
+  },
+  {
+   "t": 47.9,
+   "quem": "Ominousxxi",
+   "fez": "Summon Felhunter no meio da luta",
+   "devia": "trazer o pet antes do portão",
+   "porque": "o cast longo em 2v3 gastou tempo sem ação útil",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 40.0,
+   "quem": "Celianeyiv",
+   "descricao": "Charge no rogue seguido de Bladestorm (41.6)."
+  },
+  {
+   "t": 45.9,
+   "quem": "Omasconiv",
+   "descricao": "Gnaw do ghoul pegando o rogue que saía do Vanish."
+  },
+  {
+   "t": 58.1,
+   "quem": "Omasconiv",
+   "descricao": "Mind Freeze no healer na janela de morte."
+  },
+  {
+   "t": 60.2,
+   "quem": "Celianeyiv",
+   "descricao": "Charge no warlock logo após as mortes."
+  },
+  {
+   "t": 42.6,
+   "quem": "Ominousxxi",
+   "descricao": "Howl of Terror no DK."
+  }
+ ]
+}

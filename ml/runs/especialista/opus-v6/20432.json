@@ -1,0 +1,19 @@
+{"resumo": "O LSD gastou a abertura em CC (seduction, fear, roots) sem dano. O Celianeyii saiu dos controles com bladestorm e trocou para o Ominousdesix, que morreu aos 60.1 sem defensivo e sem cura do Kwongwegaxx. Depois os stuns do pet do Omasconii mataram o druida e o shaman.",
+ "momento_decisivo": {"t": 56.2, "descricao": "Celianeyii troca para o Ominousdesix logo depois que o warlock gastou o demonic circle (53.7). O warlock fica só em corruption, o Kwongwegaxx dá cleanse disease e water shield, e cleave/execute matam o warlock em 4 s."},
+ "erros": [
+  {"t": 56.0, "quem": "Ominousdesix", "fez": "corruption on attacker repetido (56.0, 57.4, 58.8) enquanto o warrior o matava em cleave/heroic strike", "devia": "fear ou howl no Celianeyii, healthstone (criada aos 31.7) e pedir a cura do shaman", "porque": "DoT não salva ninguém em 4 s; o warlock morreu com healthstone na bolsa e sem nenhum peel no warrior", "gravidade": "alta"},
+  {"t": 53.7, "quem": "Ominousdesix", "fez": "demonic circle: teleport antes de ser o alvo", "devia": "guardar o teleporte para quando o warrior viesse para cima dele", "porque": "2,5 s depois o Celianeyii trocou para ele e o warlock já não tinha como escapar", "gravidade": "media"},
+  {"t": 42.2, "quem": "Ominousdesix", "fez": "death coil no Heruvii com 96% de vida logo na abertura", "devia": "guardar o death coil como peel contra o warrior ou como CC do healer numa janela de kill", "porque": "foi o único horror da luta e fez falta quando o Celianeyii o pegou", "gravidade": "media"},
+  {"t": 55.9, "quem": "Kwongwegaxx", "fez": "cleanse spirit disease e, aos 53.2, water shield com o warlock sendo morto", "devia": "riptide, lesser healing wave e nature's swiftness no Ominousdesix, earthbind totem no warrior", "porque": "o warlock foi de vida cheia a morto entre 56 e 60 s sem receber uma cura sequer", "gravidade": "alta"},
+  {"t": 51.0, "quem": "Kwongwegaxx", "fez": "purge no Heruvii com o warrior solto no time", "devia": "pôr totens de controle (earthbind/stoneclaw) e se preparar para curar o alvo do warrior", "porque": "purge no paladino não mudou nada; o bladestorm veio 1,6 s depois", "gravidade": "media"},
+  {"t": 52.0, "quem": "Celianeyii", "fez": "matou o warlock e pressionou o druida em cleave/heroic strike sem mortal strike (o primeiro só aos 84.1)", "devia": "manter o mortal strike no alvo para cortar a cura do Kwongwegaxx e do Pehdibalii", "porque": "os 50% de cura reduzida são o que garante o kill contra um time com dois curadores", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 52.6, "quem": "Celianeyii", "descricao": "bladestorm para quebrar a sequência de roots e fears e entrar no meio do time inimigo"},
+  {"t": 57.1, "quem": "Omasconii", "descricao": "encadeou pet gnaw no Pehdibalii (57.1, 61.3, 63.4) e travou o druida até ele morrer"},
+  {"t": 52.6, "quem": "Pehdibalii", "descricao": "barkskin assim que o bladestorm veio para cima dele"}
+ ],
+ "erros_da_rede": [
+  {"t": 58.8, "quem": "Ominousdesix", "acao": "corruption on attacker → Heruvii", "porque": "DoT no paladino quando faltava 1 s para morrer; devia usar fear, healthstone ou qualquer peel"},
+  {"t": 51.0, "quem": "Kwongwegaxx", "acao": "purge → Heruvii", "porque": "dispel ofensivo sem valor enquanto o warrior estava prestes a dar bladestorm no time"}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "No espelho de RMP, Zebedeuii abriu shadow dance em Zebedeuvi e o matou aos 57.2 enquanto Amnesianvii lançava mind sear; o resto foi um 3v2 longo até Heshovi cair aos 176.3.",
+ "momento_decisivo": {"t": 44.8, "descricao": "Zebedeuii usa shadow dance com cheap shot e ambush em Zebedeuvi (52% para 25%) e o kidney aos 48.4 fecha o rogue inimigo, que morre aos 57.2 sem cura."},
+ "erros": [
+  {"t": 52.4, "quem": "Amnesianvii", "fez": "mind sear ×2 até 55.7 com Zebedeuvi a 22%", "devia": "power word: shield, penance e flash heal no rogue (ou pain suppression)", "porque": "o rogue morreu aos 57.2 com o curador canalizando AoE", "gravidade": "alta"},
+  {"t": 47.4, "quem": "Zebedeuvi", "fez": "premeditation e ambush a 24% logo após vanish", "devia": "ficar em stealth, sair de alcance e esperar cura", "porque": "voltou ao combate sem vida e levou o kidney de 48.4 que o matou", "gravidade": "alta"},
+  {"t": 45.7, "quem": "Heshovi", "fez": "flamestrike (45.7, 58.6) em 3v3", "devia": "frost nova/polymorph em Zebedeuii para tirar o rogue do parceiro", "porque": "o parceiro estava sendo morto e o AoE não fez peel", "gravidade": "media"},
+  {"t": 74.9, "quem": "Zebedeuii", "fez": "slice and dice repetido (74.9, 97.5, 107.5, 120.9, 139.1) com poucos eviscerates", "devia": "fechar combos em eviscerate/rupture no mage", "porque": "com vantagem numérica a luta se arrastou por 120 s sem kill", "gravidade": "media"},
+  {"t": 33.8, "quem": "Amnesianvii", "fez": "power infusion antes do contato", "devia": "guardar para o burst ou para a cura sob pressão", "porque": "o cooldown de 2 min se perdeu sem alvo em luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 44.8, "quem": "Zebedeuii", "descricao": "shadow dance e kidney no rogue inimigo, kill limpo"},
+  {"t": 82.1, "quem": "Heshovi", "descricao": "ice block a 17% sob stun e pressão"},
+  {"t": 188.5, "quem": "Amnesianvii", "descricao": "pain suppression a 19% sob o kidney"}
+ ],
+ "erros_da_rede": [
+  {"t": 157.3, "quem": "Zebedeuii", "acao": "slice and dice", "porque": "gastou os combos do premeditation em buff em vez de abrir com cheap shot/dano"},
+  {"t": 74.9, "quem": "Zebedeuii", "acao": "slice and dice", "porque": "buff de ataque em vez de finalizador de dano no mage"},
+  {"t": 113.6, "quem": "Heshoiv", "acao": "fire blast", "porque": "golpe fraco de mage de gelo; o GCD rendia mais em frostbolt/ice lance com congelamento"}
+ ]}

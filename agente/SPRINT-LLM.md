@@ -121,6 +121,18 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
   empate depois de 200 sai. Registro "V9A/V9B" no `versoes.json`.
 - **Treino de madrugada com o servidor ligado** (queda → `treina.py --retoma`).
 
+**29/10 noite — V6 do especialista e V10 do treino (registrado antes do resultado):**
+- **Dados V6:** +100 lutas rotuladas por 10 subagentes Opus sem o vencedor (`opus-v6/`), total 200 x3 + Gemini
+  limpo (`dataset_tecnico.py --v6`: treino-v6 4539, validação 60).
+- **Teste cego 3:** 20 lutas nunca vistas (23024+), referência de 2 subagentes sem vencedor em `cego3-opus/`
+  (116 erros), sha256 `beaa3a8e…`; `compara.py --cego3`. Gemini nele: momento 14/20, achou 43/109, 2,4 sem
+  par/luta, 81% em quem perdeu (a referência dá 79%).
+- **Critério da V6:** no cego 3, JSON 20/20; fatos graves 13/13 (código); momento ≥ 14/20 e achou ≥ 43/109
+  (≥ Gemini); crítica errada ≤ 0,5/luta e ≤ a do Gemini pelo juiz cego (`juiz.py --cego3`); ≤ 60 s/luta.
+- **V10 (treino):** os dois braços com plano + fatos por código + momento; o braço B testa a fase B no C++ — os
+  DPS dos times dele miram o alvo de kill do plano (`Playerbots.ArenaPlanTeams/ArenaPlanFile`, mod-playerbots
+  `4b96f5a9`, imagem nova; rollback `pre-plano-v10`). Mesma regra do A/B (~100 lutas, ±3).
+
 **Feito em 29/10 (tarde):**
 - **V5 do especialista: não passou** (teste cego 2, critério pré-registrado). JSON 20/20 ✅, fatos graves 11/11 ✅,
   40 s/luta ✅; momento 15/20 ❌ (meta 16), achou 31/115 ❌ (meta 35; Gemini 35, V4 24); 95% das críticas em quem

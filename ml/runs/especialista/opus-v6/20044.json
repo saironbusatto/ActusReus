@@ -1,0 +1,20 @@
+{"resumo": "Luta longa de controle: Zebedeu encaixou kidney/blind no shaman em todas as janelas enquanto Amnesianxxv ficava alternando shadowform e dando dano em vez de curar; Kwongwegaxiv morreu aos 178.7 e o RPS caiu em seguida.",
+ "momento_decisivo": {"t": 169.8, "descricao": "Kidney shot de Zebedeu em Kwongwegaxiv a 47% com Heshoii lançando ice lances; o priest parceiro estava em mind flay e o shaman morre no eviscerate aos 178.7."},
+ "erros": [
+  {"t": 168.0, "quem": "Amnesianxxv", "fez": "mind flay ×2 com Kwongwegaxiv a 47% em kidney shot", "devia": "sair de shadowform antes e dar PW:S/flash heal/penance no shaman", "porque": "o healer foi morto em 9 s sem cura do priest", "gravidade": "alta"},
+  {"t": 74.3, "quem": "Amnesianxxv", "fez": "tirou e pôs shadowform mais de 10 vezes (74.3 a 173.5)", "devia": "ficar no papel de healer de apoio ou de dano, sem alternar", "porque": "cada troca gasta GCD e deixa o priest sem curar nem bater", "gravidade": "media"},
+  {"t": 41.4, "quem": "Kwongwegaxiv", "fez": "cleanse spirit poison repetido a luta toda", "devia": "curar e poupar mana; dispel só de wound/crippling quando necessário", "porque": "o rogue reaplica veneno a cada golpe; GCDs gastos sem ganho", "gravidade": "media"},
+  {"t": 87.4, "quem": "Heshoii", "fez": "cold snap para um segundo deep freeze em Zebedeuxiv 3 s depois do primeiro", "devia": "guardar cold snap para ice block/frost nova ou usar deep freeze em outro alvo", "porque": "o segundo stun no mesmo alvo pega DR e dura metade", "gravidade": "media"},
+  {"t": 106.1, "quem": "Zebedeuxiv", "fez": "kidney shot em Heshoii com 97% de vida", "devia": "kidney no priest healer junto da pressão do time", "porque": "stun longo num alvo cheio não gera kill", "gravidade": "baixa"},
+  {"t": 197.3, "quem": "Amnesian", "fez": "renew com ~3% de vida", "devia": "flash heal/PW:S em si ou fade", "porque": "HoT não salva de golpe vindo; morreu aos 199.0", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 84.6, "quem": "Zebedeu", "descricao": "blind no shaman seguido de kidney shot (86.3) manteve o healer inimigo fora da luta"},
+  {"t": 64.2, "quem": "Amnesian", "descricao": "psychic scream tirou Zebedeuxiv de cima repetidas vezes (64.2, 92.0, 147.6)"},
+  {"t": 182.3, "quem": "Amnesian", "descricao": "trinket + pain suppression + desperate prayer a 19-32% sobreviveram ao burst duplo"}
+ ],
+ "erros_da_rede": [
+  {"t": 177.6, "quem": "Kwongwegaxiv", "acao": "purge em Amnesian", "porque": "o shaman estava baixo após kidney e morreu 1 s depois; era hora de se curar"},
+  {"t": 122.1, "quem": "Kwongwegaxiv", "acao": "purge em Amnesian", "porque": "Zebedeuxiv tinha acabado de ir a 12%; o certo era cura nele"},
+  {"t": 84.8, "quem": "Heshoii", "acao": "cold snap logo após deep freeze", "porque": "só serviu para repetir deep freeze no mesmo alvo em DR"}
+ ]}

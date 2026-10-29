@@ -1,0 +1,19 @@
+{"resumo": "RLS IV abriu com shadow dance + cheap shot + kidney shot em Pehdibalii, enquanto o felhunter de Ominousxxiv travava os dois curandeiros inimigos; o druida caiu aos 58.7 e o shaman logo depois.",
+ "momento_decisivo": {"t": 44.5, "descricao": "Zebedeuxi usa shadow dance + cheap shot (e depois kidney shot aos 48.0) em Pehdibalii logo após o pet spell lock nele; o druida fica preso sem se defender e Kwongwegaxx é silenciado aos 48.4/52.6."},
+ "erros": [
+  {"t": 44.7, "quem": "Pehdibalii", "fez": "só usou barkskin aos 57.5, já com 23%", "devia": "barkskin no início do cheap shot/kidney shot (dá para usar em stun)", "porque": "é o defensivo feito para essa situação; usado tarde, não evitou a morte aos 58.7", "gravidade": "alta"},
+  {"t": 41.9, "quem": "Pehdibalii", "fez": "sai da moonkin form para caster e lança entangling roots ×2 com o rogue colado", "devia": "ficar em moonkin (armadura) ou ir para bear form e se curar", "porque": "em caster ele perde a armadura contra um rogue e o root quase não segura quem já está colado", "gravidade": "media"},
+  {"t": 47.0, "quem": "Ominousdesix", "fez": "corruption e curse of the elements (49.1, 52.6, 54.7) enquanto o druida aliado era morto", "devia": "death coil/fear em Zebedeuxi para tirar a pressão de Pehdibalii", "porque": "o rogue fez todo o dano da kill; o death coil só saiu aos 70.5, depois das duas mortes", "gravidade": "alta"},
+  {"t": 42.9, "quem": "Kwongwegaxx", "fez": "purge, wind shear e cleanse spirit curse (42.9-44.0) enquanto o druida entrava no stun", "devia": "riptide/healing wave em Pehdibalii", "porque": "a cura chegou atrasada (47.0) e pouca; o druida morreu com o curandeiro olhando outras coisas", "gravidade": "media"},
+  {"t": 48.1, "quem": "Kwongwegaxx", "fez": "lesser healing wave sem grounding totem diante do felhunter ativo", "devia": "baixar grounding totem antes dos casts", "porque": "foi silenciado pelo spell lock aos 48.4 e de novo aos 52.6, bem na janela de kill do druida", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 44.4, "quem": "Ominousxxiv", "descricao": "pet spell lock em Pehdibalii e depois spell lock nos dois curandeiros (48.4/52.6), garantindo a janela da kill"},
+  {"t": 44.5, "quem": "Zebedeuxi", "descricao": "shadow dance + cheap shot + kidney shot encadeados no druida, com dano sustentado de hemorrhage até a morte"},
+  {"t": 50.2, "quem": "Zebedeuxi", "descricao": "evasion a 41% quando a pressão voltou para ele, mantendo-se vivo para fechar a kill"}
+ ],
+ "erros_da_rede": [
+  {"t": 58.6, "quem": "Kwongwegaxx", "acao": "purge → Ominousxxiv", "porque": "Pehdibalii estava a 23% e morreu 0.1 s depois; o GCD era para cura"},
+  {"t": 64.2, "quem": "Kwongwegaxx", "acao": "cleanse spirit poison on party → Kwongwegavi", "porque": "sozinho contra três e prestes a morrer (65.1), devia se curar ou fugir em vez de limpar veneno"},
+  {"t": 52.6, "quem": "Ominousdesix", "acao": "curse of the elements → Zebedeuxi", "porque": "curse de dano mágico num rogue enquanto o druida morria; era hora de death coil/fear no rogue"}
+ ]}

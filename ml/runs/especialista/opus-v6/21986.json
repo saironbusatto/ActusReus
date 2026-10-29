@@ -1,0 +1,19 @@
+{"resumo": "No espelho Wild, o Beteranvi usou readiness + rapid fire e silencing shot para derrubar o Ominoustres, enquanto o Ominousvii travava o druida healer com spell lock; com 3v2 o Wild IV finalizou o hunter e o druida feared.",
+ "momento_decisivo": {"t": 52.1, "descricao": "Ominousvii dá spell lock no Pehdicouii logo após o nature's swiftness, impedindo a cura de emergência no Ominoustres a 29%, que morre aos 53.6."},
+ "erros": [
+  {"t": 50.5, "quem": "Ominoustres", "fez": "fear e depois shoot (51.5) com 29% de vida sob burst de hunter", "devia": "healthstone, quebrar linha de visão no pilar e pedir cura; demonic circle não estava montado", "porque": "a 29% contra rapid fire o lock precisava se defender, não dar dano", "gravidade": "alta"},
+  {"t": 49.9, "quem": "Pehdicouii", "fez": "tree of life e shadowmeld (49.1) com o aliado caindo, nature's swiftness só aos 52.1", "devia": "nature's swiftness + healing touch ou swiftmend no Ominoustres assim que ele ficou baixo", "porque": "a demora deixou o NS para depois do silence e a cura não saiu", "gravidade": "alta"},
+  {"t": 33.4, "quem": "Beteranvi", "fez": "hunter's mark repetido (35.7, 37.3, 38.9)", "devia": "uma vez e depois dano/serpent sting/viper sting", "porque": "quatro GCDs em mark na abertura são dano perdido", "gravidade": "baixa"},
+  {"t": 40.8, "quem": "Beteraniv", "fez": "trocar o hunter's mark para Ominousvii depois de marcar Pehdicouiv", "devia": "escolher um alvo e manter a pressão", "porque": "troca de alvo sem motivo espalha o dano e não força defensivos", "gravidade": "baixa"},
+  {"t": 64.5, "quem": "Beteraniv", "fez": "multi-shot", "devia": "chimera/aimed shot no alvo de kill ou scatter/trap para peel", "porque": "multi-shot é dano fraco espalhado em arena; com 2v3 ele precisava de dano focado ou de controle", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 45.4, "quem": "Beteranvi", "descricao": "readiness + rapid fire + kill command sincronizados e silencing shot (50.5) no lock baixo."},
+  {"t": 52.1, "quem": "Ominousvii", "descricao": "spell lock no druida healer logo após o nature's swiftness, negando a cura que salvaria o Ominoustres."},
+  {"t": 61.9, "quem": "Beteranvi", "descricao": "deterrence a 41% de vida quando virou alvo."}
+ ],
+ "erros_da_rede": [
+  {"t": 33.0, "quem": "Beteraniv", "acao": "hunter's mark → Pehdicouiv", "porque": "reaplicou o mark no mesmo alvo marcado aos 30.2; GCD perdido."},
+  {"t": 44.9, "quem": "Ominoustres", "acao": "toggle pet spell", "porque": "GCD gasto em configurar o pet bem na hora do burst inimigo."},
+  {"t": 75.7, "quem": "Beteraniv", "acao": "serpent sting → Beteranvi", "porque": "DoT lento com a própria vida baixa e sem deterrence; morreu 1.4 s depois sem disengage nem peel."}
+ ]}

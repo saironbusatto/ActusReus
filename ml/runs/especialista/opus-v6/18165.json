@@ -1,0 +1,20 @@
+{"resumo": "TSG pressionou Zebedeuxiv com bladestorm e depois trocou para Amnesianxxv com execute + mind freeze; o RPS, com dois healers e pouco dano, perdeu GCDs tirando doenças do DK e morreu em sequência.",
+ "momento_decisivo": {"t": 55.1, "descricao": "Celianeyiv troca para Amnesianxxv com execute, Omasconiv acompanha com icy touch e mind freeze (55.6), e o priest morre aos 58.2 sem o shaman curá-lo."},
+ "erros": [
+  {"t": 41.1, "quem": "Kwongwegaxiv", "fez": "cleanse spirit disease em sequência (41-61 s) contra o DK com pestilence", "devia": "healing wave/riptide nos aliados e deixar as doenças", "porque": "pestilence reaplica as doenças de graça; o shaman trocou cura por dispel inútil", "gravidade": "alta"},
+  {"t": 36.7, "quem": "Amnesianxxv", "fez": "mind blast enquanto Zebedeuxiv tomava bladestorm", "devia": "power word: shield/penance no rogue", "porque": "o rogue foi a 30% em 4 s e teve de queimar evasion e vanish", "gravidade": "media"},
+  {"t": 43.7, "quem": "Amnesianxxv", "fez": "alternou shadowform (43.7, 46.8, 48.5)", "devia": "ficar fora de shadowform curando", "porque": "cada troca é um GCD perdido num time que dependia de cura", "gravidade": "media"},
+  {"t": 53.8, "quem": "Omasconiv", "fez": "every man for himself num stun com 97% de vida", "devia": "aguentar o stun e guardar o trinket", "porque": "sem risco de morte; perdeu o trinket para um CC sem consequência", "gravidade": "baixa"},
+  {"t": 66.6, "quem": "Omasconiv", "fez": "summon gargoyle só no fim, com o último inimigo quase morto", "devia": "invocar na abertura, junto do empower rune weapon (39.4)", "porque": "a gargoyle é o maior cooldown de dano do DK unholy; no fim não muda nada", "gravidade": "baixa"},
+  {"t": 41.2, "quem": "Heruix", "fez": "every man for himself num stun com 84% de vida", "devia": "guardar o trinket para um CC com aliado baixo", "porque": "stun sem pressão; o trinket ficou indisponível o resto da luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 36.8, "quem": "Celianeyiv", "descricao": "charge + bladestorm em Zebedeuxiv forçou evasion e vanish logo no começo"},
+  {"t": 55.6, "quem": "Omasconiv", "descricao": "mind freeze no priest durante a troca de alvo garantiu a kill"},
+  {"t": 35.7, "quem": "Amnesianxxv", "descricao": "silence no paladino healer na abertura"}
+ ],
+ "erros_da_rede": [
+  {"t": 40.0, "quem": "Kwongwegaxiv", "acao": "purge no warrior", "porque": "Zebedeuxiv estava em 30%; era hora de curar"},
+  {"t": 59.1, "quem": "Kwongwegaxiv", "acao": "mana tide totem", "porque": "priest já morto e o shaman sendo focado; mana não era o problema"},
+  {"t": 51.2, "quem": "Zebedeuxiv", "acao": "cloak of shadows", "porque": "o dano era físico e as doenças do DK não são magia; cloak rendeu pouco"}
+ ]}

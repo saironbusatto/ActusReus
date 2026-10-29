@@ -1,0 +1,19 @@
+{"resumo": "Ominous e Beteranii afogaram o Heruvi em dots e silences; o paladino gastou a luta dando cleanse em vez de se curar, morreu aos 90.3 sem divine shield, e o Amnesianxxiv caiu logo depois no silencing shot.",
+ "momento_decisivo": {"t": 87.7, "descricao": "Heruvi segue no loop de cleanse magic contra corruption/UA que voltam na hora, em vez de se curar ou usar divine shield, e morre aos 90.3."},
+ "erros": [
+  {"t": 59.0, "quem": "Heruvi", "fez": "cleanse e cleanse magic em loop de 59.0 a 87.7 contra corruption/UA reaplicados", "devia": "curar a si mesmo (holy light/flash of light) e dispelar só o essencial", "porque": "o warlock reaplica dots instantâneo e dispelar UA dá silence e dano; o curador fez só 5958 de cura e morreu", "gravidade": "alta"},
+  {"t": 88.4, "quem": "Heruvi", "fez": "morreu sem usar divine shield (só divine protection aos 65.8)", "devia": "dar bubble quando passou a cair sob dots e o hunter, e curar dentro do bubble", "porque": "divine shield é o defensivo que salva o paladino de uma pressão de dano mágico e físico", "gravidade": "alta"},
+  {"t": 43.9, "quem": "Amnesianxxiv", "fez": "mind sear em loop (43.9, 47.9, 52.7, 58.0, 62.5...)", "devia": "usar mind flay/vampiric touch/silence no alvo certo ou curar o Heruvi", "porque": "mind sear é dano em área em volta do alvo e quase não faz nada em arena; precisava ajudar o curador sob pressão", "gravidade": "alta"},
+  {"t": 62.4, "quem": "Beteranii", "fez": "hunter's mark repetido (62.4, 74.7, 81.0 ×3)", "devia": "usar os globais em aimed/chimera/steady shot no alvo", "porque": "a marca já estava aplicada; refazer é global perdido no meio da pressão", "gravidade": "baixa"},
+  {"t": 101.7, "quem": "Beteranii", "fez": "aspect of the viper na fase do 3v1 contra o Ominousxii", "devia": "ficar em dragonhawk e terminar o warlock com o burst", "porque": "viper corta o dano bem no momento de fechar a luta", "gravidade": "baixa"},
+  {"t": 56.1, "quem": "Ominousxii", "fez": "curse of tongues e dots no time sem nenhum peel com o Heruvi silenciado e caindo", "devia": "usar fear/death coil no Beteranii ou spell lock no Pehdicouve para tirar a pressão do curador", "porque": "o dano em área dele não salvava o curador que estava sendo morto", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 44.6, "quem": "Ominous", "descricao": "pet spell lock no Heruvi abrindo a série de silences no curador."},
+  {"t": 91.5, "quem": "Beteranii", "descricao": "silencing shot no Amnesianxxiv aos 13%, que morre 2 s depois sem conseguir se curar."},
+  {"t": 71.1, "quem": "Pehdicouve", "descricao": "barkskin na hora em que levava dano, sem parar de curar."}
+ ],
+ "erros_da_rede": [
+  {"t": 56.1, "quem": "Beteranii", "acao": "volley → Heruvi (38%)", "porque": "volley é canal em área de pouco dano no alvo; aimed/chimera shot dava mais pressão."},
+  {"t": 79.2, "quem": "Beteranii", "acao": "hunter's mark → Heruvi (37%)", "porque": "reaplicar a marca já ativa é global perdido com o curador quase morto."}
+ ]}

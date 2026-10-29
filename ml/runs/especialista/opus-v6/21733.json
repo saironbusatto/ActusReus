@@ -1,0 +1,20 @@
+{"resumo": "A TSG matou Zebedeuix aos 55.9, mas o howl of terror de Ominousxxi tirou o warrior e o DK da troca para o curador, e os dois caíram sob DoTs até 69.6.",
+ "momento_decisivo": {"t": 57.4, "descricao": "Ominousxxi lança howl of terror em Celianeyii e Omasconii logo depois do charge e da gargoyle no curador; a ofensiva da TSG para e o warrior morre aos 63.7."},
+ "erros": [
+  {"t": 34.1, "quem": "Celianeyii", "fez": "heroic strike, slam e sunder armor na abertura; mortal strike só aos 46.8", "devia": "abrir com mortal strike no rogue e manter o efeito", "porque": "sem o MS o xamã curou o rogue livremente por 15 s", "gravidade": "media"},
+  {"t": 49.2, "quem": "Kwongwegaiv", "fez": "cleanse spirit disease ×2 até 52.9 com Zebedeuix caindo", "devia": "healing wave/riptide e nature's swiftness no rogue", "porque": "o DK reaplica doenças na hora; o rogue morreu aos 55.9 sob MS e execute", "gravidade": "alta"},
+  {"t": 48.4, "quem": "Heruvii", "fez": "divine sacrifice e cancelou em seguida", "devia": "curar o warrior ou o DK", "porque": "gastou o cooldown sem proteger ninguém e perdeu GCDs", "gravidade": "media"},
+  {"t": 43.3, "quem": "Omasconii", "fez": "pvp trinket e every man for himself num fear a 60%", "devia": "guardar o trinket para o howl/CC da janela decisiva", "porque": "no howl of terror de 57.4 o DK ficou preso sem saída", "gravidade": "media"},
+  {"t": 41.1, "quem": "Zebedeuix", "fez": "vanish logo após o kidney e voltou com hemorrhage, sem abrir do stealth", "devia": "usar o vanish para resetar e sair do warrior e do DK, ou abrir com cheap shot/garrote", "porque": "o vanish foi gasto e o rogue morreu aos 55.9 sem defensivos", "gravidade": "media"},
+  {"t": 32.7, "quem": "Omasconii", "fez": "death and decay (32.7, 50.2, 65.7)", "devia": "icy touch/plague strike/death strike no alvo", "porque": "AoE de runas em 3v3 gasta recurso sem pressão real", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 57.4, "quem": "Ominousxxi", "descricao": "howl of terror nos dois atacantes na hora da troca para o curador"},
+  {"t": 45.4, "quem": "Omasconii", "descricao": "icebound fortitude a 41%"},
+  {"t": 61.6, "quem": "Ominousxxi", "descricao": "demonic circle: teleport para sair do warrior"}
+ ],
+ "erros_da_rede": [
+  {"t": 39.3, "quem": "Celianeyii", "acao": "sunder armor", "porque": "debuff de PvE gastando GCD no lugar de mortal strike"},
+  {"t": 58.9, "quem": "Celianeyii", "acao": "heroic strike em Kwongwegaiv", "porque": "gasta raiva sem efeito; no curador pedia mortal strike"},
+  {"t": 34.7, "quem": "Kwongwegaiv", "acao": "call of the elements", "porque": "rebaixa os totens já em combate em vez de curar o rogue sob charge"}
+ ]}

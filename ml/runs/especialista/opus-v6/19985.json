@@ -1,0 +1,20 @@
+{"resumo": "O shadowfury do Ominousdesix forçou dois trinkets do TSG, mas o Celianeyiv deu bladestorm no Pehdibalii, e o Kwongwegaxx gastou os GCDs em purge, cleanse disease e lifeblood em vez de curar. O druida morreu aos 46.1 e o shaman aos 47.1.",
+ "momento_decisivo": {"t": 40.5, "descricao": "Celianeyiv dá bladestorm em cima do Pehdibalii com o DK ajudando (pestilence, empower rune weapon); o Kwongwegaxx responde com cleanse spirit disease e purge em vez de cura e o druida cai de 27% para morto."},
+ "erros": [
+  {"t": 41.6, "quem": "Kwongwegaxx", "fez": "cleanse spirit disease três vezes (41.6, 43.5, 44.6) com o druida caindo para 27%", "devia": "nature's swiftness + healing wave, riptide e lesser healing wave no Pehdibalii", "porque": "doença de DK é dano pequeno; o bladestorm e o cleave estavam matando o druida e a cura total do shaman na luta foi 4700", "gravidade": "alta"},
+  {"t": 38.2, "quem": "Kwongwegaxx", "fez": "purge no Heruix e no Omasconiv (38.2, 39.4, 46.5)", "devia": "manter riptide/earth shield no alvo do warrior e pôr totens de peel (earthbind)", "porque": "o warrior estava solto no time e purge não reduz a pressão; foi tempo de GCD tirado da cura", "gravidade": "media"},
+  {"t": 35.9, "quem": "Ominousdesix", "fez": "pet seduction no Omasconiv (35.9-38.4)", "devia": "seduction no Heruix (healer, já sem trinket) ou fear no Celianeyiv antes do bladestorm", "porque": "o DK não era a ameaça principal; deixar o healer livre e o warrior sem controle abriu caminho para o kill", "gravidade": "media"},
+  {"t": 32.3, "quem": "Pehdibalii", "fez": "starfall e force of nature antes do contato (32.3, 35.0)", "devia": "guardar starfall e treants para quando o shadowfury prendesse os três", "porque": "o shadowfury aos 35.2 era a janela de burst; os cooldowns já tinham ido no vazio", "gravidade": "media"},
+  {"t": 44.8, "quem": "Pehdibalii", "fez": "cyclone com 27% enquanto o warrior batia nele", "devia": "fugir com nature's grasp/typhoon ou se curar (sair de moonkin, regrowth/HoTs)", "porque": "cast de cyclone com 27% sob cleave e heroic strike não salva o druida; morreu 1,3 s depois", "gravidade": "media"},
+  {"t": 35.2, "quem": "Heruix", "fez": "every man for himself no shadowfury com 88%", "devia": "aguentar o stun de 3 s com vida alta e guardar o trinket", "porque": "ficou sem trinket para a seduction ou o fear seguinte; tomou outro stun aos 38.7", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 35.2, "quem": "Ominousdesix", "descricao": "shadowfury pegando os três do TSG e forçando o trinket do Heruix e do Omasconiv"},
+  {"t": 40.5, "quem": "Celianeyiv", "descricao": "bladestorm no druida enquanto o healer inimigo estava ocupado, imune a controle durante o burst"},
+  {"t": 43.5, "quem": "Omasconiv", "descricao": "icebound fortitude com 43% e logo depois empower rune weapon para emendar a pressão"}
+ ],
+ "erros_da_rede": [
+  {"t": 41.6, "quem": "Kwongwegaxx", "acao": "cleanse spirit disease on party", "porque": "limpou doença enquanto o druida morria; a prioridade era cura direta"},
+  {"t": 38.2, "quem": "Kwongwegaxx", "acao": "purge → Heruix", "porque": "dispel ofensivo no paladino com o warrior solto batendo no time"},
+  {"t": 32.3, "quem": "Pehdibalii", "acao": "starfall → Celianeyiv", "porque": "cooldown de dano gasto antes de chegar ao alcance e antes da janela do shadowfury"}
+ ]}

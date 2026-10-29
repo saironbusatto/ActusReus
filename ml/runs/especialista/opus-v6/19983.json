@@ -1,0 +1,20 @@
+{"resumo": "Luta longa entre dois LSD. Kwongwegaxix curou 201k e segurou o time. Kwongwegaxxv curou pouco, gastou GCDs em purge e cleanse e foi o primeiro a cair (227 s), deixando Pehdibalv e Ominousdesxi sem cura.",
+ "momento_decisivo": {"t": 205.5, "descricao": "Kwongwegaxxv faz três cleanse spirit curse seguidos (205.5-209.8) e depois purge (212.0, 219.7, 225.2), sem se curar, enquanto Ominousdesvi o pressiona com curse of the elements e drain soul. O healer morre aos 227.1 s e o time perde a sustentação."},
+ "erros": [
+  {"t": 98.9, "quem": "Kwongwegaxxv", "fez": "purge 4 vezes seguidas (98.9-109.0) e cleanse spirit curse repetido a luta inteira", "devia": "priorizar riptide, healing wave e chain heal e usar purge só em buff importante (innervate, barkskin)", "porque": "o healer do LSD IV curou só 38k em 227 s. Os curses dos locks voltavam em 1 GCD", "gravidade": "alta"},
+  {"t": 105.9, "quem": "Pehdibalv", "fez": "channel de hurricane várias vezes (105.9, 135.2, 142.3, 153.4, 207.6, 212.0)", "devia": "usar starfire, wrath, moonfire e insect swarm no alvo de kill, ou cyclone no healer", "porque": "hurricane faz pouco dano em arena, quebra fácil e prende o druid no channel sem pressão real", "gravidade": "media"},
+  {"t": 243.3, "quem": "Pehdicouv", "fez": "entangling roots em Pehdibalv (243.3, 280.2), um caster", "devia": "cyclone no healer ou dano no alvo", "porque": "root não impede casters de lançar feitiços. Contra um moonkin é GCD quase perdido", "gravidade": "media"},
+  {"t": 277.3, "quem": "Pehdibalv", "fez": "entangling roots em Pehdicouv e Ominousdesvi, casters (277.3, 286.8)", "devia": "cyclone em Kwongwegaxix (healer) ou se curar, já que estava abaixo de 60%", "porque": "root em caster não tira ninguém da luta, e Pehdibalv morreu aos 293.5 s sem healer", "gravidade": "media"},
+  {"t": 43.8, "quem": "Ominousdesvi", "fez": "demonic circle: summon 3 vezes antes do contato (43.8-53.2)", "devia": "pôr o círculo uma vez em posição boa e gastar o resto da preparação em soul shard e healthstone", "porque": "cada summon substitui o anterior. São GCDs sem ganho, e o healthstone só foi criado aos 179 s", "gravidade": "baixa"},
+  {"t": 62.6, "quem": "Pehdibalv", "fez": "starfall logo depois dos portões, sem ninguém controlado nem em alcance", "devia": "guardar o starfall para quando o time inimigo estivesse junto e sem defensivos", "porque": "o starfall tem cooldown longo e foi gasto antes de qualquer janela", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 139.6, "quem": "Ominousdesvi", "descricao": "shadowfury pegando os três inimigos e forçando os trinkets de Pehdibalv e Ominousdesxi"},
+  {"t": 168.7, "quem": "Kwongwegaxix", "descricao": "sustentação constante com riptide e healing wave, fechando a luta com 201k de cura"},
+  {"t": 205.5, "quem": "Pehdicouv", "descricao": "innervate no momento de pressão em mana, mantendo o 3v3 longo"}
+ ],
+ "erros_da_rede": [
+  {"t": 93.2, "quem": "Ominousdesvi", "acao": "pet autocast setup", "porque": "configuração do pet em pleno combate, com Kwongwegaxxv em stun. GCD perdido"},
+  {"t": 98.9, "quem": "Pehdicouv", "acao": "nature's grasp", "porque": "o nature's grasp prende quem ataca corpo a corpo, e o time inimigo eram três casters. Não pega ninguém"},
+  {"t": 170.7, "quem": "Ominousdesvi", "acao": "life tap", "porque": "life tap em sequência (168.7, 170.7) troca vida por mana no meio da luta, sem precisar de mana"}
+ ]}

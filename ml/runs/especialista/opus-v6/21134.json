@@ -1,0 +1,19 @@
+{"resumo": "O felhunter do Ominousx silenciou e o time deu fear no Kwongwegaxxv sem parar, e a cura do LSD não acompanhou os DoTs; o Pehdibalv, sem defensivo nem cura própria, caiu aos 93.6 e o Ominousdesxi aos 98.7.",
+ "momento_decisivo": {"t": 84.8, "descricao": "Spell lock do Ominousx pegou o Pehdibalv com 26%, e o Kwongwegaxxv vinha preso em fear e silence; sem cura de ninguém, o druida chegou a 19% no silence do Amnesianxxi (91.3) e morreu."},
+ "erros": [
+  {"t": 42.8, "quem": "Kwongwegaxxv", "fez": "levou fear várias vezes (42.8, 54.9, 59.1, 78.8) e não plantou tremor totem", "devia": "tremor totem logo no início contra dois warlocks e um priest", "porque": "Era o único healer do time; cada fear tirou segundos de cura e o deixou abaixo de 20% duas vezes", "gravidade": "alta"},
+  {"t": 54.6, "quem": "Kwongwegaxxv", "fez": "purge três vezes seguidas até 57.3", "devia": "curar ou se esconder atrás do pilar, longe do felhunter", "porque": "Logo depois ele estava a 67% e depois a 50%, silenciado; GCD em purge num momento de pressão", "gravidade": "media"},
+  {"t": 91.0, "quem": "Kwongwegaxxv", "fez": "flametongue totem com o Pehdibalv a 19% de vida", "devia": "riptide/healing wave no druida, ou nature's swiftness se tivesse", "porque": "O druida morreu 2.6 s depois; um totem de dano não tinha utilidade nenhuma ali", "gravidade": "alta"},
+  {"t": 50.6, "quem": "Ominousdesxi", "fez": "shoot (varinha) em vários momentos (50.6, 67.3, 69.0, 74.0)", "devia": "castar fear no healer, haunt/UA/immolate ou curse no alvo de kill", "porque": "Warlock com 13.5k de dano em 98 s; GCD de varinha não faz pressão", "gravidade": "media"},
+  {"t": 60.9, "quem": "Pehdibalv", "fez": "barkskin com 71%, quando ainda não estava em perigo", "devia": "guardar o barkskin para quando caísse para menos de 40% sob os DoTs", "porque": "Aos 84.8 e 91.3, com 26% e 19%, ele não tinha nenhum defensivo e morreu", "gravidade": "media"},
+  {"t": 52.4, "quem": "Amnesianxxi", "fez": "mind sear como dano principal (52.4, 57.4, 72.2)", "devia": "mind blast, mind flay, SW:P e VT num alvo só", "porque": "Mind Sear é AoE em volta do alvo; num 3v3 espalhado rende pouco dano no alvo que importa", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 61.0, "quem": "Ominousx", "descricao": "Escape artist para sair do entangling roots e voltar a castar."},
+  {"t": 64.1, "quem": "Ominousx", "descricao": "Spell lock no Kwongwegaxxv com 50%: o healer foi a 21% sem poder curar."},
+  {"t": 91.3, "quem": "Amnesianxxi", "descricao": "Silence no Pehdibalv a 19%, sem deixar ele se curar, e o kill saiu."}
+ ],
+ "erros_da_rede": [
+  {"t": 49.2, "quem": "Amnesianxxi", "acao": "shadow word: death no Pehdibalv", "porque": "SW:D num alvo com quase toda a vida dá pouco retorno e machuca o próprio priest; é golpe de finalização."},
+  {"t": 55.2, "quem": "Ominousx", "acao": "toggle pet spell", "porque": "GCD em configuração do pet no meio da luta, sem efeito nenhum."}
+ ]}

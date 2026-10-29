@@ -1,0 +1,90 @@
+{
+ "resumo": "O Zebedeuii ficou abaixo de 35% por mais de 40 s sob DoTs e raízes, voltou a atacar depois do Vanish e o Amnesianii passou a janela batendo (Holy Fire/Smite) em vez de curar. O LSD IV converteu o 3v2 depois.",
+ "momento_decisivo": {
+  "t": 88.3,
+  "descricao": "Com o Zebedeuii a ~20% e enraizado, o Amnesianii usa Holy Fire (88.3) e Smite (93.3, 97.0) em vez de curar; o rogue morre aos 105.7 no Drain Soul."
+ },
+ "momento_aceitos": [
+  70.9,
+  88.3,
+  93.3,
+  97.0
+ ],
+ "erros": [
+  {
+   "t": 88.3,
+   "quem": "Amnesianii",
+   "fez": "Holy Fire (88.3) e Smite (93.3, 97.0) com o Zebedeuii entre 20% e 8%",
+   "devia": "Flash Heal/Penance/Pain Suppression no rogue",
+   "porque": "o rogue estava enraizado e com DoTs; o healer de disciplina era a única cura e não curou na janela da morte",
+   "gravidade": "alta"
+  },
+  {
+   "t": 70.9,
+   "quem": "Zebedeuii",
+   "fez": "Hemorrhage logo após o Vanish (69.7), com cerca de 34%",
+   "devia": "ficar em stealth e esperar a cura",
+   "porque": "quebrou a reinicialização e ficou exposto aos DoTs e raízes até morrer",
+   "gravidade": "alta"
+  },
+  {
+   "t": 92.4,
+   "quem": "Zebedeuii",
+   "fez": "Kidney Shot no Pehdibalv a 87% com o próprio rogue em vida baixa",
+   "devia": "sair de alcance/defender-se e deixar o mage controlar",
+   "porque": "gastou o stun sem ameaça de morte; tomou root (101.9) e morreu",
+   "gravidade": "media"
+  },
+  {
+   "t": 85.2,
+   "quem": "Ominousdesxi",
+   "fez": "trinket no Deep Freeze a 84%",
+   "devia": "esperar o stun acabar, já que não havia burst nele",
+   "porque": "o trinket ficou indisponível para um CC de verdade",
+   "gravidade": "media"
+  },
+  {
+   "t": 92.4,
+   "quem": "Pehdibalv",
+   "fez": "trinket no Kidney Shot com 87% de vida",
+   "devia": "aguentar o stun, já que ninguém tinha burst nele",
+   "porque": "sem ameaça, o trinket foi desperdiçado",
+   "gravidade": "media"
+  },
+  {
+   "t": 150.3,
+   "quem": "Heshoiv",
+   "fez": "Arcane Intellect e drink (150.3-150.4) no 2v3",
+   "devia": "usar o tempo para pressionar/controlar o healer inimigo",
+   "porque": "no 2v3 o mage precisava gerar janela; bebida no meio do combate entrega a iniciativa",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 38.9,
+   "quem": "Zebedeuii",
+   "descricao": "Blind no healer e Cheap Shot (40.4) no druida na abertura."
+  },
+  {
+   "t": 65.8,
+   "quem": "Heshoiv",
+   "descricao": "Deep Freeze + Counterspell no healer + Cold Snap: a melhor janela do RMP (Kwong a 36%)."
+  },
+  {
+   "t": 52.6,
+   "quem": "Pehdibalv",
+   "descricao": "Entangling Roots e Abolish Poison para segurar o rogue."
+  },
+  {
+   "t": 105.5,
+   "quem": "Ominousdesxi",
+   "descricao": "Drain Soul para finalizar o rogue."
+  },
+  {
+   "t": 110.1,
+   "quem": "Kwongwegaxxv",
+   "descricao": "Mana Tide Totem para sustentar a luta longa."
+  }
+ ]
+}

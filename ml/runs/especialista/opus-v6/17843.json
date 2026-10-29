@@ -1,0 +1,17 @@
+{"resumo": "Zebedeuix mergulhou sozinho no mago e nos dois bruxos, gastou todos os defensivos em 2 s e morreu sem cura de verdade, porque Kwongwegaiv gastou os GCDs em purge e cleanse de maldição. Depois o shaman do RLS, sozinho e focado, caiu também.", 
+ "momento_decisivo": {"t": 47.3, "descricao": "Kwongwegaiv gasta 5 s em cleanse spirit curse ×3 e purge enquanto Zebedeuix cai de 74% para 42% sob mago e bruxo; o rogue fica sem cura e precisa queimar evasion/vanish/cloak juntos, e depois não tem mais nada."},
+ "erros": [
+  {"t": 42.1, "quem": "Zebedeuix", "fez": "shadowstep em Heshoxi com o mago de mirror image ativo e dois bruxos perto", "devia": "abrir no healer Kwongwegaxi ou esperar o CC do time antes de entrar", "porque": "levou death coil/fear na hora (42.4) e frost nova logo depois; ficou exposto sem ter controlado ninguém", "gravidade": "media"},
+  {"t": 44.3, "quem": "Kwongwegaiv", "fez": "wind shear em Heshoxi já silenciado pelo spell lock de 43.6", "devia": "guardar o wind shear para o próximo cast do mago ou do bruxo", "porque": "interromper alvo silenciado não faz nada e põe o interrupt em recarga", "gravidade": "media"},
+  {"t": 47.3, "quem": "Kwongwegaiv", "fez": "cleanse spirit curse ×3 e purge até 52.3 sem curar", "devia": "riptide/healing wave em Zebedeuix, que caiu de 74% para 42%", "porque": "a curse of the elements volta logo, porque são dois bruxos; a vida do rogue é que estava em jogo", "gravidade": "alta"},
+  {"t": 51.1, "quem": "Zebedeuix", "fez": "evasion, vanish (52.2) e cloak of shadows (53.5) em 2.4 s", "devia": "cloak primeiro contra o dano de feitiço e guardar o vanish para depois", "porque": "quem batia nele eram mago e bruxos; evasion não pega feitiço, e gastar tudo junto o deixou sem resposta até morrer aos 68.2", "gravidade": "alta"},
+  {"t": 69.5, "quem": "Kwongwegaiv", "fez": "purge, cleanse curse, wind shear e water shield entre 69.5 e 76.9 sob foco duplo", "devia": "curar a si mesmo (healing wave/riptide) e se afastar dos casters", "porque": "caiu aos 79.7; os GCDs de utilidade não seguravam a vida dele", "gravidade": "alta"},
+  {"t": 43.0, "quem": "Kwongwegaiv", "fez": "call of the elements de novo, já em combate", "devia": "usar o GCD para curar ou interromper", "porque": "os totens já tinham sido postos aos 34.9; foi um GCD perdido na abertura", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 42.1, "quem": "Ominousdesv", "descricao": "death coil e seduction do pet na hora em que o rogue mergulhou; tirou o rogue da abertura."},
+  {"t": 57.1, "quem": "Heshoxi", "descricao": "counterspell no healer Kwongwegaiv enquanto o rogue estava abaixo da metade."},
+  {"t": 90.2, "quem": "Ominousdesv", "descricao": "trinket no fear com 26% de vida e voltou logo ao chaos bolt."}],
+ "erros_da_rede": [
+  {"t": 44.3, "quem": "Kwongwegaiv", "acao": "wind shear em Heshoxi", "porque": "o alvo já estava silenciado pelo spell lock; o interrupt foi desperdiçado."},
+  {"t": 72.0, "quem": "Kwongwegaiv", "acao": "cleanse spirit curse on party", "porque": "estava sob foco duplo e caindo; tirar maldição que os bruxos reaplicam em 2 s não muda a luta, curar sim."},
+  {"t": 76.9, "quem": "Kwongwegaiv", "acao": "cleanse spirit curse on party", "porque": "a 3 s da morte, gastou o GCD em maldição em vez de se curar."}]}

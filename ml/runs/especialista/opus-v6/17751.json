@@ -1,0 +1,17 @@
+{"resumo": "Thunder IV matou Amnesianxxiv cedo com charge + bladestorm (47.3), mas não converteu o 3v2: o felhunter de Ominousxii manteve Heruxvi travado em silence e Celianeyxi gastou GCDs em cleave/sunder sem pressão real, até morrer aos 85.4.",
+ "momento_decisivo": {"t": 57.6, "descricao": "Ominousxii encaixa pet spell lock em Heruxvi (41%) no meio do 3v2; com o ciclo spell lock pet/próprio sem resposta (ninguém mata ou bloqueia o felhunter), o curandeiro do Thunder para de curar e o time perde a vantagem numérica."},
+ "erros": [
+  {"t": 38.4, "quem": "Amnesianxxiv", "fez": "remove shadowform para lançar power word: shield sob o charge do warrior", "devia": "manter shadowform e lançar o shield nela (PW:S é castável em shadowform)", "porque": "shadowform reduz 15% do dano físico e ele era o alvo do bladestorm logo em seguida; saiu e voltou (45.2) e saiu de novo (47.1), queimando GCDs e defesa", "gravidade": "media"},
+  {"t": 45.8, "quem": "Heruvi", "fez": "holy light ×3 (cast longo) enquanto Amnesianxxiv apanhava do warrior", "devia": "hand of protection em Amnesianxxiv", "porque": "o dano era todo físico (bladestorm/cleave/heroic strike); a BoP zerava a pressão do warrior e salvava o priest que morreu aos 47.3", "gravidade": "alta"},
+  {"t": 40.0, "quem": "Celianeyxi", "fez": "alternou cleave/heroic strike de 40.0 a 51.0 sem usar mortal strike (primeira só aos 63.4)", "devia": "mortal strike no alvo da kill e depois no curandeiro Heruvi", "porque": "sem o -50% de cura do MS, Heruvi segurou o 2v3 sozinho; heroic strike/cleave só queimam rage", "gravidade": "alta"},
+  {"t": 61.5, "quem": "Celianeyxi", "fez": "sunder armor repetido (61.5, 65.2, 68.8, 72.1) e thunder clap em sequência", "devia": "mortal strike/slam no alvo e intercept/hamstring no warlock", "porque": "sunder armor em arena é GCD desperdiçado; no 3v2 o warrior precisava matar ou travar alguém", "gravidade": "media"},
+  {"t": 83.1, "quem": "Heruxvi", "fez": "cleanse com Celianeyxi a 4% (83.5), depois holy light lento", "devia": "lay on hands ou flash of light/holy shock em Celianeyxi", "porque": "o warrior estava a um tick de morrer pelos DoTs; um dispel não salva, uma cura instantânea sim", "gravidade": "alta"},
+  {"t": 77.7, "quem": "Heruxvi", "fez": "divine sacrifice e cancelou 0.3 s depois", "devia": "guardar para o momento em que um aliado estivesse em perigo real", "porque": "cooldown queimado sem efeito útil enquanto o time ainda estava no 3v2", "gravidade": "baixa"},
+  {"t": 51.0, "quem": "Naminvi", "fez": "chain lightning repetido sendo travado pelo pet spell lock (51.1, 68.4, 73.0, 77.6)", "devia": "baixar grounding totem antes dos casts e/ou matar/controlar o felhunter", "porque": "grounding absorve o spell lock; casts longos sem proteção contra um felhunter ativo viram silence de graça", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 39.8, "quem": "Ominousxii", "descricao": "usa pet spell lock e spell lock de forma alternada em Heruxvi e Naminvi, mantendo o curandeiro inimigo travado durante quase todo o 3v2"},
+  {"t": 36.8, "quem": "Naminvi", "descricao": "heroism junto do charge + bladestorm de Celianeyxi, convertendo a abertura na morte de Amnesianxxiv"},
+  {"t": 46.6, "quem": "Heruxvi", "descricao": "every man for himself logo ao entrar em fear, voltando a curar rápido"}
+ ],
+ "erros_da_rede": []}

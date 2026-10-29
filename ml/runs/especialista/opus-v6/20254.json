@@ -1,0 +1,19 @@
+{"resumo": "O Wild II sobreviveu à abertura do LSD com dois deterrence do Beteraniv. Depois trancou o Kwongwegaxx com spell lock e matou Ominousdesix (kill shot aos 75.8) e Pehdibalii (78.6) em sequência, enquanto o shaman do LSD passava a luta purgando.",
+ "momento_decisivo": {"t": 68.4, "descricao": "Ominoustres usa pet spell lock no Kwongwegaxx no exato momento em que o shaman começava a curar. Com Pehdibalii a 34% e Ominousdesix sob pressão do Beteraniv, o LSD fica sem cura e perde os dois DPS em 10 s."},
+ "erros": [
+  {"t": 42.4, "quem": "Kwongwegaxx", "fez": "purge em loop (42.4 ×2, 52.4 ×2, 61.8, 73.0, 74.1) como principal ação do healer", "devia": "curar o time (riptide/healing wave) e usar grounding totem contra o spell lock do felhunter", "porque": "terminou com 16446 de cura e os dois parceiros morreram; os GCDs de purge saíram justo nas janelas de pressão", "gravidade": "alta"},
+  {"t": 77.4, "quem": "Pehdibalii", "fez": "entangling roots no Beteraniv com a vida quase no fim", "devia": "regrowth/rejuvenation em si mesmo, ou forma de urso para aguentar", "porque": "morreu 1 s depois, aos 78.6; root no hunter não para o dano a distância e o pet continua batendo", "gravidade": "alta"},
+  {"t": 66.6, "quem": "Pehdibalii", "fez": "entangling roots no Pehdicouii (healer) com 34%", "devia": "se curar ou cyclone no Pehdicouii para cortar a cura do Wild", "porque": "root num healer não impede cura; o druid gastou o GCD sem efeito estando na zona de kill", "gravidade": "media"},
+  {"t": 42.5, "quem": "Pehdibalii", "fez": "hurricane logo depois do shadowfury (41.0) que stunou os três inimigos", "devia": "burst em alvo único (starfire/moonfire) no Beteraniv ou cyclone no Pehdicouii durante o stun", "porque": "o shadowfury abriu janela de 3 s com o healer inimigo stunado; hurricane espalhou pouco dano e não ameaçou ninguém", "gravidade": "media"},
+  {"t": 49.5, "quem": "Ominousdesix", "fez": "curse of the elements no Beteraniv em deterrence, sem fear/death coil no Pehdicouii", "devia": "fear no Pehdicouii enquanto o hunter estava a 40-44% sem readiness", "porque": "Beteraniv chegou a 40% duas vezes; tirar o druid healer convertia a janela, mas o warlock nunca usou CC nele", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 48.0, "quem": "Beteraniv", "descricao": "deterrence com 40%, readiness e um segundo deterrence aos 53.2 com 44%: aguentou toda a abertura do LSD"},
+  {"t": 75.8, "quem": "Beteraniv", "descricao": "kill shot no Ominousdesix assim que ele entrou na faixa, abrindo a vantagem de 3x2"},
+  {"t": 44.3, "quem": "Ominoustres", "descricao": "pet spell lock alternando entre Pehdibalii e Kwongwegaxx (44.3, 53.5, 68.4, 78.3), sempre na hora de uma cura"}
+ ],
+ "erros_da_rede": [
+  {"t": 74.1, "quem": "Kwongwegaxx", "acao": "purge no Beteraniv", "porque": "Ominousdesix morreu 2 s depois e Pehdibalii estava baixo; o GCD tinha que ir em cura"},
+  {"t": 51.7, "quem": "Pehdicouii", "acao": "healing touch on party no Pehdibalii", "porque": "conjuração longa que fica exposta a interrupção e silence; com Beteraniv a 44% o certo era nourish/regrowth ou swiftmend no hunter"},
+  {"t": 69.6, "quem": "Beteraniv", "acao": "chimera shot no Kwongwegaxx", "porque": "Pehdibalii estava a 34% depois do silencing shot; espalhar o dano no healer em vez de terminar o druid atrasou o kill"}
+ ]}

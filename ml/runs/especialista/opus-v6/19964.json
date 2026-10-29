@@ -1,0 +1,16 @@
+{"resumo": "Luta longa entre dois times com rogue. Decidiu-se quando Zebedeuxii, já sem trinket, cloak nem vanish, foi derrubado enquanto Kwongwegaxii gastava GCDs em purge e cleanse de veneno. Sozinho, o shaman caiu sob o controle do rogue e do mago.",
+ "momento_decisivo": {"t": 137.0, "descricao": "Kwongwegaxii passa de 137.0 a 143.6 só em purge ×3, com Zebedeuxii vindo de 21% e sem cooldowns; o rogue não recebe cura antes do kidney de 146.1 e morre aos 151.1."},
+ "erros": [
+  {"t": 137.0, "quem": "Kwongwegaxii", "fez": "purge ×3 até 143.6 (e já tinha feito purge ×2 aos 131.4)", "devia": "riptide/healing wave em Zebedeuxii, que estava entre 21% e 24%", "porque": "o disc reaplica shield e renew na hora; tirar buff não ganhava a corrida, e o rogue morreu sem cura", "gravidade": "alta"},
+  {"t": 88.4, "quem": "Kwongwegaxii", "fez": "cleanse spirit poison repetido (88.4, 91.7, 95.0, 114.9 ×2, 126.3, 148.0)", "devia": "limpar só o wound/crippling na hora certa e gastar o resto em cura", "porque": "o rogue reaplica veneno a cada golpe; o shaman gastou dezenas de GCDs sem efeito duradouro", "gravidade": "media"},
+  {"t": 130.8, "quem": "Zebedeuxii", "fez": "shadow dance + cheap shot logo após trinket e cloak, com 21% de vida", "devia": "usar o cloak para sair, se recuperar com o healer e voltar depois", "porque": "ficou no melee sem defensivos; o kidney de 146.1 o pegou a 24% e ele morreu", "gravidade": "media"},
+  {"t": 121.0, "quem": "Amnesianix", "fez": "dispersion com 96% de vida", "devia": "guardar para quando fosse focado ou para sair de stun/CC com pouca vida", "porque": "o maior defensivo do shadow priest foi gasto sem ameaça e não estava pronto no fim, quando ele foi a 33%", "gravidade": "media"},
+  {"t": 59.6, "quem": "Amnesianix", "fez": "sai e volta do shadowform várias vezes (59.6/65.4, 125.2/126.8, 143.8, 173.1)", "devia": "ficar em shadowform e curar só em emergência real com o shield", "porque": "cada troca custa GCD e mana e tira o dano e a redução de dano da forma", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 42.9, "quem": "Amnesianvii", "descricao": "psychic scream no rogue Zebedeuxii, que abriu em cima dele."},
+  {"t": 60.7, "quem": "Heshovi", "descricao": "deep freeze no healer Kwongwegaxii, cold snap e icy veins logo depois para um burst em Zebedeuxii."},
+  {"t": 86.4, "quem": "Zebedeuvi", "descricao": "cloak of shadows com 11% de vida, sobrevivendo ao dano do shadow priest."}],
+ "erros_da_rede": [
+  {"t": 78.9, "quem": "Zebedeuxii", "acao": "kick em Zebedeuvi", "porque": "kick num rogue, que não lança feitiço; o interrupt foi desperdiçado."},
+  {"t": 53.0, "quem": "Kwongwegaxii", "acao": "purge em Zebedeuvi", "porque": "o rogue quase não tem buff mágico para tirar; o GCD deveria ser cura."},
+  {"t": 141.4, "quem": "Kwongwegaxii", "acao": "cleanse spirit poison", "porque": "com o parceiro abaixo de 25%, limpar veneno que volta no próximo golpe não ajuda."}]}

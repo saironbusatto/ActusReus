@@ -1,0 +1,17 @@
+{"resumo": "O LSD levou Pehdicouve a 22% na abertura e trocou de alvo antes de matar. Depois Kwongwegaxx gastou a luta em purge e ficou preso em fears sem tremor, e o Wild matou o healer e em seguida Ominousdesix.",
+ "momento_decisivo": {"t": 44.4, "descricao": "Com Pehdicouve a 22%, stunado e já sem trinket, Ominousdesix troca para Ominous (immolate) e Pehdibalii vai para caster form/entangling roots; o druida se cura e a vantagem do LSD acaba."},
+ "erros": [
+  {"t": 44.4, "quem": "Ominousdesix", "fez": "immolate trocando o alvo para Ominous", "devia": "conflagrate/chaos bolt em Pehdicouve, a 22% e stunado", "porque": "o healer inimigo já tinha gasto o trinket aos 43.1; era a janela de morte e o bruxo a largou", "gravidade": "alta"},
+  {"t": 44.4, "quem": "Pehdibalii", "fez": "caster form e entangling roots com Pehdicouve a 22%", "devia": "ficar em moonkin e terminar o druida com starfire/wrath/moonfire", "porque": "roots não mata ninguém; a pressão caiu e o healer saiu da zona de morte", "gravidade": "alta"},
+  {"t": 60.3, "quem": "Kwongwegaxx", "fez": "purge ×2 até 71.8 em Beteranii (e purge em 38.0, 42.9, 52.5, 75.6, 82.3)", "devia": "curar o time e se manter fora do alcance do bruxo", "porque": "o healer fez 0 de dano e pouca cura; tirar buff do hunter não mudava nada enquanto ele mesmo apanhava", "gravidade": "alta"},
+  {"t": 61.1, "quem": "Kwongwegaxx", "fez": "jogou contra dois bruxos sem tremor totem (fear aos 61.1 e 76.7)", "devia": "pôr o tremor totem quando Ominous começou a dar fear", "porque": "os fears seguidos o tiraram da cura e ele morreu aos 83.7 sem reagir", "gravidade": "alta"},
+  {"t": 39.1, "quem": "Pehdicouve", "fez": "caster form + entangling roots + remove curse com 42% e barkskin ativo", "devia": "se curar (regrowth/swiftmend/nature's swiftness)", "porque": "caiu para 23% em 4 s e precisou do trinket", "gravidade": "media"},
+  {"t": 68.9, "quem": "Pehdibalii", "fez": "remove curse ×2 até 70.0 e de novo aos 77.0 e 79.0", "devia": "curar ou proteger Kwongwegaxx, que estava sendo feareado e levando dano", "porque": "maldição de bruxo volta na hora; o healer do time morreu aos 83.7", "gravidade": "media"}],
+ "acertos": [
+  {"t": 43.1, "quem": "Pehdicouve", "descricao": "trinket no stun com 23% de vida e regrowth logo depois; sobreviveu à janela de morte."},
+  {"t": 56.3, "quem": "Beteranii", "descricao": "readiness, rapid fire e kill command logo após silencing shot no druida inimigo."},
+  {"t": 66.8, "quem": "Beteranii", "descricao": "deterrence com 42% de vida para segurar a pressão."}],
+ "erros_da_rede": [
+  {"t": 41.7, "quem": "Kwongwegaxx", "acao": "purge em Ominous", "porque": "o parceiro estava em CC e o time inimigo, bem; o GCD de purge num bruxo valeu pouco."},
+  {"t": 51.4, "quem": "Kwongwegaxx", "acao": "purge em Beteranii", "porque": "purge de novo no hunter enquanto a cura do time era mais urgente."},
+  {"t": 81.9, "quem": "Ominousdesix", "acao": "life tap", "porque": "com o próprio healer a 2 s da morte, gastou vida e GCD em mana em vez de ajudar a defendê-lo."}]}

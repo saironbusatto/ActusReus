@@ -1,0 +1,19 @@
+{"resumo": "A Shadowplay II trancou o curador Kwongwegaxxv com spell locks e fears sem resposta de tremor totem, e matou Pehdibalv com pressão de DoTs enquanto o druida gastava GCDs em roots.",
+ "momento_decisivo": {"t": 46.4, "descricao": "Ominousx dá spell lock em Kwongwegaxxv e emenda fears (49.6/54.8): o xamã curador passa a luta trancado e Pehdibalv fica sem cura."},
+ "erros": [
+  {"t": 51.4, "quem": "Kwongwegaxxv", "fez": "ficou em fear repetidas vezes (51.4, 56.1) sem tremor totem", "devia": "baixar tremor totem contra time com warlock e priest", "porque": "tremor quebra fear a cada pulso; era o counter direto do CC que o trancava", "gravidade": "alta"},
+  {"t": 59.4, "quem": "Kwongwegaxxv", "fez": "purge em sequência (59.4, 60.5, 66.1) com Pehdibalv caindo para 62% e 57%", "devia": "curar Pehdibalv (riptide/healing wave) e só purgar com o parceiro estável", "porque": "o druida estava sob DoTs de dois warlocks e morreu aos 78.7", "gravidade": "media"},
+  {"t": 45.8, "quem": "Pehdibalv", "fez": "entangling roots em cadeia (45.8, 52.1, 58.8, 62.1, 68.5) contra casters", "devia": "dano de moonkin (starfire/wrath) ou cyclone no curador", "porque": "roots não impede caster de lançar; cada GCD foi perdido e ainda foi interrompido pelo spell lock", "gravidade": "media"},
+  {"t": 42.3, "quem": "Pehdibalv", "fez": "hurricane em Heruiv logo após o shadowfury e cancelou aos 44.0", "devia": "explodir o alvo atordoado com dano direto (starfire/starsurge de instantes como moonfire) dentro do stun", "porque": "o shadowfury de Ominousdesxi (41.4) prendeu os dois inimigos e nada foi convertido em dano", "gravidade": "media"},
+  {"t": 43.6, "quem": "Ominousdesxi", "fez": "corruption espalhada em vários alvos (Heruiv, Amnesianxxi) durante toda a luta", "devia": "concentrar UA/haunt/corruption em um alvo junto do druida", "porque": "Heruiv limpava os DoTs a cada poucos segundos; pressão dividida não matou ninguém", "gravidade": "media"},
+  {"t": 75.2, "quem": "Pehdibalv", "fez": "cyclone em Amnesianxxi segundos antes de morrer", "devia": "se curar (regrowth/rejuvenation) ou se afastar dos casters", "porque": "estava sob DoTs e sem barkskin (usado aos 60.4); morreu 3 s depois", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 45.9, "quem": "Ominousx", "descricao": "spell lock em Pehdibalv cortando o roots e, aos 46.4, no curador inimigo"},
+  {"t": 46.3, "quem": "Heruiv", "descricao": "cleanse constante dos DoTs e debuffs, mantendo o time de pé"},
+  {"t": 74.0, "quem": "Amnesianxxi", "descricao": "shadowfiend para recuperar mana numa luta longa"}
+ ],
+ "erros_da_rede": [
+  {"t": 72.1, "quem": "Amnesianxxi", "acao": "inner focus", "porque": "o cooldown foi gasto antes de um dispel magic, sem ganho real"},
+  {"t": 86.7, "quem": "Ominousx", "acao": "curse of agony em Kwongwegaxxv", "porque": "agony tem dano crescente e lento; com o alvo baixo pedia dano imediato (haunt/shadow bolt/drain soul)"}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "O TSG IV aguentou o fear chain e o howl of terror do Ominoustres, depois colou Celianeyvi e Omasconvi no Pehdicouii. O mind freeze cortou a cura do druid e o execute o matou aos 74.9; sem healer, Ominoustres e Beteraniv caíram aos 85.7.",
+ "momento_decisivo": {"t": 66.4, "descricao": "Celianeyvi troca para o Pehdicouii com slam (66.2), e o Omasconvi usa mind freeze no healing touch do druid. Sem barkskin (já gasto aos 63.6) e sem peel, o Pehdicouii cai no execute aos 74.9."},
+ "erros": [
+  {"t": 66.3, "quem": "Pehdicouii", "fez": "healing touch conjurado com warrior e DK colados nele", "devia": "HoTs instantâneos (rejuv/lifebloom/swiftmend) e se afastar para o pilar", "porque": "conjuração longa no alcance do mind freeze; foi interrompida na hora e a escola de cura ficou trancada", "gravidade": "alta"},
+  {"t": 66.2, "quem": "Ominoustres", "fez": "UA e corruption on attacker enquanto o Pehdicouii era focado, sem fear/death coil no Celianeyvi", "devia": "fear ou death coil no Celianeyvi para tirar o warrior do druid", "porque": "o death coil foi gasto aos 49.3 e o fear voltou para o Heruxi; o healer morreu sem receber peel nenhum", "gravidade": "alta"},
+  {"t": 53.2, "quem": "Beteraniv", "fez": "raptor strike no Celianeyvi aos 53.2 e aos 62.0, ficando no corpo a corpo", "devia": "disengage e scatter shot/freezing trap no warrior para descascar o druid", "porque": "hunter no melee perde o dano à distância; o warrior ficou livre para trocar para o Pehdicouii", "gravidade": "media"},
+  {"t": 49.8, "quem": "Celianeyvi", "fez": "every man for himself no fear com 89%", "devia": "berserker rage (usado só aos 54.8) ou deixar o paladino dispelar", "porque": "warrior tem berserker rage para fear; o trinket foi queimado à toa e ele tomou o howl of terror logo depois", "gravidade": "media"},
+  {"t": 56.1, "quem": "Celianeyvi", "fez": "cleave, thunder clap e heroic strike em loop, mortal strike só aos 71.0", "devia": "mortal strike no alvo para aplicar o -50% de cura no druid", "porque": "o Pehdicouii curou 54877 de vida; sem MS, a pressão demorou 30 s a mais para virar kill", "gravidade": "media"},
+  {"t": 41.2, "quem": "Beteraniv", "fez": "rapid fire e kill command na abertura com o alvo no Heruxi, o paladino healer", "devia": "segurar o burst para quando o Heruxi estivesse em CC e o alvo fosse um DPS sem defensivo", "porque": "abrir burst num healer com bolha não matou nada; quando o Heruxi chegou a 3% aos 83.9, o rapid fire já tinha sido usado", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 53.4, "quem": "Ominoustres", "descricao": "howl of terror pegando Celianeyvi e Omasconvi juntos e forçando o trinket do DK"},
+  {"t": 66.4, "quem": "Omasconvi", "descricao": "mind freeze no healing touch do Pehdicouii na janela de troca, a jogada que abriu o kill"},
+  {"t": 83.9, "quem": "Beteraniv", "descricao": "silencing shot no Heruxi com 3%, forçando o divine shield em vez de deixar ele se curar"}
+ ],
+ "erros_da_rede": [
+  {"t": 73.4, "quem": "Pehdicouii", "acao": "healing touch on party com o alvo no Heruxi", "porque": "com o warrior colado e logo antes de morrer no execute, conjuração longa não sai; precisava de HoT instantâneo, barkskin ou fuga"},
+  {"t": 55.0, "quem": "Beteraniv", "acao": "mend pet", "porque": "no meio do go do TSG, um GCD canalizado no pet em vez de concussive/scatter no warrior que pressionava o druid"},
+  {"t": 63.1, "quem": "Ominoustres", "acao": "corruption on attacker no Heruxi", "porque": "o paladino limpava magia a toda hora (cleanse 61.9, 67.9); era o momento de fear no Celianeyvi, que trocava para o Pehdicouii"}
+ ]}

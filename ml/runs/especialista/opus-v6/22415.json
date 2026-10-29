@@ -1,0 +1,19 @@
+{"resumo": "O Zebedeuix quase morreu na abertura mas escapou com trinket e vanish; depois o kidney shot dos 60.6 no Kwongwegavii, que gastava globais em purge, matou o curador aos 68.5 e o Heshovii caiu sem cura.",
+ "momento_decisivo": {"t": 60.6, "descricao": "Kidney shot do Zebedeuix no Kwongwegavii a 62% enquanto o Ominousxxi fazia pressão; sem peel nem trinket, o shaman morre aos 68.5."},
+ "erros": [
+  {"t": 50.5, "quem": "Kwongwegavii", "fez": "purge ×3 (50.5-55.9) e purge aos 58.0 enquanto o rogue trocava para ele", "devia": "curar o Heshovii e a si mesmo e pôr earth shield/grounding", "porque": "o curador gastou globais em purge e entrou no kidney sem vantagem de vida", "gravidade": "alta"},
+  {"t": 67.3, "quem": "Kwongwegavii", "fez": "cleanse spirit poison logo antes de morrer", "devia": "healing wave/riptide em si mesmo", "porque": "morreu 1.2 s depois; tirar veneno não salvava a vida", "gravidade": "media"},
+  {"t": 60.6, "quem": "Ominousdes", "fez": "immolate e curse of the elements no Zebedeuix durante o kidney no próprio curador", "devia": "fear/death coil no Zebedeuix para fazer peel", "porque": "o warlock tinha o controle para tirar o rogue do curador e não usou", "gravidade": "media"},
+  {"t": 68.3, "quem": "Heshovii", "fez": "evocation a 21% com o curador morrendo", "devia": "frost nova/blink para fazer peel no rogue ou polymorph no Kwongwegaiv", "porque": "canalizar parado ali não ajudou o curador e foi silenciado logo depois (69.1)", "gravidade": "media"},
+  {"t": 39.5, "quem": "Heshovii", "fez": "shoot (de novo aos 40.2) com o rogue em cima", "devia": "frostbolt/frost nova ou polymorph no curador inimigo", "porque": "wand é o pior dano do mago e o global se perde enquanto o rogue abre", "gravidade": "baixa"},
+  {"t": 46.1, "quem": "Heshovii", "fez": "não usou polymorph no Kwongwegaiv quando o Zebedeuix estava a 17-29%", "devia": "polymorph/counterspell no curador inimigo para fechar o kill no rogue", "porque": "o rogue escapou com trinket e vanish porque o curador dele estava livre", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 45.9, "quem": "Heshovii", "descricao": "fire blast com stun no Zebedeuix a 29%, quase fechando o kill."},
+  {"t": 46.1, "quem": "Zebedeuix", "descricao": "trinket e vanish (46.4) a 17%, saindo vivo da abertura."},
+  {"t": 49.9, "quem": "Heshovii", "descricao": "ice block a 10% para sobreviver ao burst do rogue."}
+ ],
+ "erros_da_rede": [
+  {"t": 60.0, "quem": "Heshovii", "acao": "spellsteal → Zebedeuix (5%)", "porque": "spellsteal num rogue (que quase não tem buff mágico) logo antes do kidney no curador; global perdido."},
+  {"t": 74.5, "quem": "Ominousdes", "acao": "shadow bolt → Zebedeuix (14%)", "porque": "com o Heshovii a 21% e silenciado, devia fazer peel (fear/death coil) em vez de dano."}
+ ]}

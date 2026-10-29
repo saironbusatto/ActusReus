@@ -1,0 +1,20 @@
+{"resumo": "RLS I travou o curandeiro Heruiv com kidney shot + shadow dance/cheap shot enquanto os DoTs de Ominousv matavam Ominousx (80.1); Amnesianxxi, sem trinket e alternando shadowform, caiu no fear + kidney aos 116.7.",
+ "momento_decisivo": {"t": 72.7, "descricao": "Zebedeuvii dá kidney shot em Heruiv e depois shadow dance + cheap shot (75.8) com Ominousx a 16-21%; o curandeiro fica preso e o warlock morre aos 80.1."},
+ "erros": [
+  {"t": 77.2, "quem": "Amnesianxxi", "fez": "shadowform, shadowfiend e inner focus (77.2-79.7) com Ominousx a 11%", "devia": "flash heal/power word: shield em Ominousx", "porque": "Heruiv estava em stun e o priest era a única cura; o warlock morreu aos 80.1", "gravidade": "alta"},
+  {"t": 53.9, "quem": "Amnesianxxi", "fez": "entra e sai de shadowform várias vezes (53.9, 55.5, 65.2, 67.1, 68.7, 77.2, 81.3, 85.4...)", "devia": "escolher uma função: curar sem shadowform enquanto o time era pressionado", "porque": "cada troca é um GCD e mana; ele não curou direito nem causou dano", "gravidade": "media"},
+  {"t": 114.4, "quem": "Heruiv", "fez": "cleanse poison com Amnesianxxi a 19% em kidney shot", "devia": "hand of protection em Amnesianxxi ou holy shock/flash of light", "porque": "o dano final era físico do rogue; a BoP anulava o dano e o priest não teria morrido aos 116.7", "gravidade": "alta"},
+  {"t": 68.2, "quem": "Ominousx", "fez": "shoot e UA (68.2-71.3) caindo para 21% sob os DoTs de Ominousv", "devia": "healthstone/death coil e pedir dispel, ou LoS do warlock", "porque": "não fez nenhuma ação defensiva antes do trinket aos 16%", "gravidade": "media"},
+  {"t": 54.6, "quem": "Heruiv", "fez": "divine sacrifice e cancel com vida baixa, e divine shield aos 16% (56.2)", "devia": "usar divine protection/hand of protection antes de chegar a 16%", "porque": "o rogue já o focava desde 39.9; esperar até 16% obrigou a gastar o bubble, que depois faltou", "gravidade": "baixa"},
+  {"t": 118.5, "quem": "Heruiv", "fez": "shield of righteousness no 1v3", "devia": "se curar e buscar LoS", "porque": "golpe de tank sem efeito real para um paladino de cura sozinho", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 57.4, "quem": "Amnesianxxi", "descricao": "psychic horror e depois psychic scream em Zebedeuvii, tirando o rogue de cima de Heruiv a 16%"},
+  {"t": 75.5, "quem": "Zebedeuvii", "descricao": "shadow dance + cheap shot no curandeiro logo depois do kidney, segurando ele preso durante a kill do warlock"},
+  {"t": 108.6, "quem": "Ominousv", "descricao": "howl of terror pegando Heruiv e Amnesianxxi juntos, abrindo a kill do priest"}
+ ],
+ "erros_da_rede": [
+  {"t": 70.3, "quem": "Ominousx", "acao": "unstable affliction on attacker → Kwongwegaii", "porque": "a 21% de vida, mais um DoT não salva; era hora de defesa ou healthstone"},
+  {"t": 63.7, "quem": "Amnesianxxi", "acao": "shadow word: death → Kwongwegaii", "porque": "SW:D em curandeiro a 73% só dá dano de volta no priest, sem chance de matar"},
+  {"t": 106.3, "quem": "Heruiv", "acao": "judgement of light → Zebedeuvii", "porque": "Amnesianxxi estava a 50% e caindo sob o rogue; o GCD era para cura direta"}
+ ]}

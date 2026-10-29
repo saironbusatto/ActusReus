@@ -42,7 +42,7 @@ def cego(pastas: list[str]) -> None:
     junta (junta_fatos), então os fatos graves dela são do programa, e o que mede o modelo são os erros próprios:
     quantos por luta, quantos batem com a referência (achou), quantos não batem (ler à mão) e o viés de resultado
     (fração das críticas próprias em quem perdeu; a referência dá a régua)."""
-    n = "2" if "--cego2" in sys.argv else ""  # --cego2: o teste cego da V5 (referência de subagentes sem vencedor)
+    n = next((k for k in ("2", "3") if f"--cego{k}" in sys.argv), "")  # --cego2: V5; --cego3: V6 (subagentes sem vencedor)
     ids = json.loads((RUNS / f"teste_cego{n}_ids.json").read_text())
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}
     refs = {i: json.loads((RUNS / f"cego{n}-opus" / f"{i}.json").read_text()) for i in ids}
@@ -67,7 +67,7 @@ def cego(pastas: list[str]) -> None:
             if "erro" in a:
                 ns.append({"json": False})
                 continue
-            if "v4" in pasta or "v5" in pasta:  # V4+ não escreve os fatos: o código junta
+            if any(f"v{k}" in pasta for k in range(4, 10)):  # V4+ não escreve os fatos: o código junta
                 a = junta_fatos(a, erros_dos_fatos(l, []))
             erros = a.get("erros", [])
             graves = [f for f in verificador.achados(l) if f["tipo"] in GRAVES]
@@ -97,7 +97,7 @@ def cego(pastas: list[str]) -> None:
 
 
 def main() -> None:
-    if "--cego" in sys.argv or "--cego2" in sys.argv:
+    if any(x.startswith("--cego") for x in sys.argv):
         return cego([x for x in sys.argv[1:] if not x.startswith("--")])
     ids = json.loads((RUNS / "teste_ids.json").read_text())[:10]
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}

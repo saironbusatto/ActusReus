@@ -1,0 +1,16 @@
+{"resumo": "Luta longa de casters, decidida quando Pehdicouv, preso por vários shadowfury e sem cura firme, foi derrubado com o healer do LSD silenciado. Kwongwegaxix passou a luta em purge e wind shear e quase não curou.",
+ "momento_decisivo": {"t": 91.6, "descricao": "Kwongwegaxix gasta purge ×3 até 96.1 com Pehdicouv a 47% e o time sob seed/corruption; a cura não vem, e o druida chega a 32% e morre logo depois."},
+ "erros": [
+  {"t": 91.6, "quem": "Kwongwegaxix", "fez": "purge ×3 até 96.1", "devia": "curar Pehdicouv (riptide/healing wave), que estava a 47% depois do shadowfury", "porque": "o healer do LSD fez só 28k de cura na luta toda; tirar buffs não segura o alvo focado", "gravidade": "alta"},
+  {"t": 39.1, "quem": "Pehdicouv", "fez": "troca caster/moonkin várias vezes (39.1, 40.8, 43.6, 49.3, 68.0, 90.3)", "devia": "ficar numa forma e só sair para curar quando precisasse", "porque": "cada troca gasta GCD e mana, e o bot fica sem dano nem cura nesses instantes", "gravidade": "media"},
+  {"t": 75.6, "quem": "Ominousdesii", "fez": "seed of corruption ×4 até 81.7 (e de novo ×3 até 105.3)", "devia": "chaos bolt/immolate/conflagrate no alvo da vez", "porque": "seed é cast de 2 s e só explode depois de um limite de dano; num 3v3 espalhado é dano pior e mais fácil de interromper que o kit destruction", "gravidade": "media"},
+  {"t": 101.6, "quem": "Kwongwegaxix", "fez": "purge e wind shear entre 101.7 e 102.0 com Pehdicouv a 32-47%", "devia": "curar o druida antes do barkskin acabar", "porque": "Pehdicouv precisou de barkskin aos 103.7 e morreu aos 111.0 sem cura do shaman", "gravidade": "alta"},
+  {"t": 68.3, "quem": "Pehdicouv", "fez": "nourish com o mago livre na frente", "devia": "rejuvenation/regrowth instantâneos ou sair da linha de visão do mago", "porque": "levou counterspell aos 68.6 e ficou trancado na escola de natureza", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 34.4, "quem": "Ominousdesii", "descricao": "shadowfury pegando Pehdicouv e o healer Kwongwegaxix juntos logo na abertura."},
+  {"t": 91.2, "quem": "Heshoix", "descricao": "trinket no stun do shadowfury e voltou à ação a tempo."},
+  {"t": 105.0, "quem": "Heshoix", "descricao": "counterspell no healer Kwongwegaxix com Pehdicouv a 32%, criando a janela da morte do druida."}],
+ "erros_da_rede": [
+  {"t": 110.7, "quem": "Kwongwegaxix", "acao": "purge em Ominousdesii", "porque": "o parceiro morreu 0.3 s depois; era a hora de curar, não de tirar buff."},
+  {"t": 114.9, "quem": "Kwongwegaxix", "acao": "purge em Heshoix", "porque": "estava morrendo sozinho; o GCD tinha que ser cura em si mesmo."},
+  {"t": 85.6, "quem": "Kwongwegaxix", "acao": "water shield", "porque": "reaplicar o escudo com o time sob dots de dois bruxos tirou um GCD de cura."}]}

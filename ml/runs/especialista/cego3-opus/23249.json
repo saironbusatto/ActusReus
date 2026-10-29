@@ -1,0 +1,18 @@
+{"resumo": "Fireplay I abriu com shadowfury nos três, prendeu Ominousxi com dragon's breath e dots/living bombs e fechou com o burst de Ominousdes (conflagrate, chaos bolt, incinerate). Nesse tempo Heruv só dava cleanse. Depois o 3v2 foi desgaste até Heruv cair aos 118.9.",
+ "momento_decisivo": {"t": 65.5, "descricao": "Ominousdes solta conflagrate, chaos bolt (66.9) e incinerate (67.9) em Ominousxi, já cheio de dots e living bombs, enquanto Heruv gasta GCDs em cleanse; o warlock morre aos 71.8."},
+ "momento_aceitos": [33.5, 47.8, 65.5, 66.9, 67.9],
+ "erros": [
+  {"t": 66.6, "quem": "Heruv", "fez": "cleanse aos 66.6, 67.9 e 69.2 durante o burst de chaos bolt/incinerate em Ominousxi", "devia": "curar Ominousxi forte (holy shock, flash/holy light) e usar Divine Sacrifice/Hand of Sacrifice nele", "porque": "Os dots voltam no próximo GCD do warlock e do mage; o que matou Ominousxi foi o dano direto do burst, que só cura segurava", "gravidade": "alta"},
+  {"t": 33.6, "quem": "Heruv", "fez": "every man for himself no shadowfury com 93% de vida", "devia": "aguentar os 3 s de stun e guardar o EMFH para o momento da kill", "porque": "Logo em seguida ele levou outros stuns (35.2, 36.3) sem saída, e no burst dos 65-71 s não tinha como fugir de controle", "gravidade": "media"},
+  {"t": 58.7, "quem": "Amnesianxxii", "fez": "mind blast (também aos 63.1) e dispel enquanto Ominousxi era pressionado, sem psychic scream nem silence em Ominousdes", "devia": "silence/psychic scream no warlock antes do chaos bolt, ou shield e flash heal em Ominousxi", "porque": "O priest fez só 5707 de dano e 5393 de cura: não pressionou nem protegeu; um silence em Ominousdes aos 65 s cortava o burst", "gravidade": "media"},
+  {"t": 48.8, "quem": "Ominousxi", "fez": "death coil ofensivo em Heshovii a 76%", "devia": "guardar o death coil como peel/defesa para quando ele fosse o alvo", "porque": "Na janela de kill (65-71 s) ele estava sem o horror de 3 s para cortar o mago ou se curar, e morreu", "gravidade": "baixa"},
+  {"t": 61.6, "quem": "Ominousxi", "fez": "shoot (varinha) estando livre, sem silêncio", "devia": "lançar haunt/shadow bolt ou fear em Heshovii", "porque": "Varinha é dano desprezível; GCD gasto sem pressão nem controle", "gravidade": "baixa"},
+  {"t": 75.4, "quem": "Heruv", "fez": "cleanse ×3 até 79.2 e mais cleanses repetidos no 2v3", "devia": "se posicionar no pilar, curar e controlar com hammer of justice o mage", "porque": "Sem o warlock do time, os dots de dois inimigos voltavam sempre; os GCDs de cleanse não mudaram nada e ele morreu aos 118.9", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 33.5, "quem": "Ominousdes", "descricao": "Shadowfury pegando os três inimigos logo na abertura."},
+  {"t": 47.8, "quem": "Heshovii", "descricao": "Dragon's breath em Ominousxi e Heruv ao mesmo tempo, travando alvo e healer."},
+  {"t": 65.5, "quem": "Ominousdes", "descricao": "Conflagrate, chaos bolt e incinerate em sequência para fechar Ominousxi."},
+  {"t": 122.0, "quem": "Amnesianxxii", "descricao": "Psychic scream no mage em seguida ao frost nova, sobrevivendo ao 1v3."},
+  {"t": 79.4, "quem": "Kwongwegavii", "descricao": "Mana tide totem na luta longa, mantendo a cura até o fim."}
+ ]}

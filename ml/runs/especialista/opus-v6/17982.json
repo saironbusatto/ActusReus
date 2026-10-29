@@ -1,0 +1,20 @@
+{"resumo": "O Ominousix prendeu o Heruxii numa cadeia de fear e spell lock e o Celianeyvii, que despejava cleave e heroic strike sem mortal strike, ficou sem cura e caiu aos 100.9; depois o Heruxii também morreu.",
+ "momento_decisivo": {"t": 77.3, "descricao": "Fear do Ominousix no Heruxii logo depois do trinket dele (77.0): o healer do Thunder voltou a ficar fora da luta, e a cura que mantinha o warrior de pé acabou."},
+ "erros": [
+  {"t": 42.1, "quem": "Celianeyvii", "fez": "bladestorm 2 s depois do charge, sem alvo de kill definido e sem nenhum CC no healer inimigo", "devia": "guardar o bladestorm para quando um alvo estivesse baixo ou para quebrar CC na hora do kill", "porque": "Dano espalhado em três alvos com dois healers inteiros não mata ninguém e queima o maior cooldown dele", "gravidade": "media"},
+  {"t": 44.2, "quem": "Celianeyvii", "fez": "passou de 44 a 93 s dando heroic strike e cleave, sem usar mortal strike", "devia": "manter mortal strike no alvo de kill o tempo todo", "porque": "Contra dois healers o Mortal Strike (cura recebida -50%) é a condição para matar alguém; 127k de dano sem ele não matou ninguém", "gravidade": "alta"},
+  {"t": 53.1, "quem": "Celianeyvii", "fez": "trocou de alvo várias vezes: Amnesianxix, Ominousix (53.1), Heruii (59.5), Amnesianxix (71.9), Ominousix (74.8), Heruii (85.1)", "devia": "escolher um alvo, junto com o Naminii, e ficar nele até usar os cooldowns", "porque": "Trocar de alvo zera a pressão; os healers inimigos curavam o dano espalhado sem esforço", "gravidade": "alta"},
+  {"t": 48.7, "quem": "Naminii", "fez": "purge e chain lightning enquanto o Heruxii era feared várias vezes (48.7, 52.5, 75.0, 78.6)", "devia": "plantar tremor totem perto do Heruxii e usar wind shear no warlock quando ele castasse fear", "porque": "Contra warlock e priest o tremor totem é a defesa do time contra fear; sem ele o healer passou a luta em CC", "gravidade": "alta"},
+  {"t": 77.0, "quem": "Heruxii", "fez": "pvp trinket e em seguida tentou curar parado na frente do warlock, que deu fear de novo (77.3 e 78.6)", "devia": "depois do trinket, quebrar a linha de visão do Ominousix ou pedir wind shear/interrupt no fear", "porque": "Gastou o trinket e ficou feared de novo em segundos; o trinket não ganhou janela de cura nenhuma", "gravidade": "media"},
+  {"t": 49.3, "quem": "Amnesianxix", "fez": "ficou entrando e saindo de shadowform (49.3, 58.8, 69.2, 75.8, 83.0, 92.9, 99.5, 104.6)", "devia": "escolher um papel (curar ou causar dano) por janela, sem gastar GCD trocando de forma", "porque": "Cada troca é um GCD sem cura nem dano, e o time dele teve que segurar o warrior por mais de 60 s", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 77.3, "quem": "Ominousix", "descricao": "Fear no healer logo depois do trinket dele: aproveitou a falta do trinket."},
+  {"t": 95.0, "quem": "Amnesianxix", "descricao": "Psychic scream no Celianeyvii com 33% obrigou o warrior a usar o trinket, e ele morreu logo depois."},
+  {"t": 59.7, "quem": "Heruii", "descricao": "Divine protection quando o warrior entrou na faixa de execute: sobreviveu à pressão."}
+ ],
+ "erros_da_rede": [
+  {"t": 55.9, "quem": "Heruxii", "acao": "judgement of light no Ominousix", "porque": "Healer gastou GCD com julgamento enquanto o parceiro tomava dano e o fear ia voltar; devia curar ou se posicionar."},
+  {"t": 74.8, "quem": "Celianeyvii", "acao": "heroic strike trocando para o Ominousix", "porque": "Mais uma troca de alvo, saindo do Amnesianxix, e de novo sem mortal strike; nada morreu com isso."},
+  {"t": 81.6, "quem": "Celianeyvii", "acao": "heroic strike e cleave no Ominousix", "porque": "Rage gasta em ataques secundários num alvo que ia sair de alcance com o teleport (82.2), em vez de mortal strike."}
+ ]}

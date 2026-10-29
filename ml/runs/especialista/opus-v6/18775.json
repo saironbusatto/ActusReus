@@ -1,0 +1,20 @@
+{"resumo": "No espelho LSD, o shadowfury do Ominousdesix aos 88.5 deixou Pehdibalv com 15%, mas o LSD II não converteu: o Pehdibalii trocou de forma e soltou hurricane. O LSD IV se recuperou, matou Ominousdesix aos 105.9, depois Pehdibalii, que não tinha quem o curasse.",
+ "momento_decisivo": {"t": 90.0, "descricao": "Com Pehdibalv em fear com 15% e Ominousdesxi/Kwongwegaxxv stunados pelo shadowfury, o Pehdibalii gasta a janela com caster form, entangling roots e moonkin form (90.0-92.7) em vez de burst no druid. O kill escapa e o LSD II perde a única janela que teve."},
+ "erros": [
+  {"t": 90.0, "quem": "Pehdibalii", "fez": "caster form, entangling roots e moonkin form com Pehdibalv a 15% em fear", "devia": "ficar em moonkin e soltar starfire/wrath/moonfire no Pehdibalv durante o fear", "porque": "o healer inimigo estava preso no stun do shadowfury; três GCDs de troca de forma deixaram o druid inimigo vivo", "gravidade": "alta"},
+  {"t": 44.5, "quem": "Pehdibalii", "fez": "hurricane como principal ataque (44.5, 52.6, 65.5, 75.4, 81.5, 94.4, 99.5, 118.5)", "devia": "dano em alvo único (starfire/wrath/insect swarm) no alvo de kill", "porque": "hurricane é canalizado, tem dano baixo por alvo e quebra com qualquer pushback; espalhar dano não matou ninguém", "gravidade": "media"},
+  {"t": 99.5, "quem": "Pehdibalii", "fez": "hurricane enquanto Ominousdesix caía de 57% até morrer aos 105.9", "devia": "rejuvenation/regrowth/nourish no Ominousdesix e cyclone no Ominousdesxi", "porque": "druid híbrido com 1490 de cura na luta; o warlock aliado morreu sem nenhuma cura vinda dele", "gravidade": "alta"},
+  {"t": 102.4, "quem": "Kwongwegaxx", "fez": "mana tide, cleanse spirit e purge (99.4-105.4) enquanto Ominousdesix morria", "devia": "riptide + healing wave no Ominousdesix", "porque": "o healer não lançou cura nenhuma no parceiro nos 6 s antes da morte; mana não era o problema naquela hora", "gravidade": "alta"},
+  {"t": 48.0, "quem": "Kwongwegaxx", "fez": "purge em loop no Kwongwegaxxv e nos outros (48.0, 52.5, 63.6, 80.8, 88.3...)", "devia": "purgar só buffs que importam (water shield, NS) e usar o resto dos GCDs em cura ou em totem", "porque": "a quantidade de purges sem alvo de valor tirou GCDs de cura em todos os momentos de pressão", "gravidade": "media"},
+  {"t": 112.4, "quem": "Pehdibalii", "fez": "entangling roots no Pehdibalv com 24% de vida, logo depois do barkskin", "devia": "se curar (rejuv/regrowth/lifebloom) ou mudar para forma de urso", "porque": "root num healer não faz nada; o druid estava morrendo e morreu aos 129.9", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 88.7, "quem": "Ominousdesxi", "descricao": "trinket no stun do shadowfury com 37%, o que permitiu reagir ao go e ajudar a matar Ominousdesix"},
+  {"t": 108.4, "quem": "Pehdibalv", "descricao": "barkskin com 36% e nourish/regrowth em sequência, mantendo o time vivo depois da troca"},
+  {"t": 88.5, "quem": "Ominousdesix", "descricao": "shadowfury pegando três inimigos com Pehdibalv a 29% e Kwongwegaxxv a 28%, seguido de death coil: melhor janela do LSD II"}
+ ],
+ "erros_da_rede": [
+  {"t": 74.0, "quem": "Pehdibalii", "acao": "innervate com o alvo no Kwongwegaxxv", "porque": "innervate não serve num healer inimigo; num moonkin com mana sobrando no meio da luta foi um cooldown jogado fora"},
+  {"t": 94.2, "quem": "Kwongwegaxx", "acao": "purge em Kwongwegaxxv", "porque": "com Pehdibalv saindo do fear com 15%, o GCD tinha que ir em dano/wind shear no druid ou em cura para o time"},
+  {"t": 126.3, "quem": "Kwongwegaxx", "acao": "cleanse spirit com o alvo em Pehdibalv", "porque": "Pehdibalii estava com 26% e preso em root; precisava de riptide/healing wave nele, não de dispel de curse"}
+ ]}

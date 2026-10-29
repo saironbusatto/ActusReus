@@ -1,0 +1,20 @@
+{"resumo": "Zebedeuxvi abriu com Shadow Dance no Ominous e cegou o Pehdicouve no meio do treino; o warlock, sem trinket nem defensivo, caiu aos 57.5 e o druida, sozinho, foi o seguinte.",
+ "momento_decisivo": {"t": 48.4, "descricao": "Blind do Zebedeuxvi no Pehdicouve com o Ominous já em controle: tirou o único healer do Wild I justo na janela do kidney shot e do burst que mataram o warlock."},
+ "erros": [
+  {"t": 49.3, "quem": "Ominous", "fez": "escape artist logo depois do cheap shot, sem estar enraizado nem lento", "devia": "guardar o GCD e usar pvp trinket/death coil/fear no Zebedeuxvi quando quebrasse o stun", "porque": "Escape Artist só tira root e snare; contra os stuns do rogue não faz nada e gastou a janela entre os controles", "gravidade": "media"},
+  {"t": 51.0, "quem": "Beteranii", "fez": "rapid fire e kill command no Kwongwegaxvi enquanto o Ominous apanhava o burst", "devia": "fazer peel no Zebedeuxvi (scatter shot, concussive, freezing trap) para tirar o rogue de cima do warlock", "porque": "O parceiro estava sob stun e sem healer (druida em blind); dano no healer full não salvava ninguém", "gravidade": "alta"},
+  {"t": 55.8, "quem": "Beteranii", "fez": "hunter's mark três vezes seguidas (e de novo aos 73.3 e 79.6)", "devia": "reaplicar a marca uma vez só e usar os GCDs em tiros ou CC", "porque": "Hunter's Mark já estava no alvo; cada recast é GCD perdido, inclusive enquanto o druida morria", "gravidade": "media"},
+  {"t": 46.4, "quem": "Ominous", "fez": "pet spell lock no Amnesianxxix (priest shadow) e nada contra o rogue", "devia": "usar fear/death coil no Zebedeuxvi ou pedir peel; o felhunter podia devorar magia do aliado", "porque": "Quem estava matando era o rogue; silenciar um priest que causava pouco dano não aliviava a pressão", "gravidade": "media"},
+  {"t": 71.7, "quem": "Pehdicouve", "fez": "pvp trinket no kidney shot já com 6% de vida", "devia": "ter usado o trinket bem antes, por exemplo no blind de 48.4 para curar o Ominous, ou ter saído em forma de urso/viagem quando ficou sozinho", "porque": "Com 6% e o rogue colado, o trinket só adiou 2 s a morte; no blind ele teria salvo o warlock", "gravidade": "alta"},
+  {"t": 58.0, "quem": "Pehdicouve", "fez": "entangling roots e frag bomb depois da morte do Ominous, mas sem kitar ou se defender", "devia": "barkskin/forma de urso cedo e kitar para o pilar, usando o hunter como peel", "porque": "Ficou parado no caster e só usou barkskin aos 65.2 com 38%; o rogue tinha passe livre", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 44.0, "quem": "Zebedeuxvi", "descricao": "Shadow Dance, sprint, berserking e tricks of the trade juntos no Ominous: burst concentrado num alvo só."},
+  {"t": 48.4, "quem": "Zebedeuxvi", "descricao": "Blind no healer durante o treino no warlock."},
+  {"t": 67.3, "quem": "Pehdicouve", "descricao": "Nature's swiftness + healing touch quando apertado: cura instantânea na hora certa."}
+ ],
+ "erros_da_rede": [
+  {"t": 52.2, "quem": "Beteranii", "acao": "hunter's mark no Kwongwegaxvi", "porque": "GCD gasto em marca enquanto o Ominous estava em stun e prestes a morrer; o certo era peel no rogue."},
+  {"t": 54.0, "quem": "Beteranii", "acao": "tranquilizing shot no Kwongwegaxvi", "porque": "Tirar um buff do shaman não mudava nada naquele momento; o warlock morria 3 s depois sem nenhum peel."},
+  {"t": 57.0, "quem": "Ominous", "acao": "corruption no Kwongwegaxvi", "porque": "Com o rogue em cima e a vida baixa, gastou o último GCD num DoT em vez de trinket ou death coil para sobreviver."}
+ ]}

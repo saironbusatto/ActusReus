@@ -1,0 +1,16 @@
+{"resumo": "O RLS IV abriu janela no shaman Kwongwegaxvi com pet spell lock e shadow dance + cheap shots do Zebedeuxi; o healer caiu e o RPS IV perdeu com o shadow priest gastando GCDs entrando e saindo de shadowform.",
+ "momento_decisivo": {"t": 55.5, "descricao": "Zebedeuxi usa shadow dance e cheap shot no Kwongwegaxvi logo após o pet spell lock do Ominousxxiv; o healer cai de 96% para 29% e precisa do trinket."},
+ "erros": [
+  {"t": 63.4, "quem": "Kwongwegaxvi", "fez": "purge logo após trinketar com 29% de vida", "devia": "nature's swiftness + healing wave ou riptide em si mesmo", "porque": "o trinket comprou só um GCD de liberdade e ele o gastou em ofensiva; morreu aos 70.7", "gravidade": "alta"},
+  {"t": 60.8, "quem": "Amnesianxxix", "fez": "remove shadowform / shadowform repetido (62.5, 65.3, 67.4) para curar", "devia": "sair uma vez e manter cura no healer aliado (PW:S, flash heal, PoM) ou ficar em shadow e pressionar", "porque": "cada troca de forma custa um GCD; com o shaman aliado em stun e silence, essas trocas eram cura perdida", "gravidade": "alta"},
+  {"t": 52.7, "quem": "Amnesianxxix", "fez": "silence no Zebedeuxi (rogue)", "devia": "silence no Ominousxxiv ou no healer Kwongwegavi", "porque": "silence quase não afeta rogue, que vive de habilidades físicas", "gravidade": "media"},
+  {"t": 47.2, "quem": "Zebedeuxvi", "fez": "evasion contra o Ominousxxiv", "devia": "cloak of shadows ou pedir dispel; usar evasion só contra melee", "porque": "evasion não reduz dano de DoTs e magias do warlock", "gravidade": "media"},
+  {"t": 60.4, "quem": "Zebedeuxi", "fez": "segundo cheap shot no Kwongwegaxvi seguido de kidney shot (61.5)", "devia": "abrir com um cheap shot e emendar kidney depois, ou guardar o segundo stun", "porque": "stuns de rogue compartilham DR; o segundo cheap shot e o kidney duraram metade e um quarto", "gravidade": "baixa"},
+  {"t": 59.0, "quem": "Zebedeuxvi", "fez": "kidney shot no Kwongwegavi a 73% sem burst depois", "devia": "peel no Zebedeuxi (blind/kidney) que estava matando seu healer", "porque": "o kidney sem dano não rendeu nada e o próprio healer morreu na mesma janela", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 54.8, "quem": "Ominousxxiv", "descricao": "pet spell lock no healer Kwongwegaxvi para abrir a janela do rogue."},
+  {"t": 55.5, "quem": "Zebedeuxi", "descricao": "shadow dance + cheap shot no healer silenciado, derrubando-o para trinket."},
+  {"t": 88.2, "quem": "Amnesianxxix", "descricao": "dispersion a 17% para alongar a luta 1v2."}
+ ],
+ "erros_da_rede": []}

@@ -1,0 +1,19 @@
+{"resumo": "A Shadowplay II focou o paladino Heruvi com DoTs, silence e spell lock; ele morreu aos 66 sem bubble, e Amnesianxxiv sozinha não sustentou até 94.",
+ "momento_decisivo": {"t": 50.6, "descricao": "Ominousx dá spell lock em Heruvi durante o flash of light, depois do haunt (50.1); o paladino fica sem curar e sob DoTs até morrer aos 66.0."},
+ "erros": [
+  {"t": 66.0, "quem": "Heruvi", "fez": "morreu lançando cleanse magic sem usar divine shield", "devia": "divine shield ou divine protection ao cair sob DoTs", "porque": "o bubble limpa os DoTs e dá tempo; morreu com o cooldown sobrando", "gravidade": "alta"},
+  {"t": 47.8, "quem": "Amnesianxxiv", "fez": "mind sear em sequência (47.8-62.2) enquanto Heruvi caía", "devia": "power word: shield/flash heal em Heruvi e dispel dos DoTs", "porque": "AoE canalizado sem alvo de kill; o parceiro morreu sem cura", "gravidade": "alta"},
+  {"t": 65.8, "quem": "Amnesianxxiv", "fez": "tirou e pôs shadowform várias vezes (65.8, 68.8, 78.0, 83.7, 85.3, 87.0, 90.2)", "devia": "escolher um papel: ficar curando ou ficar em shadowform", "porque": "cada troca gasta GCD e mana e corta o dano reduzido da forma", "gravidade": "media"},
+  {"t": 42.8, "quem": "Heruvi", "fez": "exorcism logo após o judgement, e foi silenciado", "devia": "ficar curando/dispelando com o time sob DoTs", "porque": "o paladino curador gastou a abertura em dano e terminou com 0 de cura", "gravidade": "media"},
+  {"t": 44.3, "quem": "Heruiv", "fez": "exorcism ×2 até 49.6", "devia": "cleanse dos DoTs e cura", "porque": "paladino curador dando dano baixo enquanto Amnesianxxi era silenciado", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 82.0, "quem": "Amnesianxxiv", "descricao": "dispersion a 36% para sobreviver"},
+  {"t": 88.9, "quem": "Amnesianxxi", "descricao": "silence em Amnesianxxiv a 30%, impedindo a autocura"},
+  {"t": 89.5, "quem": "Amnesianxxi", "descricao": "shadow word: death de execução no alvo baixo"}
+ ],
+ "erros_da_rede": [
+  {"t": 65.3, "quem": "Ominousx", "acao": "curse of agony em Heruvi", "porque": "DoT lento num alvo que morreu 0.7 s depois; não somou nada"},
+  {"t": 76.8, "quem": "Ominousx", "acao": "spell lock", "porque": "repetido 0.3 s depois do pet spell lock no mesmo alvo, sem efeito extra"},
+  {"t": 82.0, "quem": "Ominousx", "acao": "shadow bolt em Amnesianxxiv", "porque": "lançado na hora do dispersion, que reduz o dano em 90%"}
+ ]}

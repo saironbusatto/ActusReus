@@ -1,0 +1,17 @@
+{"resumo": "TSG III aguentou o shadowfury de abertura e matou Pehdibaliv em 8 s depois do charge (44.5), com Kwongwegaxxi gastando GCDs em cleanse spirit em vez de curar o moonkin. Sem o druida, o shaman caiu logo depois.",
+ "momento_decisivo": {"t": 44.5, "descricao": "Celianeyv dá charge em Pehdibaliv e, com Omasconv junto, derruba o moonkin de 97% a 31%; o healer só limpa doença e o barkskin vem tarde (51.4), e Pehdibaliv morre aos 52.1."},
+ "momento_aceitos": [44.5, 45.5, 48.6, 51.4, 51.7],
+ "erros": [
+  {"t": 45.5, "quem": "Kwongwegaxxi", "fez": "cleanse spirit ×2 até 47.8 e de novo aos 48.9 e 50.0, enquanto Pehdibaliv caía para 31%", "devia": "curar Pehdibaliv (riptide, healing wave, earth shield) e usar nature's swiftness", "porque": "As doenças voltam no próximo golpe do DK; o druida morreu com o healer quase sem curar (6199 de cura na luta toda)", "gravidade": "alta"},
+  {"t": 51.4, "quem": "Pehdibaliv", "fez": "barkskin só com 31% de vida, 7 s depois do charge", "devia": "barkskin e trinket no stun do charge (44.5) ou ao ser alvo do bladestorm, e kitar com roots/cyclone", "porque": "Barkskin com 31% contra warrior + DK no bladestorm não segura nada; ele morreu 0.7 s depois sem usar o trinket", "gravidade": "alta"},
+  {"t": 46.4, "quem": "Pehdibaliv", "fez": "saiu do moonkin para caster form e deu rejuvenation no meio do burst", "devia": "ficar em moonkin (armadura extra) e usar cyclone/roots no warrior, ou ir para bear form", "porque": "Em caster form ele perdeu armadura bem quando o dano físico era maior", "gravidade": "media"},
+  {"t": 51.9, "quem": "Ominousdesx", "fez": "life tap com o parceiro a 31%", "devia": "fear em Celianeyv ou death coil no DK para fazer peel no druida", "porque": "O life tap gastou um GCD e vida no instante em que um fear salvaria Pehdibaliv", "gravidade": "media"},
+  {"t": 42.4, "quem": "Omasconv", "fez": "every man for himself no shadowfury com 91% de vida", "devia": "aguentar os 3 s de stun e guardar o EMFH", "porque": "Não havia burst em cima dele; sem saída de controle, ele ficou exposto ao fear/seduction depois", "gravidade": "media"},
+  {"t": 57.1, "quem": "Kwongwegaxxi", "fez": "purge (57.1, 58.3) e cleanse sendo atacado por Celianeyv e Omasconv, sozinho", "devia": "se curar, dar earth shield em si e ir para perto do warlock", "porque": "Com dois melee em cima e já em 2v3, purgar não muda nada; ele morreu aos 62.6", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.4, "quem": "Ominousdesx", "descricao": "Shadowfury pegando os três inimigos de uma vez na abertura."},
+  {"t": 44.5, "quem": "Celianeyv", "descricao": "Troca para o moonkin com charge, bladestorm (48.6) e mortal strike, escolhendo o alvo mais frágil."},
+  {"t": 51.7, "quem": "Omasconv", "descricao": "Death coil em Pehdibaliv para finalizar no barkskin."},
+  {"t": 61.1, "quem": "Celianeyv", "descricao": "Mortal strike e execute no healer isolado, fechando a luta rápido."}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "RLS IV matou Celianeyix com kidney shot + blind no curandeiro (50.9-52.0) enquanto Heruxiv era travado por spell lock/fear; Naminiv nunca curou e caiu em seguida no 2v3.",
+ "momento_decisivo": {"t": 50.9, "descricao": "Zebedeuxi dá kidney shot em Celianeyix (38%) e blind em Heruxiv (52.0); com o curandeiro em CC, depois em silence e fear, o warrior morre aos 58.7."},
+ "erros": [
+  {"t": 43.6, "quem": "Celianeyix", "fez": "cleave/heroic strike a luta toda, sem mortal strike, inclusive depois do evasion de Zebedeuxi (50.6)", "devia": "mortal strike no alvo e trocar para o warlock/curandeiro quando o rogue usou evasion", "porque": "golpes físicos num rogue em evasion erram muito; sem MS a cura de Kwongwegavi entrava inteira", "gravidade": "alta"},
+  {"t": 45.4, "quem": "Celianeyix", "fez": "trocou de alvo várias vezes entre Ominousxxiv e Zebedeuxi (45.4, 46.1, 47.9, 49.0)", "devia": "escolher um alvo e manter a pressão", "porque": "cada troca reseta a pressão e nenhum dos dois precisou gastar defensivo cedo", "gravidade": "media"},
+  {"t": 46.6, "quem": "Heruxiv", "fez": "cleanse repetido (46.6 e 47.7 ×2 até 50.9) enquanto o warrior caía de 84% para 38%", "devia": "holy light/flash of light/holy shock em Celianeyix", "porque": "o dano no warrior era a ameaça real; dispel não segurou a vida dele", "gravidade": "alta"},
+  {"t": 44.4, "quem": "Heruxiv", "fez": "every man for himself num stun com 96% de vida", "devia": "guardar o racial/trinket para o CC da janela de kill", "porque": "logo depois veio a sequência blind/silence/fear (52.0-56.5) que matou o warrior", "gravidade": "media"},
+  {"t": 49.3, "quem": "Naminiv", "fez": "chain lightning, lava burst e purge com o curandeiro aliado em blind/silence/fear", "devia": "lançar healing wave/lesser healing wave em Celianeyix", "porque": "com Heruxiv em CC de 52.0 a 56.5, o shaman era a única cura possível; terminou a luta com 0 de cura", "gravidade": "alta"},
+  {"t": 62.1, "quem": "Naminiv", "fez": "purge ×3 em Kwongwegavi no 2v3", "devia": "se proteger/curar e ajudar Heruxiv, ou pressionar Zebedeuxi", "porque": "tirar buffs do curandeiro não muda nada num 2v3 perdido; ele era o próximo alvo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 52.0, "quem": "Zebedeuxi", "descricao": "blind no curandeiro Heruxiv logo depois do kidney shot no warrior, montando a janela de kill"},
+  {"t": 50.6, "quem": "Zebedeuxi", "descricao": "evasion a 39% contra o warrior, depois vanish + cloak of shadows (53.1) para sair da pressão"},
+  {"t": 43.0, "quem": "Ominousxxiv", "descricao": "spell lock em Heruxiv logo na abertura e fear nele aos 55.4, mantendo o curandeiro fora da luta"}
+ ],
+ "erros_da_rede": [
+  {"t": 52.7, "quem": "Heruxiv", "acao": "judgement of light → Kwongwegavi", "porque": "acabou de usar o trinket para sair do blind e o warrior estava a 27%; o GCD era para cura direta"},
+  {"t": 50.4, "quem": "Naminiv", "acao": "purge → Zebedeuxi", "porque": "um rogue não tem nada útil para purgar; com o warrior a 38% era hora de curar"},
+  {"t": 73.5, "quem": "Naminiv", "acao": "flame shock → Zebedeuxi", "porque": "a 29% depois do trinket, um DoT não salva; devia se curar ou fugir (morreu aos 74.5)"}
+ ]}

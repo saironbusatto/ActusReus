@@ -1,0 +1,20 @@
+{"resumo": "Ominousxxi deu spell lock em cadeia em Heshovii e Kwongwegavii, e o healer da Fireplay (6.9k de cura) morreu aos 62.6 s. Depois Zebedeuix entrou com shadow dance e cheap shot em Ominousdes, que caiu aos 100.3 s.",
+ "momento_decisivo": {"t": 59.8, "descricao": "Pet spell lock de Ominousxxi em Kwongwegavii a 33% de vida. Com o healer sem lançar cura, Zebedeuix e os DoTs o matam aos 62.6 s."},
+ "erros": [
+  {"t": 46.7, "quem": "Kwongwegavii", "fez": "chain lightning, purge (51.7) e cleanse spirit poison, curando só 6.9k na luta", "devia": "riptide, earth shield e healing wave e baixar grounding totem contra o spell lock", "porque": "era o único healer e passou a abertura dando dano. Tomou silence e morreu aos 62.6 s", "gravidade": "alta"},
+  {"t": 59.3, "quem": "Heshovii", "fez": "spellsteal com o próprio healer a 33% sendo morto", "devia": "polymorph ou counterspell em Ominousxxi, ou frost nova em Zebedeuix antes", "porque": "o peel e o CC do mage eram o que tirava a pressão do shaman. A frost nova só veio aos 62.0 s", "gravidade": "alta"},
+  {"t": 35.8, "quem": "Heshovii", "fez": "combustion e mirror image antes do contato (35.8 e 36.5)", "devia": "guardar os dois para a janela de kill", "porque": "os cooldowns ofensivos acabaram sem ninguém em alcance", "gravidade": "media"},
+  {"t": 44.7, "quem": "Heshovii", "fez": "flamestrike e, aos 48.3 s, blizzard", "devia": "fireball, frostbolt e polymorph em alvo único", "porque": "AoE de cast longo faz pouco dano em arena e deixa o mage parado, à mercê de spell lock", "gravidade": "media"},
+  {"t": 81.7, "quem": "Heshovii", "fez": "dragon's breath em Zebedeuix a 14%", "devia": "fire blast ou ice lance instantâneo para matar", "porque": "o dragon's breath quebra com dano e serve de CC, não de finalizador. Deu ao rogue tempo de usar o trinket", "gravidade": "media"},
+  {"t": 57.8, "quem": "Zebedeuix", "fez": "evasion a 43% contra mage e warlock", "devia": "cloak of shadows para tirar os DoTs e o living bomb", "porque": "o dano era todo mágico, e evasion não reduz nada disso", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 59.8, "quem": "Ominousxxi", "descricao": "pet spell lock no healer inimigo a 33%, garantindo o kill"},
+  {"t": 94.8, "quem": "Zebedeuix", "descricao": "shadow dance e cheap shot em Ominousdes a 28%, forçando o trinket. Com death coil e fear de Ominousxxi, matou o warlock"},
+  {"t": 51.9, "quem": "Ominousdes", "descricao": "death coil em Zebedeuix quando ele deu shadowstep no mage, seguido de dragon's breath de Heshovii"}
+ ],
+ "erros_da_rede": [
+  {"t": 48.3, "quem": "Heshovii", "acao": "blizzard", "porque": "channel de AoE em arena, de pouco dano, deixando o mage parado contra dois warlocks"},
+  {"t": 60.0, "quem": "Heshovii", "acao": "lifeblood", "porque": "autocura pequena com o próprio healer a 33% e prestes a morrer. Devia pôr CC ou counterspell"},
+  {"t": 76.2, "quem": "Ominousdes", "acao": "pet seduction em Zebedeuix", "porque": "seduction no rogue que entrou em vanish logo depois (77.1). O certo era o healer Kwongwegaiv"}
+ ]}

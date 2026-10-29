@@ -1,0 +1,17 @@
+{"resumo": "Espelho TSG: o sweeping+bladestorm de Celianeyvi logo na abertura derrubou os dois melees adversários, que continuaram batendo nele com a vida baixa. Heruix não segurou ninguém, e Omasconiv e Celianeyiv morreram em 2 s.",
+ "momento_decisivo": {"t": 52.1, "descricao": "Celianeyiv, com 23% de vida, solta bladestorm em vez de se defender, dentro da área do retaliation e da D&D inimigos; ele e Omasconiv (16%) morrem aos 57-59 s."},
+ "erros": [
+  {"t": 52.1, "quem": "Celianeyiv", "fez": "bladestorm com 23% de vida", "devia": "se defender (shield wall/intercept para longe) e esperar cura", "porque": "um cooldown ofensivo nessa vida só o deixou batendo enquanto o time inimigo terminava; morreu aos 59.1", "gravidade": "alta"},
+  {"t": 56.5, "quem": "Heruix", "fez": "divine sacrifice e cancelou aos 56.8", "devia": "manter o sacrifice ou dar hand of protection em Omasconiv, que estava a 16%", "porque": "cancelar na hora jogou fora o cooldown que salvaria o DK; ele morreu aos 57.0", "gravidade": "alta"},
+  {"t": 50.6, "quem": "Heruix", "fez": "um holy light e um holy shock em 6 s de pressão nos dois melees", "devia": "flash of light/holy shock seguidos em Omasconiv e Celianeyiv", "porque": "fez só 12k de cura na luta toda enquanto os dois parceiros caíam", "gravidade": "alta"},
+  {"t": 55.3, "quem": "Omasconiv", "fez": "death and decay com 16% de vida", "devia": "death strike/death coil para se curar, ou sair do alcance", "porque": "o icebound sozinho não salva; o DK precisava recuperar vida e não espalhar dano", "gravidade": "media"},
+  {"t": 60.5, "quem": "Celianeyvi", "fez": "sunder armor ×3 até 77.4 em Heruix, que estava em divine shield a partir de 62.1", "devia": "trocar para Heruxi ou esperar o bubble com intercept/hamstring prontos", "porque": "bater em alvo imune não faz nada; foram 17 s sem pressão útil", "gravidade": "media"},
+  {"t": 64.8, "quem": "Heruxi", "fez": "divine sacrifice e cancelou aos 65.2", "devia": "não usar ou manter até o fim", "porque": "gastou o cooldown sem proteger ninguém", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 42.3, "quem": "Celianeyvi", "descricao": "charge, sweeping strikes e bladestorm em cima dos dois melees inimigos colados: dano que preparou a luta."},
+  {"t": 62.1, "quem": "Heruix", "descricao": "divine shield com 23% de vida, sozinho, para sobreviver ao dano dos três."},
+  {"t": 52.8, "quem": "Omasconvi", "descricao": "gnaw do pet no healer Heruix na janela em que os dois melees inimigos estavam baixos."}],
+ "erros_da_rede": [
+  {"t": 53.7, "quem": "Omasconiv", "acao": "icy touch em Celianeyvi", "porque": "estava a poucos pontos de 16%; era hora de se defender ou se curar, não de aplicar doença."},
+  {"t": 57.2, "quem": "Celianeyiv", "acao": "heroic strike em Celianeyvi", "porque": "quase morto, bateu dentro do Retaliation em vez de sair ou se defender."},
+  {"t": 58.5, "quem": "Celianeyiv", "acao": "cleave em Celianeyvi", "porque": "mesmo erro, a 0.6 s da morte."}]}

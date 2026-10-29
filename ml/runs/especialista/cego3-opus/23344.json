@@ -1,0 +1,81 @@
+{
+ "resumo": "O Kwongwegax gastou a luta limpando doenças de DK em vez de curar, e o Bladestorm do Celianeyvi sobre os casters agrupados fechou o healer. Sem cura, Heshox caiu no Execute e o Omasconvi foi a última morte.",
+ "momento_decisivo": {
+  "t": 55.7,
+  "descricao": "Celianeyvi solta Bladestorm no meio do Fireplay III, enquanto o Kwongwegax usava os GCDs em Cleanse Spirit em vez de curar, e o healer morre em seguida (64.5)."
+ },
+ "momento_aceitos": [
+  46.1,
+  52.7,
+  55.7
+ ],
+ "erros": [
+  {
+   "t": 46.1,
+   "quem": "Kwongwegax",
+   "fez": "Cleanse Spirit em doenças (37.4, 46.1, 52.7, 56.7)",
+   "devia": "Riptide/Healing Wave e totens de controle; deixar as doenças",
+   "porque": "o DK reaplica as doenças em 1 GCD; o healer terminou com só 8722 de cura e morreu sem ter sustentado ninguém",
+   "gravidade": "alta"
+  },
+  {
+   "t": 34.2,
+   "quem": "Kwongwegax",
+   "fez": "Chain Lightning na abertura",
+   "devia": "preparar escudos/Riptide e posição contra o Charge do warrior",
+   "porque": "o dano do healer é irrelevante e o time levou Charge/D&D logo em seguida",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 68.2,
+   "quem": "Heshox",
+   "fez": "Mana Shield três vezes (68.2-72.7) sob o Execute do Celianeyvi",
+   "devia": "Blink/Frost Nova para sair do alcance do warrior",
+   "porque": "Mana Shield não impede o Execute; sair do melee era a única forma de sobreviver, e ele morreu aos 74.5",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.5,
+   "quem": "Omasconvi",
+   "fez": "Every Man for Himself num Frost Nova (root)",
+   "devia": "aceitar o root (Death Grip/Chains em alcance) e guardar o racial para Fear/Seduction",
+   "porque": "racial gasto numa raiz curta; no Howl of Terror (80.6) já estava sem ele",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.3,
+   "quem": "Ominousdesiv",
+   "fez": "Chaos Bolt no Omasconvi no exato momento do Icebound Fortitude",
+   "devia": "Fear/Death Coil no Celianeyvi para salvar o healer, ou trocar de alvo",
+   "porque": "bater em quem acabou de ativar um defensivo grande desperdiça o maior golpe da rotação",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 41.8,
+   "quem": "Ominousdesiv",
+   "descricao": "Howl of Terror pegando o warrior durante a investida."
+  },
+  {
+   "t": 55.7,
+   "quem": "Celianeyvi",
+   "descricao": "Bladestorm no grupo de casters, imune a CC, decidiu o healer."
+  },
+  {
+   "t": 57.9,
+   "quem": "Heshox",
+   "descricao": "Ice Block com 16% de vida."
+  },
+  {
+   "t": 63.3,
+   "quem": "Omasconvi",
+   "descricao": "Icebound Fortitude com 55% sob pressão."
+  },
+  {
+   "t": 64.5,
+   "quem": "Celianeyvi",
+   "descricao": "Victory Rush para finalizar o healer."
+  }
+ ]
+}

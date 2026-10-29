@@ -1,0 +1,17 @@
+{"resumo": "RLS controlou o healer de Thunder III (blind, spell lock, frag bomb) e transformou isso em pressão em Naminiv, que morreu silenciado; quase ao mesmo tempo Zebedeuxi a 15% se salvou com cloak. Celianeyx batia em Zebedeuxi sem mortal strike, e Kwongwegavi curou à vontade.",
+ "momento_decisivo": {"t": 71.5, "descricao": "Pet spell lock em Naminiv a 42%, depois do stun da frag bomb (61.6/63.4); sem conseguir se curar nem tirar o dot, o shaman morre aos 76.6, enquanto Zebedeuxi sobrevive com cloak aos 73.9 e kidney em Celianeyx aos 75.0."},
+ "momento_aceitos": [61.6, 63.4, 71.5, 73.9, 75.0],
+ "erros": [
+  {"t": 46.7, "quem": "Celianeyx", "fez": "heroic strike, slam e sunder armor em Zebedeuxi por 30 s, sem nenhum mortal strike até os 78.3", "devia": "manter o Mortal Strike no alvo (ou trocar para Kwongwegavi com MS) para cortar a cura", "porque": "Zebedeuxi chegou a 43% (49.5) e 15% (73.9) e sempre era curado de volta; sem o debuff de -50% de cura a pressão nunca fechou", "gravidade": "alta"},
+  {"t": 58.0, "quem": "Heruxv", "fez": "divine sacrifice a ~48% de vida, sendo ele o alvo de dots e spell lock", "devia": "se curar/usar divine protection e deixar o DS para quando o dano estivesse no parceiro", "porque": "O DS redireciona dano para o paladino, que já era o mais pressionado; aos 68.6 ele precisou de bubble a 21%", "gravidade": "media"},
+  {"t": 51.5, "quem": "Kwongwegavi", "fez": "purge em Celianeyx com Zebedeuxi a 43% logo após o evasion", "devia": "curar Zebedeuxi (riptide/healing wave) ou dar earth shield", "porque": "Purgar um warrior tira pouco; o parceiro estava em perigo real e só foi salvo pelo vanish aos 58.0", "gravidade": "media"},
+  {"t": 69.6, "quem": "Naminiv", "fez": "purge e chain lightning a 42-45% com o warlock aplicando dots nele", "devia": "se curar (healing wave), dar cleanse spirit nas próprias maldições ou pôr grounding totem contra o spell lock", "porque": "Ele era o alvo e caiu de 66% para 0 em 14 s; o grounding teria absorvido o spell lock de 71.5 que o matou", "gravidade": "media"},
+  {"t": 52.5, "quem": "Heruxv", "fez": "every man for himself para sair de um blind com 91%", "devia": "esperar o dano quebrar o blind ou o parceiro dar cleanse, e guardar o EMFH para o stun/silêncio da janela de kill", "porque": "Logo depois ele foi silenciado (52.9, 56.4) sem saída, e Naminiv ficou sem cura no stun dos 63.4", "gravidade": "baixa"},
+  {"t": 45.1, "quem": "Zebedeuxi", "fez": "fan of knives ×2 na abertura", "devia": "focar o alvo com hemorrhage/garrote e guardar energia para o controle", "porque": "FoK em arena 3v3 gasta energia sem alvo-chave; o rogue ficou sem energia e precisou de evasion a 43%", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 52.2, "quem": "Zebedeuxi", "descricao": "Blind em Heruxv com shadow dance/cheap shot em Celianeyx, desmontando o time inimigo."},
+  {"t": 73.9, "quem": "Zebedeuxi", "descricao": "Cloak of shadows a 15% e kidney em Celianeyx em seguida, sobrevivendo e travando o warrior."},
+  {"t": 71.5, "quem": "Ominousxxiv", "descricao": "Pet spell lock em Naminiv no momento da kill e spell locks repetidos em Heruxv ao longo da luta."},
+  {"t": 73.0, "quem": "Kwongwegavi", "descricao": "Mana tide totem e cura constante mesmo com 0 de dano, mantendo o time de pé."}
+ ]}

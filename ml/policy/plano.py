@@ -99,6 +99,26 @@ def notas(luta: dict, planos: dict) -> tuple[list[dict], list[dict]]:
     return erros, acertos
 
 
+# Classes de cada composição (ids do jogo) para o arquivo do C++ (Playerbots.ArenaPlanFile)
+CLASSE_ID = {"Warrior": 1, "Paladin": 2, "Hunter": 3, "Rogue": 4, "Priest": 5, "Death Knight": 6, "Shaman": 7,
+             "Mage": 8, "Warlock": 9, "Druid": 11}
+CLASSES = {"RMP": ("Rogue", "Mage", "Priest"), "RLS": ("Rogue", "Warlock", "Shaman"),
+           "RPS": ("Rogue", "Priest", "Shaman"), "Wild": ("Hunter", "Warlock", "Druid"),
+           "Shadowplay": ("Priest", "Warlock", "Paladin"), "TSG": ("Warrior", "Death Knight", "Paladin"),
+           "Thunder": ("Warrior", "Shaman", "Paladin"), "Fireplay": ("Mage", "Warlock", "Shaman"),
+           "LSD": ("Warlock", "Druid", "Shaman")}
+
+
+def exporta(planos: dict) -> str:
+    """Uma linha por confronto: "<ids nossos>|<ids deles>=<id do alvo de kill>", cada lado em ordem."""
+    lado = lambda c: ",".join(str(i) for i in sorted(CLASSE_ID[x] for x in CLASSES[c]))  # noqa: E731
+    linhas = []
+    for chave, p in sorted(planos.items()):
+        nosso, inimigo = chave.split(" vs ")
+        linhas.append(f"{lado(nosso)}|{lado(inimigo)}={CLASSE_ID[p['kill']]}")
+    return "\n".join(linhas) + "\n"
+
+
 def selftest() -> None:
     planos = {"RMP vs TSG": {"kill": "Paladin", "cc": "Warrior", "cc_acoes": ["polymorph", "blind"],
                              "burst": ["shadow dance"], "burst_quando": "cc_no_healer"}}
@@ -130,4 +150,6 @@ def selftest() -> None:
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         selftest()
+    if "--exporta" in sys.argv:  # plano.py --exporta <arquivo do C++>
+        Path(sys.argv[-1]).write_text(exporta(carrega()))
     sys.exit(0)

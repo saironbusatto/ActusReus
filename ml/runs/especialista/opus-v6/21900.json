@@ -1,0 +1,20 @@
+{"resumo": "O Thunder gastou a luta em GCDs fracos (warrior só com heroic strike/slam, shaman purgando o rogue) e o paladino não segurou Celianeyix, que morreu aos 100.3; depois o RPS controlou e matou paladino e shaman.",
+ "momento_decisivo": {"t": 95.4, "descricao": "Silence de Amnesianix seguido de stun em Heruxiv (97.3) enquanto Celianeyix estava sob Zebedeuxii; sem cura, o warrior morre aos 100.3."},
+ "erros": [
+  {"t": 46.2, "quem": "Celianeyix", "fez": "heroic strike e slam em série a luta toda, sem mortal strike", "devia": "mortal strike/overpower/rend, com heroic strike só para gastar rage sobrando", "porque": "sem mortal strike não há redução de cura; os healers do RPS curaram tudo", "gravidade": "alta"},
+  {"t": 43.6, "quem": "Naminiv", "fez": "purge repetido em Zebedeuxii", "devia": "lava burst/lightning bolt no alvo ou purge só no PW:S/renew", "porque": "um rogue quase não tem buff para purgar; eram GCDs de dano perdidos", "gravidade": "media"},
+  {"t": 94.0, "quem": "Heruxiv", "fez": "judgement, divine illumination e cleanse poison (87.1-94.0) com Celianeyix morrendo", "devia": "holy light/flash of light e hand of protection no warrior", "porque": "o warrior morreu aos 100.3; dispel de veneno não segura burst", "gravidade": "alta"},
+  {"t": 123.8, "quem": "Heruxiv", "fez": "judgement of light dentro do divine shield a 2%", "devia": "holy light em si durante a bolha", "porque": "saiu da bolha quase sem vida e morreu aos 133.9", "gravidade": "media"},
+  {"t": 124.8, "quem": "Naminiv", "fez": "water shield ×4 (124.8-138.9) sozinho contra três", "devia": "healing wave/lesser healing wave em si ou dano", "porque": "o escudo já estava ativo; GCDs sem efeito na hora de sobreviver", "gravidade": "media"},
+  {"t": 45.5, "quem": "Celianeyix", "fez": "every man for himself num kidney shot a 65%", "devia": "aguentar o stun e guardar o trinket para fear/silence", "porque": "sem risco imediato; trinket perdido para o resto da luta", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 47.5, "quem": "Zebedeuxii", "descricao": "evasion, vanish e cloak escalonados (47.5-56.8) sobreviveram ao bladestorm e ao dano do shaman"},
+  {"t": 109.2, "quem": "Zebedeuxii", "descricao": "shadow dance + kidney shot no paladino levou o healer a 2% e forçou a bolha"},
+  {"t": 146.7, "quem": "Amnesianix", "descricao": "silence no shaman a 3% impediu a última cura e fechou a luta"}
+ ],
+ "erros_da_rede": [
+  {"t": 77.8, "quem": "Celianeyix", "acao": "heroic strike ×3", "porque": "o warrior precisava de mortal strike; heroic strike não aplica redução de cura"},
+  {"t": 48.8, "quem": "Amnesianix", "acao": "silence no warrior", "porque": "silence quase não afeta warrior; o certo era guardar para o paladino"},
+  {"t": 43.6, "quem": "Naminiv", "acao": "purge no rogue", "porque": "não havia buff relevante para tirar; GCD sem dano"}
+ ]}

@@ -1,0 +1,19 @@
+{"resumo": "Ominousix (135k de dano) manteve DoTs e devour magic o tempo todo e matou Ominousdesv aos 141 s. Do outro lado, Heshoxi gastou GCDs em mana shield e spellsteal, e Kwongwegaxi passou a luta tirando curse sem tremor totem.",
+ "momento_decisivo": {"t": 90.7, "descricao": "Ominousix troca os DoTs para Ominousdesv (corruption 90.7, UA 93.9, haunt 99.5), com Amnesianxix tirando os buffs dele. Ominousdesv é aberto sem defensivos e cai aos 141.4 s."},
+ "erros": [
+  {"t": 46.1, "quem": "Ominousdesv", "fez": "corruption on attacker repetido 7 vezes (46.1-70.3) e mais 7 (78.7-102.7)", "devia": "manter corruption e UA uma vez e usar os GCDs em fear, death coil, haunt e chaos bolt no alvo", "porque": "reaplicar o mesmo DoT que já está ativo não adiciona dano, e o warlock fez só 31k na luta", "gravidade": "alta"},
+  {"t": 66.2, "quem": "Heshoxi", "fez": "evocation a 32% de vida, sob pressão de dois casters", "devia": "dar blink e LoS, ou usar ice block só depois e evocar com segurança", "porque": "Amnesianxix deu silence na hora e o mage teve que gastar ice block e trinket a 21%", "gravidade": "media"},
+  {"t": 149.0, "quem": "Heshoxi", "fez": "flamestrike duas vezes (149-162) no 2v3", "devia": "polymorph e counterspell no healer inimigo e frostbolt no warlock", "porque": "flamestrike é cast longo de AoE fraco em arena. Não controla nem mata ninguém", "gravidade": "media"},
+  {"t": 42.8, "quem": "Kwongwegaxi", "fez": "baixou stoneskin e flametongue totem e nunca o tremor totem, contra dois casters com fear (warlock e priest)", "devia": "manter o tremor totem e o grounding totem contra os locks", "porque": "o time tomou fear em sequência na abertura (24.4-29.1) e passou a luta reagindo", "gravidade": "media"},
+  {"t": 50.1, "quem": "Heruii", "fez": "cast greater blessing assignment várias vezes no meio do combate (50.1, 59.3, 70.3, 114.4), além do apply oil aos 120.6", "devia": "dar os buffs antes dos portões e no combate usar cleanse, holy shock e flash of light", "porque": "cada GCD em buff de preparação é cura e dispel a menos", "gravidade": "baixa"},
+  {"t": 228.5, "quem": "Kwongwegaxi", "fez": "cleanse spirit curse em cadeia (228.5-232.1 e 262.1-268.6) enquanto Heshoxi morria", "devia": "riptide, healing wave e lesser healing wave em Heshoxi", "porque": "Ominousix reaplica curse of agony instantâneo. O mage morreu aos 268.6 s sem receber cura nessa janela", "gravidade": "alta"}
+ ],
+ "acertos": [
+  {"t": 66.2, "quem": "Amnesianxix", "descricao": "silence em Heshoxi durante a evocation, forçando ice block e trinket"},
+  {"t": 141.4, "quem": "Heruii", "descricao": "judgement de execução em Ominousdesv, depois do hammer of wrath aos 134.8 s"},
+  {"t": 130.7, "quem": "Amnesianxix", "descricao": "dispersion preventivo no meio da pressão, mantendo o priest vivo"}
+ ],
+ "erros_da_rede": [
+  {"t": 70.3, "quem": "Heruii", "acao": "cast greater blessing assignment", "porque": "buff de fora de combate no meio da luta, com o time sob DoTs"},
+  {"t": 62.2, "quem": "Ominousix", "acao": "curse of agony em Heshoxi", "porque": "o mage tem remove curse e tirou o curse depois. Curse of tongues ou exhaustion travariam mais"}
+ ]}

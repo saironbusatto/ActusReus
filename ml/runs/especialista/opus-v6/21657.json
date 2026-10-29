@@ -1,0 +1,15 @@
+{"resumo": "Guerra de dots e fears. O healer do Shadowplay, Heruvi, gastou o trinket cedo e passou a luta em cleanse, e quando ficou em fear com 21% de vida o hunter matou Amnesianxxiv e depois o próprio Heruvi.",
+ "momento_decisivo": {"t": 127.4, "descricao": "Ominoustres prende Heruvi em fear (21% de vida, sem trinket e sem bubble); com o healer fora, Beteraniv mata Amnesianxxiv aos 134.6 e silencia Heruvi para o golpe final aos 142.5."},
+ "erros": [
+  {"t": 63.3, "quem": "Heruvi", "fez": "every man for himself num fear com 84% de vida", "devia": "aceitar o fear (ou pedir fear ward ao priest) e guardar o trinket para a janela de morte", "porque": "o bruxo voltou a dar fear aos 65.4 e 67.0; e aos 128.7, com 21%, Heruvi não tinha mais como sair", "gravidade": "alta"},
+  {"t": 128.7, "quem": "Heruvi", "fez": "ficou em fear com 21% sem usar divine shield", "devia": "divine shield, que tira o fear e salva o paladino", "porque": "o bubble estava disponível (não foi usado na luta) e salvaria o healer e o parceiro, que morreram em seguida", "gravidade": "alta"},
+  {"t": 65.9, "quem": "Heruvi", "fez": "cleanse ×3 até 69.9 e cleanse magic ×3 até 77.7", "devia": "curar entre os dispels e deixar o priest dispelar", "porque": "dois bruxos reaplicam dots e curses sem parar; o paladino fez só 24k de cura", "gravidade": "media"},
+  {"t": 32.7, "quem": "Beteraniv", "fez": "hunter's mark repetido (32.7 ×2, 43.5 ×3, 54.0 ×2, 70.4 ×2, 90.3 ×2, 116.6 ×2)", "devia": "uma marca por alvo e os GCDs em chimera/aimed/steady shot", "porque": "trocar a marca a cada segundo tira dano do hunter", "gravidade": "media"},
+  {"t": 86.5, "quem": "Ominoustres", "fez": "life tap ×4 até 91.5", "devia": "um life tap e voltar a pressionar ou dar fear no healer", "porque": "foram 5 s seguidos sem dano nem CC, com a própria vida em jogo", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 97.8, "quem": "Beteraniv", "descricao": "silencing shot em Amnesianxxiv, travando o priest no meio da pressão."},
+  {"t": 131.1, "quem": "Pehdicouii", "descricao": "nature's swiftness + healing touch e barkskin aos 133.9 para segurar o hunter e a si mesmo sob fear."},
+  {"t": 141.2, "quem": "Beteraniv", "descricao": "silencing shot em Heruvi a 16% para impedir a cura e fechar a morte do paladino."}],
+ "erros_da_rede": [
+  {"t": 42.0, "quem": "Beteraniv", "acao": "hunter's mark em Amnesianxxiv", "porque": "o priest já estava marcado desde 37.3 e de novo aos 40.4; foi GCD perdido."},
+  {"t": 102.1, "quem": "Beteraniv", "acao": "wing clip em Amnesianxxiv", "porque": "com 24% depois do psychic scream, o hunter devia se afastar ou se defender, não usar habilidade de melee no priest."}]}

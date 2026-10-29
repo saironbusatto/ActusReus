@@ -1,0 +1,20 @@
+{"resumo": "Espelho de RLS: o Zebedeuix deu shadowstep no Kwongwegaii, que levou kidney shot e o felhunter do Ominousxxi silenciou na sequência, morrendo aos 52.2; o RLS I só respondeu tarde, perdeu o Ominousv aos 72.2 e o resto da luta foi rogue contra rogue.",
+ "momento_decisivo": {"t": 47.3, "descricao": "Kidney shot do Zebedeuix no Kwongwegaii com 46%: depois do trinket (48.6) vieram spell lock e kick em sequência, e o healer morreu sem conseguir castar."},
+ "erros": [
+  {"t": 43.4, "quem": "Kwongwegaii", "fez": "purge no Zebedeuix e lifeblood enquanto o rogue corria nele com sprint", "devia": "earthbind/frost shock no rogue e se mover para o pilar perto do parceiro", "porque": "Ficou parado e virou alvo fácil do kidney shot e dos silences; morreu aos 52.2", "gravidade": "media"},
+  {"t": 42.3, "quem": "Ominousv", "fez": "spell lock e devour magic no Ominousxxi enquanto o próprio healer era o alvo do rogue", "devia": "fear ou death coil no Zebedeuix para tirar o rogue do Kwongwegaii", "porque": "Ninguém fez peel no healer; trocar silence com outro warlock não salvou ninguém", "gravidade": "alta"},
+  {"t": 48.6, "quem": "Kwongwegaii", "fez": "pvp trinket no kidney shot e continuou no alcance do felhunter", "devia": "depois do trinket, sair da linha de visão do Ominousxxi antes de castar a cura", "porque": "Levou spell lock 0.4 s depois; o trinket não rendeu nenhuma cura", "gravidade": "media"},
+  {"t": 52.3, "quem": "Kwongwegaiv", "fez": "riptide e healing wave castado parado com dois rogues em volta, sem defensivo", "devia": "earthbind/grounding totem, kitar e pedir peel do Ominousxxi; usar o trinket nos stuns", "porque": "Morreu aos 60.3 castando parado, depois de levar dois cheap shots e um kidney", "gravidade": "media"},
+  {"t": 69.2, "quem": "Ominousv", "fez": "unstable affliction no Ominousxxi enquanto o Zebedeuix o matava", "devia": "se defender: trinket, demonic circle, fear/death coil no rogue, healthstone", "porque": "Morreu 3 s depois sem nenhum defensivo; o death coil só veio aos 71.4", "gravidade": "media"},
+  {"t": 76.2, "quem": "Zebedeuvii", "fez": "pvp trinket, evasion, vanish e cloak of shadows em 1.6 s", "devia": "usar um cooldown por vez (evasion contra o rogue, guardar vanish e cloak)", "porque": "Queimou todos os defensivos juntos e no 1v1 contra o Zebedeuix ficou sem nada", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 41.9, "quem": "Zebedeuix", "descricao": "Shadowstep e sprint no healer inimigo logo no começo: escolheu o alvo certo."},
+  {"t": 49.0, "quem": "Ominousxxi", "descricao": "Spell lock no Kwongwegaii logo depois do trinket dele."},
+  {"t": 73.3, "quem": "Zebedeuix", "descricao": "Stealth, shadowstep, premeditation e kidney shot no Zebedeuvii para reabrir o combate."}
+ ],
+ "erros_da_rede": [
+  {"t": 46.2, "quem": "Zebedeuvii", "acao": "hemorrhage no Ominousxxi", "porque": "Saiu do Kwongwegaiv, que já tinha levado o opener e estava a 54%, e dividiu a pressão."},
+  {"t": 46.8, "quem": "Kwongwegaiv", "acao": "purge no Zebedeuvii", "porque": "Healer com 54% e entrando em stun gastou GCD em purge em vez de cura."},
+  {"t": 43.9, "quem": "Ominousv", "acao": "spell lock no Ominousxxi", "porque": "O healer dele estava apanhando do rogue; o CC tinha que ir no Zebedeuix."}
+ ]}

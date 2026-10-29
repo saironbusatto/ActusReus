@@ -1,0 +1,20 @@
+{"resumo": "O RMP desperdiçou a janela em Pehdibalii (34% aos 56.8) com AoE de mage e priest; mais tarde o LSD estourou Zebedeu de 100% a 0 em 8 s, quando ele já tinha gasto evasion/vanish/cloak, e o mage sozinho morreu enraizado.",
+ "momento_decisivo": {"t": 118.5, "descricao": "Pehdibalii entra em moonkin com starfall e Ominousdesix emenda immolate/conflagrate/chaos bolt/drain soul em Zebedeu, que estava sem defensivos (todos gastos entre 95.7 e 99.3) e morre aos 124.4."},
+ "erros": [
+  {"t": 37.9, "quem": "Heshoii", "fez": "flamestrike/blizzard em série (37.9, 48.1, 54.3, 57.0) com Pehdibalii a 34-43%", "devia": "dano em alvo único no druida (fireball/pyroblast) ou polymorph no shaman healer", "porque": "AoE espalhado não fecha kill; a janela do kidney shot em Pehdibalii passou sem burst", "gravidade": "alta"},
+  {"t": 51.0, "quem": "Amnesian", "fez": "mind sear repetido (51.0 a 89.5)", "devia": "curar/PW:S nos aliados e mind blast/SW:pain só se sobrar GCD", "porque": "mind sear é canal de AoE fraco em PvP e deixa o priest parado sem ajudar a pressão ou a defesa", "gravidade": "media"},
+  {"t": 121.6, "quem": "Amnesian", "fez": "shadow protection on party com Zebedeu despencando", "devia": "pain suppression/penance/PW:S no rogue", "porque": "Zebedeu foi de 100% a 0 em 8 s; pain suppression ficou guardado até 167.8", "gravidade": "alta"},
+  {"t": 95.7, "quem": "Zebedeu", "fez": "evasion, vanish e cloak of shadows num intervalo de 4 s a 43%", "devia": "escalonar os defensivos (cloak contra o burst do warlock, evasion contra o druida)", "porque": "gastou todos de uma vez; no burst seguinte (118-124 s) não tinha nada", "gravidade": "media"},
+  {"t": 72.7, "quem": "Pehdibalii", "fez": "entangling roots no priest (×2 até 80.2, e de novo aos 130.8)", "devia": "roots no rogue/mage ou cyclone no priest", "porque": "roots não impedem um caster de lançar feitiços; é GCD jogado fora", "gravidade": "baixa"},
+  {"t": 153.6, "quem": "Heshoii", "fez": "ficou enraizado de 79% a 10% sem blink nem frost nova", "devia": "blink para sair do root e quebrar linha de visão", "porque": "blink remove roots; parado contra warlock destro morreu aos 160.6", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 56.8, "quem": "Pehdibalii", "descricao": "barkskin a 34% seguido de nourish/regrowth sobreviveu à primeira janela do RMP"},
+  {"t": 122.6, "quem": "Ominousdesix", "descricao": "chaos bolt + drain soul fecharam a kill em Zebedeu sem cooldowns"},
+  {"t": 135.4, "quem": "Heshoii", "descricao": "polymorph no shaman healer para tentar virar a 2v3"}
+ ],
+ "erros_da_rede": [
+  {"t": 34.7, "quem": "Heshoii", "acao": "mirror image antes do contato", "porque": "as imagens expiram antes de os inimigos chegarem; cooldown perdido"},
+  {"t": 74.2, "quem": "Amnesian", "acao": "inner focus", "porque": "não foi seguido de cura grande; o próximo cast foi mind sear aos 82.2"},
+  {"t": 103.6, "quem": "Zebedeu", "acao": "hemorrhage no shaman após o kidney shot", "porque": "com o healer em stun e sem aliado acompanhando, o kidney não virou kill; dano baixo no alvo errado da janela"}
+ ]}

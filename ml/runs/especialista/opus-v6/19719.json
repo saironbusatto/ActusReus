@@ -1,0 +1,21 @@
+{"resumo": "Ominoustres caiu cedo sob os gnaws do ghoul sem Pehdicouii salvá-lo, mas Heruix dispelou em vez de curar e deixou Omasconiv morrer aos 93.3; na 2v2 o druida curou o dobro do paladino e o hunter matou warrior e paladino.",
+ "momento_decisivo": {"t": 87.3, "descricao": "Com Omasconiv a 20% (icebound fortitude aos 79.7), Heruix lança cleanse poison ×3 e cleanse magic (87.3-92.6) em vez de curar; o DK morre aos 93.3 e a vantagem de 3v2 do TSG some."},
+ "erros": [
+  {"t": 87.3, "quem": "Heruix", "fez": "cleanse ×5 seguidos com Omasconiv morrendo", "devia": "holy shock/flash of light no DK ou hand of protection", "porque": "tirar serpent sting não salva aliado em 20%; a morte do DK virou a luta", "gravidade": "alta"},
+  {"t": 75.7, "quem": "Pehdicouii", "fez": "entangling roots ×2 com Ominoustres a 27% depois do trinket", "devia": "swiftmend/nourish/regrowth no warlock", "porque": "o warlock morreu aos 78.9; o swiftmend veio na hora da morte", "gravidade": "alta"},
+  {"t": 176.8, "quem": "Heruix", "fez": "divine sacrifice cancelado em 0.3 s e judgement com Celianeyiv caindo", "devia": "flash of light/holy light e hand of protection no warrior", "porque": "Celianeyiv morreu aos 183.0 sem cura extra do paladino", "gravidade": "media"},
+  {"t": 90.1, "quem": "Beteraniv", "fez": "hunter's mark repetido a luta toda (×2 a ×4 seguidos)", "devia": "chimera/aimed/steady shot no alvo", "porque": "remarcar alvo já marcado consome GCDs de dano", "gravidade": "media"},
+  {"t": 115.8, "quem": "Celianeyiv", "fez": "sunder armor ×4 (e em vários outros momentos)", "devia": "mortal strike/overpower/slam no druida", "porque": "sunder em arena tem efeito mínimo; o warrior precisava de dano para quebrar a cura do druida", "gravidade": "media"},
+  {"t": 45.5, "quem": "Celianeyiv", "fez": "every man for himself para sair de um root a 65%", "devia": "guardar o trinket para fear/cyclone ou usar intercept/berserker rage", "porque": "trinket gasto num root fraco", "gravidade": "baixa"},
+  {"t": 101.2, "quem": "Beteraniv", "fez": "aspect of the viper com Celianeyiv a 30% em silence", "devia": "manter dragonhawk e fechar a kill", "porque": "viper derruba o dano justo na janela", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 37.5, "quem": "Omasconiv", "descricao": "gnaws do ghoul em cadeia em Ominoustres (37.5-78.4) controlaram e mataram o warlock"},
+  {"t": 39.0, "quem": "Beteraniv", "descricao": "silencing shot no paladino (39.0, 61.3) segurou a cura do TSG nas trocas"},
+  {"t": 90.6, "quem": "Pehdicouii", "descricao": "tree of life + wild growth/swiftmend sustentaram a 2v2 longa, curando 218k"}
+ ],
+ "erros_da_rede": [
+  {"t": 90.0, "quem": "Heruix", "acao": "cleanse magic com o DK morrendo", "porque": "a prioridade era curar Omasconiv"},
+  {"t": 124.2, "quem": "Celianeyiv", "acao": "sunder armor no druida", "porque": "GCD quase sem dano numa luta de quebrar cura"},
+  {"t": 94.4, "quem": "Beteraniv", "acao": "hunter's mark repetido (94.4 e 95.9)", "porque": "a marca já estava ativa; GCDs perdidos"}
+ ]}

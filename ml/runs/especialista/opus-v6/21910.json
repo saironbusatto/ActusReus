@@ -1,0 +1,19 @@
+{"resumo": "O TSG II abriu com charge no Heruvi e o matou em 10 s com cleave e strikes; o paladino gastou trinket e divine sacrifice e só deu divine shield depois de morrer, e o Amnesianxxiv, trocando de forma, caiu aos 60.2.",
+ "momento_decisivo": {"t": 45.0, "descricao": "Heruvi, sob warrior e DK, usa divine sacrifice e cancela em vez de divine shield; morre aos 47.5 e o bubble aos 47.7 sai tarde demais."},
+ "erros": [
+  {"t": 45.0, "quem": "Heruvi", "fez": "divine sacrifice e cancel divine sacrifice (45.4) caindo de vida", "devia": "usar divine shield antes de chegar ao fim e se curar dentro dele", "porque": "divine sacrifice puxa dano do time para ele; o bubble só saiu aos 47.7, depois da morte", "gravidade": "alta"},
+  {"t": 41.1, "quem": "Heruvi", "fez": "cleanse disease (de novo aos 51.6) contra o DK", "devia": "se curar com holy shock/flash of light", "porque": "o DK reaplica doenças na hora com icy touch/plague strike/pestilence; o global faltou na cura", "gravidade": "media"},
+  {"t": 44.4, "quem": "Heruvi", "fez": "holy light (cast longo) com warrior e DK em cima", "devia": "flash of light/holy shock instantâneos ou hand of protection/bubble", "porque": "cast longo sob mind freeze e golpes rápidos não sai a tempo; morreu 3 s depois", "gravidade": "media"},
+  {"t": 47.2, "quem": "Amnesianxxiv", "fez": "remove shadowform / shadowform / remove shadowform / shadowform (47.2, 51.4, 56.0, 58.0)", "devia": "ficar fora de shadowform curando depois que o curador do time morreu", "porque": "cada troca gasta global; com 23% e sem curador, precisava de shield e cura, não de forma", "gravidade": "alta"},
+  {"t": 41.0, "quem": "Ominousxii", "fez": "corruption em loop no Celianeyiv enquanto o Heruvi morria", "devia": "fear/death coil no Celianeyiv depois do bladestorm para fazer peel", "porque": "o controle do warlock era o que podia salvar o paladino; dots não", "gravidade": "media"},
+  {"t": 42.5, "quem": "Celianeyiv", "fez": "cleave e heroic strike em loop no Heruvi, mortal strike só aos 62.7", "devia": "mortal strike no curador para cortar a cura", "porque": "o corte de cura faria o kill mais rápido e mais garantido", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 37.9, "quem": "Celianeyiv", "descricao": "charge no Heruvi abrindo o kill e forçando o trinket logo de cara."},
+  {"t": 43.4, "quem": "Ominousxii", "descricao": "pet spell lock no Heruix, travando a cura inimiga."},
+  {"t": 49.8, "quem": "Amnesianxxiv", "descricao": "dispersion a 23% para sobreviver àquela janela de dano."}
+ ],
+ "erros_da_rede": [
+  {"t": 44.4, "quem": "Celianeyiv", "acao": "cleave → Heruvi (64%)", "porque": "cleave no lugar de mortal strike no curador inimigo deixa a cura dele inteira."},
+  {"t": 61.2, "quem": "Celianeyiv", "acao": "sunder armor → Ominousxii (74%)", "porque": "sunder num warlock é global quase inútil; mortal strike veio só depois."}
+ ]}

@@ -1,0 +1,82 @@
+{
+ "resumo": "O Zebedeuv entrou cedo no Heshovii, ficou baixo e foi abandonado pelo Amnesianvi, que passou óleo na arma três vezes enquanto o rogue morria. No 2v3 o Fireplay derrubou o priest no fim.",
+ "momento_decisivo": {
+  "t": 55.3,
+  "descricao": "Amnesianvi começa a passar óleo na arma (55.3, 57.5, 59.8) com o Zebedeuv entre 29% e 14%, sem curar nem usar Pain Suppression nele."
+ },
+ "momento_aceitos": [
+  50.4,
+  53.6,
+  55.3,
+  59.8
+ ],
+ "erros": [
+  {
+   "t": 55.3,
+   "quem": "Amnesianvi",
+   "fez": "apply oil três vezes (55.3-59.8) no meio da luta",
+   "devia": "Flash Heal/Penance/Pain Suppression no Zebedeuv, que estava com 29%-14%",
+   "porque": "óleo de arma não tem valor em combate e gastou os GCDs exatamente na janela em que o rogue morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 61.6,
+   "quem": "Amnesianvi",
+   "fez": "dispel magic com o Zebedeuv a 14% preso em Frost Nova",
+   "devia": "Pain Suppression no rogue (só usou aos 96.0 em si mesmo)",
+   "porque": "com o parceiro enraizado e com DoTs, só uma redução de dano grande e uma cura direta o salvavam",
+   "gravidade": "alta"
+  },
+  {
+   "t": 53.6,
+   "quem": "Zebedeuv",
+   "fez": "Shadowstep de volta para a luta logo após Vanish/Evasion (50.4) e Cloak (53.2), com pouca vida",
+   "devia": "ficar fora, ou longe dos casters, até o priest curar",
+   "porque": "sem defensivos, voltou para o alcance do Frost Nova (59.6) e dos DoTs, e morreu aos 64.3",
+   "gravidade": "media"
+  },
+  {
+   "t": 79.1,
+   "quem": "Heshov",
+   "fez": "Flamestrike três vezes e Blizzard (79.1-88.2) no 2v3",
+   "devia": "CC (Polymorph/Counterspell) no Kwongwegavii ou no Heshovii e peel para o Amnesianvi",
+   "porque": "dano em área sem alvo não tira pressão; o time estava em desvantagem e precisava de controle",
+   "gravidade": "media"
+  },
+  {
+   "t": 39.8,
+   "quem": "Amnesianvi",
+   "fez": "Mind Sear no começo da luta",
+   "devia": "escudos/curas preventivas no Zebedeuv, que estava sendo enraizado e atordoado no Heshovii",
+   "porque": "canalizar dano em área como healer de RMP gasta mana e GCD sem efeito tático",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 33.5,
+   "quem": "Heshovii",
+   "descricao": "Frost Nova imediato no Zebedeuv logo após o Shadowstep dele."
+  },
+  {
+   "t": 69.1,
+   "quem": "Kwongwegavii",
+   "descricao": "Purge repetido no Amnesianvi, tirando escudos do último healer."
+  },
+  {
+   "t": 46.8,
+   "quem": "Ominousdes",
+   "descricao": "Seduction do pet controlando o time adversário."
+  },
+  {
+   "t": 114.0,
+   "quem": "Heshov",
+   "descricao": "Ice Block com 17% para sobreviver à pressão."
+  },
+  {
+   "t": 137.9,
+   "quem": "Kwongwegavii",
+   "descricao": "Mana Tide Totem para sustentar o final longo."
+  }
+ ]
+}

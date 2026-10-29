@@ -1,0 +1,20 @@
+{"resumo": "No espelho TSG, Celianeyvi e Omasconvi foram para cima de Heruvii, que passou a luta só limpando doenças e caiu aos 53.0 sem curar a si mesmo. Depois o TSG I ficou sem cura e Omasconii também morreu.",
+ "momento_decisivo": {"t": 43.6, "descricao": "Celianeyvi troca para Heruvii com sweeping strikes e logo emenda bladestorm (46.9) e pestilence do Omasconvi (47.8). Sem nenhum CC no Heruxi, o paladino do TSG I morre aos 53.0."},
+ "erros": [
+  {"t": 45.8, "quem": "Heruvii", "fez": "cleanse disease/cleanse em loop (44.5-51.1) enquanto era o alvo do warrior e do DK", "devia": "flash of light/holy light em si mesmo, hand of protection contra o warrior em bladestorm e divine shield abaixo de 40%", "porque": "doença volta em segundos com pestilence/plague strike; o healer precisava se manter vivo e terminou a luta com 415 de cura", "gravidade": "alta"},
+  {"t": 50.1, "quem": "Heruvii", "fez": "divine protection como único defensivo e morreu 3 s depois", "devia": "divine shield (bolha completa) e curar a si mesmo dentro dela", "porque": "divine protection só reduz 50% e não segura bladestorm + DK + pestilence; divine shield dava 12 s de imunidade", "gravidade": "alta"},
+  {"t": 44.2, "quem": "Celianeyii", "fez": "sunder armor, cleave e heroic strike em loop, sem mortal strike até 61.2", "devia": "mortal strike no alvo para aplicar o -50% de cura e pressionar o Heruxi", "porque": "sem MS, o Heruxi curava o time inteiro sem penalidade; sunder armor em arena é GCD jogado fora", "gravidade": "alta"},
+  {"t": 42.4, "quem": "Celianeyii", "fez": "every man for himself no stun do charge com 95% de vida", "devia": "aceitar o stun curto do charge e guardar o trinket para um CC de verdade (hammer of justice/fear)", "porque": "o stun do charge dura 1.5 s; queimar o trinket aí deixou o warrior sem resposta no resto da luta", "gravidade": "media"},
+  {"t": 43.4, "quem": "Omasconii", "fez": "every man for himself com 98% de vida, além de death and decay e icy touch sem strangulate", "devia": "guardar o trinket e usar strangulate/death grip no Heruxi para proteger o próprio healer", "porque": "o TSG I perdeu a corrida de cura; um strangulate no Heruxi durante o bladestorm no Heruvii mudava a troca", "gravidade": "media"},
+  {"t": 47.8, "quem": "Celianeyvi", "fez": "cleave ×3 em vez de mortal strike, MS só aos 61.2", "devia": "mortal strike no Heruvii logo depois do bladestorm", "porque": "o kill saiu por volume, mas sem MS a cura do Heruvii (mesmo pouca) e a do Heruxi no outro lado ficaram sem penalidade", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 43.6, "quem": "Celianeyvi", "descricao": "trocou para o healer Heruvii com sweeping strikes e bladestorm logo em seguida, tirando a cura do adversário"},
+  {"t": 47.2, "quem": "Heruxi", "descricao": "hand of freedom no time durante o go, mantendo o melee colado no healer inimigo"},
+  {"t": 54.0, "quem": "Omasconvi", "descricao": "icebound fortitude com 43% de vida no contra-ataque e summon gargoyle quando o healer inimigo já tinha morrido"}
+ ],
+ "erros_da_rede": [
+  {"t": 48.5, "quem": "Celianeyii", "acao": "cleave em Celianeyvi", "porque": "cleave no warrior em bladestorm enquanto o próprio healer morria; o certo era mortal strike, ou intercept/hamstring para tirar o Celianeyvi do Heruvii"},
+  {"t": 49.8, "quem": "Omasconii", "acao": "plague strike em Celianeyvi", "porque": "renovar doença que o Heruxi limpa toda hora; precisava de strangulate no Heruxi ou chains/death grip para descascar o Heruvii"},
+  {"t": 60.3, "quem": "Celianeyii", "acao": "heroic strike em Celianeyvi", "porque": "sozinho e sem healer, gastar rage em heroic strike em vez de mortal strike/execute ou de um defensivo"}
+ ]}

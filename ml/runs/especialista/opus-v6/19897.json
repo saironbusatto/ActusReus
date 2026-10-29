@@ -1,0 +1,21 @@
+{"resumo": "O Shadowplay II matou primeiro o Zebedeuvi, que respondeu aos DoTs de lock e shadow priest com evasion em vez de cloak enquanto seu healer usava wand; depois a pressão de DoTs e o howl of terror levaram o Amnesianvii e o mago.",
+ "momento_decisivo": {"t": 62.4, "descricao": "Zebedeuvi a 44% usa evasion contra um time de casters em vez de cloak of shadows; os DoTs do Ominousx e do Amnesianxxi seguem e ele morre aos 79.4."},
+ "erros": [
+  {"t": 62.4, "quem": "Zebedeuvi", "fez": "evasion a 44% de vida contra warlock e shadow priest", "devia": "cloak of shadows para limpar corruption/UA/SW:P e quebrar a pressão", "porque": "evasion só evita ataques físicos; todo o dano nele era mágico e de DoT", "gravidade": "alta"},
+  {"t": 65.5, "quem": "Amnesianvii", "fez": "shoot (wand), e de novo aos 78.1, com o rogue aliado entre 34% e 44%", "devia": "PW:S, penance, flash heal e dispel nos DoTs do Zebedeuvi", "porque": "o healer usou wand enquanto o único alvo em perigo morria", "gravidade": "alta"},
+  {"t": 44.0, "quem": "Amnesianvii", "fez": "mind sear na abertura (e ×3 aos 138.3 e 152.7)", "devia": "dispel ofensivo, PW:S pré-dano ou mind blast single target", "porque": "mind sear prende o healer canalizando dano AoE baixo, exposto a silence e fear", "gravidade": "media"},
+  {"t": 36.0, "quem": "Heshovi", "fez": "icy veins (e mirror image aos 40.5) antes de qualquer contato", "devia": "guardar para a primeira janela de deep freeze/poly com alvo marcado", "porque": "cooldowns de burst gastos sem alvo na abertura não dão nada", "gravidade": "media"},
+  {"t": 106.8, "quem": "Heshovi", "fez": "frostbolt enquanto Heruiv encadeava flash of light (105.1-107.9)", "devia": "counterspell no Heruiv seguido de polymorph/deep freeze no alvo", "porque": "o mago passou a luta quase toda sem counterspell (o primeiro só aos 185.2) e o paladino curou livremente", "gravidade": "media"},
+  {"t": 146.7, "quem": "Heshovi", "fez": "blizzard ×2 (e flamestrike aos 137.4 e 177.6)", "devia": "frostbolt/ice lance no alvo e CC no healer", "porque": "AoE canalizada em 2v3 não tira ninguém e o deixa parado no alcance do fear", "gravidade": "baixa"},
+  {"t": 54.2, "quem": "Heruiv", "fez": "every man for himself num kidney shot com 69% de vida", "devia": "aguentar o kidney sem dano em cima ou usar divine shield se necessário", "porque": "trinket gasto sem ameaça real de morte; ficou sem ele contra o blind aos 62.6", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 63.1, "quem": "Amnesianxxi", "descricao": "psychic scream no Zebedeuvi logo após ele dar evasion, mantendo a pressão no rogue."},
+  {"t": 180.7, "quem": "Ominousx", "descricao": "howl of terror pegando o healer e o mago e abrindo a janela que matou o Amnesianvii."},
+  {"t": 137.8, "quem": "Amnesianvii", "descricao": "will of the forsaken para sair do fear e voltar a agir."}
+ ],
+ "erros_da_rede": [
+  {"t": 127.8, "quem": "Amnesianxxi", "acao": "apply oil", "porque": "aplicar óleo na arma no meio do combate gasta tempo de cast sem efeito na luta."},
+  {"t": 78.8, "quem": "Heruiv", "acao": "consecration → Zebedeuvi", "porque": "consecration num paladino holy custa muita mana e não dá dano relevante; um holy shock ou cura era melhor."},
+  {"t": 77.0, "quem": "Ominousx", "acao": "life tap → Amnesianvii", "porque": "life tap quando o rogue inimigo estava a segundos de morrer; DoT/haunt no alvo garantia o kill."}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "O Fireplay II segurou a abertura do rogue e virou com living bomb, fears e counterspells; o RMP IV gastou globais em mind sear, spellsteal e AoE sem controlar o Kwongwegaix, e o Zebedeuvi morreu com o curador silenciado aos 94.3.",
+ "momento_decisivo": {"t": 94.0, "descricao": "Counterspell do Heshoix no Amnesianvii (41%) bem quando o Zebedeuvi estava no fim; sem cura, o rogue morre aos 94.3 e o RMP fica 2v3."},
+ "erros": [
+  {"t": 49.4, "quem": "Amnesianvii", "fez": "mind sear em loop (49.4, 52.2 ×3 até 62.2, 73.2) como curador do time", "devia": "curar/PW:S no Zebedeuvi e dar dispel nos fears/seductions dos parceiros", "porque": "mind sear é AoE canalizado e quase não faz dano em arena; o curador ficou parado enquanto o rogue caía de vida", "gravidade": "alta"},
+  {"t": 58.3, "quem": "Heshovi", "fez": "nenhum polymorph/deep freeze no Kwongwegaix a luta toda, só spellsteal, flamestrike (69.9) e blizzard (76.7)", "devia": "usar polymorph no shaman quando o rogue abria e combinar o counterspell com o kidney", "porque": "o RMP depende de controlar o curador; o Kwongwegaix curou 96k livre", "gravidade": "alta"},
+  {"t": 56.8, "quem": "Zebedeuvi", "fez": "fan of knives (de novo aos 67.9)", "devia": "manter hemorrhage/eviscerate no alvo do kill", "porque": "AoE de rogue quebra os próprios CCs e não pressiona ninguém", "gravidade": "media"},
+  {"t": 87.5, "quem": "Heshovi", "fez": "evocation com o Zebedeuvi baixo sob pressão", "devia": "fazer peel no rogue (frost nova, polymorph no mago inimigo) ou counterspell no shaman", "porque": "canalizar 8 s parado na hora que o parceiro morria deixou o kill livre", "gravidade": "media"},
+  {"t": 102.2, "quem": "Amnesianvii", "fez": "pain suppression só em si mesmo a 12%, depois de o Zebedeuvi já ter morrido", "devia": "usar pain suppression no Zebedeuvi antes do kill aos 94.3", "porque": "o defensivo mais forte do disc ficou guardado e não salvou nenhum dos dois", "gravidade": "alta"},
+  {"t": 52.2, "quem": "Ominousdesii", "fez": "fear no Heshovi e pet seduction trocando de alvo", "devia": "concentrar fear/seduction no Amnesianvii durante o burst no rogue", "porque": "o controle espalhado deu respiro ao curador inimigo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 69.9, "quem": "Heshoix", "descricao": "counterspell no curador inimigo durante a pressão no rogue."},
+  {"t": 81.6, "quem": "Zebedeuvi", "descricao": "cloak of shadows para limpar os dots e curses do warlock."},
+  {"t": 94.0, "quem": "Heshoix", "descricao": "counterspell no Amnesianvii no momento do kill no Zebedeuvi."}
+ ],
+ "erros_da_rede": [
+  {"t": 86.4, "quem": "Kwongwegaix", "acao": "water shield → Zebedeuvi (51%)", "porque": "repetiu o water shield aplicado 1.5 s antes; global perdido."},
+  {"t": 101.5, "quem": "Ominousdesii", "acao": "life tap (91%)", "porque": "com o Amnesianvii a 12% era hora de dano/fear, não de life tap."},
+  {"t": 99.8, "quem": "Ominousdesii", "acao": "life tap → Heshovi (46%)", "porque": "outro global em mana na janela de kill do curador."}
+ ]}

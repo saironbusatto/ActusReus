@@ -1,0 +1,20 @@
+{"resumo": "O RLS travou Amnesianxxv com kidney shot e spell lock do pet enquanto o shaman parceiro estava em stun; o priest gastou GCDs alternando shadowform e morreu aos 78.0, e o RPS desmoronou em seguida.",
+ "momento_decisivo": {"t": 69.8, "descricao": "Pet spell lock silencia Amnesianxxv a 43% enquanto Kwongwegaxiv está em stun; sem cura nenhuma, o priest chega a 11% e não se recupera."},
+ "erros": [
+  {"t": 40.9, "quem": "Ominousxxiv", "fez": "fear em Kwongwegaxiv já em cheap shot", "devia": "fear no priest ou dano enquanto o stun corre", "porque": "CC sobreposto ao stun desperdiça a duração do fear", "gravidade": "baixa"},
+  {"t": 55.8, "quem": "Amnesianxxv", "fez": "mind blast (de novo aos 62.6) estando sob DoTs e a ~70%", "devia": "power word: shield/dispel nos DoTs de warlock em si", "porque": "o priest era o alvo; trocar defesa por dano pequeno deixou a vida cair antes do kidney", "gravidade": "media"},
+  {"t": 67.7, "quem": "Amnesianxxv", "fez": "tirou e pôs shadowform várias vezes (67.7, 70.1, 75.9, 77.6)", "devia": "ficar fora de shadowform curando (flash heal/penance) ou em shadowform só com dispersion", "porque": "cada troca custa um GCD; perto da morte esses GCDs eram as curas que faltaram", "gravidade": "alta"},
+  {"t": 57.6, "quem": "Kwongwegaxiv", "fez": "purge ×2 no shaman inimigo", "devia": "riptide/healing wave no priest, que era o alvo", "porque": "purge em shaman tira só escudo de água; o parceiro estava perdendo vida", "gravidade": "media"},
+  {"t": 85.7, "quem": "Kwongwegavi", "fez": "purge e wind shear (84.4) enquanto era focado", "devia": "riptide/healing wave em si", "porque": "o healer morreu aos 86.1 gastando os últimos GCDs em utilidade", "gravidade": "media"},
+  {"t": 48.2, "quem": "Zebedeuxiv", "fez": "kidney shot no rogue Zebedeuxi a 67%", "devia": "guardar o kidney para o healer Kwongwegavi ou para um alvo baixo", "porque": "kidney em rogue alto não gera kill e consome o recurso de controle do time", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 63.0, "quem": "Zebedeuxi", "descricao": "kick seguido de kidney shot em Amnesianxxv iniciou a janela de kill no priest"},
+  {"t": 69.8, "quem": "Ominousxxiv", "descricao": "pet spell lock no priest com o outro healer em stun deixou o alvo sem cura"},
+  {"t": 51.4, "quem": "Amnesianxxv", "descricao": "psychic scream tirou Zebedeuxi de cima de si"}
+ ],
+ "erros_da_rede": [
+  {"t": 77.6, "quem": "Amnesianxxv", "acao": "shadowform com o priest perto de morrer", "porque": "GCD sem cura; morreu 0.4 s depois"},
+  {"t": 76.8, "quem": "Kwongwegaxiv", "acao": "purge no shaman inimigo", "porque": "o priest aliado estava em 11%; era hora de cura de emergência"},
+  {"t": 67.2, "quem": "Kwongwegaxiv", "acao": "lifeblood", "porque": "cura pequena em si quando o priest era o alvo; healing wave no parceiro era mais útil"}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "Ominousdesxi travou o paladino Heruxiv com fears e howl enquanto o Celianeyix gastava a luta em cleave/heroic strike sem mortal strike nem interrupt; o healer caiu aos 93.8 e o warrior logo depois.",
+ "momento_decisivo": {"t": 80.6, "descricao": "Ominousdesxi dá fear no Heruxiv já sem trinket; o paladino fica preso a 57% sem curar e não volta mais, morrendo aos 93.8."},
+ "erros": [
+  {"t": 43.9, "quem": "Celianeyix", "fez": "cleave/heroic strike em loop (mortal strike só aos 86.6)", "devia": "mortal strike no alvo de kill e manter o debuff de cura", "porque": "contra dois healers sem o debuff de 50% de cura a pressão do warrior não mata ninguém", "gravidade": "alta"},
+  {"t": 90.5, "quem": "Celianeyix", "fez": "sunder armor enquanto o próprio healer morria para o lock", "devia": "intercept/pummel/spell reflect no Ominousdesxi ou intervene no Heruxiv", "porque": "o lock castava livre no paladino e o warrior não o incomodou", "gravidade": "alta"},
+  {"t": 38.5, "quem": "Celianeyix", "fez": "every man for himself sem CC relevante, seguido de bladestorm a 99%", "devia": "guardar o trinket para fear/stun numa janela de kill", "porque": "gastou o trinket na abertura e o bladestorm não forçou nenhum defensivo além do barkskin", "gravidade": "media"},
+  {"t": 75.8, "quem": "Heruxiv", "fez": "divine sacrifice e cancelou logo depois (76.5)", "devia": "usar só quando o aliado estiver em burst real, ou guardar", "porque": "cooldown gasto sem efeito na luta", "gravidade": "media"},
+  {"t": 64.2, "quem": "Naminiv", "fez": "mana spring totem com o paladino aliado em chain de fear", "devia": "tremor totem para quebrar os fears no Heruxiv", "porque": "o lock encadeou fear/howl no healer por mais de 20 s sem resposta", "gravidade": "media"},
+  {"t": 47.5, "quem": "Naminiv", "fez": "chain lightning (e de novo aos 77.3, 84.3, 93.6)", "devia": "wind shear/purge no healer e cura/totem de suporte", "porque": "chain lightning dá pouco dano em arena e prende o shaman em cast no alcance do pet do lock", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 66.8, "quem": "Ominousdesxi", "descricao": "howl of terror no paladino logo depois do trinket dele."},
+  {"t": 49.6, "quem": "Ominousdesxi", "descricao": "death coil no Celianeyix no meio da pressão do warrior, dando fôlego ao time."},
+  {"t": 40.2, "quem": "Pehdibalv", "descricao": "barkskin na hora do bladestorm do warrior."}
+ ],
+ "erros_da_rede": [
+  {"t": 43.2, "quem": "Celianeyix", "acao": "cleave → Kwongwegaxxv", "porque": "cleave no lugar de mortal strike; sem o debuff de cura a pressão no healer não rende."},
+  {"t": 88.8, "quem": "Celianeyix", "acao": "sunder armor → Pehdibalv", "porque": "sunder armor não serve em PvP; o GCD devia ser mortal strike ou peel no lock que matava o healer."},
+  {"t": 92.3, "quem": "Celianeyix", "acao": "sunder armor → Pehdibalv", "porque": "repetiu o sunder 1.5 s antes do healer aliado morrer, em vez de pummel ou intercept no Ominousdesxi."}
+ ]}

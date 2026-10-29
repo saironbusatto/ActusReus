@@ -1,0 +1,20 @@
+{"resumo": "O druida healer Pehdicouve gastou GCDs em formas, roots e cyclone em vez de se curar sob a pressão do Zebedeuii; caiu após o kidney shot aos 98.7 e o Wild I perdeu o healer, depois o hunter e o lock em sequência.",
+ "momento_decisivo": {"t": 98.7, "descricao": "Zebedeuii abre kidney shot no Pehdicouve com 35% de vida, forçando o trinket; sem cura própria nem peel, o druida morre aos 106.9."},
+ "erros": [
+  {"t": 104.9, "quem": "Pehdicouve", "fez": "cyclone com ~29% de vida logo após gastar o trinket", "devia": "curar a si mesmo (regrowth/rejuvenation/swiftmend) ou entrar em forma de urso para sobreviver", "porque": "healer a 29% sob rogue sem defensivos sobrando; cyclone não reduz o dano que estava recebendo e ele morreu 2 s depois", "gravidade": "alta"},
+  {"t": 82.2, "quem": "Pehdicouve", "fez": "cyclone logo após barkskin com 40% de vida", "devia": "usar a janela do barkskin para se curar (HoTs + swiftmend/nature's swiftness)", "porque": "barkskin compra tempo para curar; gastar o GCD em CC deixou a vida dele baixa para o próximo go", "gravidade": "media"},
+  {"t": 104.9, "quem": "Beteranii", "fez": "chimera shot no Heshoiv enquanto o seu healer morria", "devia": "peel no Zebedeuii (scatter shot / freezing trap / intimidation) para tirar o rogue do druida", "porque": "o hunter é o principal peel do time Wild; o rogue matou o healer sem ser incomodado", "gravidade": "alta"},
+  {"t": 87.5, "quem": "Amnesianii", "fez": "mind sear ×2", "devia": "mind blast/SW:P no alvo de kill ou fear/dispel ofensivo no druida", "porque": "mind sear é AoE de canalização fraca contra alvos espalhados em arena e prende o priest parado", "gravidade": "baixa"},
+  {"t": 101.0, "quem": "Heshoiv", "fez": "flamestrike enquanto o druida estava a 29% e sem trinket", "devia": "counterspell/polymorph para negar a cura ou frostbolt no druida para fechar o kill", "porque": "o momento do kill pede controle no healer, não AoE de dano baixo", "gravidade": "media"},
+  {"t": 119.8, "quem": "Beteranii", "fez": "mongoose bite no Zebedeuii em melee com vida baixa", "devia": "deterrence ou disengage e kitar", "porque": "hunter em melee com rogue perde; deterrence teria evitado a sequência que o matou em stun a 2%", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 57.1, "quem": "Amnesianii", "descricao": "will of the forsaken para sair do fear do Ominous e voltar a curar/dispelar."},
+  {"t": 98.7, "quem": "Zebedeuii", "descricao": "kidney shot no druida já baixo, forçando o trinket e garantindo o kill pouco depois."},
+  {"t": 77.0, "quem": "Heshoiv", "descricao": "remove curse para tirar curse of tongues dos aliados, mantendo o ritmo de cast do time."}
+ ],
+ "erros_da_rede": [
+  {"t": 94.4, "quem": "Beteranii", "acao": "hunter's mark → Amnesianii", "porque": "troca de mark sem pressão real no priest, gastando GCD enquanto o próprio healer estava sendo treinado."},
+  {"t": 101.0, "quem": "Beteranii", "acao": "hunter's mark → Heshoiv", "porque": "segunda troca de mark em 7 s; o GCD devia ser um peel no Zebedeuii que estava matando o druida."},
+  {"t": 119.8, "quem": "Beteranii", "acao": "mongoose bite → Zebedeuii", "porque": "ataque de melee com vida baixa no alcance do rogue em vez de deterrence/disengage."}
+ ]}

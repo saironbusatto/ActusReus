@@ -1,0 +1,20 @@
+{"resumo": "O Zebedeuxiv abriu no Naminiv com kidney, blind no Heruxiv (que gastou o trinket com 94%) e cobalt frag bomb em três. O Naminiv, que passou a luta em purge, caiu aos 59.0, e o Thunder em 2v3 perdeu o paladino aos 87.0.",
+ "momento_decisivo": {"t": 51.9, "descricao": "A cobalt frag bomb do Zebedeuxiv atordoa os três do Thunder e, em seguida, o Naminiv toma outro stun (52.8). Com o Heruxiv em silence pelo Amnesianxxv aos 55.6, o shaman vai de 56% a morto sem cura."},
+ "erros": [
+  {"t": 49.0, "quem": "Naminiv", "fez": "purge em sequência (41.6, 49.0 ×2, 53.8, 57.8), vários no Zebedeuxiv", "devia": "causar dano ou se defender: earthbind/frost shock no rogue, recuar até o paladino, ou cura própria", "porque": "rogue quase não tem buff mágico para purge; o shaman terminou com 1469 de dano e morreu sendo o alvo", "gravidade": "alta"},
+  {"t": 58.7, "quem": "Heruxiv", "fez": "judgement of light logo depois do divine shield, com o Naminiv a ponto de morrer", "devia": "flash of light/holy shock no Naminiv protegido pela bolha, ou hand of protection nele", "porque": "o bubble deu ao paladino uma janela livre para curar e o aliado morreu 0,3 s depois", "gravidade": "alta"},
+  {"t": 55.8, "quem": "Heruxiv", "fez": "divine sacrifice e cancelou 0,3 s depois", "devia": "usar hand of protection/sacrifice no Naminiv ou guardar o cooldown", "porque": "gastou o cooldown sem proteger ninguém justo quando o shaman estava sendo morto", "gravidade": "media"},
+  {"t": 44.3, "quem": "Celianeyix", "fez": "sunder armor no Zebedeuxiv (44.3, 48.5) e nenhum mortal strike na luta", "devia": "mortal strike, hamstring e intercept/intervene para tirar o rogue de cima do Naminiv", "porque": "sunder não pressiona e não protege; o warrior precisava fazer peel no shaman ou forçar defensivos do rogue", "gravidade": "alta"},
+  {"t": 43.3, "quem": "Heruxiv", "fez": "não usou hammer of justice no Zebedeuxiv em nenhum momento", "devia": "hammer of justice no rogue enquanto ele fazia kidney/blind no time", "porque": "o stun do paladino é o principal peel contra o rogue e teria cortado a sequência de CC no Naminiv", "gravidade": "media"},
+  {"t": 61.1, "quem": "Kwongwegaxiv", "fez": "purge ×2 e várias wind shears em vez de cura (61.1-65.5)", "devia": "riptide/healing wave para segurar o time e earthbind contra o warrior", "porque": "com o RPS na frente, os GCDs de purge não aceleraram o kill; o time ganhou pela pressão do rogue e do priest", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 44.4, "quem": "Zebedeuxiv", "descricao": "blind no healer logo depois do kidney no Naminiv, forçando o trinket do Heruxiv no começo"},
+  {"t": 55.6, "quem": "Amnesianxxv", "descricao": "silence no Heruxiv bem quando o Naminiv estava baixo, travando a cura do kill"},
+  {"t": 51.4, "quem": "Zebedeuxiv", "descricao": "cobalt frag bomb pegando os três do Thunder, emendando os stuns do kill"}
+ ],
+ "erros_da_rede": [
+  {"t": 57.8, "quem": "Naminiv", "acao": "purge → Zebedeuxiv", "porque": "dispel ofensivo num rogue com o próprio shaman perto de morrer; devia se defender ou fugir"},
+  {"t": 44.3, "quem": "Celianeyix", "acao": "sunder armor → Zebedeuxiv", "porque": "GCD sem valor em PvP quando o time precisava de peel ou de mortal strike"},
+  {"t": 55.8, "quem": "Heruxiv", "acao": "divine sacrifice", "porque": "cancelado logo em seguida (56.1, também pela rede); o cooldown foi gasto sem efeito"}
+ ]}

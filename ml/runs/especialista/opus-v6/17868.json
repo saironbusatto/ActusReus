@@ -1,0 +1,20 @@
+{"resumo": "Celianeyvii abriu com charge e bladestorm em Zebedeuii, que gastou vanish, evasion e cloak antes dos 47 s e morreu no execute aos 69.5 s. Sem o rogue, a RMP perdeu o controle. Celianeyvii ainda caiu para deep freeze e ice lance, e Heshoiv morreu depois de queimar o trinket dentro do ice block.",
+ "momento_decisivo": {"t": 42.7, "descricao": "Celianeyvii solta bladestorm logo depois do charge em Zebedeuii (40.6), com Naminii já no rogue. Aos 44.8 s Zebedeuii está com 26% e precisa gastar vanish e evasion, e aos 46.3 s o cloak. Fica sem defensivos para o resto da luta e morre aos 69.5 s."},
+ "erros": [
+  {"t": 42.2, "quem": "Zebedeuii", "fez": "abriu com hemorrhage em Celianeyvii, o warrior, sem pôr CC em ninguém", "devia": "abrir com cheap shot ou sap no healer (Heruxii) ou no alvo de kill, mantendo a disciplina de CC da RMP", "porque": "a RMP depende de controle. Trocar golpe com um warrior com bladestorm deixou o rogue tomar o burst inteiro de Celianeyvii e Naminii", "gravidade": "alta"},
+  {"t": 51.0, "quem": "Zebedeuii", "fez": "kidney shot em Celianeyvii, com pouca pressão nele, sem casar com o burst do mage", "devia": "guardar o kidney para Heruxii (healer) ou casar com o deep freeze e o frostbolt de Heshoiv no mesmo alvo", "porque": "o kidney gastou os combo points sem abrir janela de kill. O deep freeze só veio aos 59.9 s, e aí Celianeyvii já tinha trinket", "gravidade": "media"},
+  {"t": 73.0, "quem": "Celianeyvii", "fez": "spam de slam, heroic strike e cleave a luta toda, sem nenhum mortal strike nem hamstring", "devia": "manter o mortal strike (healing reduzido) no alvo e o hamstring no mage ou no rogue", "porque": "sem o debuff de 50% de cura, Amnesianii curou 121k e segurou a luta. Sem hamstring, Heshoiv kitou à vontade", "gravidade": "alta"},
+  {"t": 58.9, "quem": "Heruxii", "fez": "divine sacrifice cancelado 0.3 s depois (59.2), com Celianeyvii a 28% e caindo para 3%", "devia": "deixar o divine sacrifice ativo ou usar hand of protection ou holy shock em Celianeyvii", "porque": "cancelar logo em seguida gasta o cooldown sem absorver dano, bem quando o warrior estava para morrer", "gravidade": "media"},
+  {"t": 151.2, "quem": "Heshoiv", "fez": "pvp trinket logo depois do ice block, ainda imune", "devia": "sair do ice block e só usar o trinket num CC de verdade (fear, stun ou hammer)", "porque": "dentro do ice block o stun não importa. O trinket foi jogado fora, e ele morreu aos 162.7 s", "gravidade": "alta"},
+  {"t": 73.7, "quem": "Heshoiv", "fez": "evocation com Celianeyvii vivo a 20-40% e o warrior batendo nele", "devia": "manter frost nova, frostbolt e ice lance no warrior e só evocar depois do kill", "porque": "o channel no corpo a corpo de um warrior vivo é fácil de quebrar. Adiou o kill até os 89.4 s", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 59.9, "quem": "Heshoiv", "descricao": "deep freeze em Celianeyvii a 3%, seguido de cold snap. Forçou o trinket e, aos 85.7 s, matou o warrior com outro deep freeze e ice lance"},
+  {"t": 39.4, "quem": "Naminii", "descricao": "heroism na abertura junto do charge e do bladestorm, concentrando o burst em Zebedeuii"},
+  {"t": 184.0, "quem": "Amnesianii", "descricao": "pain suppression a 19% e desperate prayer logo depois, segurando o 2x2 de healers"}
+ ],
+ "erros_da_rede": [
+  {"t": 33.6, "quem": "Amnesianii", "acao": "shoot", "porque": "tiro de varinha na abertura, quando devia preparar CC (fear, shield) ou curar. É GCD perdido"},
+  {"t": 33.9, "quem": "Heshoiv", "acao": "mirror image", "porque": "cooldown de defesa e dano gasto antes do contato, sem ninguém para enganar. Faltou quando o warrior chegou"},
+  {"t": 61.4, "quem": "Naminii", "acao": "water shield", "porque": "buff de mana no meio da janela de kill em Zebedeuii, quando o certo era continuar o dano ou dar wind shear no priest"}
+ ]}

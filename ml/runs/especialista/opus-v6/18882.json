@@ -1,0 +1,20 @@
+{"resumo": "Mirror de RPS decidido pelo rogue. Zebedeuxii manteve hemorrhage e kidney em Zebedeuxiv, e Amnesianix silenciou o priest inimigo na hora do kill (92.1). Zebedeuxiv morreu aos 95 s e Amnesianxxv caiu sem defensivos aos 114.8 s.",
+ "momento_decisivo": {"t": 92.1, "descricao": "Amnesianix dá silence em Amnesianxxv logo depois do kidney de Zebedeuxii (84.0), tirando a cura de Zebedeuxiv, que morre aos 95.0 s."},
+ "erros": [
+  {"t": 55.6, "quem": "Zebedeuxiv", "fez": "vanish e hemorrhage no mesmo instante", "devia": "usar o vanish para resetar e abrir com cheap shot, garrote ou ambush, ou para fugir e esperar cura", "porque": "atacar logo depois do vanish tira o stealth e queima o cooldown sem ganho nenhum", "gravidade": "media"},
+  {"t": 71.9, "quem": "Zebedeuxii", "fez": "vanish aos 71.3 e hemorrhage 0.6 s depois", "devia": "abrir do stealth com cheap shot para casar o stun com o dano", "porque": "o vanish virou só um quebra-CC. Foi stunado de novo na hora e teve que gastar trinket e cloak", "gravidade": "baixa"},
+  {"t": 84.0, "quem": "Kwongwegaxiv", "fez": "com Zebedeuxiv sob kidney e caindo (84-95 s), usou purge e cleanse spirit poison e não curou o rogue", "devia": "riptide e healing wave em Zebedeuxiv durante o kidney", "porque": "o healer da RPS II curou 41k contra 85k do lado inimigo, e o rogue morreu sem cura nos segundos finais", "gravidade": "alta"},
+  {"t": 106.3, "quem": "Amnesianxxv", "fez": "foi trenado de 101 a 114.8 s sem usar dispersion, psychic scream nem desperate prayer", "devia": "dar psychic scream ao primeiro contato do rogue e dispersion abaixo de 30%", "porque": "o priest tinha defensivos disponíveis e morreu sem usar nenhum", "gravidade": "alta"},
+  {"t": 93.8, "quem": "Zebedeuxiv", "fez": "kidney shot ofensivo em Zebedeuxii a 50% enquanto morria (morreu 1.2 s depois)", "devia": "usar vanish ou evasion para sobreviver, ou o kidney em Amnesianix para parar o dano", "porque": "o rogue inimigo não morreria a 50%. Sem um defensivo, Zebedeuxiv morreu", "gravidade": "media"},
+  {"t": 36.0, "quem": "Amnesianxxv", "fez": "passou a luta entrando e saindo do shadowform (55.6, 66.2, 89.9, 94.0, 112.4) para curar", "devia": "deixar Kwongwegaxiv como healer principal e só sair do shadowform em emergência real, ou ficar fora curando", "porque": "cada troca gasta GCD e mana e não sustentou nem o rogue nem a si mesmo", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 92.1, "quem": "Amnesianix", "descricao": "silence no healer inimigo (Amnesianxxv) bem na janela de kill do rogue"},
+  {"t": 84.0, "quem": "Zebedeuxii", "descricao": "kidney shot em Zebedeuxiv depois de 30 s de hemorrhage constante no mesmo alvo, sem trocar"},
+  {"t": 72.1, "quem": "Zebedeuxii", "descricao": "pvp trinket do kidney a 22% seguido de cloak of shadows, sobrevivendo à janela inimiga"}
+ ],
+ "erros_da_rede": [
+  {"t": 83.0, "quem": "Kwongwegaxiv", "acao": "purge em Amnesianix", "porque": "tirou o shield do priest enquanto o próprio rogue entrava no kidney. Era hora de curar"},
+  {"t": 97.4, "quem": "Kwongwegaxiv", "acao": "purge em Amnesianix", "porque": "com Amnesianxxv sendo trenado por Zebedeuxii, purge no priest não ajuda. Cura e totens ajudariam"},
+  {"t": 78.4, "quem": "Zebedeuxiv", "acao": "slice and dice", "porque": "refresh de buff enquanto Zebedeuxii o batia. Os combo points rendiam mais num kidney defensivo ou num eviscerate"}
+ ]}

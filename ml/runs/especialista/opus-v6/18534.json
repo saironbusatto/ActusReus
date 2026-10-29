@@ -1,0 +1,19 @@
+{"resumo": "A RLS quase matou Amnesianxix (4%) aos 64 s, mas o dispersion o salvou. Zebedeuix se reengajou com pouca vida depois do vanish e morreu aos 102.5 s. A partir daí os dois warlocks da Shadowplay controlaram Kwongwegaiv sem tremor totem.",
+ "momento_decisivo": {"t": 64.2, "descricao": "Amnesianxix usa dispersion a 4% de vida, logo depois do fear no rogue (62.4). A janela de kill da RLS se perde e Zebedeuix fica sem trinket para o resto da luta."},
+ "erros": [
+  {"t": 67.2, "quem": "Zebedeuix", "fez": "kidney shot em Amnesianxix com o dispersion ativo, junto com hemorrhage", "devia": "segurar o kidney e os combo points até o fim do dispersion (6 s) ou trocar para Heruii sem cooldowns", "porque": "o dispersion corta 90% do dano. O kidney gastou o stun na única janela em que o alvo não morria", "gravidade": "alta"},
+  {"t": 99.2, "quem": "Zebedeuix", "fez": "depois do vanish com pouca vida (39% aos 87.8 s), usou shadowstep de volta em Amnesianxix", "devia": "ficar em stealth e se recuperar ou esperar cura de Kwongwegaiv antes de voltar", "porque": "sem trinket nem evasion, voltou para dois warlocks com DoTs e foi feared a 1%, morrendo aos 102.5 s", "gravidade": "alta"},
+  {"t": 87.8, "quem": "Zebedeuix", "fez": "evasion a 39% contra time de casters", "devia": "usar cloak of shadows para limpar UA, corruption e curse", "porque": "o dano vinha dos DoTs dos warlocks e do priest, e evasion não reduz dano mágico", "gravidade": "media"},
+  {"t": 38.7, "quem": "Kwongwegaiv", "fez": "luta inteira sem tremor totem contra dois warlocks e um priest. Tomou fear aos 38.7, 55.5, 61.9, 91.0, 92.8, 118 e 130 s", "devia": "manter o tremor totem baixado o tempo todo", "porque": "o healer ficou fora de ação em cada fear. Isso decidiu tanto a morte do rogue quanto o 1v3 do final", "gravidade": "alta"},
+  {"t": 54.6, "quem": "Heruii", "fez": "divine sacrifice cancelado 0.3 s depois (54.9)", "devia": "manter o divine sacrifice durante a pressão em Amnesianxix ou não gastá-lo", "porque": "cancelar imediatamente perde o cooldown sem absorver nada. Aos 64 s o priest chegou a 4%", "gravidade": "media"},
+  {"t": 65.0, "quem": "Kwongwegaiv", "fez": "cleanse spirit curse em cadeia (65.0-67.5, 69.9, 84.8, 88.5), com riptide como única cura", "devia": "priorizar healing wave e chain heal nos aliados e ignorar o curse of tongues reaplicado", "porque": "o healer da RLS curou só 51k. Os curses voltavam em 1 GCD do warlock", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 64.2, "quem": "Amnesianxix", "descricao": "dispersion a 4% de vida, salvando-se do burst da RLS"},
+  {"t": 98.6, "quem": "Heruii", "descricao": "divine shield a 5% depois do kidney e do trinket, segurando a troca de alvo da RLS"},
+  {"t": 41.4, "quem": "Zebedeuix", "descricao": "blind em Heruii (healer) e, aos 45.6 s, kidney em Amnesianxix: CC no healer casado com pressão no alvo"}
+ ],
+ "erros_da_rede": [
+  {"t": 41.2, "quem": "Ominousxxi", "acao": "pet autocast setup", "porque": "configuração do pet em pleno combate, com Amnesianxix no stun. GCD perdido na janela de pressão"},
+  {"t": 98.4, "quem": "Ominousix", "acao": "life tap", "porque": "gastou vida e GCD com o rogue inimigo no shadowstep vindo, quando o certo era fear ou death coil no Zebedeuix quase morto"}
+ ]}

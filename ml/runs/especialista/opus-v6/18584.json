@@ -1,0 +1,20 @@
+{"resumo": "Luta de desgaste: o TSG II espalhou doenças com pestilence e cleave no Kwongwegaxvi, que gastou mana e globais com cleanse spirit disease em loop até cair aos 170.0; os outros dois morreram em sequência.",
+ "momento_decisivo": {"t": 117.1, "descricao": "Kwongwegaxvi segue o loop de cleanse spirit disease contra doenças que o DK reaplica na hora com icy touch/pestilence, queimando mana e globais que faltaram na hora do kill."},
+ "erros": [
+  {"t": 47.4, "quem": "Kwongwegaxvi", "fez": "cleanse spirit disease em loop a luta toda (47.4 até 161.1)", "devia": "curar e deixar as doenças, que o DK reaplica instantâneo com icy touch/plague strike/pestilence", "porque": "dispel contra doença que volta na hora é mana e global jogados fora numa luta decidida pela mana", "gravidade": "alta"},
+  {"t": 44.0, "quem": "Celianeyiv", "fez": "cleave/heroic strike/thunder clap sem mortal strike até 71.4", "devia": "manter o mortal strike no alvo para cortar a cura recebida", "porque": "contra dois curadores, o -50% de cura do mortal strike é o que permite matar; sem ele a luta virou desgaste", "gravidade": "alta"},
+  {"t": 60.0, "quem": "Zebedeuxvi", "fez": "kidney shot no Omasconiv (de novo aos 90.7, 110.9, 132.8, 154.2)", "devia": "usar o kidney no Heruix com o time no alvo ou no warrior durante o burst", "porque": "o DK tem trinket, icebound e bone shield e se cura; os 5 kidneys não deram nenhum kill", "gravidade": "media"},
+  {"t": 76.8, "quem": "Heruix", "fez": "divine plea com o Omasconiv a 41% sob pressão", "devia": "curar o DK primeiro e dar divine plea num momento calmo", "porque": "divine plea reduz a cura em 50%, bem na hora em que o parceiro precisava", "gravidade": "media"},
+  {"t": 149.3, "quem": "Zebedeuxvi", "fez": "cloak of shadows aos 24% contra dano físico do warrior/DK", "devia": "vanish/evasion ou kitar o warrior; cloak só para dano mágico", "porque": "o dano que o matava era quase todo físico (strikes, execute); o cloak não salvou e ele morreu no fim", "gravidade": "baixa"},
+  {"t": 142.4, "quem": "Amnesianxxix", "fez": "hymn of hope canalizado com o warrior em bladestorm no time", "devia": "pôr shield e curar com o time na pressão", "porque": "canal longo e parado no meio de um bladestorm é cura perdida", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 76.2, "quem": "Omasconiv", "descricao": "icebound fortitude aos 41% de vida, sobrevivendo à pressão do rogue."},
+  {"t": 95.4, "quem": "Amnesianxxix", "descricao": "silence no curador inimigo para aliviar a pressão."},
+  {"t": 173.6, "quem": "Celianeyiv", "descricao": "charge com stun no Zebedeuxvi aos 3% para fechar o kill com victory rush."}
+ ],
+ "erros_da_rede": [
+  {"t": 53.0, "quem": "Celianeyiv", "acao": "cleave → Kwongwegaxvi (68%)", "porque": "cleave no lugar de mortal strike no curador deixa ele sem o corte de cura."},
+  {"t": 76.8, "quem": "Heruix", "acao": "divine plea (50%)", "porque": "cortou a própria cura pela metade com o DK a 41%."},
+  {"t": 130.2, "quem": "Omasconiv", "acao": "horn of winter (19%)", "porque": "global em buff de enchimento com o rogue saindo do stun a 47%."}
+ ]}

@@ -1,0 +1,17 @@
+{"resumo": "Zebedeuxiv abriu com blind no healer e shadow dance no mago, e Heshoix morreu aos 45.6 sem reagir. O RPS desperdiçou a vantagem: o rogue gastou os defensivos, voltou a bater com a vida baixa e morreu. Depois Kwongwegaxiv, passando a luta em purge, caiu sob os fears do bruxo.",
+ "momento_decisivo": {"t": 41.1, "descricao": "Blind de Zebedeuxiv em Kwongwegaix seguido de shadow dance, cheap shot e ambush em Heshoix; o healer não usa o trinket para sair do blind e o mago morre em 4 s."},
+ "erros": [
+  {"t": 41.1, "quem": "Kwongwegaix", "fez": "ficou no blind enquanto o mago levava a sequência de shadow dance", "devia": "trinket no blind e cura/riptide em Heshoix", "porque": "o trinket estava disponível e o mago morreu aos 45.6; essa era a hora de usá-lo", "gravidade": "alta"},
+  {"t": 39.5, "quem": "Heshoix", "fez": "living bomb com o rogue acabando de dar shadowstep nele", "devia": "frost nova/blink ou mirror image pronto e se afastar do rogue", "porque": "ficou parado no alcance do melee e caiu no cheap shot e no ambush", "gravidade": "media"},
+  {"t": 46.8, "quem": "Kwongwegaxiv", "fez": "purge ×2 até 49.0 e purge repetido (58.7, 63.1 ×2, 70.9 ×2, 78.6)", "devia": "curar Zebedeuxiv, que estava apanhando do bruxo e caiu para 31%", "porque": "o rogue morreu aos 80.0 com o healer quase sem curar; os purges não mudaram nada", "gravidade": "alta"},
+  {"t": 69.3, "quem": "Zebedeuxiv", "fez": "voltou a hemorrhage em Ominousdesii logo depois de evasion/vanish/cloak, com cerca de 31%", "devia": "sair em stealth e esperar cura antes de voltar", "porque": "sem defensivos, morreu aos 80.0 ainda batendo", "gravidade": "alta"},
+  {"t": 67.8, "quem": "Amnesianxxv", "fez": "sai e volta do shadowform (67.8/75.6, 76.9/78.9, 150.5/152.3)", "devia": "ficar em shadowform e usar shield/renew sem trocar de forma", "porque": "cada troca gasta GCD e mana e tira a redução de dano no meio da pressão", "gravidade": "media"},
+  {"t": 147.8, "quem": "Amnesianxxv", "fez": "dispersion com 100% de vida", "devia": "guardar para os fears/dano do bruxo no fim", "porque": "não tinha o defensivo quando caiu para 28% aos 184.1", "gravidade": "media"}],
+ "acertos": [
+  {"t": 41.1, "quem": "Zebedeuxiv", "descricao": "blind no healer, shadow dance, cheap shot e ambush no mago: abertura limpa que matou Heshoix."},
+  {"t": 48.1, "quem": "Ominousdesii", "descricao": "death coil e depois fears em Zebedeuxiv, segurando o rogue após a morte do mago."},
+  {"t": 143.5, "quem": "Heshoix", "descricao": "dragon's breath no healer Kwongwegaxiv a 43%, abrindo a janela de morte do shaman."}],
+ "erros_da_rede": [
+  {"t": 41.9, "quem": "Heshoix", "acao": "spellsteal em Kwongwegaxiv", "porque": "com o rogue já em cima dele, roubar buff era menos urgente que frost nova/blink."},
+  {"t": 69.3, "quem": "Zebedeuxiv", "acao": "hemorrhage em Ominousdesii", "porque": "voltou a bater com a vida baixa e sem defensivos, logo após o vanish."},
+  {"t": 93.5, "quem": "Kwongwegaix", "acao": "call of the elements", "porque": "repor os totens no meio da luta, logo após um wind shear, enquanto havia cura a fazer."}]}

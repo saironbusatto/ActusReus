@@ -1,0 +1,19 @@
+{"resumo": "Ominousx dominou a RPS com fear e spell lock em Kwongwegaxiv e Amnesianxxv, sem tremor totem do outro lado. Zebedeuxiv morreu aos 77.1 s de DoTs e mind flay sem cura, e o resto caiu em seguida.",
+ "momento_decisivo": {"t": 72.8, "descricao": "Ominousx põe curse of tongues e fear em Kwongwegaxiv e, aos 75.7 s, spell lock em Amnesianxxv. Os dois healers da RPS ficam fora enquanto Zebedeuxiv toma DoTs e mind flay e morre aos 77.1 s."},
+ "erros": [
+  {"t": 41.6, "quem": "Kwongwegaxiv", "fez": "tomou fear em cadeia (41.6, 44.5, 53.6, 72.8) sem nunca baixar tremor totem", "devia": "baixar tremor totem logo na abertura contra warlock e priest", "porque": "o tremor quebra fear a cada pulso. Sem ele, o único healer de verdade passou boa parte da luta fora", "gravidade": "alta"},
+  {"t": 60.7, "quem": "Kwongwegaxiv", "fez": "gastou GCDs tirando curse of tongues repetidas vezes (60.7, 77.3, 80.6, 84.0, 87.3)", "devia": "priorizar riptide e healing wave nos aliados e conviver com o curse", "porque": "Ominousx reaplica o curse instantâneo. Cada GCD de cleanse era um a menos de cura, com Zebedeuxiv e Amnesianxxv morrendo", "gravidade": "media"},
+  {"t": 56.0, "quem": "Zebedeuxiv", "fez": "evasion a 42% contra time de casters (warlock e shadow priest)", "devia": "usar cloak of shadows para limpar UA e corruption, ou vanish e reset", "porque": "evasion só dá esquiva contra golpe físico e não faz nada contra DoT e mind flay, que eram a fonte do dano", "gravidade": "media"},
+  {"t": 57.1, "quem": "Amnesianxxv", "fez": "ficou entrando e saindo do shadowform (57.1, 64.5, 73.8, 75.9, 88.3)", "devia": "decidir um papel: ficar fora do shadowform curando ou dentro dando dano", "porque": "cada troca gasta GCD e mana. Com o rogue morrendo, ele voltou ao shadowform aos 75.9 s em vez de curar", "gravidade": "alta"},
+  {"t": 45.9, "quem": "Zebedeuxiv", "fez": "kidney shot em Heruiv (healer) sem dano de ninguém no paladin e sem CC no alvo de kill", "devia": "usar o kidney no alvo que o time estava batendo, casado com o burst do priest", "porque": "o kidney no healer só vale com kill acontecendo em outro alvo. Ali ninguém estava em execução", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 35.8, "quem": "Ominousx", "descricao": "pet spell lock em Amnesianxxv e fear em rodízio em Kwongwegaxiv. Manteve os healers inimigos fora a luta toda"},
+  {"t": 68.8, "quem": "Heruiv", "descricao": "pvp trinket a 30% no kidney shot e divine protection logo depois, sobrevivendo à única janela da RPS"},
+  {"t": 88.9, "quem": "Amnesianxxi", "descricao": "shadow word: death de execução em Amnesianxxv"}
+ ],
+ "erros_da_rede": [
+  {"t": 75.9, "quem": "Amnesianxxv", "acao": "shadowform", "porque": "entrou em shadowform com o aliado Zebedeuxiv a segundos de morrer, sem o flash heal que podia salvá-lo"},
+  {"t": 99.8, "quem": "Kwongwegaxiv", "acao": "purge em Ominousx", "porque": "último vivo e prestes a morrer (100.5 s), usou purge e wind shear em vez de se curar com healing wave"},
+  {"t": 75.4, "quem": "Ominousx", "acao": "curse of agony em Zebedeuxiv", "porque": "DoT lento num alvo que morreu 1.7 s depois. O GCD rendia mais no próximo alvo"}
+ ]}

@@ -1,0 +1,20 @@
+{"resumo": "Luta longa de desgaste por DoTs. O Shadowplay manteve o Pehdibalii sob spell lock do pet e silence, mais pressão de Ominousx/Amnesianxxi, até ele morrer aos 145.0. Sem o druid, Ominousdesix e Kwongwegaxx caíram em seguida.",
+ "momento_decisivo": {"t": 140.2, "descricao": "Ominousx usa spell lock no Pehdibalii (16%) logo depois do barkskin dele ter acabado (135.1). O Kwongwegaxx gasta o GCD com wind shear em vez de curar o druid, que morre aos 145.0 sob UA/haunt."},
+ "erros": [
+  {"t": 140.4, "quem": "Kwongwegaxx", "fez": "wind shear enquanto Pehdibalii estava com 16% e silenciado", "devia": "riptide/lesser healing wave no Pehdibalii, ou nature's swiftness + healing wave", "porque": "o druid silenciado não podia se curar; o shaman era a única cura possível e o parceiro morreu 5 s depois", "gravidade": "alta"},
+  {"t": 41.4, "quem": "Pehdibalii", "fez": "entangling roots no Heruiv várias vezes (41.4, 54.7, 87.6, 95.5)", "devia": "cyclone no Heruiv ou no Ominousx, ou curar/pressionar o alvo", "porque": "root não impede um healer de conjurar e o paladino ainda tem hand of freedom e cleanse; o efeito no Heruiv foi nulo", "gravidade": "media"},
+  {"t": 39.5, "quem": "Amnesianxxi", "fez": "mind sear como ataque principal a luta toda (39.5-124.5), sem vampiric touch nem shadow word: pain", "devia": "VT + SW:P + mind blast + mind flay no alvo de kill", "porque": "mind sear não acerta o alvo escolhido, só quem está em volta, e é canalizado com pushback; o dano útil no alvo foi bem menor", "gravidade": "media"},
+  {"t": 102.3, "quem": "Pehdibalii", "fez": "moonkin form, starfall e hurricane (102.3-105.4) já como alvo dos dois DoTers", "devia": "ficar em forma de cura com lifebloom/rejuv e cyclone no Ominousx", "porque": "logo depois tomou spell lock aos 107.2 e chegou a 59%; ir de moonkin deixou o time sem a segunda cura contra dois casters de DoT", "gravidade": "media"},
+  {"t": 37.4, "quem": "Kwongwegaxx", "fez": "a luta toda sem grounding totem, tomando pet spell lock repetido (37.4, 41.0, 42.4, 62.0)", "devia": "soltar grounding totem antes do spell lock/haunt do Ominousx", "porque": "o grounding absorve o spell lock do felhunter ou um UA/haunt; contra dois warlocks é o totem que segura o healer conjurando", "gravidade": "media"},
+  {"t": 131.7, "quem": "Heruiv", "fez": "divine sacrifice e cancelou 0.3 s depois", "devia": "usar só quando o Amnesianxxi estivesse em perigo, ou guardar", "porque": "gastou o cooldown sem absorver dano nenhum", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 117.6, "quem": "Heruiv", "descricao": "trinket no stun do shadowfury com 23% e divine shield na hora, saindo do único go perigoso que o LSD montou"},
+  {"t": 81.2, "quem": "Ominousx", "descricao": "spell lock no Pehdibalii (16%) junto com o silence do Amnesianxxi, tirando o druid de cura mais de uma vez"},
+  {"t": 117.4, "quem": "Ominousdesix", "descricao": "shadowfury pegando Heruiv com 23% e Amnesianxxi com 34% ao mesmo tempo, o que forçou os dois trinkets"}
+ ],
+ "erros_da_rede": [
+  {"t": 158.5, "quem": "Ominousx", "acao": "life tap ×3 seguidos (153.8-158.5) com o alvo em Ominousdesix", "porque": "gastou vida e GCD na hora de fechar o kill no warlock inimigo; um shadow bolt/haunt finalizava mais rápido e deixava o time livre para ir no shaman"},
+  {"t": 58.9, "quem": "Kwongwegaxx", "acao": "purge em Ominousx", "porque": "warlock quase não tem buff que valha purgar; o GCD faltou nas curas sob a pressão de DoTs"},
+  {"t": 64.4, "quem": "Ominousdesix", "acao": "corruption em Ominousx", "porque": "o warlock inimigo tem felhunter com devour magic (usado várias vezes) e limpa o DoT; era melhor fear/death coil no Heruiv ou dano no priest"}
+ ]}

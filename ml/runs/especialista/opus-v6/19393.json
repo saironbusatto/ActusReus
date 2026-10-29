@@ -1,0 +1,16 @@
+{"resumo": "Celianeyvi e Omasconvi caíram em cima de Kwongwegaix, que respondeu com purge e cleanse de doença em vez de se curar, e morreu aos 58.6. Sem healer, Ominousdesii foi pego por charge + execute.",
+ "momento_decisivo": {"t": 53.0, "descricao": "Bladestorm de Celianeyvi em cima de Kwongwegaix, ao mesmo tempo que o shaman gasta cleanse spirit disease ×3 em vez de se curar; ele morre 5 s depois."},
+ "erros": [
+  {"t": 53.0, "quem": "Kwongwegaix", "fez": "cleanse spirit disease ×3 até 55.1 durante o bladestorm", "devia": "riptide/healing wave em si mesmo e afastar-se dos melees", "porque": "o DK reaplica doença sem custo; quem morria era o próprio healer, que fez só 5.7k de cura", "gravidade": "alta"},
+  {"t": 43.2, "quem": "Kwongwegaix", "fez": "call of the elements de novo e purge aos 45.0 e 47.2", "devia": "se posicionar e pré-curar o time contra o rush de dois melees", "porque": "os totens já tinham sido postos aos 35.6; os GCDs da abertura foram em utilidade de pouco valor", "gravidade": "media"},
+  {"t": 43.3, "quem": "Heshoix", "fez": "flamestrike e blizzard na abertura", "devia": "polymorph no healer Heruxi ou frost nova/dano direto num alvo", "porque": "AoE em arena dá pouco dano e não controla ninguém, enquanto os melees iam no seu healer", "gravidade": "media"},
+  {"t": 42.6, "quem": "Heruxi", "fez": "every man for himself no stun do shadowfury com 88%", "devia": "aceitar os 2 s de stun e guardar o trinket para fear/poly de verdade", "porque": "ninguém estava ameaçado; o healer ficou sem trinket para o resto da luta", "gravidade": "media"},
+  {"t": 56.4, "quem": "Heshoix", "fez": "scorch ×2 em Celianeyvi com o próprio healer morrendo", "devia": "polymorph em Omasconvi ou frost nova para tirar os melees do shaman", "porque": "dano no warrior não salvava Kwongwegaix; faltou peel", "gravidade": "media"},
+  {"t": 57.2, "quem": "Ominousdesii", "fez": "demonic circle: teleport, saindo de perto do healer", "devia": "fear/death coil em Celianeyvi para tirar a pressão de Kwongwegaix", "porque": "o shaman ficou sozinho 1.4 s antes de morrer", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 42.6, "quem": "Ominousdesii", "descricao": "shadowfury pegando os três adversários de uma vez."},
+  {"t": 51.4, "quem": "Celianeyvi", "descricao": "berserker rage para sair do fear e voltar ao healer com cleave e bladestorm."},
+  {"t": 67.9, "quem": "Celianeyvi", "descricao": "charge em Ominousdesii a 22% e execute em seguida."}],
+ "erros_da_rede": [
+  {"t": 35.9, "quem": "Heshoix", "acao": "mirror image", "porque": "usado antes de qualquer contato, desperdiçando o cooldown defensivo/ofensivo."},
+  {"t": 57.8, "quem": "Heshoix", "acao": "spellsteal em Celianeyvi", "porque": "com o healer a 1 s da morte, o GCD tinha que ser peel (poly/frost nova), não roubar buff."}]}

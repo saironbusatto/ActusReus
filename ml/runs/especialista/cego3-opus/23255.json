@@ -1,0 +1,18 @@
+{"resumo": "No espelho RLS, Zebedeuix ganhou a briga de rogues na abertura: shadow dance + cheap shot + ambushes + frag bomb em Zebedeuxi, que queimou trinket, vanish, evasion e cloak e morreu aos 58.4. Kwongwegavi não curava o parceiro. No 3v2, Zebedeuix morreu, mas o howl e o kidney em Kwongwegavi fecharam a luta.",
+ "momento_decisivo": {"t": 35.8, "descricao": "Zebedeuix abre shadow dance + cheap shot (36.1), ambush (37.1/38.2), cobalt frag bomb (37.4) e novo cheap shot (40.3) em Zebedeuxi, levando-o a 26% e forçando todos os defensivos; o eviscerate de 44.8 o deixa a 9%."},
+ "momento_aceitos": [35.8, 36.1, 37.4, 40.3, 44.8],
+ "erros": [
+  {"t": 57.7, "quem": "Kwongwegavi", "fez": "purge em Zebedeuix com o parceiro Zebedeuxi prestes a morrer (morreu aos 58.4)", "devia": "riptide + healing wave/nature's swiftness em Zebedeuxi", "porque": "O rogue estava sob dots e hemorrhage sem defensivo nenhum; cada GCD fora da cura foi a morte dele", "gravidade": "alta"},
+  {"t": 36.8, "quem": "Kwongwegavi", "fez": "wrath of air totem (e cleanse spirit poison aos 35.2) enquanto Zebedeuxi tomava cheap shot e ambushes", "devia": "riptide e healing wave em Zebedeuxi desde o primeiro golpe", "porque": "Abrir com totem e limpar veneno com o parceiro no stunlock deixou o rogue cair para 26% em 6 s", "gravidade": "media"},
+  {"t": 34.0, "quem": "Zebedeuxi", "fez": "shadowstep no rogue inimigo, blind no healer e shadow dance aos 35.4 sem converter, sendo aberto em seguida", "devia": "usar o shadow dance com cheap shot/kidney num alvo (Ominousxxi em stun) ou guardar e usar blind/gouge em Zebedeuix", "porque": "Gastou a dança sem dano e ficou à mercê do opener do outro rogue, perdendo as recargas defensivas logo no início", "gravidade": "media"},
+  {"t": 47.6, "quem": "Zebedeuxi", "fez": "voltou a atacar (hemorrhage, kidney aos 51.7) a 9% logo após evasion e cloak", "devia": "usar evasion/cloak para correr até o healer/pilar e se recuperar antes de voltar", "porque": "Com 9% e dots voltando, ficar trocando dano no meio levou à morte aos 58.4", "gravidade": "media"},
+  {"t": 81.8, "quem": "Kwongwegaiv", "fez": "purge (também aos 76.7) com Zebedeuix caindo depois do fear a 34%", "devia": "curar Zebedeuix (riptide/healing wave) e usar grounding contra o fear", "porque": "Zebedeuix morreu aos 81.8 depois de gastar o trinket; os GCDs de purge custaram o rogue e quase a luta", "gravidade": "alta"},
+  {"t": 53.9, "quem": "Kwongwegaiv", "fez": "purge ×2 até 55.1 com Zebedeuix a 37% em evasion", "devia": "riptide/healing wave em Zebedeuix", "porque": "O rogue estava baixo e só se salvou pelo vanish/cloak aos 54.2", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 35.8, "quem": "Zebedeuix", "descricao": "Shadow dance + cheap shot + ambush + frag bomb: venceu o duelo de rogues e forçou trinket, vanish, evasion e cloak no rival."},
+  {"t": 54.2, "quem": "Zebedeuix", "descricao": "Vanish + premeditation + cloak of shadows a 37%, se livrando dos dots e voltando à luta."},
+  {"t": 100.9, "quem": "Ominousxxi", "descricao": "Howl of terror pegando Kwongwegavi e Ominousxxiv, abrindo a kill no healer."},
+  {"t": 103.4, "quem": "Zebedeuix", "descricao": "Kidney shot em Kwongwegavi a 30% logo depois do howl, fechando o healer."},
+  {"t": 34.9, "quem": "Zebedeuxi", "descricao": "Cobalt frag bomb em Ominousxxi com blind em Kwongwegaiv no mesmo segundo, controlando dois inimigos."}
+ ]}

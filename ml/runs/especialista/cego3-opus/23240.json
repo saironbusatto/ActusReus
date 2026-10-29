@@ -1,0 +1,17 @@
+{"resumo": "Espelho LSD em que LSD I pôs a pressão em Kwongwegaxxi (dots + hurricane) e fechou com o fear de Ominousdesvi aos 66.1; o shaman, a 14%, ainda gastou GCD em purge e morreu. Sem healer, Pehdibaliv caiu aos 110.7.",
+ "momento_decisivo": {"t": 66.1, "descricao": "Ominousdesvi dá fear em Kwongwegaxxi logo após o hurricane de Pehdicouv (66.0) nele; o shaman cai para 28%, gasta o trinket a 20% e, em stun e fear seguidos, morre aos 72.7."},
+ "momento_aceitos": [64.0, 66.0, 66.1, 69.4],
+ "erros": [
+  {"t": 69.4, "quem": "Kwongwegaxxi", "fez": "purge em Kwongwegaxix estando com 14% de vida", "devia": "se curar (riptide + healing wave/lesser healing wave, nature's swiftness)", "porque": "Na janela entre o stun e o novo fear, essa era a única chance de recuperar vida; ele morreu 3 s depois", "gravidade": "alta"},
+  {"t": 67.7, "quem": "Pehdibaliv", "fez": "hurricane em Kwongwegaxix com o próprio healer a 28% e em fear", "devia": "curar Kwongwegaxxi (regrowth/rejuvenation/nourish, como ele fez em outros momentos) ou cyclone em Ominousdesvi", "porque": "O healer estava a segundos de morrer; o hurricane num healer inimigo cheio não mudava nada", "gravidade": "alta"},
+  {"t": 47.0, "quem": "Kwongwegaxxi", "fez": "purge em sequência (47.0, 50.0, 52.3) e water shield, com dots dos dois inimigos em cima", "devia": "cleanse spirit nas maldições/curas e posicionamento no pilar", "porque": "Ele virou o alvo da pressão dos dots e dos hurricanes; os GCDs de purge foram vida que faltou quando o burst veio", "gravidade": "media"},
+  {"t": 62.5, "quem": "Pehdibaliv", "fez": "troca de forma moonkin/caster pelo menos 6 vezes entre 43.8 e 62.5", "devia": "ficar numa forma e fazer cada GCD valer (dano em moonkin ou cura em caster)", "porque": "Cada troca gasta GCD e mana; o druida ficou sem produzir dano nem cura enquanto o healer era pressionado", "gravidade": "media"},
+  {"t": 53.8, "quem": "Pehdibaliv", "fez": "barkskin com 82% de vida", "devia": "guardar o barkskin para quando fosse focado (no fim, a 9% e em root aos 108.8, já não tinha)", "porque": "O barkskin dura 12 s e tem 1 min de recarga; usado sem pressão, não protegeu nada", "gravidade": "media"},
+  {"t": 71.8, "quem": "Ominousdesx", "fez": "corruption em Ominousdesvi com o próprio healer em fear/stun a 9-14%", "devia": "fazer peel no healer: death coil/howl of terror em Pehdicouv ou fear em Ominousdesvi para cortar o burst", "porque": "Ele não fez nenhum controle defensivo no momento da kill do healer", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 40.7, "quem": "Ominousdesvi", "descricao": "Shadowfury pegando os três inimigos na abertura."},
+  {"t": 66.1, "quem": "Ominousdesvi", "descricao": "Fear no healer inimigo já baixo, no momento certo para fechar a kill."},
+  {"t": 66.0, "quem": "Pehdicouv", "descricao": "Hurricane no healer inimigo para somar dano à pressão dos dots."},
+  {"t": 75.9, "quem": "Pehdicouv", "descricao": "Depois da kill, passou a curar o time (rejuvenation, nourish, regrowth), garantindo a vantagem."}
+ ]}

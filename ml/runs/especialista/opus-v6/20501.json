@@ -1,0 +1,20 @@
+{"resumo": "Zebedeuvi abriu Zebedeuii com cheap shot e emendou cheap shot/kidney até a morte aos 49.9 enquanto Amnesianii só jogava renew; em 3v2 o RMP IV controlou o priest e o matou com deep freeze + kidney aos 102.1.",
+ "momento_decisivo": {"t": 39.8, "descricao": "Shadow dance + cheap shot de Zebedeuvi em Zebedeuii, seguido de cheap shot (44.9) e kidney (47.7): o rogue inimigo morre aos 49.9 sem receber PW:S nem pain suppression."},
+ "erros": [
+  {"t": 40.4, "quem": "Amnesianii", "fez": "renew em sequência (40.4-48.7) com Zebedeuii caindo de 75% a 32% em stuns", "devia": "PW:S/penance/flash heal e pain suppression no rogue", "porque": "HoT pequeno não segura burst de rogue; pain suppression só foi usado aos 94.5 nele mesmo", "gravidade": "alta"},
+  {"t": 44.7, "quem": "Zebedeuii", "fez": "shadow dance para reentrar com 34% logo após trinket e vanish", "devia": "ficar em stealth/fugir e esperar cura antes de voltar", "porque": "voltou a ser aberto por cheap shot aos 44.9 e morreu no kidney seguinte", "gravidade": "alta"},
+  {"t": 38.5, "quem": "Heshoiv", "fez": "flamestrike e blizzard enquanto o rogue aliado era treinado", "devia": "polymorph/frost nova em Zebedeuvi para tirar a pressão", "porque": "AoE não salva o aliado; o peel só veio aos 54.0, depois da morte", "gravidade": "media"},
+  {"t": 50.4, "quem": "Amnesianvii", "fez": "shadow protection repetido (50.4, 61.2, 87.0, 136.4)", "devia": "PW:S/dispel/dano", "porque": "o time inimigo (mage+rogue+priest discipline) quase não dá dano de sombra; GCD sem valor", "gravidade": "media"},
+  {"t": 35.6, "quem": "Zebedeuii", "fez": "blind no priest inimigo na abertura, com todos em vida cheia", "devia": "guardar o blind para tirar Zebedeuvi de cima ou para uma janela de kill", "porque": "ficou sem CC de defesa quando foi o alvo segundos depois", "gravidade": "baixa"},
+  {"t": 118.9, "quem": "Heshoiv", "fez": "shoot (wand) em 118.9, 120.7, 122.6", "devia": "frostbolt/fire blast/polymorph", "porque": "wand é o menor dano possível numa 2v3 em que precisava de controle", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 47.7, "quem": "Zebedeuvi", "descricao": "cadeia cheap shot -> cheap shot -> kidney shot travou Zebedeuii até a morte"},
+  {"t": 88.8, "quem": "Amnesianvii", "descricao": "psychic scream no priest inimigo forçou will of the forsaken e abriu a janela seguinte"},
+  {"t": 97.0, "quem": "Heshovi", "descricao": "deep freeze no priest forçou o trinket e o kidney de Zebedeuvi (101.1) fechou a kill"}
+ ],
+ "erros_da_rede": [
+  {"t": 40.4, "quem": "Amnesianii", "acao": "renew com o rogue aliado em cheap shot", "porque": "precisava de PW:S/cura direta, não HoT"},
+  {"t": 42.3, "quem": "Amnesianii", "acao": "renew de novo com o rogue a 34%", "porque": "o momento pedia pain suppression"},
+  {"t": 88.6, "quem": "Heshoiv", "acao": "conjure mana gem no meio da 2v3", "porque": "GCD sem efeito no combate; o mage estava sendo controlado e precisava agir"}
+ ]}

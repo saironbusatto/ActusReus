@@ -1,0 +1,16 @@
+{"resumo": "O Wild IV travou o shaman Kwongwegaxi com spell locks, silencing shot e fears; ele gastou GCDs em purge e wind shear em vez de se curar e morreu, e o Fireplay IV desmoronou em seguida.",
+ "momento_decisivo": {"t": 58.0, "descricao": "Ominousvii dá spell lock no Kwongwegaxi a 46% durante a pressão de dano, cortando a cura do healer, que não se recupera mais."},
+ "erros": [
+  {"t": 70.7, "quem": "Kwongwegaxi", "fez": "purge e wind shear (71.0) logo após trinketar com 8% de vida", "devia": "nature's swiftness + healing wave ou riptide/lesser healing wave em si mesmo", "porque": "o trinket só vale se o GCD seguinte for de sobrevivência; morreu 1.3 s depois sem curar", "gravidade": "alta"},
+  {"t": 63.7, "quem": "Kwongwegaxi", "fez": "purge (e de novo aos 69.2) enquanto estava baixo e focado", "devia": "curar a si mesmo e pré-posicionar grounding/tremor contra os fears", "porque": "com a vida caindo, cada GCD ofensivo do healer é cura perdida", "gravidade": "media"},
+  {"t": 50.8, "quem": "Kwongwegaxi", "fez": "chain lightning", "devia": "colocar totens (tremor/grounding) e curar/pré-HoT", "porque": "healer resto não tem dano relevante; o time inimigo tinha dois locks com fear", "gravidade": "baixa"},
+  {"t": 54.7, "quem": "Heshoxi", "fez": "blizzard (e flamestrike aos 51.2 e 62.7)", "devia": "polymorph no druida healer e counterspell no lock para aliviar o shaman", "porque": "AoE de mago em arena dá pouco dano e não tira pressão do healer aliado; o mago só usou polymorph aos 91.7", "gravidade": "media"},
+  {"t": 80.2, "quem": "Heshoxi", "fez": "pvp trinket logo depois de ice block", "devia": "guardar o trinket para depois do ice block", "porque": "ice block já anula o stun; trinketar dentro dele desperdiça o trinket e ele morreu em fear depois", "gravidade": "media"},
+  {"t": 53.3, "quem": "Beteranvi", "fez": "volley ×2 canalizado", "devia": "aimed/chimera/arcane shot no healer silenciado", "porque": "volley é AoE fraca e prende o hunter parado na janela do silencing shot", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 51.3, "quem": "Beteranvi", "descricao": "silencing shot no healer Kwongwegaxi encadeado com o pet spell lock, abrindo a janela de dano."},
+  {"t": 73.1, "quem": "Ominousdesv", "descricao": "shadowfury pegando três inimigos ao mesmo tempo, forçando dois trinkets."},
+  {"t": 79.8, "quem": "Heshoxi", "descricao": "ice block a 9% de vida em stun, evitando a morte imediata."}
+ ],
+ "erros_da_rede": []}

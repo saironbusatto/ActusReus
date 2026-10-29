@@ -1,0 +1,20 @@
+{"resumo": "Espelho de Shadowplay; a guerra de DoTs foi decidida quando Ominousx caiu aos 103.2 sem cura do próprio time (priest passando óleo, paladino lançando buffs) e depois o felhunter de Ominousix travou Heruiv até a morte no 3v2.",
+ "momento_decisivo": {"t": 73.3, "descricao": "Ominousx usa life tap em sequência (até 87.6) cheio de UA/haunt/corruption de Ominousix, enquanto seus curandeiros não o curavam; ele derrete até morrer aos 103.2 e o Shadowplay II fica em desvantagem numérica."},
+ "erros": [
+  {"t": 82.6, "quem": "Amnesianxxi", "fez": "apply oil ×3 (até 86.8) no meio da luta, com Ominousx sob UA/haunt", "devia": "flash heal/power word: shield/renew em Ominousx", "porque": "preparação de arma é coisa de antes dos portões; Ominousx morreu aos 103.2 e o priest só curou aos 98.5", "gravidade": "alta"},
+  {"t": 70.2, "quem": "Heruiv", "fez": "cast greater blessing assignment (também 45.8 e 55.5) e só 2 flash of light entre 74.0 e 98.4", "devia": "curar Ominousx e limpar a UA com o parceiro em vida alta", "porque": "renovar blessing em combate é GCD perdido; o warlock aliado morreu sem cura", "gravidade": "alta"},
+  {"t": 76.1, "quem": "Ominousx", "fez": "corruption on attacker ×4 (76.1-80.8 e 90.5-95.2) no mesmo alvo", "devia": "fear/death coil no outro warlock, drain life ou se defender", "porque": "reaplicar um DoT ativo não aumenta o dano; os GCDs faltaram para se manter vivo", "gravidade": "media"},
+  {"t": 77.0, "quem": "Heruii", "fez": "cast greater blessing assignment em combate (77.0, 90.3, 104.0)", "devia": "cura ou dispel no time", "porque": "buff que dura 30 min não precisa de renovação no meio da arena; é só GCD perdido", "gravidade": "baixa"},
+  {"t": 238.6, "quem": "Heruiv", "fez": "holy light (cast longo) a ~21% com o felhunter inimigo ativo", "devia": "holy shock/flash of light instantâneos e LoS do warlock", "porque": "foi travado pelo pet spell lock aos 238.8 e morreu aos 241.9", "gravidade": "media"},
+  {"t": 111.3, "quem": "Heruiv", "fez": "shield of righteousness como paladino de cura", "devia": "holy shock/cura ou dispel", "porque": "dano mínimo sem o talento de tank, e um GCD que poderia ter ido para a cura no 2v3", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 196.9, "quem": "Amnesianxix", "descricao": "silence em Heruiv a 24%, forçando o divine shield no curandeiro inimigo"},
+  {"t": 238.8, "quem": "Ominousix", "descricao": "pet spell lock em Heruiv a 21%, cortando a última cura e garantindo a kill"},
+  {"t": 197.0, "quem": "Heruiv", "descricao": "divine shield a 24% sob silence, o que segurou a luta por mais ~45 s"}
+ ],
+ "erros_da_rede": [
+  {"t": 73.3, "quem": "Ominousx", "acao": "life tap ×2 até 87.6", "porque": "trocar vida por mana coberto de DoTs e sem curandeiro olhando acelerou a própria morte"},
+  {"t": 71.4, "quem": "Ominousx", "acao": "toggle pet spell", "porque": "mexer no autocast do pet no meio da pressão é GCD sem efeito"},
+  {"t": 198.5, "quem": "Heruiv", "acao": "judgement of light → Ominousix", "porque": "logo depois do divine shield a 24%, a janela de imunidade era para se curar com holy light/flash"}
+ ]}

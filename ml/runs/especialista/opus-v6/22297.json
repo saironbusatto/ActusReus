@@ -1,0 +1,18 @@
+{"resumo": "Celianeyiv deu charge e bladestorm em Amnesianii e o matou aos 49.4 s, sem que a RMP tirasse o warrior de cima do healer. Zebedeuii caiu aos 57.2 s e a luta acabou em 70 s.",
+ "momento_decisivo": {"t": 39.8, "descricao": "Bladestorm de Celianeyiv em Amnesianii logo depois do charge (38.5), com Omasconiv junto. A RMP não respondeu (sem psychic scream, nova, blind nem pain suppression), e o priest morreu aos 49.4 s."},
+ "erros": [
+  {"t": 40.9, "quem": "Amnesianii", "fez": "abolish disease várias vezes (40.9-44.3, 45.4, 48.8) enquanto tomava cleave e execute", "devia": "psychic scream no warrior e no DK, pain suppression e desperate prayer", "porque": "tirar doença não salva um priest sob bladestorm e execute. Morreu com os defensivos guardados", "gravidade": "alta"},
+  {"t": 42.2, "quem": "Heshoiv", "fez": "spellsteal duas vezes (42.2 e 43.4) com o próprio healer sendo morto", "devia": "frost nova no warrior e no DK quando o bladestorm acabasse, e polymorph em Heruix", "porque": "o peel do mage era o que salvava o priest. O spellsteal não muda nada naquele momento", "gravidade": "alta"},
+  {"t": 40.9, "quem": "Zebedeuii", "fez": "hemorrhage em Omasconiv e só pôs CC (blind) em Celianeyiv aos 47.5 s, com o priest já quase morto", "devia": "kidney shot ou blind no warrior logo depois do bladestorm (por volta de 42.7)", "porque": "o blind chegou tarde e o warrior saiu com every man for himself, matando o priest 2 s depois", "gravidade": "alta"},
+  {"t": 56.7, "quem": "Heshoiv", "fez": "flamestrike com Zebedeuii morrendo", "devia": "frost nova e polymorph para tirar a pressão do rogue, ou blink e LoS", "porque": "o cast longo de AoE não protege ninguém e Zebedeuii morreu aos 57.2 s", "gravidade": "media"},
+  {"t": 36.2, "quem": "Heshoiv", "fez": "icy veins e berserking antes do contato (35.9-36.2)", "devia": "guardar os cooldowns ofensivos para uma janela de kill", "porque": "os cooldowns acabaram sem alvo, e o mage terminou com 11.8k de dano", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.8, "quem": "Celianeyiv", "descricao": "charge no healer e bladestorm imediato. Sem CC possível durante o bladestorm, o priest ficou exposto"},
+  {"t": 47.5, "quem": "Omasconiv", "descricao": "icebound fortitude a 27%, sobrevivendo ao contra-ataque do rogue"},
+  {"t": 47.6, "quem": "Celianeyiv", "descricao": "every man for himself no blind para fechar o execute em Amnesianii"}
+ ],
+ "erros_da_rede": [
+  {"t": 40.4, "quem": "Omasconiv", "acao": "mind freeze em Zebedeuii", "porque": "interrupt num rogue, que não lança feitiço. O cooldown faltou contra o priest e o mage"},
+  {"t": 35.9, "quem": "Heshoiv", "acao": "berserking", "porque": "cooldown de dano antes do contato, sem alvo em alcance"}
+ ]}

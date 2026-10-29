@@ -1,0 +1,21 @@
+{"resumo": "Mais um espelho: o Heruxvi curou bem mais que o Heruxii, que gastou GCDs em cleanse e divine sacrifice cancelado enquanto o Celianeyvii entrava na faixa de execute. O warrior morreu aos 78.6 e o Naminii aos 93.6.",
+ "momento_decisivo": {"t": 75.6, "descricao": "Com o Celianeyvii já tomando execute (73.9), o Heruxii lançou cleanse magic em vez de cura e o warrior morreu aos 78.6."},
+ "erros": [
+  {"t": 43.9, "quem": "Celianeyvii", "fez": "bladestorm logo depois do charge, com o time inimigo cheio", "devia": "segurar o bladestorm para quando um alvo estivesse baixo ou o healer inimigo em CC", "porque": "Os dois times se espelhavam; quem gastou o cooldown cedo ficou sem pressão nem defesa quando importou", "gravidade": "media"},
+  {"t": 51.0, "quem": "Celianeyvii", "fez": "trocou do Celianeyxi para o Naminvi logo depois do enraged regeneration do warrior inimigo", "devia": "seguir no Celianeyxi com mortal strike, que anula boa parte da regeneração", "porque": "A troca deu fôlego para o alvo que estava baixo e dividiu o dano", "gravidade": "media"},
+  {"t": 72.1, "quem": "Heruxii", "fez": "divine sacrifice cancelado 0.3 s depois", "devia": "gastar o GCD numa holy light no Celianeyvii ou manter o sacrifice para dividir o dano", "porque": "Ativar e cancelar seguido não protege ninguém e queima um GCD com o parceiro caindo", "gravidade": "media"},
+  {"t": 75.6, "quem": "Heruxii", "fez": "cleanse magic on party com o Celianeyvii na faixa de execute", "devia": "flash of light/holy shock/holy light no warrior", "porque": "O warrior morreu 3 s depois; tirar uma debuff não salva quem está com menos de 20%", "gravidade": "alta"},
+  {"t": 74.5, "quem": "Celianeyvii", "fez": "sweeping strikes, thunder clap e cleave enquanto levava execute", "devia": "usar defensive stance/shield wall ou sair do warrior inimigo para perto do healer", "porque": "Seguiu ofensivo sem nenhuma defesa nos últimos 5 s de vida", "gravidade": "media"},
+  {"t": 81.4, "quem": "Heruxii", "fez": "divine plea logo depois da morte do warrior, 2v3 e com o Naminii virando alvo", "devia": "guardar o plea para depois ou ficar atrás de pilar com o shaman", "porque": "Divine Plea corta a cura pela metade; o Naminii morreu aos 93.6", "gravidade": "media"},
+  {"t": 87.4, "quem": "Naminii", "fez": "wind shear, chain lightning e purge sendo o alvo no 2v3, sem se curar", "devia": "healing wave/riptide em si mesmo, hex ou earthbind no warrior e recuar para o paladino", "porque": "Terminou com 1142 de cura; sem defesa nenhuma ficou fácil de matar", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 49.4, "quem": "Celianeyxi", "descricao": "Enraged regeneration quando pressionado e o warrior continuou na luta."},
+  {"t": 52.2, "quem": "Naminvi", "descricao": "Wind shear no healer inimigo várias vezes (52.2, 64.1, 70.4)."},
+  {"t": 79.4, "quem": "Celianeyxi", "descricao": "Charge no Naminii logo após o kill, sem dar tempo ao time inimigo de se reorganizar."}
+ ],
+ "erros_da_rede": [
+  {"t": 65.7, "quem": "Heruxii", "acao": "judgement of light no Naminvi", "porque": "Healer gastou GCD com julgamento enquanto o warrior dele perdia vida."},
+  {"t": 68.4, "quem": "Naminii", "acao": "purge no Naminvi", "porque": "Tirar water shield do shaman não ajudava o Celianeyvii, que estava indo para a faixa de execute."},
+  {"t": 73.4, "quem": "Naminii", "acao": "purge no Naminvi", "porque": "Com o parceiro tomando execute naquele instante, devia curá-lo ou dar earthbind/hex no warrior inimigo."}
+ ]}

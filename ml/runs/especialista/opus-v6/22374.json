@@ -1,0 +1,20 @@
+{"resumo": "Luta longa de controle; RMP I abriu a kill em Heruiv com deep freeze, frost nova, shadow dance/cheap shots e polymorph no outro curandeiro, e o paladino morreu aos 189.1 sem usar divine shield. Depois Zebedeu limpou o resto.",
+ "momento_decisivo": {"t": 183.5, "descricao": "Heshoii dá polymorph em Amnesianxxi enquanto Zebedeu fecha Heruiv com kidney shot (186.5) e eviscerate; sem a segunda cura e sem bubble, o paladino morre aos 189.1."},
+ "erros": [
+  {"t": 176.5, "quem": "Heruiv", "fez": "divine illumination sob o rogue a ~48%, depois divine sacrifice + cancel (187.8), sem usar divine shield na luta", "devia": "divine shield (ou hand of protection em si contra o rogue) depois do deep freeze a 28%/quando começou a cadeia de stuns", "porque": "o dano era quase todo físico do rogue e a cadeia de stuns era previsível; morreu com o bubble disponível", "gravidade": "alta"},
+  {"t": 87.6, "quem": "Heruiv", "fez": "cleanse poison repetido a luta toda (42.6, 87.6 ×2, 111.0, 123.5, 164.0...)", "devia": "limpar só crippling/mind-numbing nos momentos certos e usar os GCDs para curar", "porque": "o rogue reaplica os venenos a cada golpe; limpar sempre é GCD jogado fora", "gravidade": "media"},
+  {"t": 153.8, "quem": "Amnesian", "fez": "mind sear ×3 (até 162.8), também aos 129.6 e 140.1, sendo o curandeiro", "devia": "penance/PW:S/renew no time e dispel ofensivo", "porque": "mind sear é canalizado, deixa o priest parado e rende pouco dano; o time dele estava perdendo vida no mesmo período", "gravidade": "media"},
+  {"t": 41.9, "quem": "Zebedeu", "fez": "fan of knives ×2 na abertura contra Heruiv", "devia": "abrir com cheap shot/garrote no alvo e hemorrhage", "porque": "FoK em alvo único rende pouco e queimou a energia da abertura sem nenhum controle", "gravidade": "media"},
+  {"t": 62.9, "quem": "Heshoii", "fez": "arcane intellect e conjure mana gem (65.1) e apply oil (131.1) no meio da luta", "devia": "frostbolt/polymorph ou CC no curandeiro", "porque": "são preparações de antes dos portões; em combate só gastam GCD", "gravidade": "baixa"},
+  {"t": 158.3, "quem": "Amnesianxxi", "fez": "remove shadowform ×2 e volta para shadowform aos 160.4", "devia": "decidir entre curar fora de shadowform ou dar dano", "porque": "trocar de forma várias vezes gasta GCDs e mana durante a pressão no próprio time", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 167.3, "quem": "Heshoii", "descricao": "deep freeze em Heruiv a 28%, cold snap e frost nova logo depois, abrindo a janela de kill no curandeiro"},
+  {"t": 183.5, "quem": "Heshoii", "descricao": "polymorph no segundo curandeiro bem na hora do kidney shot em Heruiv"},
+  {"t": 211.6, "quem": "Amnesian", "descricao": "pain suppression a 22% sob pressão, ganhando tempo para o time fechar a kill de Amnesianxxi"}
+ ],
+ "erros_da_rede": [
+  {"t": 182.2, "quem": "Heruiv", "acao": "judgement of light → Zebedeu", "porque": "estava a ~47% entre cheap shots do rogue; o GCD era para cura ou para o divine shield"},
+  {"t": 165.6, "quem": "Heruiv", "acao": "cleanse poison on party → Amnesian", "porque": "limpar veneno enquanto ele próprio caía para 28%; a cura em si importava mais"},
+  {"t": 200.9, "quem": "Ominousx", "acao": "curse of agony on attacker ×2 (200.9, 202.2)", "porque": "Amnesianxxi estava em blind/kidney sendo morto; precisava de fear/death coil em Zebedeu, não de mais um DoT"}
+ ]}

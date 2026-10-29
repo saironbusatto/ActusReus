@@ -1,0 +1,17 @@
+{"resumo": "Espelho TSG em que TSG II matou Celianeyii primeiro: dois pet gnaw de Omasconiv com mortal strike de Celianeyiv queimaram o EMFH e o trinket do warrior, e Heruvii passou esses segundos dando cleanse disease em vez de curar. Com 3v2, Omasconii caiu em seguida.",
+ "momento_decisivo": {"t": 56.5, "descricao": "Omasconiv dá pet gnaw em Celianeyii a 45% e emenda outro gnaw aos 58.7 (25%) com o mortal strike de Celianeyiv aos 57.0; o warrior gasta EMFH e trinket e morre aos 61.7, enquanto Heruvii só limpa doença."},
+ "momento_aceitos": [49.2, 56.5, 57.0, 58.3, 58.7],
+ "erros": [
+  {"t": 54.4, "quem": "Heruvii", "fez": "cleanse disease ×4 (54.4, 55.7, 57.0, 58.3) com Celianeyii caindo de 45% para 25%", "devia": "curar forte em Celianeyii (holy shock, flash/holy light) e usar Hand of Protection ou Divine Sacrifice contra o burst físico com gárgula", "porque": "Doenças de DK voltam no próximo icy touch/plague strike; os GCDs no cleanse foram exatamente a janela em que o warrior morreu", "gravidade": "alta"},
+  {"t": 34.1, "quem": "Omasconii", "fez": "every man for himself no stun do charge com 98% de vida", "devia": "aguentar o stun de 1.5 s do charge e guardar o EMFH para os gnaws/hammer da janela de kill", "porque": "Gastou a única saída de controle no início, sem perigo nenhum", "gravidade": "media"},
+  {"t": 54.0, "quem": "Omasconii", "fez": "death and decay enquanto o parceiro era treinado, sem strangulate nem death grip", "devia": "usar strangulate em Heruix ou death grip/chains of ice em Celianeyiv para aliviar Celianeyii", "porque": "TSG I não usou nenhum CC no healer inimigo nem fez peel; Heruix curou livre durante todo o burst", "gravidade": "media"},
+  {"t": 35.3, "quem": "Celianeyii", "fez": "sunder armor (repetido aos 41.3) e heroic strike/slam, sem mortal strike", "devia": "abrir com Mortal Strike e mantê-lo em Omasconiv (ou no healer)", "porque": "Sunder em arena é GCD quase perdido; sem o debuff de cura, Heruix segurou Omasconiv até no icebound aos 43%", "gravidade": "media"},
+  {"t": 33.5, "quem": "Omasconii", "fez": "death and decay logo no portão", "devia": "abrir com icy touch/plague strike no alvo e guardar as runas", "porque": "D&D na abertura gasta runas sem alvo parado; o DK chegou atrasado no dano", "gravidade": "baixa"},
+  {"t": 66.6, "quem": "Heruvii", "fez": "every man for himself num stun com 77%, já em 2v3", "devia": "guardar o EMFH para o momento de pressão no Omasconii", "porque": "Com 77% e sem burst em cima, o stun não era perigoso; mais tarde Omasconii morreu sem nenhum controle quebrado pelo time", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 49.2, "quem": "Omasconiv", "descricao": "Empower rune weapon (38.5) e summon gargoyle sincronizados com o burst do time."},
+  {"t": 56.5, "quem": "Omasconiv", "descricao": "Dois pet gnaw seguidos no warrior em queda, forçando EMFH e trinket e fechando a kill."},
+  {"t": 57.0, "quem": "Celianeyiv", "descricao": "Mortal strike no alvo da kill com bladestorm/sweeping já pressionando o time inteiro."},
+  {"t": 71.3, "quem": "Heruix", "descricao": "Divine sacrifice com cancelamento imediato para ativar o Divine Guardian (-20% de dano no time) sob pressão."}
+ ]}

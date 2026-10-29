@@ -1,0 +1,90 @@
+{
+ "resumo": "O Thunder abriu com Charge + Bladestorm sob Heroism no Zebedeu, que gastou Evasion, Vanish e Cloak e ainda voltou a atacar com pouca vida; ninguém do RMP o protegeu e ele caiu no Execute. Daí em diante foi 3v2 e o RMP só atrasou o fim.",
+ "momento_decisivo": {
+  "t": 36.1,
+  "descricao": "Celianeyx emenda Charge (33.2) e Bladestorm (36.1) no Zebedeu sob Heroism: o rogue cai para 41% e queima Evasion, Vanish e Cloak no abertura, ficando sem defensivos."
+ },
+ "momento_aceitos": [
+  33.2,
+  36.1,
+  43.1,
+  52.7
+ ],
+ "erros": [
+  {
+   "t": 43.1,
+   "quem": "Zebedeu",
+   "fez": "Cheap Shot no Celianeyx logo depois de Vanish (40.8) e Cloak (42.0), ainda com pouca vida",
+   "devia": "ficar em stealth/recuar, deixar o Amnesian curar e só voltar com vida cheia",
+   "porque": "já tinha gasto todos os defensivos; reengajar no warrior com Execute disponível o deixou exposto e ele morreu em seguida",
+   "gravidade": "alta"
+  },
+  {
+   "t": 52.7,
+   "quem": "Heshoii",
+   "fez": "Spellsteal no Naminv enquanto o Celianeyx dava Execute no Zebedeu",
+   "devia": "Polymorph/Frost Nova/Deep Freeze no Celianeyx para tirar o warrior de cima do rogue",
+   "porque": "o rogue estava em faixa de Execute; um CC no warrior naquele instante salvava o parceiro, e o Deep Freeze só foi usado aos 81.1",
+   "gravidade": "alta"
+  },
+  {
+   "t": 35.7,
+   "quem": "Celianeyx",
+   "fez": "Every Man for Himself sem nenhum CC visível nele",
+   "devia": "guardar o racial para o primeiro stun/medo real (Deep Freeze, Psychic Scream)",
+   "porque": "queimou um quebra-CC no vazio; depois precisou do trinket no Deep Freeze (81.2) e ficou sem saída no Psychic Scream (88.5) antes de morrer",
+   "gravidade": "media"
+  },
+  {
+   "t": 57.3,
+   "quem": "Celianeyx",
+   "fez": "depois da morte do rogue trocou para o Amnesian (Charge 57.3)",
+   "devia": "ir no Heshoii, que já tinha gasto Ice Block e trinket aos 40.8-41.1",
+   "porque": "o priest tinha Pain Suppression, Psychic Scream e cura; o mage estava sem defensivos maiores e era a morte mais rápida no 3v2",
+   "gravidade": "media"
+  },
+  {
+   "t": 63.4,
+   "quem": "Heruxv",
+   "fez": "drink no meio da luta com Heshoii e Amnesian vivos e o warrior sob ataque",
+   "devia": "seguir curando/limpando o Celianeyx e só beber com o inimigo em CC",
+   "porque": "bebida é interrompida e deixa o parceiro sem cura num momento em que o RMP apertava o warrior",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 223.6,
+   "quem": "Amnesian",
+   "fez": "Pain Suppression só com 15% de vida e sem Desperate Prayer na luta",
+   "devia": "usar Pain Suppression/Desperate Prayer quando a vida cruzasse ~40% sob o Naminv",
+   "porque": "defensivo tardio não cobre o próximo golpe; ele morreu 4 s depois com o cooldown ainda ativo",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 30.5,
+   "quem": "Naminv",
+   "descricao": "Heroism logo no portão sincronizado com o Charge do warrior, maximizando a abertura."
+  },
+  {
+   "t": 36.1,
+   "quem": "Celianeyx",
+   "descricao": "Bladestorm em cima do rogue logo após o Charge, forçando todos os defensivos dele."
+  },
+  {
+   "t": 40.8,
+   "quem": "Heshoii",
+   "descricao": "Ice Block com 10% de vida e trinket em seguida, sobrevivendo à abertura."
+  },
+  {
+   "t": 81.1,
+   "quem": "Heshoii",
+   "descricao": "Deep Freeze no Celianeyx forçou o trinket, e Cold Snap (81.4) deixou outro Deep Freeze pronto."
+  },
+  {
+   "t": 59.8,
+   "quem": "Amnesian",
+   "descricao": "Psychic Scream para tirar o warrior de cima dele depois do Charge."
+  }
+ ]
+}

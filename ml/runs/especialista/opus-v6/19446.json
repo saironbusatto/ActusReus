@@ -1,0 +1,19 @@
+{"resumo": "Zebedeuxii abriu shadow dance no druida Pehdicouiv e encadeou cheap shot, ambush e kidney; o druida quase não curou, gastou o trinket cedo e morreu aos 54.9, decidindo a luta.",
+ "momento_decisivo": {"t": 45.6, "descricao": "Zebedeuxii usa shadow dance em Pehdicouiv: cheap shot (46.1), ambush, cheap shot (50.0) e kidney (51.1) mantêm o curador preso até a morte."},
+ "erros": [
+  {"t": 39.3, "quem": "Pehdicouiv", "fez": "entangling roots (39.3, 45.3) em vez de curar", "devia": "HoTs preventivos (rejuvenation/lifebloom) no time e em si", "porque": "o druida curador terminou com 3.6k de cura; roots em rogue com cloak/vanish disponível pouco faz", "gravidade": "alta"},
+  {"t": 48.1, "quem": "Pehdicouiv", "fez": "trinket a 33% saindo de um cheap shot, e foi atordoado de novo aos 50.0", "devia": "guardar o trinket para o kidney shot ou usar barkskin no stun (o druida nunca usou barkskin)", "porque": "barkskin funciona em stun; com trinket gasto o kidney seguinte foi letal", "gravidade": "alta"},
+  {"t": 53.0, "quem": "Beteranvi", "fez": "readiness para rapid fire e kill command enquanto o curador morria", "devia": "scatter shot/freezing trap em Zebedeuxii para tirá-lo do druida", "porque": "o rogue estava sozinho no curador; um peel salvava Pehdicouiv", "gravidade": "media"},
+  {"t": 84.8, "quem": "Ominousvii", "fez": "trinket a 12%, escape artist e shoot até morrer aos 89.1", "devia": "death coil no rogue e teleportar no demonic circle ou usar healthstone", "porque": "com 12% de vida, wand e escape artist não o tiravam do alcance do rogue", "gravidade": "media"},
+  {"t": 59.9, "quem": "Beteranvi", "fez": "hunter's mark repetido (59.9-61.5, 85.6, 88.8, 94.3)", "devia": "dano ou controle em vez de remarcar", "porque": "o mark já estava ativo; GCDs desperdiçados", "gravidade": "baixa"},
+  {"t": 50.0, "quem": "Kwongwegaxii", "fez": "ficou em fear (50.0, 69.3) sem tremor totem", "devia": "baixar tremor totem contra o warlock", "porque": "tremor anula fear repetido do warlock", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 45.6, "quem": "Zebedeuxii", "descricao": "shadow dance no curador com cadeia de stuns até a morte"},
+  {"t": 56.6, "quem": "Zebedeuxii", "descricao": "evasion, vanish e cloak of shadows a 38% para sair da pressão"},
+  {"t": 71.1, "quem": "Ominousvii", "descricao": "howl of terror para tirar o rogue de cima"}
+ ],
+ "erros_da_rede": [
+  {"t": 40.3, "quem": "Amnesianix", "acao": "shadow word: death em Pehdicouiv", "porque": "alvo a 93%: dano baixo, auto-dano e cooldown gastos fora da execução"},
+  {"t": 66.4, "quem": "Amnesianix", "acao": "shadowform", "porque": "voltou à forma logo depois de sair para curar, gastando GCDs na troca"}
+ ]}

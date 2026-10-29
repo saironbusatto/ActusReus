@@ -1,0 +1,19 @@
+{"resumo": "No espelho LSD, Pehdibalv alternou forma moonkin/caster e foi morto enquanto seu shaman Kwongwegaxxv gastava GCDs em purge e cleanse de curse of the elements; 2v3 depois disso, o LSD IV não se recuperou.",
+ "momento_decisivo": {"t": 50.6, "descricao": "Kwongwegaxxv dá purge ×2 no Kwongwegaxx em vez de curar Pehdibalv, que estava sendo morto e caiu aos 53.6."},
+ "erros": [
+  {"t": 50.6, "quem": "Kwongwegaxxv", "fez": "purge ×2 no Kwongwegaxx", "devia": "riptide/healing wave/nature's swiftness no Pehdibalv", "porque": "o aliado estava no fim da vida e morreu 3 s depois; purge não salvava ninguém", "gravidade": "alta"},
+  {"t": 41.2, "quem": "Kwongwegaxxv", "fez": "cleanse spirit em curse of the elements (de novo aos 43.5 e 47.2)", "devia": "deixar a CoE e curar ou baixar totens úteis", "porque": "os locks reaplicam a CoE de graça; dar cleanse nela troca GCD de healer por GCD de DPS", "gravidade": "media"},
+  {"t": 37.6, "quem": "Pehdibalv", "fez": "alterna caster form / moonkin form (40.4, 42.5, 46.0)", "devia": "escolher um papel por janela: ficar caster para se curar sob pressão ou ficar em moonkin pressionando", "porque": "cada troca de forma custa GCD e mana; sem cura nem dano, morreu aos 53.6", "gravidade": "media"},
+  {"t": 49.1, "quem": "Pehdibalv", "fez": "hurricane canalizado pouco antes de morrer", "devia": "barkskin já usado, então regrowth/swiftmend em si ou sair do alcance", "porque": "canalizar AoE parado no meio dos dois locks inimigos o deixou sem se defender", "gravidade": "media"},
+  {"t": 72.3, "quem": "Kwongwegaxxv", "fez": "purge (e de novo aos 76.8) sozinho contra três e com 33% de vida", "devia": "curar a si mesmo e kitar até os pilares", "porque": "1v3 só resta sobreviver; purge não muda nada e ele morreu aos 77.9", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 34.5, "quem": "Ominousdesix", "descricao": "shadowfury pegando três inimigos na abertura."},
+  {"t": 35.6, "quem": "Pehdibalii", "descricao": "force of nature e hurricane encaixados na janela do shadowfury aliado."},
+  {"t": 37.7, "quem": "Ominousdesxi", "descricao": "shadowfury de resposta pegando três inimigos, incluindo o healer."}
+ ],
+ "erros_da_rede": [
+  {"t": 82.4, "quem": "Ominousdesix", "acao": "curse of the elements → Ominousdesxi", "porque": "reaplicar CoE num alvo que já tinha a curse renovada pelo próprio aliado; um DoT/conflagrate era mais dano."},
+  {"t": 84.1, "quem": "Pehdibalii", "acao": "remove curse on party", "porque": "dar remove curse com 3v1 já ganho não ajuda; era melhor dano ou CC no lock restante."},
+  {"t": 93.0, "quem": "Ominousdesix", "acao": "life tap → Ominousdesxi", "porque": "life tap com o último inimigo a 23% em vez de dano para fechar."}
+ ]}

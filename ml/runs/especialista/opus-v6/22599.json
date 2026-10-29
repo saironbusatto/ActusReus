@@ -1,0 +1,15 @@
+{"resumo": "Espelho RPS. Zebedeuxiv abriu com shadow dance no healer Kwongwegaxvi e o manteve em stun até a morte, enquanto o shaman gastava GCDs em bloodlust, water shield e purge. Sem healer, Zebedeuxvi caiu e Amnesianxxix ficou sozinho.",
+ "momento_decisivo": {"t": 40.7, "descricao": "Shadow dance + cheap shot + ambush de Zebedeuxiv em Kwongwegaxvi abre a luta. O healer cai para 37% no kidney de 48.8 e nunca se recupera, porque responde com bloodlust e water shield em vez de cura."},
+ "erros": [
+  {"t": 55.0, "quem": "Kwongwegaxvi", "fez": "bloodlust, lifeblood e water shield (55.0-56.1) com 37% de vida", "devia": "riptide/healing wave em si mesmo e se afastar do rogue", "porque": "o shaman fez só 5k de cura na luta; bloodlust e water shield não seguram o healer focado", "gravidade": "alta"},
+  {"t": 66.4, "quem": "Kwongwegaxvi", "fez": "purge, water shield, cleanse spirit poison e purge (66.4-70.9)", "devia": "curar a si mesmo antes do próximo kidney", "porque": "entrou no kidney de 71.3 com 21% e morreu aos 76.5", "gravidade": "alta"},
+  {"t": 52.4, "quem": "Amnesianxxix", "fez": "sai e volta do shadowform a cada poucos segundos (52.4, 58.0, 65.3, 69.2, 72.0, 75.9, 81.1, 83.6, 86.4, 88.1, 89.5, 93.4, 106.3)", "devia": "escolher um papel: ficar fora da forma e curar o healer focado, ou ficar em shadow e só usar shield", "porque": "cada troca é um GCD sem cura nem dano, bem no momento em que o shaman do time morria", "gravidade": "alta"},
+  {"t": 46.9, "quem": "Zebedeuxvi", "fez": "hemorrhage ×2 em Zebedeuxiv com o próprio healer sob stun e kidney", "devia": "blind/kidney em Zebedeuxiv para tirar o rogue de cima de Kwongwegaxvi", "porque": "o rogue inimigo foi livre no healer até a morte; faltou peel", "gravidade": "media"},
+  {"t": 65.6, "quem": "Amnesianxxv", "fez": "mind sear ×3 até 73.1", "devia": "mind flay/mind blast no alvo focado", "porque": "mind sear é AoE canalizado que não acerta o alvo principal; dá menos dano no kill target", "gravidade": "media"},
+  {"t": 78.3, "quem": "Amnesianxxix", "fez": "pvp trinket num stun com 59%", "devia": "guardar para quando estivesse sozinho e baixo", "porque": "levou outro stun aos 79.1 e no fim, a 6% em stun, não tinha mais saída", "gravidade": "media"}],
+ "acertos": [
+  {"t": 40.7, "quem": "Zebedeuxiv", "descricao": "shadowstep, shadow dance, cheap shot e ambush no healer adversário: abertura que decidiu a luta."},
+  {"t": 47.1, "quem": "Amnesianxxix", "descricao": "psychic scream e psychic horror no rogue que estava no healer do time."},
+  {"t": 103.2, "quem": "Zebedeuxiv", "descricao": "segundo shadow dance para cheap shot + ambush em Amnesianxxix sozinho, levando o priest a 6%."}],
+ "erros_da_rede": [
+  {"t": 78.0, "quem": "Zebedeuxiv", "acao": "hemorrhage em Zebedeuxvi", "porque": "o alvo deu vanish no mesmo instante; o golpe e a troca de alvo foram perdidos."}]}

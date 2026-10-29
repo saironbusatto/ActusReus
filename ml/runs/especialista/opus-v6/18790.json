@@ -1,0 +1,16 @@
+{"resumo": "Zebedeuvii foi caçado pelo hunter e pelo bruxo, gastou cloak e vanish e voltou a bater com a vida baixa, sem cura porque os healing waves de Kwongwegaii eram silenciados pelos pets. Morto o rogue, Ominousv caiu sob o silencing shot.",
+ "momento_decisivo": {"t": 44.8, "descricao": "Logo depois do vanish (43.5), Zebedeuvii, com cerca de 28% de vida, volta a hemorrhage em Pehdicouiv em vez de ficar escondido até a cura; fica sem defensivos e morre aos 50.1."},
+ "erros": [
+  {"t": 44.8, "quem": "Zebedeuvii", "fez": "re-entrou com hemorrhage logo após vanish, com vida baixa", "devia": "ficar em stealth e se afastar até o healer o recuperar", "porque": "já tinha queimado evasion, cloak e vanish; voltou exposto ao hunter e ao bruxo sem nada para se salvar", "gravidade": "alta"},
+  {"t": 45.2, "quem": "Kwongwegaii", "fez": "healing wave ×2 até 49.7, sendo silenciado", "devia": "riptide e curas instantâneas ou sair da linha de visão dos pets do bruxo", "porque": "os spell locks dos felhunters pegavam os casts longos; o rogue morreu sem receber cura", "gravidade": "alta"},
+  {"t": 43.3, "quem": "Zebedeuvii", "fez": "cloak of shadows e vanish em 0.2 s", "devia": "um de cada vez, com o vanish reservado para resetar o foco depois", "porque": "empilhar os dois deixou o rogue sem resposta para o resto da pressão", "gravidade": "media"},
+  {"t": 34.4, "quem": "Kwongwegaii", "fez": "call of the elements, flame shock e lava burst na abertura", "devia": "preparar cura e earth shield no rogue que entrava no hunter", "porque": "o healer usou os primeiros GCDs em dano mínimo (2k na luta toda) enquanto o rogue ia a 28% em 12 s", "gravidade": "media"},
+  {"t": 46.9, "quem": "Zebedeuvii", "fez": "kidney shot em Pehdicouiv já com o próprio rogue quase morto", "devia": "kidney para se proteger ou para o burst do time, não com o próprio rogue a perder", "porque": "o druida tirou com trinket e o rogue ficou sem stun e sem vida", "gravidade": "baixa"}],
+ "acertos": [
+  {"t": 47.1, "quem": "Pehdicouiv", "descricao": "trinket no kidney com 30% e nature's swiftness + healing touch logo depois."},
+  {"t": 49.5, "quem": "Beteranvi", "descricao": "readiness + rapid fire + kill command para fechar o rogue."},
+  {"t": 53.7, "quem": "Beteranvi", "descricao": "silencing shot em Ominousv na troca de alvo, que morreu aos 62.1."}],
+ "erros_da_rede": [
+  {"t": 41.2, "quem": "Zebedeuvii", "acao": "slice and dice", "porque": "a 28% de vida e sob foco duplo, gastou GCD com buff de dano em vez de se defender."},
+  {"t": 44.8, "quem": "Zebedeuvii", "acao": "hemorrhage em Pehdicouiv", "porque": "voltou a bater logo após o vanish, com vida baixa e sem defensivos."},
+  {"t": 65.9, "quem": "Kwongwegaii", "acao": "cleanse spirit poison", "porque": "estava a 13% e sozinho; precisava se curar, não limpar veneno."}]}

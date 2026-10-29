@@ -1,0 +1,90 @@
+{
+ "resumo": "O Ominousxi segurou o Pehdibalv com Spell Lock do Felhunter e DoTs, e o druida morreu enquanto o Kwongwegaxxv bebia e plantava totens. Em 2v3, o shaman caiu depois.",
+ "momento_decisivo": {
+  "t": 156.9,
+  "descricao": "Ominousxi dá Spell Lock no Pehdibalv a 46% (156.9), logo após a sequência de Curse of Agony/Corruption, enquanto o Kwongwegaxxv bebia (153.2): o druida não consegue se curar e cai."
+ },
+ "momento_aceitos": [
+  153.2,
+  156.9,
+  161.8,
+  162.5
+ ],
+ "erros": [
+  {
+   "t": 153.2,
+   "quem": "Kwongwegaxxv",
+   "fez": "drink com o Pehdibalv sob DoTs e Spell Lock",
+   "devia": "curar o druida (Riptide/Healing Wave) e cobrir com Grounding Totem",
+   "porque": "bebida em arena ativa tira o healer da luta; o druida caiu de 77% para 46% nessa janela",
+   "gravidade": "alta"
+  },
+  {
+   "t": 162.5,
+   "quem": "Kwongwegaxxv",
+   "fez": "Wrath of Air (159.9) e Mana Spring (162.5) com o druida a 46-47%",
+   "devia": "Healing Wave/Riptide no Pehdibalv",
+   "porque": "reposicionar totens de utilidade não salva quem está morrendo; o Pehdibalv morreu aos 172.8",
+   "gravidade": "alta"
+  },
+  {
+   "t": 156.9,
+   "quem": "Pehdibalv",
+   "fez": "Hurricane canalizado com 46%",
+   "devia": "Rejuvenation/Regrowth em si mesmo ou sair da visão do warlock",
+   "porque": "canal longo de AoE é fácil de interromper e não muda a luta; ele estava sendo o alvo",
+   "gravidade": "media"
+  },
+  {
+   "t": 172.8,
+   "quem": "Pehdibalv",
+   "fez": "Cyclone (168.4 e 172.8) com vida baixa",
+   "devia": "curar a si mesmo (Nourish/Regrowth) ou forma de urso",
+   "porque": "CC ofensivo não impede o dano dos DoTs já aplicados; morreu no meio do cast",
+   "gravidade": "media"
+  },
+  {
+   "t": 79.0,
+   "quem": "Kwongwegaxxv",
+   "fez": "drink em combate",
+   "devia": "curar/preparar para o Ominousdesxi, que chegou a 36% aos 86.7",
+   "porque": "beber com os inimigos livres arrisca o parceiro e só não foi fatal por sorte",
+   "gravidade": "media"
+  },
+  {
+   "t": 34.2,
+   "quem": "Heruv",
+   "fez": "Every Man for Himself no Shadowfury de abertura com 93%",
+   "devia": "aceitar o stun de 2 s e guardar o racial para os Fears",
+   "porque": "depois tomou Fear (117.9, 208.0) sem o racial pronto",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 37.7,
+   "quem": "Ominousxi",
+   "descricao": "Spell Lock no warlock inimigo logo no começo."
+  },
+  {
+   "t": 156.9,
+   "quem": "Ominousxi",
+   "descricao": "Spell Lock do Felhunter no druida em vida baixa."
+  },
+  {
+   "t": 153.1,
+   "quem": "Amnesianxxii",
+   "descricao": "Dispersion para se proteger sob pressão."
+  },
+  {
+   "t": 148.7,
+   "quem": "Kwongwegaxxv",
+   "descricao": "Mana Tide Totem para sustentar a luta longa."
+  },
+  {
+   "t": 138.4,
+   "quem": "Heruv",
+   "descricao": "Hand of Freedom para tirar o time das raízes."
+  }
+ ]
+}

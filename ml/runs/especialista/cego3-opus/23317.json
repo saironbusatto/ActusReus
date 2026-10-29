@@ -1,0 +1,83 @@
+{
+ "resumo": "O Celianeyvii deu Charge no Heshoix, levou Shadowfury e o burst de Combustion + Chaos Bolt/Conflagrate, e morreu em ~9 s sem nenhuma cura do Heruxii. Em 2v3 o Thunder durou até o Naminii cair.",
+ "momento_decisivo": {
+  "t": 38.4,
+  "descricao": "Ominousdesii dá Shadowfury no Celianeyvii logo após o Charge, abrindo a janela de burst (Living Bomb, Blast Wave, Conflagrate, Chaos Bolt) que o matou aos 47.4."
+ },
+ "momento_aceitos": [
+  38.0,
+  38.4,
+  38.7,
+  44.1,
+  45.9
+ ],
+ "erros": [
+  {
+   "t": 38.7,
+   "quem": "Celianeyvii",
+   "fez": "Every Man for Himself para sair do Shadowfury (stun curto)",
+   "devia": "aguentar o stun de 2 s e guardar o racial para um medo/stun longo",
+   "porque": "ficou sem quebra-CC para o resto do burst e foi pego pelo Frost Nova logo depois (41.1)",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.1,
+   "quem": "Heruxii",
+   "fez": "Seal of Wisdom (44.1) e Judgement (45.6) enquanto o warrior derretia",
+   "devia": "Flash of Light/Holy Shock no Celianeyvii, Hand of Protection ou Divine Sacrifice",
+   "porque": "era o único healer acordado; o warrior foi de 82% a morto em 6 s sem uma cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.8,
+   "quem": "Naminii",
+   "fez": "Lava Burst com o warrior quase morto",
+   "devia": "Healing Wave/Lesser Healing Wave no Celianeyvii ou Grounding contra o Chaos Bolt",
+   "porque": "o dano não ameaçava ninguém; a cura secundária podia segurar o warrior até o paladino agir",
+   "gravidade": "media"
+  },
+  {
+   "t": 104.3,
+   "quem": "Heruxii",
+   "fez": "trinket sem CC visível nele (o último foi aos 89.7)",
+   "devia": "guardar para o Fear/Polymorph seguinte",
+   "porque": "logo depois tomou Counterspell (106.3) e Fear (109.1) sem saída, e o Naminii morreu aos 109.8",
+   "gravidade": "media"
+  },
+  {
+   "t": 106.8,
+   "quem": "Heruxii",
+   "fez": "cancelou o Divine Sacrifice 0.3 s depois de usá-lo",
+   "devia": "manter o Divine Sacrifice ativo para dividir o dano do Naminii",
+   "porque": "cancelar na hora joga fora o cooldown que podia salvar o parceiro na janela da morte",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 38.4,
+   "quem": "Ominousdesii",
+   "descricao": "Shadowfury no warrior que acabava de dar Charge, abrindo o burst."
+  },
+  {
+   "t": 41.1,
+   "quem": "Heshoix",
+   "descricao": "Frost Nova no warrior para manter distância durante a Combustion."
+  },
+  {
+   "t": 41.3,
+   "quem": "Heruxii",
+   "descricao": "Hand of Freedom para tirar o warrior do root."
+  },
+  {
+   "t": 80.0,
+   "quem": "Heshoix",
+   "descricao": "Counterspell no healer seguido de Polymorph."
+  },
+  {
+   "t": 88.0,
+   "quem": "Ominousdesii",
+   "descricao": "Howl of Terror pegando Naminii e Heruxii juntos."
+  }
+ ]
+}

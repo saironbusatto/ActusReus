@@ -1,0 +1,18 @@
+{"resumo": "A Wild trancou o paladino Heruxvi (silencing shot, cyclone, spell lock) e o matou aos 55.1 sem que ele usasse o divine shield; sem curador, Celianeyxi caiu logo depois.",
+ "momento_decisivo": {"t": 42.8, "descricao": "Beteranii silencia Heruxvi e Pehdicouve emenda cyclone (43.1) e o spell lock de Ominous (48.4): o único curador da Thunder fica preso enquanto apanha, abrindo a morte aos 55.1."},
+ "erros": [
+  {"t": 54.6, "quem": "Heruxvi", "fez": "divine sacrifice e cancelou em seguida, morrendo aos 55.1", "devia": "divine shield (ou divine protection/hand of protection) assim que ficou abaixo de ~40%", "porque": "divine sacrifice puxa dano dos aliados para o próprio paladino que já era o alvo; o bubble era o único botão que salvava a vida dele", "gravidade": "alta"},
+  {"t": 39.9, "quem": "Celianeyxi", "fez": "cleave/heroic strike em sequência de 39.9 a 54 sem mortal strike (primeiro só aos 61.8)", "devia": "manter mortal strike no alvo e usar a raiva no MS, não em cleave", "porque": "sem o efeito de -50% de cura do MS o druida curou 82k livremente; cleave/HS só gastam raiva", "gravidade": "alta"},
+  {"t": 44.5, "quem": "Naminvi", "fez": "purge repetido (44.5, 45.5, 49.7) enquanto Heruxvi estava silenciado e caía para 75%", "devia": "curar Heruxvi (healing wave/chain heal) ou usar grounding totem contra cyclone/spell lock", "porque": "com o curador trancado o xamã era a única fonte de cura do time; terminou a luta com 5k de cura", "gravidade": "media"},
+  {"t": 43.9, "quem": "Celianeyxi", "fez": "heroic strike/cleave em Beteranii logo depois do deterrence (43.7)", "devia": "trocar para Pehdicouve ou Ominous durante o deterrence", "porque": "deterrence faz o caçador aparar/desviar todos os ataques corpo a corpo; os golpes foram desperdiçados", "gravidade": "media"},
+  {"t": 52.0, "quem": "Celianeyxi", "fez": "trocou o alvo para Ominous enquanto Heruxvi era morto", "devia": "fazer peel em Beteranii (hamstring/intercept/intimidating shout) ou pressionar Pehdicouve", "porque": "o caçador matou o paladino com kill shot aos 54.5 sem ninguém atrapalhar", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 42.8, "quem": "Beteranii", "descricao": "silencing shot no curador inimigo, emendado com cyclone do parceiro"},
+  {"t": 43.7, "quem": "Beteranii", "descricao": "deterrence a 34% sob o warrior, sobreviveu ao burst"},
+  {"t": 48.4, "quem": "Ominous", "descricao": "spell lock em Heruxvi no momento em que ele tentava curar, mantendo o curador trancado"}
+ ],
+ "erros_da_rede": [
+  {"t": 45.2, "quem": "Ominous", "acao": "pet autocast setup", "porque": "gasta GCD em configuração no meio da janela de pressão sobre o curador"},
+  {"t": 49.3, "quem": "Ominous", "acao": "life tap", "porque": "perde vida e GCD durante a janela de kill em vez de aplicar dano/CC"}
+ ]}

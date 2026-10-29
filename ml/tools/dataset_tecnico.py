@@ -316,13 +316,16 @@ def exemplo_v5(l: dict, alvo: dict) -> dict:
         {"role": "assistant", "content": json.dumps(alvo, ensure_ascii=False)}]}
 
 
-def main_v5() -> int:
+def main_v5(v: int = 5) -> int:
     """treino-v5.jsonl (Gemini limpo + Opus x PESO_OPUS) e cego2-v5.jsonl (o teste cego novo, referência de
-    subagentes em cego2-opus/). Validação igual à da V4; os dois testes cegos e o teste fixo ficam fora."""
-    fora = set(json.loads((SAIDA / "teste_cego_ids.json").read_text())) | \
-        set(json.loads((SAIDA / "teste_cego2_ids.json").read_text())) | set(json.loads((SAIDA / "teste_ids.json").read_text()))
+    subagentes em cego2-opus/). Validação igual à da V4; os testes cegos e o teste fixo ficam fora.
+    v=6: + as 100 lutas de opus-v6/, teste cego 3 (cego3-v6.jsonl)."""
+    n = v - 3  # V5 → teste cego 2, V6 → teste cego 3
+    fora = set(json.loads((SAIDA / "teste_ids.json").read_text()))
+    for f in ["teste_cego_ids.json"] + [f"teste_cego{k}_ids.json" for k in range(2, n + 1)]:
+        fora |= set(json.loads((SAIDA / f).read_text()))
     val = {json.loads(x)["luta"] for x in (SAIDA / "validacao-v4.jsonl").open()}
-    opus = {int(f.stem): json.loads(f.read_text()) for f in (SAIDA / "opus-v5").glob("*.json")}
+    opus = {int(f.stem): json.loads(f.read_text()) for k in range(5, v + 1) for f in (SAIDA / f"opus-v{k}").glob("*.json")}
     todas = lutas_analisadas()
     lutas = [l for l in todas if l["luta"] not in fora]
     usos = base(lutas)
@@ -337,10 +340,10 @@ def main_v5() -> int:
         else:
             treino.append(exemplo_v5(l, alvo_v5(l, usos)))
     random.Random(8).shuffle(treino)
-    cego2 = set(json.loads((SAIDA / "teste_cego2_ids.json").read_text()))
-    for nome, parte in (("treino-v5", treino),
-                        ("validacao-v5", [exemplo_v5(l, alvo_v5(l, usos)) for l in lutas if l["luta"] in val]),
-                        ("cego2-v5", [exemplo_v5(l, {}) for l in todas if l["luta"] in cego2])):
+    cego = set(json.loads((SAIDA / f"teste_cego{n}_ids.json").read_text()))
+    for nome, parte in ((f"treino-v{v}", treino),
+                        (f"validacao-v{v}", [exemplo_v5(l, alvo_v5(l, usos)) for l in lutas if l["luta"] in val]),
+                        (f"cego{n}-v{v}", [exemplo_v5(l, {}) for l in todas if l["luta"] in cego])):
         with (SAIDA / f"{nome}.jsonl").open("w") as f:
             for ex in parte:
                 f.write(json.dumps(ex, ensure_ascii=False) + "\n")
@@ -355,14 +358,15 @@ def main() -> int:
     ap.add_argument("--compacto", action="store_true", help="V4: grava {treino,teste}-compacto.jsonl")
     ap.add_argument("--v4", action="store_true", help="grava {treino,validacao,teste,cego}-v4.jsonl")
     ap.add_argument("--v5", action="store_true", help="grava treino-v5/validacao-v5/cego2-v5.jsonl")
+    ap.add_argument("--v6", action="store_true", help="grava treino-v6/validacao-v6/cego3-v6.jsonl (+ opus-v6/)")
     a = ap.parse_args()
     if a.selftest:
         selftest()
         return 0
     if a.v4:
         return main_v4()
-    if a.v5:
-        return main_v5()
+    if a.v5 or a.v6:
+        return main_v5(6 if a.v6 else 5)
     lutas = lutas_analisadas()
     usos = base(lutas)
     random.Random(7).shuffle(lutas)

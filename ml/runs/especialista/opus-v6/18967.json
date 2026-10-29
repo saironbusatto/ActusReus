@@ -1,0 +1,20 @@
+{"resumo": "O shadowfury de Ominousdesii abriu a luta e Heruiv queimou o trinket logo; depois o paladino ficou dispelando sem curar nem usar divine shield e morreu aos 57.9, e o priest caiu na sequência sob polymorph do warlock aliado.",
+ "momento_decisivo": {"t": 52.7, "descricao": "Heruiv, sob pressão, usa divine protection e volta a cleansar (53.4-57.1) em vez de divine shield + holy light; morre aos 57.9 e o Shadowplay fica sem healer."},
+ "erros": [
+  {"t": 38.9, "quem": "Heruiv", "fez": "cleanse em sequência (9 vezes entre 38.9 e 57.1)", "devia": "holy light/flash of light e dispel só no CC importante", "porque": "dots de dois warlocks e de mage são reaplicados mais rápido do que se tiram; curou só 19k", "gravidade": "alta"},
+  {"t": 52.7, "quem": "Heruiv", "fez": "divine protection e morreu sem usar divine shield", "devia": "divine shield e se curar dentro da bolha", "porque": "divine protection só reduz dano; a bolha tinha virado a luta", "gravidade": "alta"},
+  {"t": 34.6, "quem": "Heruiv", "fez": "every man for himself no shadowfury com 94%", "devia": "aguentar 2-3 s de stun e guardar o trinket", "porque": "ficou sem trinket para o resto da luta por um stun sem pressão", "gravidade": "media"},
+  {"t": 49.1, "quem": "Amnesianxxi", "fez": "mind sear (37.1, 42.2, 49.1) com o paladino sendo focado", "devia": "PW:S/flash heal no paladino ou dano em alvo único", "porque": "mind sear é AoE fraco; o paladino precisava de cura extra", "gravidade": "media"},
+  {"t": 35.6, "quem": "Heshoix", "fez": "flamestrike/blizzard na abertura", "devia": "fireball/pyroblast no paladino durante o shadowfury", "porque": "AoE espalhado contra time sem pets frágeis rende menos que burst num alvo", "gravidade": "baixa"},
+  {"t": 74.4, "quem": "Ominousx", "fez": "shoot (wand) sozinho contra três", "devia": "dots/fear/death coil no shaman healer", "porque": "wand é o menor dano disponível; o warlock tinha feitiços prontos", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 34.3, "quem": "Ominousdesii", "descricao": "shadowfury pegou os três inimigos e forçou o trinket do paladino"},
+  {"t": 60.1, "quem": "Heshoix", "descricao": "polymorph em Ominousx isolou o priest para a kill"},
+  {"t": 44.5, "quem": "Ominousx", "descricao": "pet spell lock no shaman healer e spell lock no mage (49.5)"}
+ ],
+ "erros_da_rede": [
+  {"t": 39.0, "quem": "Amnesianxxi", "acao": "shadow word: death no mage com vida alta", "porque": "SW:D é execute e devolve dano ao priest; em alvo alto rende pouco"},
+  {"t": 59.0, "quem": "Ominousdesii", "acao": "life tap logo após a kill do paladino", "porque": "GCD sem dano na janela de matar o priest"},
+  {"t": 66.4, "quem": "Ominousdesii", "acao": "life tap de novo na janela de kill", "porque": "outro GCD perdido com o priest já baixo"}
+ ]}

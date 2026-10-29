@@ -1,0 +1,20 @@
+{"resumo": "A RMP pôs blind, cheap shot e kidney em Kwongwegaiv, que curou só 7k e morreu aos 62.2 s. Zebedeuix quase matou Zebedeuvi com o shadow dance, mas sem healer a RLS ruiu. Heshovi fechou com deep freeze, polymorph e frost nova.",
+ "momento_decisivo": {"t": 56.2, "descricao": "Com Zebedeuix no polymorph de Heshovi (54.8), Zebedeuvi dá kidney shot em Kwongwegaiv, que já vinha do blind (41.9) e do cheap shot (49.3). O healer morre aos 62.2 s."},
+ "erros": [
+  {"t": 38.1, "quem": "Kwongwegaiv", "fez": "abriu com wind shear e flame shock em Amnesianvii e depois purge (44.6), em vez de curar e se proteger", "devia": "earth shield e riptide no aliado e posicionar grounding totem contra a RMP", "porque": "o healer da RLS curou só 7k na luta. Era o alvo da RMP e gastou a abertura dando dano", "gravidade": "alta"},
+  {"t": 47.8, "quem": "Zebedeuvi", "fez": "vanish aos 47.0 e kick logo depois, quebrando o stealth, com evasion e cloak no mesmo segundo", "devia": "ficar em stealth para quebrar a pressão e reabrir com cheap shot no healer quando seguro", "porque": "o vanish virou só um reset de CC. Tomou kidney de Zebedeuix aos 49.8 s com 22% de vida", "gravidade": "media"},
+  {"t": 38.6, "quem": "Ominousxxi", "fez": "death coil na abertura, sem ninguém em perigo", "devia": "guardar o death coil para tirar Zebedeuvi de cima de Kwongwegaiv no kidney (56.2) ou interromper o priest", "porque": "o único peel instantâneo do warlock faltou quando o healer morreu", "gravidade": "alta"},
+  {"t": 80.9, "quem": "Zebedeuix", "fez": "a 27%, depois de vanish e cloak, abriu com premeditation e hemorrhage em Amnesianvii", "devia": "usar o vanish para se afastar e esperar o reincarnate ou a cura de Kwongwegaiv", "porque": "sem trinket, voltou para o dano de mage e priest e morreu aos 89.1 s", "gravidade": "alta"},
+  {"t": 36.8, "quem": "Heshovi", "fez": "mirror image e icy veins antes do contato (35.8-36.8)", "devia": "guardar os dois para a janela de kill (o kidney em Kwongwegaiv aos 56.2 s)", "porque": "os cooldowns acabaram sem dano relevante. O mage tinha 43k de dano no fim", "gravidade": "media"},
+  {"t": 48.1, "quem": "Ominousxxi", "fez": "life tap no meio do burst de Zebedeuix em Zebedeuvi e com o próprio healer sob CC", "devia": "fear em Zebedeuvi ou Amnesianvii, ou UA e haunt no alvo a 19%", "porque": "Zebedeuvi estava a 19%, e era o momento de fechar o kill ou pôr CC no healer inimigo", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 43.2, "quem": "Zebedeuix", "descricao": "shadow dance, premeditation, cheap shot e ambush, levando Zebedeuvi de 67% para 19% em 3 s"},
+  {"t": 54.8, "quem": "Heshovi", "descricao": "polymorph em Zebedeuix no burst dele, permitindo o kidney em Kwongwegaiv sem retaliação"},
+  {"t": 74.8, "quem": "Heshovi", "descricao": "deep freeze em Ominousxxi seguido de cold snap, icy veins e ice barrier. Depois, frost nova em Zebedeuix quando ele deu shadowstep (77.3)"}
+ ],
+ "erros_da_rede": [
+  {"t": 53.6, "quem": "Kwongwegaiv", "acao": "water shield", "porque": "buff de mana entre o cheap shot e o kidney, sendo o alvo de kill. Devia se curar ou baixar totem"},
+  {"t": 74.1, "quem": "Ominousxxi", "acao": "life tap", "porque": "gastou vida estando enraizado e logo antes do deep freeze, sem healer vivo no time"},
+  {"t": 83.0, "quem": "Zebedeuix", "acao": "hemorrhage em Amnesianvii", "porque": "com pouca vida (27% aos 77.3 s), insistiu no dano em vez de fugir e esperar o reincarnate do shaman"}
+ ]}
