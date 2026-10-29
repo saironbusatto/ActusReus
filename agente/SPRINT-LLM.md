@@ -36,7 +36,27 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
       eventos do mesmo instante numa linha) = 6.643 → 4.724 tokens por luta (−29%); e xformers do torch do venv (o
       instalado era do torch 2.10, o treino caía na atenção comum; não há flash_attn para torch 2.14). `analisa.py`
       lê o teste compacto sozinho pela marca `teste.txt` no LoRA.
-- [ ] Comparar V3 x Gemini x Opus nas 10 lutas fixas.
+- [x] V3 (treino) terminado 29/10 00:47: morto por RAM no passo 216 (compilação C++ de outro projeto), retomado do
+      checkpoint-200 (`treina.py --retoma`). Loss 1,74 → ~0,66.
+- [x] Comparar V3 x Gemini x Opus nas 10 lutas fixas (`ml/especialista/compara.py` + leitura à mão, mesma régua para
+      todos; o Opus de referência fui eu, então o "momento" é o automático, sem ajuste). 29/10 01:30:
+
+| | JSON | fatos graves (horário certo) | fatos (todos) | crítica errada/luta (à mão) | momento = Opus | s/luta |
+|---|---|---|---|---|---|---|
+| Gemini (no ar) | 10/10 | 6/10 lutas | 16/40 | 0–0,3 | 5/10 | — |
+| V1 | 10/10 | 6/10 | 7/40 | 0,3–0,4 | 5/10 | 45 |
+| V2 | 10/10 | 6/10 | 12/40 | 0,6–0,7 | 6/10 | 51 |
+| **V3** (limite 4096) | 10/10 | **7/10** (10/10 pelo conteúdo) | **30/40** | 0,4–0,5 | **7/10** | 65 |
+| V3 (limite 2500, 1ª rodada) | 9/10 | — | — | — | 6/9 | 63 |
+
+      Meta: JSON ✔ (só com o limite 4096: 6% das respostas de treino passam de ~2500 tokens e a 19636 foi cortada no
+      meio), crítica errada ≤ 1 ✔, momento ≥ 7 ✔ no limite (a 19636 refeita é outra amostra, temperatura 0,3), fatos
+      graves ≥ 9 ✗ (7: as 3 que faltam citam o fato com o **horário errado** — e o treinador usa o `t` para achar a
+      ação), ≤ 60 s ✗ (65; o tempo é quase todo geração: ~27 tokens/s, e a V3 escreve 6 erros/luta). **Não bateu a
+      meta.** A melhor local e acima do Gemini em fatos e momento; o Gemini erra menos críticas. Críticas erradas da
+      V3: Wind Shear no healer, culpa do Warrior na própria Retaliation, Victory Rush "cooldown", Divine Plea em 3v2.
+      Próximo: horário dos fatos (o `t` do erro do fato = instante citado no texto) e resposta mais curta; a V4
+      compacta acelera o treino, mas pouco a análise (a entrada não é o gargalo dela).
 - [ ] Modo sombra: o especialista analisa as lutas ao vivo em paralelo ao Gemini por algumas rodadas, sem ir para
       o treinador; comparar.
 
