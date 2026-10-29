@@ -45,6 +45,12 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
   no time que perdeu, então o filtro usa só quem perde com aquela ação, não as críticas); treino:
   `ml/especialista/treina.py` (venv próprio). Comparação nas 10 lutas de teste (Gemini × Opus × especialista): o especialista roda em ~40 s,
   acerta o momento decisivo em 6/10, mas aponta poucos erros e ainda inventa mecânica — não substitui o Gemini.
+  **V4** (29/10): glossário de mecânica na entrada, vencedor escondido, fatos do verificador juntados por código,
+  resposta curta. No **teste cego** de 20 lutas (referência congelada antes do treino, `ml/runs/especialista/cego-opus/`,
+  régua `ml/especialista/compara.py --cego`): momento 16/19, fatos graves 11/11, 34 s/luta, mas achou 17/45 erros
+  (Gemini 24/48) e errou 0,53 crítica/luta (Gemini 0,15-0,4) — **não passou no critério registrado antes; fica o
+  Gemini**. O caminho para o especialista entrar ao vivo existe (`ml/especialista/servidor.py` + o arquivo
+  `ml/runs/especialista/ao-vivo.json`, desligado). Detalhes e lições em `agente/SPRINT-LLM.md`.
 - **Verificador** (`ml/policy/verificador.py`, nó `verificar` do grafo): fatos contados no log, sem LLM, antes da
   análise. Achou nas 10 lutas de teste tudo o que os LLMs perderam (bots ausentes, trinkets guardados, Divine Plea).
 
@@ -67,6 +73,7 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V5 | 27/10 12:54 | contestação só com elogios (contestava 41% dos erros, agora ~9%); promoção contando desde a V3; técnico na conta nova do agy. **Piorou: desafiante 42% (129/308)** |
 | V6 | 27/10 19:59 | desafiante volta ao checkpoint de 27/10 10:44; notas do técnico com 30% do peso; âncora KL na campeã; contestação da V4. Desafiante 47% (168/355) |
 | V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico. **Desafiante 52% (220/427)**, melhor até agora |
+| V8 | 29/10 07:21 | V7 + verificador corrigido (ação de trinket conta como uso: o fato "morreu sem trinket" era falso quando faltava o evento). Especialista V4 testado e reprovado no teste cego; técnico segue o Gemini |
 
 ### Lições (não repetir)
 

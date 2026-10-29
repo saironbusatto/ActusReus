@@ -45,6 +45,12 @@ Full plan: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Arena manual: [.claude/skills/wot
   on the losing team, so the filter uses only those who lose with that action, not the criticisms); training:
   `ml/especialista/treina.py` (its own venv). Comparison on the 10 test matches (Gemini × Opus × specialist): the specialist runs in ~40 s,
   gets the decisive moment right in 6/10, but points out few errors and still invents mechanics — it does not replace Gemini.
+  **V4** (10/29): mechanics glossary in the input, winner hidden, verifier facts merged by code, short answer. On the
+  **blind test** of 20 matches (reference frozen before training, `ml/runs/especialista/cego-opus/`, scored with
+  `ml/especialista/compara.py --cego`): decisive moment 16/19, serious facts 11/11, 34 s/match, but found 17/45 errors
+  (Gemini 24/48) and made 0.53 wrong critiques/match (Gemini 0.15-0.4) — **failed the criterion registered beforehand;
+  Gemini stays**. The path for the specialist to go live exists (`ml/especialista/servidor.py` + the file
+  `ml/runs/especialista/ao-vivo.json`, off). Details and lessons in `agente/SPRINT-LLM.md`.
 - **Verifier** (`ml/policy/verificador.py`, `verificar` node of the graph): facts counted from the log, without an LLM, before the
   analysis. It found, in the 10 test matches, everything the LLMs missed (missing bots, saved trinkets, Divine Plea).
 
@@ -67,6 +73,7 @@ Every change that alters the game or the training becomes a version in [`agente/
 | V5 | 10/27 12:54 | challenge only with praise (it challenged 41% of the errors, now ~9%); promotion counting since V3; coach on the new agy account. **It got worse: challenger 42% (129/308)** |
 | V6 | 10/27 19:59 | challenger back to the 10/27 10:44 checkpoint; coach notes with 30% of the weight; KL anchor on the champion; V4 challenging. Challenger 47% (168/355) |
 | V7 | 10/28 07:53 | verifier in the graph: log facts (missing bot, saved trinket, CC on DR, Divine Plea, Retaliation) in the coach's prompt. **Challenger 52% (220/427)**, best so far |
+| V8 | 10/29 07:21 | V7 + fixed verifier (a trinket action counts as use: the "died without trinket" fact was false when the event was missing). Specialist V4 tested and rejected on the blind test; the coach stays Gemini |
 
 ### Lessons (do not repeat)
 
