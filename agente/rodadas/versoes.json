@@ -107,5 +107,24 @@
    "Regra: ~100 lutas por braço contra a campeã e as regras; +3 pontos → vai para os dois braços e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → +100 lutas; empate depois de 200 sai.",
    "Correção 29/10 11:18 SP: o treinador do braço B caía em loop desde as 09:44 (sorted comparava dicts quando dois nomes empatavam na posição da descrição do momento) e não treinou nada até aí; a contagem do braço B começa às 11:18 SP."
   ]
+ },
+ {
+  "id": "V10A",
+  "nome": "Braço A: plano + fatos por código + momento",
+  "desde": "2026-10-31 18:05",
+  "mudancas": [
+   "Igual à V9A, mais o ganho do A/B da V9: o braço A (55,59,...,87, unidade ia-ao-vivo) treina também com os fatos do verificador juntados por código com o horário exato e com a nota do momento decisivo, além do plano tático. Os dois braços passaram de +3 na V9, então as duas mudanças vão para os dois.",
+   "Ressalva registrada antes de medir: a aplicação do +3 na V9 usou base de só 80 lutas (erro de ±5 pontos), então a diferença pode ser variação normal; o A/B da V10 compara os braços entre si na mesma janela."
+  ]
+ },
+ {
+  "id": "V10B",
+  "nome": "Braço B: fase B — alvo de kill do plano no C++",
+  "desde": "2026-10-31 18:05",
+  "mudancas": [
+   "Cópia III (56,64,68,72,76,80,84,88, unidade ia-ao-vivo-b) treina com plano + fatos por código + momento, como o braço A, e testa a fase B: o C++ (mod-playerbots 4b96f5a9, imagem acore/ac-wotlk-worldserver:master compilada em 29/10) força o alvo de kill do plano como alvo dos DPS dos times dele (Playerbots.ArenaPlanTeams/ArenaPlanFile; arena-plan.txt exportado de planos.json por plano.py --exporta).",
+   "O código novo nunca tinha rodado. Prova de que funciona: a fração de ações dos DPS no alvo de kill tem de subir no braço B em relação ao A; se ficar igual, o plano não está sendo aplicado. Rollback: docker tag pre-plano-v10 na imagem master e force-recreate.",
+   "Regra do A/B: ~100 lutas por braço contra campeã + só-regras; +3 pontos → vai para os dois e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → mais 100 lutas; empate depois de 200 sai."
+  ]
  }
 ]

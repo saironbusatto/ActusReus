@@ -123,6 +123,8 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
 
 **31/10 — passagem:** o DeepSeek 4.1 executa o projeto e o Claude/Opus fica só como régua (`agente/HANDOFF-DEEPSEEK.md`). A V6 terminou em 30/10 01:19 e ainda não fez a prova; a V10 ainda não rodou.
 
+**31/10 18:05 UTC — V10 no ar (V10A e V10B em `versoes.json`):** commit `03808d9` refeito em `3cd58ad` sem a senha do banco (push segue bloqueado por falta de OK); worldserver recriado com a imagem de 29/10 (plano no C++), `arena-plan.txt` exportado e ligado ao braço B (times 56…88), treinadores A e B e o `rodada-sync` (R0471) no ar. Medição só depois dos ~15 min de aquecimento; a prova de que o plano é aplicado é a fração de ações dos DPS no alvo de kill subir no braço B em relação ao A.
+
 **29/10 noite — V6 do especialista e V10 do treino (registrado antes do resultado):**
 - **Dados V6:** +100 lutas rotuladas por 10 subagentes Opus sem o vencedor (`opus-v6/`), total 200 x3 + Gemini
   limpo (`dataset_tecnico.py --v6`: treino-v6 4539, validação 60).
