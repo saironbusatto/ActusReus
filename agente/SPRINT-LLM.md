@@ -121,6 +121,8 @@ Técnicos comparados nas 10 lutas de teste fixas (`ml/runs/especialista/teste_id
   empate depois de 200 sai. Registro "V9A/V9B" no `versoes.json`.
 - **Treino de madrugada com o servidor ligado** (queda → `treina.py --retoma`).
 
+**31/10 — passagem:** o DeepSeek 4.1 executa o projeto e o Claude/Opus fica só como régua (`agente/HANDOFF-DEEPSEEK.md`). A V6 terminou em 30/10 01:19 e ainda não fez a prova; a V10 ainda não rodou.
+
 **29/10 noite — V6 do especialista e V10 do treino (registrado antes do resultado):**
 - **Dados V6:** +100 lutas rotuladas por 10 subagentes Opus sem o vencedor (`opus-v6/`), total 200 x3 + Gemini
   limpo (`dataset_tecnico.py --v6`: treino-v6 4539, validação 60).

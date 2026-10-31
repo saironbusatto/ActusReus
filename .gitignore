@@ -16,3 +16,20 @@ agente/logs/
 
 # cópia de hardlinks do core só para testar a compilação do mod-actus-reus
 .actus-build/
+
+# Pesos, checkpoints e datasets grandes do ML — só código e avaliações pequenas entram
+ml/runs/**/ckpt*/
+ml/runs/**/lora*/
+ml/runs/**/qwen*/
+ml/runs/rodadas/
+ml/runs/**/*.jsonl
+ml/runs/*.jsonl
+ml/runs/*.offset
+ml/runs/*.pt
+ml/runs/*.pt.bak-*
+ml/runs/**/*.log
+ml/especialista/unsloth_compiled_cache/
+
+# Worktrees locais do Claude Code
+.claude/worktrees/
+ml/runs/checkpoints*/
