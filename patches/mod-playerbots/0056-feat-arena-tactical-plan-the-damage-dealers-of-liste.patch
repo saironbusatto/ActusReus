@@ -1,0 +1,207 @@
+From 4b96f5a9df88838c3c0ced7b92c2891e94090026 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 29 Oct 2026 18:38:00 -0300
+Subject: [PATCH 56/58] =?UTF-8?q?feat:=20arena=20tactical=20plan=20?=
+ =?UTF-8?q?=E2=80=94=20the=20damage=20dealers=20of=20listed=20teams=20focu?=
+ =?UTF-8?q?s=20the=20plan's=20kill=20target?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Playerbots.ArenaPlanTeams / ArenaPlanFile: one line per matchup, keyed by both teams' sorted class ids, gives
+the kill-target class. While that enemy can be hit (alive, seen, in LoS within 40 yd, not immune, not in a
+teammate's breakable CC) it is the enemy player and dps target of the team's damage dealers; otherwise the rules
+pick as before. Re-read every 10 s.
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ conf/playerbots.conf.dist              | 15 ++++++
+ src/Ai/Base/ArenaMlPolicy.h            | 67 ++++++++++++++++++++++++++
+ src/Ai/Base/Value/DpsTargetValue.cpp   |  4 ++
+ src/Ai/Base/Value/EnemyPlayerValue.cpp |  5 ++
+ 4 files changed, 91 insertions(+)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index e0a58f72..ea2a8608 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -571,6 +571,21 @@ Playerbots.ArenaMlChallengerBTeams = ""
+ 
+ Playerbots.ArenaMlControl = 0.0
+ 
++#
++#    Playerbots.ArenaPlanTeams
++#    Playerbots.ArenaPlanFile
++#        Tactical plan for the damage dealers of the listed arena teams (comma-separated ids): while the
++#        plan's kill target of the matchup can be hit (alive, seen, in line of sight within 40 yd, not
++#        immune, not in a teammate's breakable CC) it is their target; otherwise the rules pick as usual.
++#        The file has one line per matchup, "<own class ids>|<enemy class ids>=<kill class id>" with each
++#        side's class ids sorted, e.g. "4,5,8|4,7,9=9" (Rogue/Priest/Mage vs Rogue/Shaman/Warlock: kill the
++#        Warlock). Both are re-read every 10 s.
++#        Default: "" - No plan (the rules pick targets)
++#
++
++Playerbots.ArenaPlanTeams = ""
++Playerbots.ArenaPlanFile = ""
++
+ #
+ #    Playerbots.ArenaRoundFile
+ #        Synchronised arena rounds. When set, the first word of this file is the current round id: each bot
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index 0158d46a..10aef549 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -7,8 +7,11 @@
+ #ifndef PLAYERBOTS_ARENAMLPOLICY_H
+ #define PLAYERBOTS_ARENAMLPOLICY_H
+ 
++#include <algorithm>
+ #include <atomic>
+ #include <filesystem>
++#include <fstream>
++#include <map>
+ #include <memory>
+ #include <mutex>
+ #include <random>
+@@ -16,8 +19,10 @@
+ 
+ #include "ArenaMlNet.h"
+ #include "ArenaObservation.h"
++#include "Battleground.h"
+ #include "Config.h"
+ #include "Helpers.h"
++#include "ObjectAccessor.h"
+ #include "Queue.h"
+ #include "Strategy.h"
+ 
+@@ -36,6 +41,10 @@ namespace ai::arena
+     {
+         std::set<uint32> champion, challenger, challengerB;  // challengerB: second challenger for A/B tests
+         float control = 0.0f;
++        // Tactical plan (Playerbots.ArenaPlanTeams / ArenaPlanFile): kill-target class per matchup, keyed by the two
++        // teams' sorted class ids, "4,5,8|4,7,9" -> 9 (RMP vs RLS: the Warlock). Written by ml/policy/plano.py.
++        std::set<uint32> plan;
++        std::map<std::string, uint8> kill;
+     };
+ 
+     class MlPolicies
+@@ -69,6 +78,12 @@ namespace ai::arena
+             s->challenger = teams("Playerbots.ArenaMlChallengerTeams");
+             s->challengerB = teams("Playerbots.ArenaMlChallengerBTeams");
+             s->control = std::clamp(sConfigMgr->GetOption<float>("Playerbots.ArenaMlControl", 0.0f), 0.0f, 1.0f);
++            s->plan = teams("Playerbots.ArenaPlanTeams");
++            // ponytail: re-read every 10 s (81 short lines); cache by mtime if the file ever grows
++            std::ifstream planFile(sConfigMgr->GetOption<std::string>("Playerbots.ArenaPlanFile", ""));
++            for (std::string line; std::getline(planFile, line);)
++                if (size_t const eq = line.find('='); eq != std::string::npos)
++                    s->kill[line.substr(0, eq)] = uint8(std::stoul(line.substr(eq + 1)));
+             std::atomic_store(&settings, std::shared_ptr<MlSettings const>(s));
+             Reload(championFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", ""));
+             Reload(challengerFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlChallengerFile", ""));
+@@ -141,6 +156,58 @@ namespace ai::arena
+         return nullptr;
+     }
+ 
++    // The enemy the tactical plan wants dead (its kill-target class in this matchup), for a damage dealer of a
++    // Playerbots.ArenaPlanTeams team, while it can be hit right now: alive, seen, in line of sight within 40 yd, not
++    // immune and not in a teammate's breakable CC. nullptr leaves targeting to the rules.
++    inline Unit* PlanKillTarget(PlayerbotAI* botAI)
++    {
++        Player* bot = botAI->GetBot();
++        Battleground* bg = bot->GetBattleground();
++        if (!bg || !bot->InArena() || PlayerbotAI::IsHeal(bot))
++            return nullptr;
++        MlPolicies& p = MlPolicies::Instance();
++        p.Refresh();
++        auto const s = p.Settings();
++        bool planned = false;
++        for (uint8 slot = 0; slot < 3; ++slot)  // 2v2, 3v3, 5v5 team slots
++            planned = planned || s->plan.count(bot->GetArenaTeamId(slot));
++        if (!planned || s->kill.empty())
++            return nullptr;
++
++        std::vector<uint8> ours, theirs;
++        std::vector<Player*> enemies;
++        for (auto const& [guid, bgPlayer] : bg->GetPlayers())
++        {
++            Player* player = ObjectAccessor::FindPlayer(guid);
++            if (!player)
++                continue;
++            if (player->GetBgTeamId() == bot->GetBgTeamId())
++                ours.push_back(player->getClass());
++            else
++            {
++                theirs.push_back(player->getClass());
++                enemies.push_back(player);
++            }
++        }
++        auto key = [](std::vector<uint8> classes)
++        {
++            std::sort(classes.begin(), classes.end());
++            std::string k;
++            for (uint8 c : classes)
++                k += (k.empty() ? "" : ",") + std::to_string(c);
++            return k;
++        };
++        auto const it = s->kill.find(key(ours) + "|" + key(theirs));
++        if (it == s->kill.end())
++            return nullptr;
++        for (Player* enemy : enemies)
++            if (enemy->getClass() == it->second && enemy->IsAlive() && bot->CanSeeOrDetect(enemy) &&
++                bot->IsWithinDist(enemy, 40.0f) && bot->IsWithinLOSInMap(enemy) &&
++                !enemy->HasAuraType(SPELL_AURA_SCHOOL_IMMUNITY) && !enemy->HasBreakableByDamageCrowdControlAura())
++                return enemy;
++        return nullptr;
++    }
++
+     // Movement, targeting and upkeep stay with the rules: they are most of the logged actions, so an imitating net
+     // learns to boost them and starved "arena tactics" (chasing out of LoS, healer hiding) in almost every class.
+     // Keep in sync with RULE_OWNED in ml/policy/train_v2.py.
+diff --git a/src/Ai/Base/Value/DpsTargetValue.cpp b/src/Ai/Base/Value/DpsTargetValue.cpp
+index a92231b1..89bc8e3a 100644
+--- a/src/Ai/Base/Value/DpsTargetValue.cpp
++++ b/src/Ai/Base/Value/DpsTargetValue.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "DpsTargetValue.h"
++#include "ArenaMlPolicy.h"
+ #include "PlayerbotAIConfig.h"
+ #include "Playerbots.h"
+ #include "Strategy.h"
+@@ -284,6 +285,9 @@ Unit* DpsTargetValue::Calculate()
+     if (rti)
+         return rti;
+ 
++    if (Unit* plan = ai::arena::PlanKillTarget(botAI))
++        return plan;
++
+     float dps = AI_VALUE(float, "estimated group dps");
+ 
+     if (botAI->GetNearGroupMemberCount() > 3)
+diff --git a/src/Ai/Base/Value/EnemyPlayerValue.cpp b/src/Ai/Base/Value/EnemyPlayerValue.cpp
+index 19b46d86..c14583a8 100644
+--- a/src/Ai/Base/Value/EnemyPlayerValue.cpp
++++ b/src/Ai/Base/Value/EnemyPlayerValue.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "EnemyPlayerValue.h"
++#include "ArenaMlPolicy.h"
+ #include "CombatManager.h"
+ #include "Playerbots.h"
+ #include "ServerFacade.h"
+@@ -38,6 +39,10 @@ bool NearestEnemyPlayersValue::AcceptUnit(Unit* unit)
+ 
+ Unit* EnemyPlayerValue::Calculate()
+ {
++    // Tactical plan: on the kill target already = no other enemy to switch to
++    if (Unit* plan = ai::arena::PlanKillTarget(botAI))
++        return plan == bot->GetVictim() ? nullptr : plan;
++
+     bool controllingCannon = false;
+     bool controllingVehicle = false;
+     bool passenger = false;
+-- 
+2.55.0
+

@@ -140,6 +140,12 @@ com o worldserver parado (item equipado vive em memória) e servidor de volta em
 Medallion, 108 online, lutas retomadas (24101+). As duas peças de equipamento mudaram no meio da janela da V10,
 mas nos dois braços ao mesmo tempo.
 
+**01/11 02:20 SP (05:20 UTC) — Promoção para Campeã V4 e abertura da V11:**
+O teste A/B da V10 foi concluído com vitória expressiva do Braço B: **58.0%** vs Campeã v3 em 100 lutas diretas (+11.0% de folga sobre a meta de +3) e **57.5%** no geral (229V - 169D), contra 47.9% do Braço A e 47.0% da Campeã v3. Por determinação do usuário ("promovemos agora a v3 para ela ser base de regua ja"), a política vencedora foi promovida:
+- **Promoção formal para Campeã V4**: `arena-policy-v4.txt` e `policy-v4.pt` assumem a política do Braço B como régua fixa nos trios da Campeã (54, 58, 62, 66, 70, 74, 78, 82, 86).
+- **Fase B C++ em toda a frota IA**: `Playerbots.ArenaPlanTeams` cobrindo Campeã + Desafiante A + Desafiante B (times 54..86, 55..87, 56..88; time 60 Reload do usuário preservado fora).
+- **Desafiante contínuo**: segue com os próprios pesos (o braço A não foi reiniciado) e continua treino ao vivo (`ia-ao-vivo`) com plano tático + fatos por código + momento decisivo. Lutas rodando continuamente pela madrugada.
+
 **29/10 noite — V6 do especialista e V10 do treino (registrado antes do resultado):**
 - **Dados V6:** +100 lutas rotuladas por 10 subagentes Opus sem o vencedor (`opus-v6/`), total 200 x3 + Gemini
   limpo (`dataset_tecnico.py --v6`: treino-v6 4539, validação 60).
@@ -275,3 +281,5 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 - Só modelos gratuitos ou em casa; cota do agy acabou = parar treinador, rodadas e servidor.
 - Treino de LLM com o servidor ligado só se a RAM aguentar (o de 28/10 17:00 foi morto por falta de memória).
 - Toda mudança documentada (README, `versoes.json`, este arquivo, nota da missão no Obsidian) e com push.
+
+**01/11 10:30 SP — auditoria da V11 (V11C):** a V4 não estava no ar desde as 02:30: `arena-policy-v4.txt` no servidor era um stub de 22 bytes e a campeã carregava `arena-policy-live-b.txt`, ou seja, o braço B em treino. Corrigido com `.reload config`, sem restart. Dados de campeã entre 02:30 e 10:19 SP não valem como base. Medido nas lutas analisadas da janela V10: B 46/78 = 58% x campeã, 60/100 = 60% x regras, 48/86 = 55% x A. Depois da promoção o A virou (A 51/83 = 61% x B), então a vantagem do B ainda não está confirmada. Prova da fase B: DPS no alvo do plano 0,86 no B x 0,41 no A. Patches 0055 a 0058 exportados em `patches/mod-playerbots`.

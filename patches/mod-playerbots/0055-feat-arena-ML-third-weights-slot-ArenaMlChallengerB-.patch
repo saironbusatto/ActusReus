@@ -1,0 +1,101 @@
+From fe77bac54e8201c43329d593f74801b14a60ccc0 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Thu, 29 Oct 2026 09:46:56 -0300
+Subject: [PATCH 55/58] feat: arena ML third weights slot (ArenaMlChallengerB*)
+ for A/B tests of two training changes
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ conf/playerbots.conf.dist   |  7 ++++++-
+ src/Ai/Base/ArenaMlPolicy.h | 12 +++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index 0c405645..e0a58f72 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -544,8 +544,11 @@ Playerbots.ArenaMlLog = 0
+ #    Playerbots.ArenaMlTeams
+ #    Playerbots.ArenaMlChallengerFile
+ #    Playerbots.ArenaMlChallengerTeams
++#    Playerbots.ArenaMlChallengerBFile
++#    Playerbots.ArenaMlChallengerBTeams
+ #        Learned arena policies ("arena-policy v2" weights files) and the comma-separated arena team ids
+-#        (2v2 or 3v3) that play with each: the champion, and a challenger a live trainer keeps rewriting.
++#        (2v2 or 3v3) that play with each: the champion, and up to two challengers a live trainer keeps
++#        rewriting (the second one, "B", for A/B tests of two training changes at once).
+ #        Teams not listed keep the rules alone, which gives a mirror test (policy vs rules). Weight files
+ #        and these lists are re-read every 10 s, so a new policy needs no restart.
+ #        Default: "" - Disabled
+@@ -555,6 +558,8 @@ Playerbots.ArenaMlPolicyFile = ""
+ Playerbots.ArenaMlTeams = ""
+ Playerbots.ArenaMlChallengerFile = ""
+ Playerbots.ArenaMlChallengerTeams = ""
++Playerbots.ArenaMlChallengerBFile = ""
++Playerbots.ArenaMlChallengerBTeams = ""
+ 
+ #
+ #    Playerbots.ArenaMlControl
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index 79e95515..0158d46a 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -22,7 +22,8 @@
+ #include "Strategy.h"
+ 
+ // Learned arena policy (ArenaMlNet.h, any arena size) for the bots whose arena team is listed in
+-// Playerbots.ArenaMlTeams (champion weights) or Playerbots.ArenaMlChallengerTeams (challenger weights).
++// Playerbots.ArenaMlTeams (champion weights), Playerbots.ArenaMlChallengerTeams or ArenaMlChallengerBTeams
++// (two challengers, for A/B tests).
+ // On a share of the engine ticks (Playerbots.ArenaMlControl) the net picks, among the combat actions the rules
+ // queued this tick, which one runs; the rest of the time, and for movement, targeting and emergencies, the rules
+ // decide. Weight files are re-read when they change on disk (ml/policy/live.py rewrites them while bots play),
+@@ -33,7 +34,7 @@ namespace ai::arena
+ 
+     struct MlSettings
+     {
+-        std::set<uint32> champion, challenger;
++        std::set<uint32> champion, challenger, challengerB;  // challengerB: second challenger for A/B tests
+         float control = 0.0f;
+     };
+ 
+@@ -66,15 +67,18 @@ namespace ai::arena
+             auto s = std::make_shared<MlSettings>();
+             s->champion = teams("Playerbots.ArenaMlTeams");
+             s->challenger = teams("Playerbots.ArenaMlChallengerTeams");
++            s->challengerB = teams("Playerbots.ArenaMlChallengerBTeams");
+             s->control = std::clamp(sConfigMgr->GetOption<float>("Playerbots.ArenaMlControl", 0.0f), 0.0f, 1.0f);
+             std::atomic_store(&settings, std::shared_ptr<MlSettings const>(s));
+             Reload(championFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlPolicyFile", ""));
+             Reload(challengerFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlChallengerFile", ""));
++            Reload(challengerBFile, sConfigMgr->GetOption<std::string>("Playerbots.ArenaMlChallengerBFile", ""));
+         }
+ 
+         std::shared_ptr<MlSettings const> Settings() const { return std::atomic_load(&settings); }
+         PolicyPtr Champion() const { return std::atomic_load(&championFile.net); }
+         PolicyPtr Challenger() const { return std::atomic_load(&challengerFile.net); }
++        PolicyPtr ChallengerB() const { return std::atomic_load(&challengerBFile.net); }
+ 
+     private:
+         struct WeightFile
+@@ -113,7 +117,7 @@ namespace ai::arena
+         std::atomic<uint64> lastCheck{0};
+         std::mutex lock;
+         std::shared_ptr<MlSettings const> settings = std::make_shared<MlSettings>();
+-        WeightFile championFile, challengerFile;
++        WeightFile championFile, challengerFile, challengerBFile;
+     };
+ 
+     // The policy this bot plays with right now, or nullptr when the rules decide alone
+@@ -129,6 +133,8 @@ namespace ai::arena
+             uint32 const team = bot->GetArenaTeamId(slot);
+             if (s->challenger.count(team))
+                 return p.Challenger();
++            if (s->challengerB.count(team))
++                return p.ChallengerB();
+             if (s->champion.count(team))
+                 return p.Champion();
+         }
+-- 
+2.55.0
+

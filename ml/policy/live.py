@@ -529,7 +529,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--intervalo", type=int, default=45)
     ap.add_argument("--portao", type=int, default=600)
-    ap.add_argument("--campea", type=Path, default=ETC / "arena-policy-v3.txt")
+    ap.add_argument("--campea", type=Path, default=ETC / "arena-policy-v4.txt")
     ap.add_argument("--desafiante", type=Path, default=ETC / "arena-policy-live.txt")
     ap.add_argument("--braco", default="", help="A/B: 'b' = segundo desafiante (arquivos -b, sem promover)")
     ap.add_argument("--times", default="", help="times deste desafiante (padrão: CHALLENGER_TEAMS)")

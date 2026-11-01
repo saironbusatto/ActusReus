@@ -40,7 +40,7 @@ subir_braco_b() {  # começa da desafiante atual (pesos, checkpoint e posição 
 if [ "${1:-}" = "treinador" ]; then subir_treinador; exit 0; fi
 
 cp "$CONF" "$CONF.bak-pre-live"
-[ -f "$ETC/arena-policy-live.txt" ] || cp "$ETC/arena-policy-v3.txt" "$ETC/arena-policy-live.txt"
+[ -f "$ETC/arena-policy-live.txt" ] || cp "$ETC/arena-policy-v4.txt" "$ETC/arena-policy-live.txt"
 set_opt() {  # set_opt chave valor: troca a linha se existe, senão acrescenta no fim
     if grep -q "^Playerbots.$1 = " "$CONF"; then
         sed -i "s|^Playerbots.$1 = .*|Playerbots.$1 = $2|" "$CONF"
@@ -48,7 +48,7 @@ set_opt() {  # set_opt chave valor: troca a linha se existe, senão acrescenta n
         echo "Playerbots.$1 = $2" >> "$CONF"
     fi
 }
-set_opt ArenaMlPolicyFile '"/azerothcore/env/dist/etc/arena-policy-v3.txt"'
+set_opt ArenaMlPolicyFile '"/azerothcore/env/dist/etc/arena-policy-v4.txt"'
 set_opt ArenaMlTeams '"54,58,62,66,70,74,78,82,86"'
 set_opt ArenaMlChallengerFile '"/azerothcore/env/dist/etc/arena-policy-live.txt"'
 set_opt ArenaMlChallengerTeams "\"$TIMES_A\""
@@ -58,7 +58,7 @@ set_opt ArenaMlChallengerBTeams "\"$TIMES_B\""
 set_opt ArenaMlControl 0.25
 (cd "$ROOT/ml/policy" && python3 plano.py --exporta "$ETC/arena-plan.txt")
 set_opt ArenaPlanFile '"/azerothcore/env/dist/etc/arena-plan.txt"'
-set_opt ArenaPlanTeams "\"$TIMES_B\""
+set_opt ArenaPlanTeams "\"54,58,62,66,70,74,78,82,86,$TIMES_A,$TIMES_B\""
 grep -E "^Playerbots.ArenaMl" "$CONF"
 
 python3 -c "import sys; sys.path.insert(0, '$ROOT/ml/tools'); import wsconsole; wsconsole.run(['.saveall'])"

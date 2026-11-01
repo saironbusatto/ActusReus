@@ -75,6 +75,8 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V7 | 28/10 07:53 | verificador no grafo: fatos do log (bot ausente, trinket guardado, CC em DR, Divine Plea, Retaliation) no prompt do técnico. **Desafiante 52% (220/427)**, melhor até agora |
 | V8 | 29/10 07:21 | V7 + verificador corrigido (ação de trinket conta como uso: o fato "morreu sem trinket" era falso quando faltava o evento). Especialista V4 testado e reprovado no teste cego; técnico segue o Gemini |
 | V9 | 29/10 09:44 | A/B com terceira rede: braço A (desafiante) treina com o plano tático como shaping; braço B (cópia III, times 56,64…88) com os fatos do verificador juntados por código + o momento decisivo. O treinador do braço B caiu em loop até 11:18 (o sort comparava dicts num empate de nomes) — a contagem dele começa às 11:18. Regra: ~100 lutas por braço, +3 pontos espalha, −3 volta |
+| V10 | 31/10 15:05 | A/B com fatos por código e momento nos dois braços; braço B com alvo de kill do plano no C++ (DPS no alvo: 0,86 no B x 0,41 no A). B fez 60% x regras e 58% x campeã |
+| V11 | 01/11 02:30 | Braço B promovido a Campeã V4 e plano no C++ em toda a frota. A V4 real só entrou às 10:19 (V11C): antes a campeã carregava o braço B em treino. Vantagem ainda não confirmada: depois da promoção A fez 61% x B |
 | — | 29/10 18:10 | Especialista V5 (Qwen3-4B, + 100 lutas rotuladas pelo Opus sem o vencedor) reprovado no teste cego 2: momento 15/20 (meta 16), achou 31/115 erros (meta 35; Gemini 35). Fica o Gemini. A/B: braço A 52%, braço B 50% contra campeã+regras (46% antes) — os dois passam de +3, as duas mudanças vão para os dois braços (V10). Servidor pausado |
 
 ### Lições (não repetir)

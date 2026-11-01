@@ -127,6 +127,66 @@ def ficha_trio(tid: int, luta: dict, analise: dict) -> dict:
             "lutas": [luta["luta"]], "analise": a, "motor": analise.get("_motor")}
 
 
+def notifica_usuario(luta: dict, analise: dict) -> None:
+    """Envia relatório pós-luta para o jogador humano (Reload) via tela e correio."""
+    if TIME_USUARIO not in luta.get("times", {}):
+        return
+    if not analise or "erro" in analise:
+        return
+
+    fid = luta.get("luta")
+    venceu = (luta.get("vencedor") == TIME_USUARIO)
+    resultado = "VITÓRIA" if venceu else "DERROTA"
+    resumo = analise.get("resumo", "")
+    momento = analise.get("momento_decisivo", {})
+    erros = analise.get("erros", [])
+    conselhos = analise.get("conselho_por_time", {})
+    meu_time = luta["times"].get(TIME_USUARIO, "Seu Trio")
+    conselho = conselhos.get(meu_time, "")
+
+    # 1. Mensagens no jogo para Reload
+    comandos = []
+    comandos.append(f'.send message Reload [Pós-Luta #{fid}] {resultado}: {resumo[:200]}')
+    if momento and isinstance(momento, dict) and "descricao" in momento:
+        comandos.append(f'.send message Reload [Momento Decisivo ({momento.get("t", 0)}s)] {momento["descricao"][:200]}')
+
+    membros_meus = {m["nome"] for m in luta.get("membros", {}).values() if m.get("time") == TIME_USUARIO}
+    erros_meus = [e for e in erros if e.get("quem") in membros_meus]
+    for e in erros_meus[:2]:
+        msg_erro = f'{e.get("quem")}: {e.get("fez")} -> devia {e.get("devia")}. {e.get("porque")}'
+        comandos.append(f'.send message Reload [Erro] {msg_erro[:200]}')
+
+    if conselho:
+        comandos.append(f'.send message Reload [Conselho Próx.] {conselho[:200]}')
+
+    # 2. Carta no correio com relatório completo
+    corpo_mail = [
+        f"Luta #{fid} - Resultado: {resultado}",
+        f"Resumo: {resumo}",
+        f"\nMomento Decisivo ({momento.get('t', 0) if isinstance(momento, dict) else 0}s):\n{momento.get('descricao', '') if isinstance(momento, dict) else ''}",
+        "\nErros Apontados:"
+    ]
+    if erros_meus:
+        for e in erros_meus:
+            corpo_mail.append(f"- [{e.get('t', 0)}s] {e.get('quem')}: {e.get('fez')} -> devia {e.get('devia')}. ({e.get('porque')})")
+    else:
+        corpo_mail.append("- Nenhum erro grave detectado.")
+
+    if conselho:
+        corpo_mail.append(f"\nConselho para a próxima rodada:\n{conselho}")
+
+    texto_mail = "\\n".join(corpo_mail).replace('"', "'")
+    comandos.append(f'.send mail Reload "Técnico: Luta #{fid} ({resultado})" "{texto_mail}"')
+
+    try:
+        import wsconsole
+        # o texto vem do LLM: quebra de linha viraria um segundo comando de GM no console
+        wsconsole.run([" ".join(c.split()) for c in comandos])
+        print(f"Relatório pós-luta #{fid} enviado para Reload com sucesso.", flush=True)
+    except Exception as exc:
+        print(f"Erro ao enviar relatório pós-luta #{fid}: {exc}", flush=True)
+
+
 def grava(rid: str, inicio: dt.datetime, lutas: dict[int, dict], analises: dict[int, dict]) -> None:
     trios = [ficha_trio(tid, l, analises[fid]) for fid, l in lutas.items() for tid in l["times"]]
     saida = {"id": rid, "inicio": f"{inicio:%Y-%m-%d %H:%M}", "fim": f"{agora():%Y-%m-%d %H:%M}",
@@ -208,6 +268,9 @@ def rodada(n: int, pool: ThreadPoolExecutor) -> None:
         print(f"{agora():%H:%M:%S} {rid} sem lutas em {MAX_RODADA}s, reabrindo", flush=True)
         return rodada(n, pool)
     analises = {fid: f.result() if f else SEM_TECNICO for fid, f in futuros.items()}
+    for fid, l in lutas.items():
+        if TIME_USUARIO in l.get("times", {}):
+            notifica_usuario(l, analises.get(fid, {}))
     grava(rid, t0, lutas, analises)
     atualiza_evolucao()
     espera_aval(rid)

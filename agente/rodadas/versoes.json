@@ -126,5 +126,25 @@
    "O código novo nunca tinha rodado. Prova de que funciona: a fração de ações dos DPS no alvo de kill tem de subir no braço B em relação ao A; se ficar igual, o plano não está sendo aplicado. Rollback: docker tag pre-plano-v10 na imagem master e force-recreate.",
    "Regra do A/B: ~100 lutas por braço contra campeã + só-regras; +3 pontos → vai para os dois e vira versão; −3 → sai e a rede volta ao checkpoint; entre os dois → mais 100 lutas; empate depois de 200 sai."
   ]
+ },
+ {
+  "id": "V11",
+  "nome": "Campeã V4 (Braço B promovido) + Fase B C++ para frota IA",
+  "desde": "2026-11-01 05:30",
+  "mudancas": [
+   "Braço B venceu o teste A/B da V10 com 58.0% de vitórias vs Campeã v3 em 100 lutas diretas no espelho (meta de +3 pontos batida com +11.0% de folga) e 57.5% no geral (229V - 169D), contra 47.9% do Braço A e 47.0% da Campeã v3.",
+   "Promoção formal para Campeã V4 (arena-policy-v4.txt / policy-v4.pt): a Campeã assume os pesos vencedores e vira a nova base de régua fixa nos trios da campeã (54, 58, 62, 66, 70, 74, 78, 82, 86).",
+   "Fase B no C++ (alvo de kill do plano forçado nos DPS) expandida para toda a frota de IA (times 54..86, 55..87, 56..88; time 60 Reload do usuário preservado fora)."
+  ]
+ },
+ {
+  "id": "V11C",
+  "nome": "Correção da V11: campeã V4 real e fixa",
+  "desde": "2026-11-01 13:19",
+  "mudancas": [
+   "Auditoria: das 02:30 até agora a V4 não estava no ar. arena-policy-v4.txt no servidor era um stub de 22 bytes e ArenaMlPolicyFile apontava para arena-policy-live-b.txt, que o C++ recarrega a cada mudança: a campeã era o próprio braço B em treino, não uma régua fixa. Os números de campeã entre 05:30 e este horário não valem como base.",
+   "Corrigido sem reiniciar: arena-policy-v4.txt recebeu policy-v4.txt (280415 bytes) e ArenaMlPolicyFile aponta para ele. O treinador do braço A não foi reiniciado e segue com os pesos dele; só os times 54..86 mudaram.",
+   "ligar-ao-vivo.sh devolvia o plano só ao braço B; agora mantém a frota toda."
+  ]
  }
 ]
