@@ -131,6 +131,15 @@ linhas em que o alvo do plano está atacável, o DPS do braço B está mirado na
 enfrentaram, o mesmo warlock vai de 0,61 no A para 0,98 no B. Linhas de healer ficam perto de 0,5 por acaso, por
 isso o número que vale é o "só DPS". O que falta da V10 é o A/B de vitória, que ainda tem ~2 lutas por time.
 
+**31/10 22:30 SP (01:30 UTC de 01/11) — trinket PvP em todo mundo:** 44 dos 109 bots de arena (times 54-89) estavam
+sem Medallion e jogavam com dois trinkets PvE, ou seja, sem o único jeito de sair de CC — isso contaminava a
+observação (`tem_trinket`) e o aprendizado nos confrontos com medo/polimorfa. `agente/fix-trinket-todos.sql` trocou
+o trinket mais fraco pelo Medallion da facção (42122 Horda / 42123 Aliança, ilvl 200, igual aos 65 que já tinham) e
+`agente/fix-gear-pokastranca.sql` equipou as 4 peças Hateful que estavam na mochila do shaman do time 60. Aplicado
+com o worldserver parado (item equipado vive em memória) e servidor de volta em 68 s; conferência: 0 bots sem
+Medallion, 108 online, lutas retomadas (24101+). As duas peças de equipamento mudaram no meio da janela da V10,
+mas nos dois braços ao mesmo tempo.
+
 **29/10 noite — V6 do especialista e V10 do treino (registrado antes do resultado):**
 - **Dados V6:** +100 lutas rotuladas por 10 subagentes Opus sem o vencedor (`opus-v6/`), total 200 x3 + Gemini
   limpo (`dataset_tecnico.py --v6`: treino-v6 4539, validação 60).
