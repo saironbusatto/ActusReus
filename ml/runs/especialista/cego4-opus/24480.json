@@ -1,0 +1,103 @@
+{
+ "resumo": "Zebedeuii treinou Kwongwegaxxi com Kidney Shot e Hemorrhage por quase um minuto. Quando o mago tirou o warlock com Polymorph e o druida trocou para moonkin, o shaman ficou sem cura e morreu, e o resto caiu em sequência.",
+ "momento_decisivo": {
+  "t": 92.4,
+  "descricao": "Pehdibaliv larga a função de healer e entra em moonkin para usar Starfall com Kwongwegaxxi sob o rogue; o shaman fica sem cura até morrer aos 102.8."
+ },
+ "momento_aceitos": [
+  87.8,
+  90.9,
+  92.4,
+  101.9
+ ],
+ "erros": [
+  {
+   "t": 92.4,
+   "quem": "Pehdibaliv",
+   "fez": "Moonkin Form e Starfall com o aliado sob pressão do rogue",
+   "devia": "Ficar em forma de cura com Lifebloom, Rejuvenation e Nourish em Kwongwegaxxi",
+   "porque": "Entre 92.4 e 102.8 o druida não curou o shaman, e faerie fire e Innervate não mudaram a pressão",
+   "gravidade": "alta"
+  },
+  {
+   "t": 91.9,
+   "quem": "Kwongwegaxxi",
+   "fez": "Purge aos 91.9, Wind Shear aos 92.3 e Water Shield aos 93.5, sem cura própria",
+   "devia": "Usar Riptide e Healing Wave em si mesmo logo ao sair do stun",
+   "porque": "A última cura real foi aos 81.1; a poção de 96.4 foi insuficiente contra Hemorrhage e Eviscerate",
+   "gravidade": "alta"
+  },
+  {
+   "t": 89.5,
+   "quem": "Ominousdesx",
+   "fez": "Life Tap com o shaman em Kidney Shot desde 87.8",
+   "devia": "Dar Fear ou Death Coil em Zebedeuii",
+   "porque": "O warlock não deu Fear na luta e gastou o Death Coil aos 33.7 no mago; sem peel, o rogue bateu livre no healer",
+   "gravidade": "alta"
+  },
+  {
+   "t": 87.9,
+   "quem": "Pehdibaliv",
+   "fez": "Entangling Roots no mago com o aliado a 58% em stun",
+   "devia": "Usar Cyclone em Zebedeuii ou curar Kwongwegaxxi",
+   "porque": "Root no mago não para a pressão melee; Cyclone tiraria o rogue e ganharia segundos ao shaman",
+   "gravidade": "media"
+  },
+  {
+   "t": 56.5,
+   "quem": "Kwongwegaxxi",
+   "fez": "Purge duas vezes em Zebedeuii até 58.8, sendo o alvo dele",
+   "devia": "Curar-se com Riptide e Healing Wave",
+   "porque": "Rogue tem pouco a tirar com Purge; cada GCD ali entregava vida de graça",
+   "gravidade": "media"
+  },
+  {
+   "t": 38.5,
+   "quem": "Amnesianii",
+   "fez": "Mind Sear canalizado perto dos 38.5, em plena abertura",
+   "devia": "Dispelar os HoTs do druida ou manter o escudo no alvo do warlock",
+   "porque": "Mind Sear rende pouco num alvo único e o canal trava o priest; o custo é mana e GCD de disciplina",
+   "gravidade": "baixa"
+  },
+  {
+   "t": 30.4,
+   "quem": "Pehdibaliv",
+   "fez": "Starfall logo aos 30.4, seguido de Force of Nature aos 31.8, antes do contato",
+   "devia": "Guardar os cooldowns para quando os inimigos estivessem em alcance",
+   "porque": "Starfall com alvos fora de área rende pouco e os treants saíram sem janela; a recarga fez falta depois",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 43.6,
+   "quem": "Zebedeuii",
+   "descricao": "Troca para o healer shaman e pressão constante com Hemorrhage"
+  },
+  {
+   "t": 46.0,
+   "quem": "Zebedeuii",
+   "descricao": "Kidney Shot no shaman em cooperação com o Frostfire Bolt do mago"
+  },
+  {
+   "t": 59.5,
+   "quem": "Heshoiv",
+   "descricao": "Counterspell em Pehdibaliv durante o Nourish, travando o druida"
+  },
+  {
+   "t": 90.9,
+   "quem": "Heshoiv",
+   "descricao": "Polymorph no warlock tirando a peel do fim do treino"
+  },
+  {
+   "t": 101.9,
+   "quem": "Zebedeuii",
+   "descricao": "Trinket na Seduction para continuar batendo e matar o shaman 1 s depois"
+  },
+  {
+   "t": 125.2,
+   "quem": "Zebedeuii",
+   "descricao": "Shadow Dance, Cheap Shot e Ambush para acabar rápido com o último inimigo"
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{"resumo": "Beteraniv cortou o Fear do Ominousvii com Silencing Shot e concentrou o burst nele enquanto o Ominoustres silenciava a Pehdicouiv; o warlock caiu de 96% a 34% em segundos e morreu. Depois o foco foi para a healer, que morreu sem peel do Beteranvi.",
+ "momento_decisivo": {"t": 46.6, "descricao": "Spell Lock do Ominoustres na Pehdicouiv, que estava canalizando Hurricane: a healer fica fora de jogo justo quando o Beteraniv abre o foco no Ominousvii, que perde 60% da vida sem cura."},
+ "momento_aceitos": [45.4, 46.6, 49.7, 51.2, 51.5],
+ "erros": [
+  {"t": 35.7, "quem": "Beteraniv", "fez": "Rapid Fire, Kill Command e trinket de uso antes do primeiro contato (43 s)", "devia": "Guardar os cooldowns para o início real da troca de dano", "porque": "Quase toda a janela foi perdida sem alvo; o Readiness aos 51.2 só corrigiu isso porque o inimigo errou também", "gravidade": "media"},
+  {"t": 46.6, "quem": "Pehdicouiv", "fez": "Hurricane como healer em vez de preparar cura", "devia": "Lifebloom/Rejuvenation no Ominousvii e ficar pronta para reagir", "porque": "Hurricane é canalizado, tem dano baixo e expõe o healer a lock; ao ser silenciada ela não curou por vários segundos enquanto o warlock caía", "gravidade": "alta"},
+  {"t": 54.1, "quem": "Ominousvii", "fez": "Mais uma poção estando a menos de 34%, sem usar Death Coil nem o Demonic Circle preparado", "devia": "Demonic Circle: Teleport para sair do alcance e Death Coil/Healthstone", "porque": "O círculo foi colocado aos 40.6 e a pedra aos 38.8; só poção não acompanha Rapid Fire e o Kill Shot aos 55.6 acabou com ele", "gravidade": "alta"},
+  {"t": 54.6, "quem": "Beteranvi", "fez": "Tranquilizing Shot enquanto o aliado morria", "devia": "Scatter Shot no Beteraniv ou Silencing Shot na cura inimiga para dar peel", "porque": "O Rapid Fire do Beteraniv estava matando o warlock e o time não aplicou nenhum CC nele durante todo o abate", "gravidade": "media"},
+  {"t": 55.4, "quem": "Pehdicouiv", "fez": "Tree of Life com o Ominousvii a menos de 20%", "devia": "Swiftmend ou outra cura instantânea", "porque": "Trocar de forma nesse GCD tirou a última chance de absorver o Kill Shot aos 55.6", "gravidade": "media"},
+  {"t": 61.3, "quem": "Pehdicouiv", "fez": "Abolish Poison em sequência com o foco inimigo nela", "devia": "Priorizar Rejuvenation, Lifebloom e Swiftmend em si mesma", "porque": "Tirar Serpent Sting não acompanha o dano do Chimera Shot; dois GCDs perdidos em quem morreu 6 s depois", "gravidade": "media"},
+  {"t": 63.3, "quem": "Beteranvi", "fez": "Volley com a própria healer morrendo", "devia": "Silencing Shot ou Scatter no Beteraniv e pressão no warlock inimigo", "porque": "Volley canalizado rende pouco dano e não dá peel; a Pehdicouiv morreu aos 67.8", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 45.4, "quem": "Beteraniv", "descricao": "Silencing Shot no Ominousvii durante o Fear, cortando o CC e abrindo o foco."},
+  {"t": 46.6, "quem": "Ominoustres", "descricao": "Spell Lock na healer inimiga no momento do foco no warlock."},
+  {"t": 49.1, "quem": "Pehdicouii", "descricao": "Shadowmeld + Barkskin para evitar o Fear e segurar a pressão."},
+  {"t": 51.2, "quem": "Beteraniv", "descricao": "Readiness refazendo Rapid Fire e Kill Command com o alvo já a 34%."},
+  {"t": 53.7, "quem": "Pehdicouiv", "descricao": "Nature's Swiftness + Healing Touch de emergência, a melhor cura possível naquela janela."},
+  {"t": 57.1, "quem": "Beteraniv", "descricao": "Troca imediata para a healer depois da morte do warlock."}
+ ]}

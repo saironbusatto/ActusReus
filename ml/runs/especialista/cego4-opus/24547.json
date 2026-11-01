@@ -1,0 +1,104 @@
+{
+ "resumo": "Zebedeuxi foi derretido por priest e warlock enquanto Kwongwegavi jogava de caster em vez de curar. Sem o rogue, o time virou um warlock e um shaman sem pressão e foi drenado até o fim.",
+ "momento_decisivo": {
+  "t": 56.3,
+  "descricao": "Livre do silence pelo trinket, Kwongwegavi usa Flame Shock, depois Lava Burst e Lightning Bolt, em vez de curar Zebedeuxi, que chega a 6% aos 58.3."
+ },
+ "momento_aceitos": [
+  48.0,
+  51.4,
+  56.3,
+  57.6,
+  58.7
+ ],
+ "erros": [
+  {
+   "t": 56.3,
+   "quem": "Kwongwegavi",
+   "fez": "Flame Shock logo depois do trinket, seguido de Lava Burst e Lightning Bolt",
+   "devia": "Riptide e Healing Wave em Zebedeuxi",
+   "porque": "O rogue caía para 6% sob Mind Flay; o trinket só valia para curar e a janela foi usada para dano",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.1,
+   "quem": "Kwongwegavi",
+   "fez": "Lava Burst com o rogue já usando poção aos 51.6",
+   "devia": "Curar Zebedeuxi; a única cura nele até a morte foi o Riptide aos 48.5",
+   "porque": "Cast longo sob dois warlocks tomou Spell Lock e travou Nature, a escola de cura do shaman",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.6,
+   "quem": "Zebedeuxi",
+   "fez": "Só poção sob dano de sombra, sem Cloak of Shadows, Evasion ou Vanish",
+   "devia": "Cloak of Shadows para limpar Corruption e UA e sumir com Vanish",
+   "porque": "Morreu sem usar nenhum defensivo de classe; Cloak anularia a parte mágica e abriria espaço para reset",
+   "gravidade": "alta"
+  },
+  {
+   "t": 44.9,
+   "quem": "Zebedeuxi",
+   "fez": "Fan of Knives com o paladino recém-saído do Kidney Shot",
+   "devia": "Gastar energia em Hemorrhage e finalizador no alvo, ou Kick reservado",
+   "porque": "Dano em área baixo sem CC ativo desperdiça a energia da janela do Kidney Shot, que acabou com Every Man for Himself",
+   "gravidade": "media"
+  },
+  {
+   "t": 49.5,
+   "quem": "Ominousxxiv",
+   "fez": "Curse of Tongues enquanto Amnesianxxii canalizava Mind Flay no aliado",
+   "devia": "Dar Fear ou Death Coil em Amnesianxxii para quebrar o canal",
+   "porque": "Seu dano total foi 12 mil e ele não tirou o priest do rogue; Fear no priest só viria depois da morte do aliado",
+   "gravidade": "media"
+  },
+  {
+   "t": 119.5,
+   "quem": "Kwongwegavi",
+   "fez": "Water Shield com Ominousxxiv sob pressão desde 108",
+   "devia": "Curar com Healing Wave e Riptide em sequência",
+   "porque": "O warlock já tinha gasto poções e morreu aos 125.2; o Shield foi reaplicado várias vezes porque era consumido e devorado, custando GCDs",
+   "gravidade": "media"
+  },
+  {
+   "t": 89.3,
+   "quem": "Heruv",
+   "fez": "Apply oil em plena luta, repetindo buffs aos 113.1 e 144.4",
+   "devia": "Preparar antes dos portões e usar o GCD em cura ou dano",
+   "porque": "Não custou a luta porque o time estava à frente, mas é tempo perdido",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 39.7,
+   "quem": "Ominousxi",
+   "descricao": "Death Coil em Zebedeuxi logo que ele chegou ao paladino"
+  },
+  {
+   "t": 44.7,
+   "quem": "Ominousxi",
+   "descricao": "Spell Lock no Lava Burst de Kwongwegavi, travando o único healer"
+  },
+  {
+   "t": 48.0,
+   "quem": "Amnesianxxii",
+   "descricao": "Mind Flay no rogue, mantendo a pressão junto do warlock"
+  },
+  {
+   "t": 51.4,
+   "quem": "Ominousxi",
+   "descricao": "Segundo Spell Lock em Kwongwegavi durante outro Lava Burst"
+  },
+  {
+   "t": 84.1,
+   "quem": "Amnesianxxii",
+   "descricao": "Silence em Ominousxxiv somado ao Spell Lock para travar o warlock inimigo"
+  },
+  {
+   "t": 56.2,
+   "quem": "Heruv",
+   "descricao": "Hammer of Wrath no rogue baixo, ajudando a acabar com ele"
+  }
+ ]
+}

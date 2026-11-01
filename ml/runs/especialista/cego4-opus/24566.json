@@ -1,0 +1,104 @@
+{
+ "resumo": "Ominousx dominou com Spell Lock em todos os adversários e DoTs. A virada foi aos 100 s: os healers inimigos ficaram mudos e o druida entrou em moonkin, morrendo sem cura.",
+ "momento_decisivo": {
+  "t": 102.9,
+  "descricao": "Ominousx dá Spell Lock em Kwongwegaxxv com o druida sob ataque; no mesmo instante Pehdibalv entra em moonkin e o time fica sem cura enquanto Haunt, Shadow Bolt e Mind Flay caem nele."
+ },
+ "momento_aceitos": [
+  100.8,
+  102.9,
+  103.0,
+  104.0,
+  110.2
+ ],
+ "erros": [
+  {
+   "t": 103.0,
+   "quem": "Pehdibalv",
+   "fez": "Moonkin Form sob foco de priest e warlock",
+   "devia": "Ficar em caster e usar Nourish, Lifebloom e Rejuvenation em si mesmo",
+   "porque": "Depois disso só usou uma poção aos 106.5 e morreu aos 113.3; Moonkin não cura e o shaman estava silenciado",
+   "gravidade": "alta"
+  },
+  {
+   "t": 110.3,
+   "quem": "Kwongwegaxxv",
+   "fez": "Water Shield e depois Purge aos 112.6, com Pehdibalv morrendo",
+   "devia": "Riptide e Healing Wave no druida",
+   "porque": "Fora do silence, com 3 s até a morte, cada GCD devia ser de cura; o Healing Wave só veio aos 115.7",
+   "gravidade": "alta"
+  },
+  {
+   "t": 89.0,
+   "quem": "Ominousdesxi",
+   "fez": "Corruption quatro vezes até 94.3, sempre dispelada ou repetida",
+   "devia": "Usar Chaos Bolt, Conflagrate ou Fear em Heruiv",
+   "porque": "O time inimigo limpava magia sem parar e o warlock fez só 20 mil de dano, um sétimo do outro warlock",
+   "gravidade": "media"
+  },
+  {
+   "t": 97.1,
+   "quem": "Ominousdesxi",
+   "fez": "Create Healthstone no meio da luta, com 65% de vida",
+   "devia": "Criar antes e usar o tempo em Fear ou Death Coil no priest",
+   "porque": "É conjuração longa e foi cortada pelo Spell Lock de 97.2; devia estar pronta dos portões",
+   "gravidade": "media"
+  },
+  {
+   "t": 42.3,
+   "quem": "Ominousdesxi",
+   "fez": "Corruption depois do Shadowfury que stunou os três inimigos aos 41.3",
+   "devia": "Usar a janela para Chaos Bolt e Conflagrate",
+   "porque": "A sobreposição com Force of Nature (42.2) e Bloodlust (39.4) era o melhor momento do time, e foi trocada por um DoT",
+   "gravidade": "media"
+  },
+  {
+   "t": 49.6,
+   "quem": "Pehdibalv",
+   "fez": "Oscilou entre moonkin e caster aos 49.6, 51.3, 52.7 e 54.5",
+   "devia": "Escolher a função: curar com o time sob pressão e sair só em janela segura",
+   "porque": "Trocar de forma gasta GCD e mana e não produz nem dano nem cura",
+   "gravidade": "media"
+  },
+  {
+   "t": 118.5,
+   "quem": "Amnesianxxi",
+   "fez": "Dispersion com 100% de vida",
+   "devia": "Guardar para pressão real ou para recuperar mana no momento seguro",
+   "porque": "Canal de 6 s fora do dano só tira o priest da luta e queima o cooldown",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 102.9,
+   "quem": "Ominousx",
+   "descricao": "Spell Lock no shaman no pico da pressão no druida"
+  },
+  {
+   "t": 97.2,
+   "quem": "Ominousx",
+   "descricao": "Spell Lock interrompendo o Create Healthstone de Ominousdesxi"
+  },
+  {
+   "t": 43.7,
+   "quem": "Amnesianxxi",
+   "descricao": "Silence em Pehdibalv durante Hurricane"
+  },
+  {
+   "t": 98.9,
+   "quem": "Heruiv",
+   "descricao": "Hand of Freedom em Amnesianxxi logo após o root"
+  },
+  {
+   "t": 69.0,
+   "quem": "Ominousx",
+   "descricao": "Howl of Terror pegando Pehdibalv e abrindo tempo"
+  },
+  {
+   "t": 110.2,
+   "quem": "Ominousx",
+   "descricao": "Drain Soul no druida baixo para garantir a morte"
+  }
+ ]
+}

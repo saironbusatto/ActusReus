@@ -1,0 +1,19 @@
+{"resumo": "RLS I sincronizou a bomba de stun no healer com o Kidney Shot no Zebedeuix e o Spell Lock do Ominousv, deixando o rogue sem cura até morrer. Depois o Zebedeuvii sobreviveu com o trinket e fechou o shaman restante.",
+ "momento_decisivo": {"t": 40.9, "descricao": "Kidney Shot do Zebedeuvii no Zebedeuix logo após a bomba (39.3) stunnar o Kwongwegaiv: o rogue leva dano com o healer preso e vai de 58% a 32% sem receber cura."},
+ "momento_aceitos": [39.3, 39.4, 40.9, 43.9, 48.2],
+ "erros": [
+  {"t": 44.0, "quem": "Ominousxxi", "fez": "Seguiu aplicando Unstable Affliction com o próprio rogue sendo destruído", "devia": "Dar peel: Fear no Zebedeuvii ou Death Coil para aliviar", "porque": "O Zebedeuix estava a 32% e o warlock só usou CC defensivo aos 59 s, quando o rogue já estava morto", "gravidade": "media"},
+  {"t": 45.3, "quem": "Zebedeuix", "fez": "Vanish e poção, sem Cloak of Shadows nem Evasion", "devia": "Cloak of Shadows antes do Vanish para limpar Corruption, Curse e Unstable Affliction", "porque": "Com DoTs ativos o Vanish não o tira de perigo; ele foi de 32% a 18% sem receber golpe direto e morreu sem agir de novo", "gravidade": "alta"},
+  {"t": 48.0, "quem": "Ominousv", "fez": "Spell Lock no Zebedeuix (rogue)", "devia": "Guardar para a cura do Kwongwegaiv", "porque": "Silence em rogue não tira nada dele; o mesmo lock num Healing Wave teria fechado a janela do healer", "gravidade": "media"},
+  {"t": 48.2, "quem": "Kwongwegaiv", "fez": "Purge em sequência com o Zebedeuix a 18%", "devia": "Riptide e Healing Wave no rogue", "porque": "Ele acabara de sair do silence e era a última chance de salvar o rogue; Purge não remove os DoTs do aliado", "gravidade": "alta"},
+  {"t": 50.5, "quem": "Zebedeuvii", "fez": "Kick no Zebedeuix, que não estava lançando nada", "devia": "Guardar o Kick para a cura do Kwongwegaiv", "porque": "Kick em rogue não interrompe nada; desperdiça o GCD e os 10 s de cooldown justamente na janela de matar o alvo", "gravidade": "media"},
+  {"t": 51.9, "quem": "Kwongwegaiv", "fez": "Water Shield com o aliado morrendo", "devia": "Riptide no Zebedeuix", "porque": "Reposição de mana num momento que define a luta; o rogue morreu 1.9 s depois", "gravidade": "alta"},
+  {"t": 57.7, "quem": "Kwongwegaii", "fez": "Call of the Elements no meio do combate com o Zebedeuvii em cerca de 40%", "devia": "Curar e deixar totens para antes dos portões", "porque": "O rogue dele estava caindo e chegou a 32% aos 59.6; o totem completo custa o GCD de uma cura importante", "gravidade": "baixa"}
+ ],
+ "acertos": [
+  {"t": 39.3, "quem": "Zebedeuvii", "descricao": "Cobalt Frag Bomb no Kwongwegaiv para abrir a janela do Kidney Shot no outro alvo."},
+  {"t": 39.6, "quem": "Ominousxxi", "descricao": "Spell Lock do pet no Kwongwegaii durante a Lesser Healing Wave, a melhor resposta do time ao go."},
+  {"t": 43.9, "quem": "Ominousv", "descricao": "Spell Lock no Healing Wave do Kwongwegaiv, deixando o rogue sem nenhuma cura."},
+  {"t": 59.7, "quem": "Zebedeuvii", "descricao": "Trinket imediato no Fear com 32%, voltando a atacar o healer inimigo."},
+  {"t": 62.0, "quem": "Zebedeuvii", "descricao": "Kidney Shot no Kwongwegaiv para matar o segundo alvo com o time adversário sem cura."}
+ ]}

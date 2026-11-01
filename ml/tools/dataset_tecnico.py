@@ -316,10 +316,11 @@ def exemplo_v5(l: dict, alvo: dict) -> dict:
         {"role": "assistant", "content": json.dumps(alvo, ensure_ascii=False)}]}
 
 
-def main_v5(v: int = 5) -> int:
+def main_v5(v: int = 5, so_opus: bool = False) -> int:
     """treino-v5.jsonl (Gemini limpo + Opus x PESO_OPUS) e cego2-v5.jsonl (o teste cego novo, referência de
     subagentes em cego2-opus/). Validação igual à da V4; os testes cegos e o teste fixo ficam fora.
-    v=6: + as 100 lutas de opus-v6/, teste cego 3 (cego3-v6.jsonl)."""
+    v=6: + as 100 lutas de opus-v6/, teste cego 3 (cego3-v6.jsonl).
+    so_opus (V7): só as lutas rotuladas pelo Opus, sem repetição; quem repete é --epocas no treino."""
     n = v - 3  # V5 → teste cego 2, V6 → teste cego 3
     fora = set(json.loads((SAIDA / "teste_ids.json").read_text()))
     for f in ["teste_cego_ids.json"] + [f"teste_cego{k}_ids.json" for k in range(2, n + 1)]:
@@ -335,9 +336,9 @@ def main_v5(v: int = 5) -> int:
         if l["luta"] in val:
             continue
         if l["luta"] in opus:
-            treino += [exemplo_v5(l, _enxuga(l, opus[l["luta"]], opus[l["luta"]].get("erros", [])))] * PESO_OPUS
+            treino += [exemplo_v5(l, _enxuga(l, opus[l["luta"]], opus[l["luta"]].get("erros", [])))] * (1 if so_opus else PESO_OPUS)
             n_opus += 1
-        else:
+        elif not so_opus:
             treino.append(exemplo_v5(l, alvo_v5(l, usos)))
     random.Random(8).shuffle(treino)
     cego = set(json.loads((SAIDA / f"teste_cego{n}_ids.json").read_text()))
@@ -359,12 +360,15 @@ def main() -> int:
     ap.add_argument("--v4", action="store_true", help="grava {treino,validacao,teste,cego}-v4.jsonl")
     ap.add_argument("--v5", action="store_true", help="grava treino-v5/validacao-v5/cego2-v5.jsonl")
     ap.add_argument("--v6", action="store_true", help="grava treino-v6/validacao-v6/cego3-v6.jsonl (+ opus-v6/)")
+    ap.add_argument("--v7", action="store_true", help="grava treino-v7 (só Opus)/validacao-v7/cego4-v7.jsonl")
     a = ap.parse_args()
     if a.selftest:
         selftest()
         return 0
     if a.v4:
         return main_v4()
+    if a.v7:
+        return main_v5(7, so_opus=True)
     if a.v5 or a.v6:
         return main_v5(6 if a.v6 else 5)
     lutas = lutas_analisadas()

@@ -1,0 +1,91 @@
+{
+ "resumo": "Luta 3v2 contra um time sem rogue. O priest passou a maior parte preso em root e stun, sem cobrir o shaman, que morreu na primeira janela de burst real e deixou o restante sem saída.",
+ "momento_decisivo": {
+  "t": 79.8,
+  "descricao": "O Cobalt Frag Bomb de Pehdicouv (78.0) stuna Amnesianxxvi aos 79.8, e Entangling Roots o mantém preso enquanto Kwongwegaxix e Ominousdesvi fecham Conflagrate e Drain Soul em Kwongwegaxv."
+ },
+ "momento_aceitos": [
+  78.0,
+  79.8,
+  82.8,
+  83.7,
+  84.6
+ ],
+ "erros": [
+  {
+   "t": 83.3,
+   "quem": "Amnesianxxvi",
+   "fez": "Dispel magic com Kwongwegaxv sob burst",
+   "devia": "Flash Heal e Power Word: Shield no shaman",
+   "porque": "Era o momento da morte do healer aliado e o Dispel não tirou dano nenhum",
+   "gravidade": "alta"
+  },
+  {
+   "t": 85.0,
+   "quem": "Amnesianxxvi",
+   "fez": "Saiu de Shadowform e usou Dispel, não cura",
+   "devia": "Sair da forma já aos 79 e curar com Flash Heal",
+   "porque": "A forma caiu tarde e o GCD foi usado em Dispel aos 85.4; a primeira cura veio aos 87.1, junto da morte",
+   "gravidade": "alta"
+  },
+  {
+   "t": 78.7,
+   "quem": "Kwongwegaxv",
+   "fez": "Cleanse Spirit de maldição, após outro aos 77.2",
+   "devia": "Healing Wave ou Riptide em si mesmo",
+   "porque": "O warlock reaplicava maldição a cada GCD; a poção aos 79.8 mostrou que já estava no limite",
+   "gravidade": "alta"
+  },
+  {
+   "t": 73.2,
+   "quem": "Kwongwegaxv",
+   "fez": "Purge em Ominousdesvi",
+   "devia": "Guardar mana e GCD para curar e colocar Tremor Totem",
+   "porque": "Tirar buff do warlock não reduz a pressão, e o shaman já tinha sido feared aos 50.8",
+   "gravidade": "media"
+  },
+  {
+   "t": 92.7,
+   "quem": "Kwongwegaxix",
+   "fez": "Purge seguido até 98.6 em vez de pressão no priest isolado",
+   "devia": "Flame Shock, Lava Burst e interrupções em Amnesianxxvi",
+   "porque": "Em 3v1 só o dano fecha a luta; o priest ainda durou mais de 10 s e usou Shadowfiend e poção",
+   "gravidade": "media"
+  },
+  {
+   "t": 100.3,
+   "quem": "Amnesianxxvi",
+   "fez": "Shadowfiend só depois de perder o shaman",
+   "devia": "Usar antes, durante a pressão, para sustentar cura e dano",
+   "porque": "Com o time reduzido, o cooldown saiu tarde, sem tempo para render mana",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 78.0,
+   "quem": "Pehdicouv",
+   "descricao": "Cobalt Frag Bomb para tirar o priest do jogo antes do burst"
+  },
+  {
+   "t": 63.5,
+   "quem": "Ominousdesvi",
+   "descricao": "Death Coil em Amnesianxxvi, somado ao stun e root"
+  },
+  {
+   "t": 82.8,
+   "quem": "Ominousdesvi",
+   "descricao": "Conflagrate no shaman na janela do priest preso"
+  },
+  {
+   "t": 84.6,
+   "quem": "Ominousdesvi",
+   "descricao": "Drain Soul no shaman baixo"
+  },
+  {
+   "t": 74.7,
+   "quem": "Amnesianxxvi",
+   "descricao": "Silence em Pehdicouv durante Entangling Roots"
+  }
+ ]
+}

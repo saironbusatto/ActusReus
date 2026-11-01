@@ -78,6 +78,7 @@ Every change that alters the game or the training becomes a version in [`agente/
 | V10 | 10/31 15:05 | A/B with code-joined facts and decisive moment in both arms; arm B with the plan's kill target in C++ (DPS on target: 0.86 in B vs 0.41 in A). B won 60% vs rules and 58% vs champion |
 | V11 | 11/01 02:30 | Arm B promoted to Champion V4 and the C++ plan across the fleet. The real V4 only went live at 10:19 (V11C): until then the champion loaded arm B in training. Edge not confirmed yet: after promotion A won 61% vs B |
 | — | 10/29 18:10 | Specialist V5 (Qwen3-4B, + 100 fights labelled by Opus without the winner) failed blind test 2: decisive moment 15/20 (goal 16), found 31/115 errors (goal 35; Gemini 35). Gemini stays. A/B: arm A 52%, arm B 50% vs champion+rules (46% before) — both pass +3, so both changes go to both arms next (V10). Server paused |
+| — | 11/01 10:50 | Specialist V6 failed blind test 3 (serious 13/13 and moment 14/20, but found 32/109, target 43). V7 uses only Opus labels; criterion and blind test 4 frozen before training |
 
 ### Lessons (do not repeat)
 

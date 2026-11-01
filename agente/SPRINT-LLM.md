@@ -283,3 +283,11 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 - Toda mudança documentada (README, `versoes.json`, este arquivo, nota da missão no Obsidian) e com push.
 
 **01/11 10:30 SP — auditoria da V11 (V11C):** a V4 não estava no ar desde as 02:30: `arena-policy-v4.txt` no servidor era um stub de 22 bytes e a campeã carregava `arena-policy-live-b.txt`, ou seja, o braço B em treino. Corrigido com `.reload config`, sem restart. Dados de campeã entre 02:30 e 10:19 SP não valem como base. Medido nas lutas analisadas da janela V10: B 46/78 = 58% x campeã, 60/100 = 60% x regras, 48/86 = 55% x A. Depois da promoção o A virou (A 51/83 = 61% x B), então a vantagem do B ainda não está confirmada. Prova da fase B: DPS no alvo do plano 0,86 no B x 0,41 no A. Patches 0055 a 0058 exportados em `patches/mod-playerbots`.
+
+**01/11 10:50 SP — V6 do especialista reprovada no teste cego 3; critério da V7 congelado antes do treino:**
+- V6 (`qwen-lora-v6`, hash `beaa3a8e…` conferido): JSON 20/20, graves 13/13, momento 14/20, 42 s/luta, mas achou 32/109 (meta 43) e 93% em quem perdeu (referência 79%, Gemini 81%). Reprovada no critério de achar erros; o juiz cego foi dispensado porque não mudaria o veredito.
+- V7: só as 200 lutas rotuladas pelo Opus (`opus-v5` + `opus-v6`, modo `dataset_tecnico.py --v7`), 3 épocas, sem os rótulos do Gemini.
+- Teste cego 4: 20 lutas de 20 confrontos, todas depois das 02:06 de 01/11 (gear igual), fora de treino e validação. Gabarito de subagentes Opus sem o vencedor em `cego4-opus/`, 135 erros, sha256 `8007e14a…`. Régua: `compara.py --cego4`. Gemini nele: JSON 20/20, momento 16/20, graves 5/10, achou 34/125, 2,5 sem par por luta, 81% em quem perdeu; referência 72%.
+- Critério da V7 (todos juntos): JSON 20/20; graves 10/10; momento ≥16/20; achou ≥34/125; em quem perdeu ≤81%; crítica errada ≤0,5/luta e ≤ Gemini pelo juiz cego; ≤60 s/luta. O viés em quem perdeu entrou como critério porque é o defeito que a V7 tenta corrigir.
+- Braços: comparações só com lutas depois das 02:06 de 01/11 (05:06 UTC). Antes disso o gear era desigual: A tinha 14 bots sem trinket, regras 13, B 8 e campeã 7. Nesse trecho limpo, A 54/91 = 59% x B. O portão automático do A foi zerado para 13:19 UTC, início da V4 real.
+

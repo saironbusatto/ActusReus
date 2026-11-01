@@ -1,0 +1,19 @@
+{"resumo": "Wild I travou o Heruiv com Silencing Shot e Spell Lock e usou o Readiness para um segundo Rapid Fire em cima dele; o paladino morreu sem Divine Shield enquanto o Amnesianxxi alternava Shadowform em vez de curar. No 2v3 a Ominousx caiu e o priest ficou sozinho.",
+ "momento_decisivo": {"t": 51.3, "descricao": "Beteranii usa Readiness e reabre Rapid Fire + Kill Command em cima do Heruiv já silenciado duas vezes (46.7 e 48.5) e sem cura de apoio: é o burst real da luta, em cima do healer travado."},
+ "momento_aceitos": [46.7, 51.3, 54.3, 59.3, 62.1],
+ "erros": [
+  {"t": 34.6, "quem": "Beteranii", "fez": "Rapid Fire logo seguido de Kill Command e trinket de uso (35.2) antes do contato", "devia": "Guardar os cooldowns até ter alvo sob pressão, por volta dos 43 s", "porque": "O primeiro dano real só sai aos 43 s; quase toda a janela de 15 s do Rapid Fire e do trinket foi gasta sem golpe, e foi preciso gastar Readiness para recuperar", "gravidade": "media"},
+  {"t": 46.4, "quem": "Ominousx", "fez": "Spell Lock no Ominous (warlock), depois de várias tentativas do pet no mesmo alvo", "devia": "Usar o lock na Pehdicouve, que curou quase 50 mil na luta e nunca foi silenciada ou controlada", "porque": "Silenciar o warlock adversário não quebra a defesa do time; travar o healer abriria janela para matar alguém ou aliviaria o Heruiv", "gravidade": "media"},
+  {"t": 50.2, "quem": "Amnesianxxi", "fez": "Entrou em Shadowform com o Heruiv já em 80% e silenciado", "devia": "Ficar fora de forma e curar/escudar o paladino, que estava sob foco e travado", "porque": "Em Shadowform o priest não lança curas sagradas; com o healer titular silenciado ele era a única cura do time, e aos 51.3 veio o burst", "gravidade": "alta"},
+  {"t": 58.3, "quem": "Heruiv", "fez": "Usou poção como último recurso e não apertou Divine Shield em nenhum momento", "devia": "Divine Shield antes de entrar em faixa de Kill Shot, curar-se e voltar à luta", "porque": "Bolha funciona mesmo sob dispel do time inimigo em boa parte dos casos e não depende de cura; o Kill Shot aos 60.3 mostra que ele já estava abaixo de 20%", "gravidade": "alta"},
+  {"t": 58.8, "quem": "Beteranii", "fez": "Hunter's Mark repetido no mesmo alvo no meio da janela de Rapid Fire", "devia": "Gastar o GCD em Chimera/Aimed/Steady ou Silencing Shot", "porque": "A marca já estava no alvo; repetir custa GCD e foco justo na janela de maior dano", "gravidade": "baixa"},
+  {"t": 62.1, "quem": "Amnesianxxi", "fez": "Voltou para Shadowform logo após o Flash Heal, com o Heruiv morrendo", "devia": "Continuar curando e usar Power Word: Shield/Prayer of Mending até o paladino sair do perigo", "porque": "A troca de forma custa GCD e bloqueia a cura; foi removida de novo aos 66.2, mas o Heruiv morreu aos 66.4", "gravidade": "alta"},
+  {"t": 75.5, "quem": "Ominousx", "fez": "Life Tap já sob foco, enraizada e pouco antes de estar em 46%", "devia": "Death Coil, Healthstone ou Fear no hunter antes de pagar vida por mana", "porque": "Life Tap acelera a morte de quem está sendo focado; foi um GCD perdido e vida entregue", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 43.6, "quem": "Amnesianxxi", "descricao": "Silence no Ominous cortando o Fear lançado aos 43.5 no priest."},
+  {"t": 46.7, "quem": "Beteranii", "descricao": "Silencing Shot no Heruiv durante o Exorcism: tira o paladino da luta e inicia o travamento do healer."},
+  {"t": 51.3, "quem": "Beteranii", "descricao": "Readiness para refazer Rapid Fire e Kill Command em cima do alvo travado."},
+  {"t": 54.3, "quem": "Ominous", "descricao": "Spell Lock do pet de volta no Heruiv, encadeado com os silences do hunter na mesma janela."},
+  {"t": 67.5, "quem": "Beteranii", "descricao": "Troca imediata de alvo para a Ominousx depois da morte do Heruiv, sem perder ritmo no 3v2."}
+ ]}

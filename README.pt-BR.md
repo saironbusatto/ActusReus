@@ -78,6 +78,7 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V10 | 31/10 15:05 | A/B com fatos por código e momento nos dois braços; braço B com alvo de kill do plano no C++ (DPS no alvo: 0,86 no B x 0,41 no A). B fez 60% x regras e 58% x campeã |
 | V11 | 01/11 02:30 | Braço B promovido a Campeã V4 e plano no C++ em toda a frota. A V4 real só entrou às 10:19 (V11C): antes a campeã carregava o braço B em treino. Vantagem ainda não confirmada: depois da promoção A fez 61% x B |
 | — | 29/10 18:10 | Especialista V5 (Qwen3-4B, + 100 lutas rotuladas pelo Opus sem o vencedor) reprovado no teste cego 2: momento 15/20 (meta 16), achou 31/115 erros (meta 35; Gemini 35). Fica o Gemini. A/B: braço A 52%, braço B 50% contra campeã+regras (46% antes) — os dois passam de +3, as duas mudanças vão para os dois braços (V10). Servidor pausado |
+| — | 01/11 10:50 | Especialista V6 reprovada no teste cego 3 (graves 13/13 e momento 14/20, mas achou 32/109, meta 43). V7 só com rótulos do Opus; critério e teste cego 4 congelados antes do treino |
 
 ### Lições (não repetir)
 

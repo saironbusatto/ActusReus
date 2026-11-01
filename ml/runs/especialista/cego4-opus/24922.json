@@ -1,0 +1,20 @@
+{"resumo": "O RMP trouxe a Naminvi ao chão com Kidney Shot e Blind, mas o Heshov gastou seu burst no warrior; o Celianeyxi resistiu com Enraged Regeneration e seu Bladestorm com Sweeping Strikes matou o Amnesianvi e o Zebedeuv. Heshov ficou só contra warrior e paladino.",
+ "momento_decisivo": {"t": 63.0, "descricao": "Bladestorm do Celianeyxi a 47%: imune a CC, em cima de priest e rogue que ficaram no alcance, ele troca a luta de defensiva para ofensiva e abre a morte do Amnesianvi e do Zebedeuv."},
+ "momento_aceitos": [52.8, 60.4, 63.0, 69.2],
+ "erros": [
+  {"t": 36.4, "quem": "Heshov", "fez": "Focus Magic já em combate", "devia": "Aplicar antes dos portões; em combate, Ice Lance ou Polymorph na Naminvi", "porque": "É um buff de preparação e custa um GCD inteiro com o rogue iniciando o go", "gravidade": "baixa"},
+  {"t": 38.5, "quem": "Celianeyxi", "fez": "Every Man for Himself para sair de Frost Nova com 93% de vida", "devia": "Guardar para o Deep Freeze ou um Fear num momento de pressão", "porque": "Root não exige gastar trinket racial; Deep Freeze aos 50.3 teve de ser aguentado e o mage ganhou tempo livre de dano", "gravidade": "baixa"},
+  {"t": 42.9, "quem": "Celianeyxi", "fez": "Sequência de Slam parado em cima de mage e sem Mortal Strike", "devia": "Mortal Strike (e Hamstring) para reduzir a cura do Amnesianvi", "porque": "Slam tem tempo de lançamento, é fraco contra alvo que kita, e o warrior só usou Mortal Strike aos 108.3", "gravidade": "media"},
+  {"t": 52.8, "quem": "Heshov", "fez": "Quatro Frostbolts no warrior com Icy Veins, enquanto a Naminvi estava em Kidney e o Heruxvi em Blind", "devia": "Trocar o burst para a Naminvi, que estava a 53% sem cura possível", "porque": "Era a janela do RMP: alvo em stun e healer em Blind; o burst foi para quem tinha Enraged Regeneration e Bladestorm, e a Naminvi sobreviveu mais 15 s", "gravidade": "alta"},
+  {"t": 59.6, "quem": "Naminvi", "fez": "Depois da poção, ficou sem nenhuma ação até morrer aos 69.9", "devia": "Usar Healing Wave em si mesma ou Hex/Wind Shear no RMP", "porque": "Elemental tem cura e controle; 10 s parada em meio ao ataque do rogue entregaram o alvo", "gravidade": "media"},
+  {"t": 64.8, "quem": "Heruxvi", "fez": "Cleanse em sequência (60.4, 62.6, 64.8, 68.0) sem curar a Naminvi morrendo", "devia": "Holy Shock/Flash of Light ou Hand of Protection nela", "porque": "Depois do trinket aos 59.6 só veio cura aos 70.2, depois da morte; os poisons do rogue saíram, mas o dano continuou", "gravidade": "alta"},
+  {"t": 66.4, "quem": "Amnesianvi", "fez": "Mind Sear com o Bladestorm em cima dele", "devia": "Afastar-se, usar Pain Suppression, shield e cura", "porque": "Como disc ele tinha a melhor defesa do time; ficou no alcance, canalizou dano baixo e morreu aos 72.1 sem Pain Suppression", "gravidade": "alta"}
+ ],
+ "acertos": [
+  {"t": 53.8, "quem": "Celianeyxi", "descricao": "Charge no Amnesianvi, tirando o healer do lugar e abrindo a janela do warrior."},
+  {"t": 55.3, "quem": "Celianeyxi", "descricao": "Berserker Rage quebrando o Psychic Scream em 0.3 s."},
+  {"t": 55.8, "quem": "Zebedeuv", "descricao": "Blind no Heruxvi durante o Kidney da Naminvi: go bem montado, mesmo sem o mage acompanhar."},
+  {"t": 60.4, "quem": "Celianeyxi", "descricao": "Enraged Regeneration na hora certa para aguentar o burst do mage."},
+  {"t": 63.0, "quem": "Celianeyxi", "descricao": "Bladestorm a 47%, imune a CC, com o RMP inteiro no alcance."},
+  {"t": 72.8, "quem": "Heshov", "descricao": "Frost Nova no warrior após a morte do priest, começando a kitar no 1v2."}
+ ]}

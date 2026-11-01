@@ -1,0 +1,91 @@
+{
+ "resumo": "Fear no shaman inimigo abriu uma janela sem cura e warlock e mago fecharam o burst em Pehdibalii, que morreu sem receber ajuda. Com um healer a menos, o resto do time foi drenado até o fim.",
+ "momento_decisivo": {
+  "t": 60.7,
+  "descricao": "Com Kwongwegaxx em fear desde 59.3, Ominousdesii abre Conflagrate seguido de Chaos Bolt e Incinerate em Pehdibalii, e Heshoix junta o Pyroblast; o druida perde a maior parte da vida numa janela sem o outro healer."
+ },
+ "momento_aceitos": [
+  58.3,
+  60.7,
+  62.0,
+  63.7,
+  65.2
+ ],
+ "erros": [
+  {
+   "t": 67.1,
+   "quem": "Kwongwegaxx",
+   "fez": "Saiu do fear com trinket e usou Purge duas vezes com Pehdibalii morrendo",
+   "devia": "Usar o tempo ganho com Riptide e onda de cura em Pehdibalii",
+   "porque": "O trinket só valia para salvar o druida; o Purge aos 67.1-68.2 não reduziu o dano e Pehdibalii morreu aos 69.6",
+   "gravidade": "alta"
+  },
+  {
+   "t": 58.2,
+   "quem": "Kwongwegaxx",
+   "fez": "Purge enquanto os warlocks castavam Fear, sem Tremor Totem",
+   "devia": "Colocar Tremor Totem antes dos fears aos 58.3 e 64.7",
+   "porque": "Já tinha levado fear aos 47.8 e sabia da ameaça; o Tremor quebraria os fears que abriram o burst",
+   "gravidade": "alta"
+  },
+  {
+   "t": 63.8,
+   "quem": "Ominousdesix",
+   "fez": "Curse of the Elements enquanto o druida aliado levava o burst",
+   "devia": "Dar Death Coil ou Fear em Heshoix ou Ominousdesii para quebrar a sequência",
+   "porque": "Tinha Death Coil disponível e não usou até 117.9; uma peel ali cortaria parte do Pyroblast e dos Incinerates seguintes",
+   "gravidade": "alta"
+  },
+  {
+   "t": 49.2,
+   "quem": "Heshoix",
+   "fez": "Flamestrike logo depois de Combustion e Berserking",
+   "devia": "Guardar Combustion para Pyroblast e Scorch no alvo do burst",
+   "porque": "Combustion gasto em AoE, sem alvo fechado, ficou de fora do burst real aos 60-64 s",
+   "gravidade": "media"
+  },
+  {
+   "t": 61.0,
+   "quem": "Heshoix",
+   "fez": "Scorch enquanto Pehdibalii castava Nourish aos 61.5",
+   "devia": "Usar Counterspell no Nourish",
+   "porque": "Heshoix não usou Counterspell na luta; bloquear a escola Nature do druida no meio do burst adiantaria a morte dele",
+   "gravidade": "media"
+  },
+  {
+   "t": 49.6,
+   "quem": "Pehdibalii",
+   "fez": "Trocou de moonkin para caster perto dos 50 s depois de gastar Force of Nature, entrando no combate sem manter HoTs",
+   "devia": "Entrar já em forma de cura com HoTs ativos no aliado e em si mesmo",
+   "porque": "Perdeu GCDs de preparação e chegou ao burst sem base de cura; a primeira cura de verdade só saiu aos 53.0",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 58.3,
+   "quem": "Ominousdesii",
+   "descricao": "Fear em Kwongwegaxx, tirando o segundo healer antes de abrir o burst"
+  },
+  {
+   "t": 60.7,
+   "quem": "Ominousdesii",
+   "descricao": "Conflagrate, Chaos Bolt e Incinerate em sequência no alvo certo"
+  },
+  {
+   "t": 65.2,
+   "quem": "Kwongwegaix",
+   "descricao": "Wind Shear em Pehdibalii durante o Nourish, no pico da pressão"
+  },
+  {
+   "t": 64.7,
+   "quem": "Ominousdesii",
+   "descricao": "Fear reaplicado no healer logo que ele tentou voltar a curar aos 64.5"
+  },
+  {
+   "t": 68.8,
+   "quem": "Ominousdesii",
+   "descricao": "Drain Soul para finalizar o druida baixo"
+  }
+ ]
+}

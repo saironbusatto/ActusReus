@@ -42,7 +42,7 @@ def cego(pastas: list[str]) -> None:
     junta (junta_fatos), então os fatos graves dela são do programa, e o que mede o modelo são os erros próprios:
     quantos por luta, quantos batem com a referência (achou), quantos não batem (ler à mão) e o viés de resultado
     (fração das críticas próprias em quem perdeu; a referência dá a régua)."""
-    n = next((k for k in ("2", "3") if f"--cego{k}" in sys.argv), "")  # --cego2: V5; --cego3: V6 (subagentes sem vencedor)
+    n = next((k for k in ("2", "3", "4") if f"--cego{k}" in sys.argv), "")  # --cego2: V5; --cego3: V6; --cego4: V7 (subagentes sem vencedor)
     ids = json.loads((RUNS / f"teste_cego{n}_ids.json").read_text())
     lutas = {l["luta"]: l for l in lutas_analisadas() if l["luta"] in ids}
     refs = {i: json.loads((RUNS / f"cego{n}-opus" / f"{i}.json").read_text()) for i in ids}

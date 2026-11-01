@@ -1,0 +1,20 @@
+{"resumo": "Espelho longo e cheio de limpezas; Fireplay III só desequilibrou quando Heshox e Ominousdesiv tiraram o healer de jogo aos 86 s com Counterspell e bomba, e o Ominousdesii, sem cura, morreu no Drain Soul. Sem warlock, o Kwongwegaix foi controlado e caiu.",
+ "momento_decisivo": {"t": 86.4, "descricao": "Counterspell do Heshox no Healing Wave do Kwongwegaix, somado à Cobalt Frag Bomb que o stunna aos 88.0: o único healer fica bloqueado na escola de natureza e depois preso, enquanto o Ominousdesii, já abalado, fica sem cura."},
+ "momento_aceitos": [56.8, 86.3, 86.4, 88.0, 95.9],
+ "erros": [
+  {"t": 43.9, "quem": "Kwongwegax", "fez": "Cleanse Spirit em maldição em sequência (43.9 a 46.1)", "devia": "Priorizar cura e limpar só a Curse of Tongues do healer", "porque": "As maldições são recolocadas a custo de um GCD; o healer gasta tempo que o inimigo não gasta", "gravidade": "baixa"},
+  {"t": 58.4, "quem": "Kwongwegax", "fez": "Water Shield com o Heshox a 43-48%", "devia": "Riptide imediato no mage", "porque": "Acabou de sair do Polymorph e o aliado estava em perigo; o escudo de mana podia esperar 3 s", "gravidade": "media"},
+  {"t": 61.3, "quem": "Kwongwegaix", "fez": "Purge no primeiro GCD após sair do stun, com Ominousdesii a 34%", "devia": "Riptide e Healing Wave no warlock", "porque": "Com o aliado a 34% e só poções segurando, o GCD devia ser cura; Purge não alivia", "gravidade": "alta"},
+  {"t": 82.6, "quem": "Ominousdesii", "fez": "Life Tap estando sob foco e consumindo poções a cada poucos segundos", "devia": "Chamar cura, usar Healthstone ou sair com o Demonic Circle", "porque": "Gastar vida por mana num alvo já focado encurta a sobrevivência; ele morreu aos 96.5", "gravidade": "media"},
+  {"t": 88.4, "quem": "Heshoix", "fez": "Trinket sem CC visível nele", "devia": "Guardar para Polymorph, stun ou Fear numa janela útil", "porque": "Aos 88 s quem estava em stun era o Kwongwegaix, não ele; o log mostra só outro uso aos 109.6, em Polymorph", "gravidade": "media"},
+  {"t": 92.1, "quem": "Kwongwegaix", "fez": "Purge logo depois de sair do silence e do stun", "devia": "Curar o Ominousdesii, que estava morrendo", "porque": "Eram os GCDs de reação à pressão; o warlock morreu 4 s depois sem receber cura grande", "gravidade": "alta"},
+  {"t": 111.9, "quem": "Heshoix", "fez": "Evocation com o Kwongwegaix sob Polymorph e DoTs", "devia": "Interromper o Drain Soul do Ominousdesiv ou dar pressão ao mage", "porque": "Canalizar 8 s sem proteger o último healer entrega a luta; ele morreu aos 116.6", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 51.0, "quem": "Heshoix", "descricao": "Counterspell no Healing Wave do Kwongwegax, com Polymorph em seguida aos 52.7."},
+  {"t": 56.8, "quem": "Ominousdesiv", "descricao": "Shadowfury em três inimigos (mage, warlock e healer), virando a pressão daquela fase."},
+  {"t": 60.0, "quem": "Heshox", "descricao": "Mana Shield segurando o mage em 43-49% sob foco."},
+  {"t": 81.0, "quem": "Heshoix", "descricao": "Ice Block a 41% para sair do stun e zerar o foco."},
+  {"t": 83.8, "quem": "Kwongwegaix", "descricao": "Mana Tide para sustentar o fim de uma luta longa."},
+  {"t": 86.4, "quem": "Heshox", "descricao": "Counterspell no healer sincronizado com a bomba do Ominousdesiv."}
+ ]}

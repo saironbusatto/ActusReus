@@ -1,0 +1,104 @@
+{
+ "resumo": "Beteranii matou Zebedeuix com Kill Shot e Readiness, enquanto o shaman inimigo estava em fear com o trinket já gasto. Depois a mesma pressão derrubou o shaman, que não curou mais.",
+ "momento_decisivo": {
+  "t": 48.0,
+  "descricao": "Ominous dá outro Fear em Kwongwegaiv (em fear aos 49.2) com o trinket já gasto; sem healer, Zebedeuix leva Kill Shot, Readiness e o segundo Kill Shot."
+ },
+ "momento_aceitos": [
+  46.3,
+  48.0,
+  49.6,
+  51.2,
+  52.4
+ ],
+ "erros": [
+  {
+   "t": 46.5,
+   "quem": "Zebedeuix",
+   "fez": "Vanish com Corruption, Curse of Agony e Serpent Sting nele",
+   "devia": "Cloak of Shadows antes para limpar os DoTs e só então Vanish",
+   "porque": "O próximo tick do DoT quebra o stealth; sem limpar, o Vanish vale pouco. Cloak não aparece na luta",
+   "gravidade": "alta"
+  },
+  {
+   "t": 44.6,
+   "quem": "Zebedeuix",
+   "fez": "Slice and Dice perto de 43% sob o hunter, sem defensivo",
+   "devia": "Usar Evasion ou Cloak e sair da linha de visão",
+   "porque": "Gastar GCD em buff de dano ao ser caçado não reduz nada; caiu a 43% em 5 s",
+   "gravidade": "media"
+  },
+  {
+   "t": 40.9,
+   "quem": "Zebedeuix",
+   "fez": "Shadowstep em Pehdicouve com Nature's Grasp ativo desde 40.5",
+   "devia": "Esperar o Grasp acabar ou bater em outro alvo",
+   "porque": "O efeito enraizou o rogue no toque e gastou o Shadowstep, com o hunter já marcando-o",
+   "gravidade": "media"
+  },
+  {
+   "t": 46.6,
+   "quem": "Kwongwegaiv",
+   "fez": "Cleanse Spirit de maldição após gastar o trinket",
+   "devia": "Tremor Totem e cura em Zebedeuix",
+   "porque": "Só o Tremor segura os fears encadeados de Ominous, e o rogue estava a 43%; ele caiu em fear de novo aos 49.2",
+   "gravidade": "alta"
+  },
+  {
+   "t": 59.6,
+   "quem": "Kwongwegaiv",
+   "fez": "Water Shield com 62% de vida sob dois DPS",
+   "devia": "Healing Wave e Riptide em si mesmo",
+   "porque": "Depois de 47.8 não fez mais nenhuma onda de cura, e poções e Healthstone não bastaram: morreu aos 70.1",
+   "gravidade": "alta"
+  },
+  {
+   "t": 46.8,
+   "quem": "Ominousxxi",
+   "fez": "Corruption em Pehdicouve com o rogue aliado morrendo",
+   "devia": "Fear, Death Coil ou Spell Lock em Beteranii para fazer peel",
+   "porque": "Hunter a tiro livre matou o rogue; a Death Coil aos 48.0 também foi para o druida, não para quem causava o dano",
+   "gravidade": "media"
+  },
+  {
+   "t": 34.9,
+   "quem": "Beteranii",
+   "fez": "Rapid Fire antes de haver alvo próximo",
+   "devia": "Guardar Rapid Fire para o Hunter's Mark no rogue aos 38.8",
+   "porque": "Quase todo o buff passou sem dano; só o Readiness aos 51.2 corrigiu isso",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 40.5,
+   "quem": "Pehdicouve",
+   "descricao": "Nature's Grasp antes do Shadowstep, punindo o rogue com root"
+  },
+  {
+   "t": 48.0,
+   "quem": "Ominous",
+   "descricao": "Fear encadeado no shaman logo depois do trinket"
+  },
+  {
+   "t": 51.2,
+   "quem": "Beteranii",
+   "descricao": "Readiness para reiniciar Rapid Fire e Kill Command na janela do Kill Shot"
+  },
+  {
+   "t": 52.4,
+   "quem": "Beteranii",
+   "descricao": "Segundo Kill Shot em Zebedeuix"
+  },
+  {
+   "t": 57.5,
+   "quem": "Ominous",
+   "descricao": "Spell Lock no shaman a 62%, iniciando o foco nele"
+  },
+  {
+   "t": 45.2,
+   "quem": "Zebedeuix",
+   "descricao": "Evasion a 43% diante do hunter"
+  }
+ ]
+}

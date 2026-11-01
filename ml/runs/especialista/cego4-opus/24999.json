@@ -1,0 +1,18 @@
+{"resumo": "Com o Amnesianvi travado, o RMP lutou 3v2; o Zebedeuv caiu numa cadeia de stuns e Death Coil depois do Shadowstep e não produziu dano, e Heshov ficou sozinho sem ter aplicado CC nenhum.",
+ "momento_decisivo": {"t": 45.3, "descricao": "Logo após o Shadowstep no Heshoix, o Zebedeuv volta a ser stunnado e o Death Coil aos 46.3 emenda o controle: sem healer, ele fica sem dano e sem resposta até morrer."},
+ "momento_aceitos": [45.0, 45.3, 46.3, 53.5],
+ "erros": [
+  {"t": 33.5, "quem": "Heshoix", "fez": "Combustion e Berserking antes do contato", "devia": "Guardar para o momento em que os Living Bombs e Scorch estivessem acertando alvo", "porque": "O primeiro dano real só sai aos 40 s; o Berserking de 10 s foi perdido inteiro", "gravidade": "baixa"},
+  {"t": 33.7, "quem": "Heshov", "fez": "Icy Veins (e Berserking aos 34.0) antes de qualquer contato", "devia": "Guardar para o primeiro go real, com o rogue no alvo", "porque": "Sem healer, o único caminho do RMP era um burst forte e sincronizado; o cooldown principal foi gasto sem inimigo no alcance", "gravidade": "media"},
+  {"t": 42.9, "quem": "Ominousdesii", "fez": "Create Healthstone em combate, depois Create Soul Shard (46.6) e Give Healthstone (50.3)", "devia": "Preparar antes dos portões e, em combate, pressionar com DoTs e Fear", "porque": "Três GCDs de preparação no meio da luta foram perdidos, embora a vantagem numérica tenha escondido o erro", "gravidade": "media"},
+  {"t": 50.7, "quem": "Heshoix", "fez": "Spellsteal no Zebedeuv", "devia": "Scorch/Fireball no rogue ou Polymorph no Heshov", "porque": "Rogue não tem buff mágico relevante para roubar; foi um GCD perdido com o alvo a meio caminho da morte", "gravidade": "media"},
+  {"t": 53.5, "quem": "Zebedeuv", "fez": "Evasion a 44% contra dano mágico e DoTs", "devia": "Cloak of Shadows seguido de Vanish", "porque": "Evasion não reduz Living Bomb, Corruption, Scorch nem Lava Burst; Cloak limpava os DoTs e o Vanish dava a saída", "gravidade": "alta"},
+  {"t": 54.8, "quem": "Heshov", "fez": "Remove Curse em sequência (53.5, 54.8, 57.6) enquanto o rogue morria", "devia": "Polymorph no Kwongwegaix ou no Ominousdesii, Counterspell e Deep Freeze no Heshoix", "porque": "O mage não aplicou nenhum CC na luta; limpar maldição não salva um rogue sob foco, mas tirar um inimigo do jogo podia", "gravidade": "alta"}
+ ],
+ "acertos": [
+  {"t": 46.0, "quem": "Heshov", "descricao": "Ice Barrier antes da pressão chegar nele, a tempo de absorver dano."},
+  {"t": 46.3, "quem": "Ominousdesii", "descricao": "Death Coil no Zebedeuv emendando na sequência de stuns."},
+  {"t": 48.4, "quem": "Kwongwegaix", "descricao": "Wind Shear no Heshov, tirando dano do único caster inimigo."},
+  {"t": 57.7, "quem": "Ominousdesii", "descricao": "Seduction do pet no Heshov logo depois da morte do rogue, mantendo-o controlado."},
+  {"t": 64.2, "quem": "Heshoix", "descricao": "Spellsteal no Heshov quando ele tentava se defender no 2v1."}
+ ]}

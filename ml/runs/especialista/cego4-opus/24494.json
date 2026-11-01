@@ -1,0 +1,103 @@
+{
+ "resumo": "Bladestorm com Empower Rune Weapon e Pestilence colocou os três inimigos abaixo de 60% em segundos. Mesmo perdendo o healer, warrior e DK seguiram com vida e fecharam hunter, warlock e druida sem cura suficiente.",
+ "momento_decisivo": {
+  "t": 55.7,
+  "descricao": "Celianeyiv abre Bladestorm junto do Empower Rune Weapon (56.4) e do Pestilence do DK: o dano em área leva o druida a 59%, o warlock a 68% e o hunter a 51% em 5 s, e esse dano nunca é recuperado."
+ },
+ "momento_aceitos": [
+  55.7,
+  56.4,
+  65.8,
+  69.7
+ ],
+ "erros": [
+  {
+   "t": 48.5,
+   "quem": "Heruix",
+   "fez": "Cleanse magic na Unstable Affliction",
+   "devia": "Não dispelar UA; curar-se com 66% ou deixar a UA correr",
+   "porque": "O dispel silencia quem dispela; o paladino ficou sem conjurar logo no início do foco contra ele",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.1,
+   "quem": "Heruix",
+   "fez": "Holy Light com 42%, cortado por Silencing Shot",
+   "devia": "Usar Divine Shield fora do fear e ao ver Rapid Fire e Hunter's Mark nele",
+   "porque": "Terminou a luta com 0 de cura e morreu sem usar Divine Shield; cast longo sob hunter é fácil de cortar",
+   "gravidade": "alta"
+  },
+  {
+   "t": 58.9,
+   "quem": "Beteranii",
+   "fez": "Mend Pet com o healer inimigo a 42% e a própria vida caindo",
+   "devia": "Continuar Chimera/Aimed e fechar a morte de Heruix, ou Disengage e sair do Bladestorm",
+   "porque": "O paladino ainda durou até 65.1 e o hunter caiu de 97% a 51% parado no dano em área; ele só usou Disengage aos 66.2",
+   "gravidade": "alta"
+  },
+  {
+   "t": 56.9,
+   "quem": "Pehdicouve",
+   "fez": "Tree of Life e saiu da forma aos 58.5 sem curar",
+   "devia": "Entrar em forma de cura e manter Rejuvenation, Wild Growth e Swiftmend, sem gastar dois GCDs de forma",
+   "porque": "O druida passou de 100% a 59% nesse trecho e o time inteiro precisava de HoTs em área",
+   "gravidade": "media"
+  },
+  {
+   "t": 69.7,
+   "quem": "Pehdicouve",
+   "fez": "Em troca de forma até 71.8 enquanto o warrior trocava para Beteranii",
+   "devia": "Curar Beteranii logo na troca com Rejuvenation, Regrowth e Nature's Swiftness se disponível",
+   "porque": "A primeira cura depois de 65.9 só saiu aos 72.6, tarde para um hunter sob Execute",
+   "gravidade": "alta"
+  },
+  {
+   "t": 70.7,
+   "quem": "Ominous",
+   "fez": "Unstable Affliction em Omasconiv durante a troca do warrior para o hunter",
+   "devia": "Usar Fear ou Death Coil em Celianeyiv",
+   "porque": "Peel para Beteranii atrasaria os Executes; a pressão no DK não tinha chance de virar a corrida",
+   "gravidade": "media"
+  },
+  {
+   "t": 59.5,
+   "quem": "Celianeyiv",
+   "fez": "Só Heroic Strike e Cleave, sem Mortal Strike na luta inteira",
+   "devia": "Colocar Mortal Strike em Pehdicouve",
+   "porque": "O druida curou 55 mil, incluindo Nature's Swiftness com Healing Touch; Mortal Wounds cortaria 50% disso e encurtaria a luta",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 51.4,
+   "quem": "Beteranii",
+   "descricao": "Rapid Fire e trinket junto de Hunter's Mark, focando o healer"
+  },
+  {
+   "t": 57.1,
+   "quem": "Beteranii",
+   "descricao": "Silencing Shot no Holy Light do paladino a 42%"
+  },
+  {
+   "t": 56.4,
+   "quem": "Omasconiv",
+   "descricao": "Empower Rune Weapon junto do Bladestorm"
+  },
+  {
+   "t": 62.4,
+   "quem": "Pehdicouve",
+   "descricao": "Nature's Swiftness com Healing Touch em emergência"
+  },
+  {
+   "t": 65.8,
+   "quem": "Omasconiv",
+   "descricao": "Gnaw em Pehdicouve logo após Mind Freeze, travando o healer na janela da morte de Heruix"
+  },
+  {
+   "t": 72.8,
+   "quem": "Celianeyiv",
+   "descricao": "Execute repetido em Beteranii logo após a troca de alvo"
+  }
+ ]
+}

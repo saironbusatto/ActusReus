@@ -1,0 +1,104 @@
+{
+ "resumo": "Espelho longo em que o Shadowplay II venceu por dano acumulado de Mind Sear e DoTs. Heruv gastou Divine Shield sem curar, Ominousxi caiu aos 119.9 com cura insuficiente e o outro time terminou de matar o paladino.",
+ "momento_decisivo": {
+  "t": 115.6,
+  "descricao": "Ominousx troca para Ominousxi e fecha com Amnesianxxi e Heruiv enquanto os dois healers inimigos limpam magia e trocam de forma; ele cai 4 s depois com cura insuficiente."
+ },
+ "momento_aceitos": [
+  112.2,
+  115.6,
+  117.3,
+  118.7,
+  119.4
+ ],
+ "erros": [
+  {
+   "t": 93.1,
+   "quem": "Heruv",
+   "fez": "Poção no Divine Shield com 26% e depois quase nada de cura até 109.1",
+   "devia": "Curar-se e curar o aliado com Holy Light durante o escudo, com ninguém podendo interrompê-lo",
+   "porque": "Bubble é a janela segura do paladino; ele saiu dela sem subir e seguiu a luta sem passar de 63%",
+   "gravidade": "alta"
+  },
+  {
+   "t": 115.2,
+   "quem": "Heruv",
+   "fez": "Cleanse magic com Ominousxi baixo",
+   "devia": "Holy Light ou Holy Shock em Ominousxi",
+   "porque": "O warlock usou poção aos 115.8 e caiu aos 119.9; a limpeza não salvou ninguém",
+   "gravidade": "alta"
+  },
+  {
+   "t": 117.3,
+   "quem": "Amnesianxxii",
+   "fez": "Saiu de Shadowform para dar Renew e voltou aos 119.2",
+   "devia": "Usar Flash Heal ou Power Word: Shield em Ominousxi",
+   "porque": "Renew é lento para um alvo a segundos da morte, e as duas trocas de forma gastaram os GCDs da janela",
+   "gravidade": "alta"
+  },
+  {
+   "t": 145.2,
+   "quem": "Amnesianxxii",
+   "fez": "Mind Sear depois do trinket com Heruv morrendo",
+   "devia": "Flash Heal e Power Word: Shield em Heruv",
+   "porque": "O escudo mais recente foi aos 141.4; sem o paladino ele ficaria sozinho como healer, e Heruv morreu aos 149.4",
+   "gravidade": "alta"
+  },
+  {
+   "t": 115.0,
+   "quem": "Ominousxi",
+   "fez": "Devour Magic baixo de vida",
+   "devia": "Fear ou Death Coil no atacante, ou Drain Life",
+   "porque": "Devour rende pouco; só a poção de 115.8 reagiu à pressão e ele não tinha mais saída",
+   "gravidade": "media"
+  },
+  {
+   "t": 56.8,
+   "quem": "Amnesianxxii",
+   "fez": "Mind Sear três vezes até 66.4 sem alvo agrupado",
+   "devia": "Mind Blast, Mind Flay e Vampiric Touch no alvo de pressão",
+   "porque": "Mind Sear canalizado no meio dos Spell Locks é fácil de cortar e rende pouco em alvo único; ele fez 26 mil contra 87 mil do outro priest",
+   "gravidade": "media"
+  },
+  {
+   "t": 95.6,
+   "quem": "Amnesianxxi",
+   "fez": "Dispersion com 100% de vida",
+   "devia": "Manter pressão em Heruv, que acabava de usar Divine Shield, ou guardar o cooldown",
+   "porque": "Sair do combate logo depois do bubble do inimigo desperdiça a janela de pressão",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 92.8,
+   "quem": "Heruv",
+   "descricao": "Divine Shield com 26% salvando a vida na hora certa"
+  },
+  {
+   "t": 75.5,
+   "quem": "Ominousx",
+   "descricao": "Spell Lock em Amnesianxxii a 51%, bloqueando a saída de cura"
+  },
+  {
+   "t": 115.6,
+   "quem": "Ominousx",
+   "descricao": "Troca limpa para o warlock inimigo, fechando com os aliados"
+  },
+  {
+   "t": 118.7,
+   "quem": "Heruiv",
+   "descricao": "Hammer of Wrath em Ominousxi abaixo de 20%"
+  },
+  {
+   "t": 124.3,
+   "quem": "Amnesianxxii",
+   "descricao": "Dispersion com 53%, ganhando tempo e mana"
+  },
+  {
+   "t": 87.1,
+   "quem": "Heruiv",
+   "descricao": "Hand of Freedom para liberar um aliado no meio do confronto"
+  }
+ ]
+}

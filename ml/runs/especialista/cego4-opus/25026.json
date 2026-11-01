@@ -1,0 +1,21 @@
+{"resumo": "RPS II isolou o Zebedeuxv: Psychic Horror e o foco de Mind Flay com o dano do shaman o levaram a 1% sem resposta, enquanto o Zebedeuxiv prendia o priest inimigo. Depois, com vantagem numérica, venceu a luta longa por desgaste do healer e do priest restantes.",
+ "momento_decisivo": {"t": 49.3, "descricao": "Psychic Horror do Amnesianxxv no Zebedeuxv com o Zebedeuxiv mantendo o Amnesianxxvi ocupado: o rogue entra em controle e o foco de shadow + elemental começa sem que ele ou o healer respondam."},
+ "momento_aceitos": [47.0, 49.3, 52.0, 53.7, 61.5],
+ "erros": [
+  {"t": 30.5, "quem": "Zebedeuxiv", "fez": "Tricks of the Trade logo nos portões", "devia": "Guardar para o primeiro go sincronizado com o aliado", "porque": "O efeito é curto e o contato só veio perto dos 34 s; o cooldown foi desperdiçado", "gravidade": "baixa"},
+  {"t": 47.6, "quem": "Amnesianxxv", "fez": "Silence no Zebedeuxv (rogue)", "devia": "Guardar para a cura do Kwongwegaxv ou do Amnesianxxvi", "porque": "Rogue não precisa de magia; o Kwongwegaxv estava livre lançando Cleanse/Purge e o Silence nele faria o go mais perigoso", "gravidade": "media"},
+  {"t": 52.5, "quem": "Zebedeuxv", "fez": "Slice and Dice com 69% sob foco de dois inimigos", "devia": "Cloak of Shadows para limpar DoTs e depois Vanish", "porque": "O dano vinha de Mind Flay e DoTs mágicos; o rogue nunca usou Cloak, Evasion ou Vanish e foi a 1% com apenas 3 mil de dano causado", "gravidade": "alta"},
+  {"t": 54.4, "quem": "Kwongwegaxv", "fez": "Cleanse Spirit em poison com o Zebedeuxv caindo", "devia": "Riptide e Healing Wave no rogue", "porque": "Do lado dele só veio um Riptide e uma Lesser Healing Wave enquanto o rogue perdia 68% da vida; limpar veneno não muda o resultado", "gravidade": "alta"},
+  {"t": 69.1, "quem": "Amnesianxxv", "fez": "Inner Focus seguido de Shadowfiend", "devia": "Usar Inner Focus em Mind Blast ou cura direta", "porque": "O efeito de custo zero e crítico é consumido por um feitiço que quase não o aproveita", "gravidade": "baixa"},
+  {"t": 116.6, "quem": "Kwongwegaxv", "fez": "Cleanse Spirit repetido com o Amnesianxxvi em perigo", "devia": "Healing Wave ou Riptide no priest", "porque": "O priest estava bebendo poções (116.2 e 120.0) e morreu aos 127.7; os dois GCDs seguidos não geraram cura", "gravidade": "alta"},
+  {"t": 117.6, "quem": "Amnesianxxvi", "fez": "Mind Sear com a vida baixa e sob dano direto", "devia": "Power Word: Shield, sair de Shadowform e curar-se", "porque": "Canalização de baixo dano o deixa parado no Mind Flay; sobreviver era a prioridade no 2v3", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 38.0, "quem": "Zebedeuxiv", "descricao": "Blind no Kwongwegaxv logo depois da bomba, tirando o healer do início do go."},
+  {"t": 47.0, "quem": "Zebedeuxiv", "descricao": "Kidney Shot no Amnesianxxvi na hora em que o Zebedeuxv sofria o CC, isolando o alvo."},
+  {"t": 49.3, "quem": "Amnesianxxv", "descricao": "Psychic Horror encadeando no foco do rogue."},
+  {"t": 52.0, "quem": "Amnesianxxv", "descricao": "Sequência de Mind Flay no alvo isolado, com dano e slow constantes."},
+  {"t": 61.5, "quem": "Amnesianxxv", "descricao": "Psychic Scream no Zebedeuxv a 1%, forçando o trinket e consumindo o último recurso dele."},
+  {"t": 120.1, "quem": "Kwongwegaxiv", "descricao": "Mana Tide para sustentar a fase final longa."},
+  {"t": 121.6, "quem": "Zebedeuxiv", "descricao": "Kidney Shot no Kwongwegaxv a 39%, forçando o trinket e fechando a luta."}
+ ]}

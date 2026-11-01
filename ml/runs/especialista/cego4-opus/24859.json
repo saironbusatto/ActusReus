@@ -1,0 +1,19 @@
+{"resumo": "TSG III concentrou Celianeyv e Omasconv no Heruvii, que curou praticamente nada e foi cortado por Mind Freeze; o Bladestorm do Celianeyv matou o paladino. Com o healer morto, Omasconii e Celianeyii caíram em sequência.",
+ "momento_decisivo": {"t": 51.6, "descricao": "Omasconv dá Mind Freeze no Flash of Light do Heruvii: bloqueia a escola sagrada do único healer do time e deixa o paladino sem cura para o Bladestorm que vem aos 53.8."},
+ "momento_aceitos": [45.7, 51.6, 53.8, 54.2],
+ "erros": [
+  {"t": 40.8, "quem": "Herux", "fez": "Every Man for Himself no stun do Charge com 100% de vida", "devia": "Aguentar o stun curto e guardar para Hammer, Fear ou stun durante um burst real", "porque": "Um Charge sozinho não ameaça; o cooldown de 2 min é a resposta a CC longo", "gravidade": "media"},
+  {"t": 41.1, "quem": "Celianeyii", "fez": "Every Man for Himself no stun do Charge com 100% de vida", "devia": "Guardar para quebrar um stun ou slow numa janela de burst", "porque": "Stun curto sem pressão não exige resposta; depois ele não teve como escapar dos stuns e do kite no fim", "gravidade": "media"},
+  {"t": 45.6, "quem": "Celianeyii", "fez": "Bladestorm cedo, sozinho e com todos a 100%, antes do Omasconii chegar", "devia": "Sincronizar com o DK (por volta dos 50 s) e usar Mortal Strike antes", "porque": "Sem foco combinado o cooldown não forçou defensivo útil e ainda colidiu com a Retaliation aos 45.7", "gravidade": "media"},
+  {"t": 49.1, "quem": "Heruvii", "fez": "Seal of Wisdom como primeira ação depois de quase 9 s de combate parado, com Death and Decay em cima dele", "devia": "Já estar curando ou mudar de posição; selar antes dos portões", "porque": "O combate começou aos 40.8; o paladino perdeu a abertura inteira e gastou um GCD em buff quando precisava de cura", "gravidade": "alta"},
+  {"t": 54.7, "quem": "Heruvii", "fez": "Hand of Freedom com o Bladestorm em cima dele, sem usar Divine Shield em nenhum momento", "devia": "Divine Shield assim que a escola sagrada voltasse e, em seguida, curar", "porque": "Ele morreu aos 60.0 com zero de cura efetiva; a bolha era o único botão que não dependia de cura", "gravidade": "alta"},
+  {"t": 55.5, "quem": "Celianeyii", "fez": "Trocou o GCD por Cleave/Heroic Strike em sequência no Celianeyv, sem aplicar Mortal Strike", "devia": "Manter Mortal Strike no alvo para cortar a cura do Herux", "porque": "O Herux curou quase 34 mil sem interrupção; sem o redutor de cura, o dano do warrior foi inútil", "gravidade": "media"},
+  {"t": 56.6, "quem": "Omasconii", "fez": "Blood Strike enquanto o Herux lançava Holy Light", "devia": "Mind Freeze ou Strangulate na cura lenta", "porque": "Holy Light é uma cura lenta e fácil de interromper; o time não usou interrupção nenhuma no healer inimigo durante toda a luta", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 45.7, "quem": "Celianeyv", "descricao": "Retaliation exatamente quando Celianeyii abriu Bladestorm."},
+  {"t": 51.6, "quem": "Omasconv", "descricao": "Mind Freeze na única cura do Heruvii na luta."},
+  {"t": 53.8, "quem": "Celianeyv", "descricao": "Bladestorm com 63% de vida e, em seguida, a sequência de Cleave/Heroic Strike que fechou o paladino."},
+  {"t": 54.2, "quem": "Omasconv", "descricao": "Empower Rune Weapon no meio do burst do warrior, mantendo a pressão no mesmo alvo."},
+  {"t": 64.3, "quem": "Celianeyv", "descricao": "Victory Rush para recuperar vida entre os abates e seguir direto para o Celianeyii."}
+ ]}

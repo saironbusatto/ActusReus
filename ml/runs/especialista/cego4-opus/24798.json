@@ -1,0 +1,19 @@
+{"resumo": "RMP II fez um primeiro go forte no Zebedeuxvi, que escapou de Vanish; depois trocou para o Amnesianxxix, sem trinket e sem cura da Kwongwegaxvi, e matou o priest. Com a vantagem numérica, Deep Freeze + Cold Snap + Icy Veins derrubaram o rogue e o shaman ficou só.",
+ "momento_decisivo": {"t": 60.3, "descricao": "Heshoiv polimorfa o Zebedeuxvi (o único que podia dar peel) e Zebedeuii dá Shadowstep no Amnesianxxix aos 60.6: o time inteiro converge no priest, que já tinha gastado o trinket e ficou sem proteção."},
+ "momento_aceitos": [44.1, 60.3, 60.6, 62.8, 70.8],
+ "erros": [
+  {"t": 31.7, "quem": "Heshoiv", "fez": "Mirror Image antes de qualquer contato", "devia": "Guardar para quando o rogue chegasse ou para absorver um CC/burst", "porque": "As imagens duram 30 s e o primeiro contato só sai depois dos 34 s; parte do cooldown foi jogada fora", "gravidade": "baixa"},
+  {"t": 35.7, "quem": "Amnesianxxix", "fez": "Silence no Zebedeuii (rogue)", "devia": "Guardar o Silence para o Polymorph do Heshoiv ou para a cura do Amnesianii", "porque": "Rogue não depende de magia; Silence não tira nada dele e o Polymorph que caiu em seguida ficou sem resposta", "gravidade": "media"},
+  {"t": 44.0, "quem": "Heshoiv", "fez": "Ice Barrier e, aos 44.3, Mana Sapphire com o Zebedeuxvi caindo de 46% para 30%", "devia": "Continuar o burst (Ice Lance/Frostbolt) para fechar o alvo enquanto os dois curadores estavam em CC", "porque": "Era a janela de abate, com Blind e Polymorph nos curadores; dois GCDs defensivos com ninguém batendo nele deram tempo para o Vanish aos 45.8", "gravidade": "media"},
+  {"t": 49.3, "quem": "Amnesianxxix", "fez": "Voltou para Shadowform logo após o Flash Heal, já sob foco do RMP", "devia": "Ficar em forma de cura, usar shield e cura direta até estabilizar", "porque": "Ele caiu para 53% aos 50.8 e depois não lançou mais nenhuma cura; a forma bloqueou a principal resposta dele à pressão", "gravidade": "media"},
+  {"t": 59.1, "quem": "Amnesianxxix", "fez": "Inner Focus seguido de Shadowfiend", "devia": "Usar Inner Focus em cura ou Mind Blast, e não em um feitiço que não aproveita o efeito", "porque": "Inner Focus é consumido no próximo feitiço para custo zero e crítico; num pet o efeito é quase nulo", "gravidade": "baixa"},
+  {"t": 63.6, "quem": "Kwongwegaxvi", "fez": "Purge com o Amnesianxxix sob foco total", "devia": "Riptide e Healing Wave no priest", "porque": "O priest caía rapidamente e o shaman era a única fonte de cura grande do time; Purge não alivia a pressão daquele momento", "gravidade": "alta"},
+  {"t": 70.7, "quem": "Kwongwegaxvi", "fez": "Purge com o priest a caminho de 17%", "devia": "Cura instantânea (Riptide) ou Nature's Swiftness + Healing Wave", "porque": "Foi o último GCD antes do Kidney Shot aos 70.8; sem esse GCD de cura, o stun fechou a morte aos 72.0", "gravidade": "alta"}
+ ],
+ "acertos": [
+  {"t": 36.2, "quem": "Zebedeuii", "descricao": "Blind no healer Kwongwegaxvi abrindo o go: ele só volta a agir aos 46 s."},
+  {"t": 37.1, "quem": "Zebedeuii", "descricao": "Shadow Dance + Cheap Shot no Zebedeuxvi com o healer em Blind, derrubando o alvo de 91% a 46%."},
+  {"t": 45.8, "quem": "Zebedeuxvi", "descricao": "Vanish com 30% de vida, salvando-se do primeiro go do RMP."},
+  {"t": 73.3, "quem": "Kwongwegaxvi", "descricao": "Mana Tide no momento em que precisou sustentar sozinho o restante da luta."},
+  {"t": 75.1, "quem": "Heshoiv", "descricao": "Cold Snap + Icy Veins logo após o Deep Freeze, transformando o 3v2 em burst."}
+ ]}

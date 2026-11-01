@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from compara import RUNS, perto  # noqa: E402
 from dataset_tecnico import _do_fato, entrada_v4, erros_dos_fatos, junta_fatos, lutas_analisadas  # noqa: E402
 
-N = "3" if "--cego3" in sys.argv else "2"
+N = next((k for k in "34" if f"--cego{k}" in sys.argv), "2")
 SAIDA = RUNS / f"juiz-cego{N}"
 
 

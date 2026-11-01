@@ -1,0 +1,99 @@
+{
+ "resumo": "O time do warrior gastou Bladestorm e Empower Rune Weapon cedo e dividido, sem Mortal Strike, e não matou ninguém. Depois o paladino dispelou Unstable Affliction duas vezes, ficou silenciado nas duas e o warrior e o DK morreram sem cura.",
+ "momento_decisivo": {
+  "t": 57.9,
+  "descricao": "Heruix dá Cleanse na Unstable Affliction e leva o silence do backlash (visto aos 59.2) justo quando Celianeyiv, sem defensivos e já tendo gasto as poções, precisava de cura; o warrior cai aos 62.3 e o 3v3 vira 3v2."
+ },
+ "momento_aceitos": [
+  41.3,
+  48.4,
+  57.9,
+  59.2,
+  66.4
+ ],
+ "erros": [
+  {
+   "t": 41.3,
+   "quem": "Celianeyiv",
+   "fez": "Bladestorm com Sweeping Strikes em Kwongwegaii enquanto Omasconiv batia em Zebedeuvii e estourava Empower Rune Weapon em outro alvo",
+   "devia": "Fechar Bladestorm e Empower Rune Weapon no mesmo alvo do DK, com CC no healer inimigo",
+   "porque": "Os dois maiores cooldowns do time saíram em alvos diferentes; o shaman resistiu com Lifeblood e Healthstone e Bladestorm ficou gasto por 90 s",
+   "gravidade": "alta"
+  },
+  {
+   "t": 45.3,
+   "quem": "Celianeyiv",
+   "fez": "Encheu 40-52 s de Heroic Strike e Cleave, com Mortal Strike só aos 53.7",
+   "devia": "Manter Mortal Strike no alvo de pressão a cada recarga, usando Heroic Strike só como sobra de raiva",
+   "porque": "Sem Mortal Wounds o alvo recebe cura integral, e Kwongwegaii terminou com 52 mil de cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 57.9,
+   "quem": "Heruix",
+   "fez": "Cleanse magic na Unstable Affliction lançada aos 56.4",
+   "devia": "Não dispelar UA; curar Celianeyiv, que gastou Enraged Regeneration e poções, e tirar outros debuffs",
+   "porque": "O dispel da UA silencia quem dispela; o healer ficou mudo nos segundos em que o warrior morreu",
+   "gravidade": "alta"
+  },
+  {
+   "t": 67.1,
+   "quem": "Heruix",
+   "fez": "Repetiu Cleanse na UA reaplicada e foi silenciado de novo com 31% de vida",
+   "devia": "Curar Omasconiv ou a si mesmo; com Divine Shield disponível, usá-lo antes de cair a 31%",
+   "porque": "Mesmo erro já punido aos 59.2: com o DK a 25% sob Kidney Shot, o silence tirou a última chance de cura",
+   "gravidade": "alta"
+  },
+  {
+   "t": 51.4,
+   "quem": "Omasconiv",
+   "fez": "Só usou Icebound Fortitude com 48%, depois de cair de 84% a 17% e gastar trinket e poção",
+   "devia": "Usar Icebound Fortitude ao entrar no foco, por volta de 44-46 s",
+   "porque": "Icebound reduz o dano recebido e dá imunidade a stun; usado depois da queda, não evitou o gasto do trinket no Death Coil",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.3,
+   "quem": "Kwongwegaii",
+   "fez": "Gastou GCDs em Cleanse Spirit de doença aos 44.3, 45.5 e 46.7 sob Bladestorm e Empower Rune Weapon",
+   "devia": "Priorizar Riptide e ondas de cura e evitar o sumidouro de GCD enquanto o DK reaplica doença",
+   "porque": "Icy Touch e Plague Strike repõem doença na hora; o shaman precisou gastar Healthstone e Lifeblood para compensar",
+   "gravidade": "media"
+  },
+  {
+   "t": 52.5,
+   "quem": "Ominousv",
+   "fez": "Reaplicou Corruption três vezes até 55.1 em vez de usar CC no paladino",
+   "devia": "Dar Fear em Heruix para travar a cura enquanto o warrior estava baixo",
+   "porque": "O primeiro Fear no healer só saiu aos 74.5, com a luta resolvida; Corruption repetida não soma dano",
+   "gravidade": "media"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 48.4,
+   "quem": "Ominousv",
+   "descricao": "Death Coil em Omasconiv abaixo de 20%, forçando o trinket do DK"
+  },
+  {
+   "t": 41.8,
+   "quem": "Zebedeuvii",
+   "descricao": "Kidney Shot no DK logo depois de abrir o foco, tirando dele o Every Man for Himself"
+  },
+  {
+   "t": 46.4,
+   "quem": "Kwongwegaii",
+   "descricao": "Healthstone e Lifeblood na hora certa para sobreviver ao burst duplo sem perder o papel de healer"
+  },
+  {
+   "t": 53.4,
+   "quem": "Zebedeuvii",
+   "descricao": "Evasion com 50% de vida para aguentar o melee até o warrior cair"
+  },
+  {
+   "t": 66.4,
+   "quem": "Zebedeuvii",
+   "descricao": "Kidney Shot em Omasconiv a 25%, garantindo a segunda morte com o healer silenciado aos 67.1"
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "resumo": "Luta 3v2 por falta de um shaman. Warlock e druida resistiram cerca de 40 s, até Ominousdesvi fechar Conflagrate, Chaos Bolt e Incinerate em Pehdibalii, que estava enraizado e sem Barkskin.",
+ "momento_decisivo": {
+  "t": 68.2,
+  "descricao": "Ominousdesvi abre com Conflagrate em Pehdibalii, recém-enraizado por Pehdicouv, e emenda Chaos Bolt e Incinerate; sem healer aliado nem defensivo, o druida não sobrevive."
+ },
+ "momento_aceitos": [
+  63.2,
+  68.2,
+  69.6,
+  70.6
+ ],
+ "erros": [
+  {
+   "t": 65.9,
+   "quem": "Pehdibalii",
+   "fez": "Insistiu em Entangling Roots com 66% de vida e foi enraizado",
+   "devia": "Mudar de forma para sair do root e se curar com HoTs e Nourish",
+   "porque": "Era o único healer do time; druida sai de root trocando de forma, e do último Lifebloom aos 58.5 até a morte só usou uma poção",
+   "gravidade": "alta"
+  },
+  {
+   "t": 62.6,
+   "quem": "Ominousdesix",
+   "fez": "Life Tap com o shaman inimigo curando tudo livre",
+   "devia": "Dar Fear em Kwongwegaxix",
+   "porque": "Nenhum Fear na luta: com um a menos, tirar o healer era o único caminho para vencer",
+   "gravidade": "alta"
+  },
+  {
+   "t": 34.4,
+   "quem": "Ominousdesix",
+   "fez": "Corruption depois de Shadowfury acertar três inimigos",
+   "devia": "Usar Chaos Bolt e Conflagrate no stun",
+   "porque": "A janela de 3 s sem resposta rendeu só um DoT; Chaos Bolt não foi usado por ele",
+   "gravidade": "media"
+  },
+  {
+   "t": 44.6,
+   "quem": "Ominousdesvi",
+   "fez": "Corruption repetida com Immolate já no alvo, sem Conflagrate ou Chaos Bolt",
+   "devia": "Abrir o burst cedo em Pehdibalii, que não tinha outro healer ao lado",
+   "porque": "O mesmo burst só saiu aos 68.2; com um a mais, adiar a pressão deu 25 s de vida ao inimigo",
+   "gravidade": "media"
+  },
+  {
+   "t": 62.2,
+   "quem": "Pehdibalii",
+   "fez": "Remove Curse enquanto os warlocks reaplicavam maldições",
+   "devia": "Curar em vez de limpar maldição que volta no GCD seguinte",
+   "porque": "Curse of Tongues e Curse of the Elements retornam de graça; o custo foi GCD de um healer que perdia vida",
+   "gravidade": "media"
+  },
+  {
+   "t": 30.2,
+   "quem": "Kwongwegaxix",
+   "fez": "Bloodlust logo aos 30.2, antes de haver alvo em alcance",
+   "devia": "Guardar para o burst no primeiro alvo",
+   "porque": "Sem o time em alcance, boa parte dos 40 s de haste é perdida; o burst só veio aos 68 s",
+   "gravidade": "baixa"
+  }
+ ],
+ "acertos": [
+  {
+   "t": 33.7,
+   "quem": "Ominousdesix",
+   "descricao": "Shadowfury pegando os três inimigos juntos"
+  },
+  {
+   "t": 39.1,
+   "quem": "Pehdicouv",
+   "descricao": "Barkskin com 71% sob o burst inicial"
+  },
+  {
+   "t": 63.2,
+   "quem": "Pehdicouv",
+   "descricao": "Entangling Roots no druida inimigo antes da abertura do warlock aliado"
+  },
+  {
+   "t": 69.6,
+   "quem": "Ominousdesvi",
+   "descricao": "Chaos Bolt logo depois do Conflagrate"
+  },
+  {
+   "t": 38.6,
+   "quem": "Kwongwegaxix",
+   "descricao": "Riptide rápido quando o aliado tomou o primeiro dano"
+  }
+ ]
+}

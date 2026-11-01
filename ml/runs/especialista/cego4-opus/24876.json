@@ -1,0 +1,18 @@
+{"resumo": "RLS IV travou o Kwongwegax com Fear e Spell Lock e colocou Kidney Shot no Heshox com o healer sem cura; o mage morreu sem Ice Block. Depois o Ominousdesiv e o shaman caíram sem conseguir reagir.",
+ "momento_decisivo": {"t": 46.3, "descricao": "Pet Spell Lock do Ominousxxiv corta o Healing Wave do Kwongwegax; 1 s depois vem o Kidney Shot do Zebedeuxi no Heshox: o mage leva o go sem cura e nunca mais se recupera."},
+ "momento_aceitos": [41.3, 46.3, 47.3, 52.9, 57.8],
+ "erros": [
+  {"t": 30.9, "quem": "Heshox", "fez": "Mirror Image antes de qualquer contato", "devia": "Guardar para a chegada do rogue ou para absorver o foco", "porque": "O primeiro contato vem depois dos 34 s; parte do cooldown foi gasta sem inimigo", "gravidade": "baixa"},
+  {"t": 44.6, "quem": "Ominousdesiv", "fez": "Shoot 0.3 s depois de começar Fear, cancelando o lançamento", "devia": "Terminar o Fear no Zebedeuxi ou no healer inimigo", "porque": "O Fear tem tempo de lançamento; a varinha cancelou o CC que era a principal ajuda ao mage naquele momento", "gravidade": "media"},
+  {"t": 50.5, "quem": "Kwongwegax", "fez": "Purge no Kwongwegavi com o Heshox sendo focado", "devia": "Riptide/Healing Wave no mage, que estava entrando em consumo de poções", "porque": "Depois do stun do Heshox, cada GCD do único healer devia ser cura; Purge não tira pressão", "gravidade": "alta"},
+  {"t": 52.2, "quem": "Ominousdesiv", "fez": "Curse of Tongues enquanto o Heshox caía", "devia": "Dar peel: Fear no Zebedeuxi ou Seduction do pet nele", "porque": "A maldição é limpa e não ajuda o mage; o rogue nunca recebeu CC do warlock enquanto trabalhava no Heshox", "gravidade": "media"},
+  {"t": 55.5, "quem": "Heshox", "fez": "Mais uma poção sob foco, sem nunca usar Ice Block", "devia": "Ice Block por volta dos 30% e sair do alcance", "porque": "Ice Block limpa dano por 10 s e dá tempo para o healer sair do CC; as poções não acompanham o dano de rogue e dois warlocks", "gravidade": "alta"},
+  {"t": 62.9, "quem": "Kwongwegax", "fez": "Water Shield com o Ominousdesiv sob foco", "devia": "Curar o warlock ou tentar interromper o Drain Soul", "porque": "O warlock morreu aos 67.1; manter buff num 2v3 custa o GCD que definiria a sobrevivência", "gravidade": "media"}
+ ],
+ "acertos": [
+  {"t": 35.9, "quem": "Ominousxxiv", "descricao": "Spell Lock do pet interrompendo o primeiro Polymorph do Heshox."},
+  {"t": 41.3, "quem": "Ominousxxiv", "descricao": "Fear no Kwongwegax, tirando o healer inimigo do jogo com o time já pressionando o mage."},
+  {"t": 41.7, "quem": "Kwongwegavi", "descricao": "Wind Shear no Immolate do Ominousdesiv, cortando a principal escola de dano dele."},
+  {"t": 47.3, "quem": "Zebedeuxi", "descricao": "Kidney Shot no Heshox logo depois do lock no healer: o timing certo do go."},
+  {"t": 68.2, "quem": "Zebedeuxi", "descricao": "Kidney Shot no último healer, forçando o trinket e fechando a luta."}
+ ]}
