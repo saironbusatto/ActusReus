@@ -33,14 +33,15 @@ ACOES = {"kick": ("Kick!", True), "kidney shot": ("Kidney!", True), "cheap shot"
          "ambush": ("Ambush!", True), "shadowstep": ("Shadowstep!", True), "sprint": ("Sprint!", False),
          "evasion": ("Evasion!", False), "cloak of shadows": ("Cloak!", False), "vanish": ("Vanish!", False),
          "shadow dance": ("Shadow dance!", False), "fan of knives": ("Fan!", False),
-         "slice and dice": ("Slice!", False), "gouge": ("Gouge!", True), "dismantle": ("Dismantle!", True)}
+         "slice and dice": ("Slice!", False), "gouge": ("Gouge!", True), "dismantle": ("Dismantle!", True),
+         "sap": ("Sap!", True)}
 CLASSES = {1: "guerreiro", 2: "paladino", 3: "caçador", 4: "ladino", 5: "sacerdote", 6: "DK", 7: "xamã", 8: "mago",
            9: "bruxo", 11: "druida"}
 FOCO, MUDA = "foco", "muda"
 # Calls do time, por regra e em ordem de prioridade: passam na frente do plano, cada uma no máximo a cada INTERVALO
 TRINKET, HEALER, PRESO, QUEBRA, CORRENTE, VISAO = "trinket", "healer", "preso", "quebra", "corrente", "visao"
 SEGURA, TRINKET_FOI, VAI, PROXIMO = "segura", "trinket foi", "vai", "proximo"
-ALERTA_S, INTERVALO = 8.0, {CORRENTE: 3.0, SEGURA: 12.0, VAI: 12.0, TRINKET_FOI: 0.0, PROXIMO: 8.0}
+ALERTA_S, INTERVALO = 8.0, {CORRENTE: 3.0, SEGURA: 12.0, VAI: 30.0, TRINKET_FOI: 0.0, PROXIMO: 8.0}
 CONDICAO = {TRINKET, QUEBRA, VISAO}       # cumprida quando a situação some
 AVISO = {SEGURA, TRINKET_FOI, VAI, PROXIMO}  # só informa: não vira ordem nem cobrança
 CURADORES, HEALER_APERTADO, SEM_VISAO_HP, SE_DEFENDE_HP = {2, 5, 7, 11}, 50, 60, 40
@@ -100,7 +101,7 @@ class Treinador:
         self.usou: dict[str, float] = {}
         self.foco = self.foco_novo = self.foco_falado = 0
         self.foco_novo_desde = 0.0
-        self.urgente = self.janela = False
+        self.urgente = self.janela = self.cobrou = False
         self.ultimo_alerta: dict[str, float] = {}
         self.trinket_visto: dict[int, int] = {}
         self.trinket_pendente: set[int] = set()
@@ -179,7 +180,7 @@ class Treinador:
             if acao:  # avisado antes: no fim basta o nome da magia
                 ordem(CORRENTE, acao, cc_alvo, [] if self.preparado == (cc_alvo, acao) else None)
         elif s and s["cc"] & PRENDE and s["ccleft"] >= JANELA_MS and agora - max(
-                self.usou.get(a, -1e9) for a, _, _ in CCS) > FOCO_FIRME_S:
+                self.usou.get(a, -1e9) for a in ("sap", "gouge", "blind", "kidney shot")) > FOCO_FIRME_S:
             acao = self.proximo_cc(s, cc_alvo, agora, perto=False)
             if acao:  # o parceiro acabou de prender: já diz qual é a emenda do Reload
                 ordem(PROXIMO, PROXIMO, cc_alvo, [PROXIMO, acao])
@@ -288,20 +289,23 @@ class Treinador:
             self.ordem = None  # o foco mudou: a ordem no inimigo antigo não vale mais
         if self.ordem:
             tipos = {t for t, _, _ in ativos}
+            if self.ordem[0] == "shadow dance" and SEGURA in tipos:
+                self.ordem = None  # ligou defensivo: o burst espera
             feito = self.ordem[0] not in tipos if self.ordem[0] in CONDICAO else self.cumpriu(casts, selecionado)
             if feito:
                 elogio = ["boa"]
                 self.ordem = None
             elif agora - self.desde >= DESISTE_S:
                 self.ordem = None
-            elif agora - self.ultima_fala >= COBRA_S:
+            elif agora - self.ultima_fala >= COBRA_S and not self.cobrou:  # cobra uma vez só
                 self.fala(["anda"] + self.frase(*self.ordem, classes))
-                self.ultima_fala = agora
+                self.ultima_fala, self.cobrou = agora, True
         if self.ordem is None:
             self.urgente = False
             self.ordem = self.proxima(plano, foco, selecionado, agora, lancando)
             if self.ordem:
                 self.desde = self.ultima_fala = agora
+                self.cobrou = False
                 frase = self.frase(*self.ordem, classes)
                 if mudou and self.ordem[0] == FOCO:
                     frase = [MUDA] + frase[1:]  # avisa a troca para não parecer erro
@@ -322,6 +326,9 @@ class Alto:
         threading.Thread(target=self._toca, daemon=True).start()
 
     def __call__(self, partes: list[str]) -> None:
+        if partes[:1] == ["anda"] and not self.fila.empty():
+            print(f"cobrança descartada: {partes}", flush=True)  # cobrança não passa na frente de call nova
+            return
         try:
             print(f"fala trocada antes de tocar {self.fila.get_nowait()[1]}", flush=True)
         except queue.Empty:
