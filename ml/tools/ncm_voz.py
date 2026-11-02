@@ -286,7 +286,8 @@ class Treinador:
 
 
 class Alto:
-    """Toca uma frase por vez; quando chega outra, a que está na fila é trocada pela mais nova."""
+    """Toca uma frase por vez; quando chega outra, a que está na fila é trocada pela mais nova. Cada fala vai para o
+    journal com o tempo de resposta: espera na fila (frase anterior tocando) e duração do som."""
 
     def __init__(self) -> None:
         self.fila: queue.Queue = queue.Queue(maxsize=1)
@@ -294,15 +295,19 @@ class Alto:
 
     def __call__(self, partes: list[str]) -> None:
         try:
-            self.fila.get_nowait()
+            print(f"fala trocada antes de tocar {self.fila.get_nowait()[1]}", flush=True)
         except queue.Empty:
             pass
-        self.fila.put(partes)
+        self.fila.put((time.time(), partes))
 
     def _toca(self) -> None:
         while True:
-            for p in self.fila.get():
+            pedida, partes = self.fila.get()
+            inicio = time.time()
+            for p in partes:
                 subprocess.run(["pw-play", str(FRASES / f"{p}.wav")], check=False)
+            print(f"fala {pedida:.3f} espera={inicio - pedida:.2f}s som={time.time() - inicio:.2f}s {partes}",
+                  flush=True)
 
 
 def le_log(linhas: list[str], por_id: dict[int, str]) -> tuple[list[tuple[str, int]], int | None, set[int] | None]:
