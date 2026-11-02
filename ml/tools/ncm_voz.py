@@ -241,6 +241,9 @@ class Treinador:
         self.classes = classes
         if equipe:
             self.eu, self.pos = equipe.get("unid", {}).get(RELOAD, {}), equipe.get("pos", {})
+        if equipe and equipe.get("reload_hp") == 0:
+            self.ordem = None  # morto: nada do que ele aperte muda a luta, a voz fica quieta
+            return
         foco = self.firme(foco, agora)
         mudou = bool(self.foco_falado and foco and foco != self.foco_falado)
         ativos = self.alertas(equipe, foco, selecionado, agora) if equipe else []
@@ -539,6 +542,11 @@ def _selftest_tatica() -> None:
     k2.passo(1.0, [["kick", 8]], 8, classes, [], 8, {8}, equipe={**longe, "unid": {**longe["unid"],
                                                                                   RELOAD: slot(RELOAD, kickready=0)}})
     assert k2.ordem is None                                                  # servidor diz que o kick está em recarga
+    morto = Treinador(falas.append)
+    antes = len(falas)
+    for i in range(20):
+        morto.passo(float(i), [["evasion", 0]], 8, classes, [], 8, equipe={**time_(r1045=slot(RELOAD, hp=0)), "reload_hp": 0})
+    assert len(falas) == antes                                               # morreu: silêncio
     foto = slot(9, cc=2 | 32, ccleft=2000, ms=10_000)
     assert fresco(foto, 11_000)["ccleft"] == 1000                            # o CC corre entre uma foto e outra
     assert fresco(foto, 12_500)["cc"] == 32 and fresco(foto, 14_000) is None  # acabou; foto velha não vale
