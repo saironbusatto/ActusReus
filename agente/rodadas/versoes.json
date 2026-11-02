@@ -157,5 +157,15 @@
    "Log ganha p1 (posição, alvo e magia em lançamento de todos, 1 por segundo) e h1 (magias do humano).",
    "Treinador de voz do Reload: fala a ordem, cobra após 3 s, confere pelo log e dá a próxima."
   ]
+ },
+ {
+  "id": "V13",
+  "nome": "Curador de arena cura primeiro e treinador NCM v2",
+  "desde": "2026-11-02 04:14",
+  "mudancas": [
+   "Curador de arena: com aliado abaixo de 45%, ao alcance e à vista, dps assist, set facing, purge e cura de status são puladas; podia curar e não curou caiu de 26% para 14% do tempo.",
+   "Treinador NCM passa à foto v2 às 04:34 (foco 69,3%, trocas 49,7%); CC segue desligado.",
+   "Desde a V12 o braço A é pontuado pela mudança da chance de vencer (valor_v4)."
+  ]
  }
 ]

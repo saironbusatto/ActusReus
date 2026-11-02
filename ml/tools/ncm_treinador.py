@@ -20,12 +20,14 @@ sys.path.insert(0, str(RAIZ / "ml/policy"))
 sys.path.insert(0, str(RAIZ / "ml/tools"))
 from features import parse_v2  # noqa: E402
 from ncm_dados import DIGITO, NENHUM, SEGUNDOS, foto  # noqa: E402
+from ncm_dados2 import JANELA_MS, foto2  # noqa: E402
 
 LOG = RAIZ / "azerothcore-wotlk/env/dist/logs/MlArena.log"
 CALLS = LOG.with_name("ncm_calls.txt")
 BASE = Path(os.environ.get("NCM_BASE", Path.home() / ".local/share/ncm"))
 RELOAD, RELOAD_JSON = 1045, Path.home() / ".local/share/ncm/reload.json"  # o personagem do usuário e o plano dele, lido por tools/ncm_voz.py
-PERIODO_S, LUTA_VIVA_S, JANELA_CC_S, BOTS = 0.5, 5.0, 4, 3
+PERIODO_S, LUTA_VIVA_S, JANELA_CC_S, BOTS, LUTA_NOVA_MS = 0.5, 5.0, 4, 3, 60000
+FOTO_V2 = os.environ.get("NCM_FOTO") == "2"  # modelo treinado com tools/ncm_dados2.py (89 números)
 MANDA_CC = False  # prova_ordens.json: só ~19% dos CC previstos batem com o real; o foco passou (67% x 54%)
 CC = re.compile(r"^(polymorph|fear(?! ward)|hex|cyclone|hammer of justice|kidney shot|cheap shot|sap|blind|repentance|"
                 r"scatter shot|psychic scream|howl of terror|death coil|deep freeze|gouge|shackle undead|"
@@ -89,7 +91,20 @@ class LeitorLog:
         return [x.decode("utf-8", "replace") for x in linhas]
 
 
-def atualiza(lutas: dict, linhas: list[str], agora: float) -> None:
+def memoria_do_time(memoria: dict, chave: tuple, r: dict) -> dict:
+    """Janela de linhas do time e `ms` da primeira linha da luta; instância reusada depois de LUTA_NOVA_MS é outra luta."""
+    a = memoria.get(chave)
+    if a is None or r["ms"] - a["janela"][-1]["ms"] > LUTA_NOVA_MS:
+        a = {"ms0": r["ms"], "janela": []}
+    memoria[chave] = {"ms0": a["ms0"], "janela": [x for x in a["janela"] if r["ms"] - x["ms"] < JANELA_MS] + [r]}
+    return memoria[chave]
+
+
+def foto_da_luta(v: dict) -> list[int]:
+    return foto2(v["janela"], v["guids"], v["ms0"], v["r"]["ms"]) if FOTO_V2 else foto(v["r"], v["guids"])
+
+
+def atualiza(lutas: dict, linhas: list[str], agora: float, memoria: dict) -> None:
     for linha in linhas:
         partes = linha.split(" ", 2)
         if len(partes) < 3 or not partes[2].startswith("v4,"):
@@ -98,8 +113,12 @@ def atualiza(lutas: dict, linhas: list[str], agora: float) -> None:
         if r is None:
             continue
         nos, eles = time_da_linha(r)
-        if len(nos) == BOTS and len(eles) == BOTS and any(s["visible"] for s in r["slots"][3:] if s["present"]):
-            lutas[(int(r["instance"]), nos)] = {"r": r, "guids": list(nos) + list(eles), "t": agora}
+        if len(nos) != BOTS or len(eles) != BOTS:
+            continue
+        chave = (int(r["instance"]), nos)
+        m = memoria_do_time(memoria, chave, r)
+        if any(s["visible"] for s in r["slots"][3:] if s["present"]):
+            lutas[chave] = {**m, "r": r, "guids": list(nos) + list(eles), "t": agora}
 
 
 def grava(linhas: list[str]) -> None:
@@ -134,17 +153,17 @@ def carrega_modelo(devolve_vq: bool = False):
 def main() -> None:
     gera = carrega_modelo()
     nomes = {i: a for a, i in json.loads((BASE / "dados/vocabulario.json").read_text(encoding="utf-8")).items()}
-    leitor, lutas = LeitorLog(LOG), {}
+    leitor, lutas, memoria = LeitorLog(LOG), {}, {}
     print("treinador no ar", flush=True)
     with (BASE / "ordens.jsonl").open("a", encoding="utf-8") as registro:
         while True:
             t0 = time.monotonic()
-            atualiza(lutas, leitor.novas(), t0)
+            atualiza(lutas, leitor.novas(), t0, memoria)
             for chave in [k for k, v in lutas.items() if t0 - v["t"] > LUTA_VIVA_S]:
                 del lutas[chave]
             saida, itens = [], list(lutas.items())
             if itens:
-                planos = gera([foto(v["r"], v["guids"]) for _, v in itens])
+                planos = gera([foto_da_luta(v) for _, v in itens])
                 for (chave, v), plano in zip(itens, planos):
                     por_bot = ordens(plano, v["guids"], nomes)
                     saida += [f"{b} {f} {c if MANDA_CC else 0}\n" for b, (f, c) in por_bot.items()]
@@ -175,6 +194,11 @@ def _selftest() -> None:
     assert ordens(tarde, guids, nomes) == {1: (7, 0), 2: (7, 0), 3: (7, 0)}
     assert CC.match("kidney shot") and not CC.match("mana sapphire") and not CC.match("fear ward")
     assert plano_do_bot(plano, guids, nomes, 2) == [("kidney shot", 9), ("hemorrhage", 8)]
+    memoria: dict = {}
+    assert memoria_do_time(memoria, "a", {"ms": 1000})["ms0"] == 1000
+    m = memoria_do_time(memoria, "a", {"ms": 1000 + JANELA_MS})
+    assert m["ms0"] == 1000 and [x["ms"] for x in m["janela"]] == [1000 + JANELA_MS]
+    assert memoria_do_time(memoria, "a", {"ms": 1000 + JANELA_MS + LUTA_NOVA_MS + 1})["ms0"] > 1000
     print("ok")
 
 
