@@ -27,6 +27,7 @@ CALLS = LOG.with_name("ncm_calls.txt")
 BASE = Path(os.environ.get("NCM_BASE", Path.home() / ".local/share/ncm"))
 RELOAD, RELOAD_JSON = 1045, Path.home() / ".local/share/ncm/reload.json"  # o personagem do usuário e o plano dele, lido por tools/ncm_voz.py
 PERIODO_S, LUTA_VIVA_S, JANELA_CC_S, BOTS, LUTA_NOVA_MS = 0.5, 5.0, 4, 3, 60000
+TROCA_S = 8.0  # time do Reload: foco novo do NCM só vale depois de 8 s seguidos (em 3v3 mata um, segura os outros)
 FOTO_V2 = os.environ.get("NCM_FOTO") == "2"  # modelo treinado com tools/ncm_dados2.py (89 números)
 MANDA_CC = False  # prova_ordens.json: só ~19% dos CC previstos batem com o real; o foco passou (67% x 54%)
 CC = re.compile(r"^(polymorph|fear(?! ward)|hex|cyclone|hammer of justice|kidney shot|cheap shot|sap|blind|repentance|"
@@ -56,6 +57,20 @@ def ordens(plano: list[int], guids: list[int], nomes: dict[int, str]) -> dict[in
             cc.setdefault(bot, inimigo)
     foco = pesos.most_common(1)[0][0] if pesos else 0
     return {g: (foco, cc.get(g, 0)) for g in guids[:BOTS]}
+
+
+def foco_firme(estado: dict, chave, candidato: int, r: dict, agora: float) -> int:
+    """Gruda no alvo da morte: troca só se ele morreu, sumiu ou ligou defensivo, ou se o NCM insistir no mesmo
+    outro alvo por TROCA_S. O foco cru do NCM oscila a cada meio segundo e fazia o time trocar de alvo sem parar."""
+    s = estado.get(chave, {"foco": 0, "cand": 0, "desde": agora})
+    if candidato != s["cand"] or candidato == s["foco"]:
+        s = {**s, "cand": candidato, "desde": agora}
+    atual = next((x for x in r["slots"][3:] if x["present"] and x["guid"] == s["foco"]), None)
+    largar = atual is None or atual["hp"] == 0 or atual["defensive"]
+    if candidato and (largar or agora - s["desde"] >= TROCA_S):
+        s = {"foco": candidato, "cand": candidato, "desde": agora}
+    estado[chave] = s
+    return s["foco"]
 
 
 def plano_do_bot(plano: list[int], guids: list[int], nomes: dict[int, str], bot: int) -> list[tuple[str, int]]:
@@ -153,7 +168,7 @@ def carrega_modelo(devolve_vq: bool = False):
 def main() -> None:
     gera = carrega_modelo()
     nomes = {i: a for a, i in json.loads((BASE / "dados/vocabulario.json").read_text(encoding="utf-8")).items()}
-    leitor, lutas, memoria = LeitorLog(LOG), {}, {}
+    leitor, lutas, memoria, focos = LeitorLog(LOG), {}, {}, {}
     print("treinador no ar", flush=True)
     with (BASE / "ordens.jsonl").open("a", encoding="utf-8") as registro:
         while True:
@@ -166,6 +181,9 @@ def main() -> None:
                 planos = gera([foto_da_luta(v) for _, v in itens])
                 for (chave, v), plano in zip(itens, planos):
                     por_bot = ordens(plano, v["guids"], nomes)
+                    if RELOAD in v["guids"][:BOTS]:
+                        f = foco_firme(focos, chave, por_bot[RELOAD][0], v["r"], t0)
+                        por_bot = {b: (f, c) for b, (_, c) in por_bot.items()}
                     saida += [f"{b} {f} {c if MANDA_CC else 0}\n" for b, (f, c) in por_bot.items()]
                     if RELOAD in v["guids"][:BOTS]:
                         grava_reload(plano, v, nomes, por_bot[RELOAD][0])
@@ -193,6 +211,15 @@ def _selftest() -> None:
     tarde[2 * i:2 * i + 2] = [30, DIGITO + 4]         # CC longe demais no plano fica de fora, mas o alvo conta
     assert ordens(tarde, guids, nomes) == {1: (7, 0), 2: (7, 0), 3: (7, 0)}
     assert CC.match("kidney shot") and not CC.match("mana sapphire") and not CC.match("fear ward")
+    def r(*inimigos):
+        return {"slots": [{}] * 3 + [{"present": 1, "guid": g, "hp": hp, "defensive": d} for g, hp, d in inimigos]}
+    est, vivos = {}, r((7, 80, 0), (8, 80, 0))
+    assert foco_firme(est, "a", 7, vivos, 0.0) == 7
+    assert foco_firme(est, "a", 8, vivos, 1.0) == 7 and foco_firme(est, "a", 7, vivos, 2.0) == 7  # oscilou: fica
+    assert foco_firme(est, "a", 8, vivos, 3.0) == 7 and foco_firme(est, "a", 8, vivos, 10.9) == 7
+    assert foco_firme(est, "a", 8, vivos, 11.0) == 8                  # insistiu 8 s: troca
+    assert foco_firme(est, "a", 7, r((7, 80, 0), (8, 0, 0)), 12.0) == 7   # o foco morreu: troca na hora
+    assert foco_firme(est, "a", 9, r((7, 50, 1), (9, 90, 0)), 13.0) == 9  # defensivo no foco: troca na hora
     assert plano_do_bot(plano, guids, nomes, 2) == [("kidney shot", 9), ("hemorrhage", 8)]
     memoria: dict = {}
     assert memoria_do_time(memoria, "a", {"ms": 1000})["ms0"] == 1000
