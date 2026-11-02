@@ -9,6 +9,7 @@
 # treina com os fatos do verificador por código + momento decisivo. Ver agente/SPRINT-LLM.md.
 # V10: os dois braços passaram de +3 → os dois treinam com plano + fatos por código + momento; o braço B testa a
 # fase B: no C++, o alvo de kill do plano vira o alvo dos DPS (Playerbots.ArenaPlanTeams/ArenaPlanFile).
+# V12: braço A com nota por mudança da chance de vencer (--valor, tools/valor_v4.py); braço B com o treinador NCM.
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 CONF=$ROOT/azerothcore-wotlk/env/dist/etc/modules/playerbots.conf
@@ -20,7 +21,8 @@ subir_treinador() {
     systemctl --user stop ia-ao-vivo 2>/dev/null || true
     systemctl --user reset-failed ia-ao-vivo 2>/dev/null || true
     systemd-run --user --unit=ia-ao-vivo --working-directory="$ROOT/ml" --property=Restart=on-failure \
-        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --fatos-codigo --outro "$TIMES_B"
+        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --fatos-codigo --outro "$TIMES_B" \
+        --valor "$HOME/.local/share/ncm/v2/valor_v4.pt"
     echo "treinador A no ar: journalctl --user -u ia-ao-vivo -f"
     subir_braco_b
 }

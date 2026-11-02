@@ -32,7 +32,7 @@ sys.path.insert(1, str(Path(__file__).resolve().parents[1] / "tools"))  # datase
 import caderno  # noqa: E402
 import plano  # noqa: E402
 from espelho import sql, wilson  # noqa: E402
-from features import N_FEATURES_V2, features_v2, parse_v2  # noqa: E402
+from features import N_FEATURES_V2, features_v2, features_v4, parse_v2  # noqa: E402
 from train_v2 import EMB, HIDDEN, PER_SLOT, PolicyV2, export  # noqa: E402
 from train_v3 import rule_owned  # noqa: E402
 
@@ -53,6 +53,7 @@ SUFIXO = ""
 PLANOS: dict | None = None
 PLANO_PESO = 0.3  # ~10 notas de plano por luta contra ~6 do técnico: o plano entra com 30% do peso de uma nota
 FATOS_CODIGO = False
+VALOR = None  # --valor: rede de tools/valor_v4.py; a nota vira a mudança da chance de vencer, sem pesos à mão
 
 # BETA age sobre a vantagem normalizada no lote (média 0, desvio 1): com a vantagem crua (~0,035) e BETA 0,5 todo
 # peso ficava ~1,07 e a rede só imitava o que os bots faziam, bom ou ruim
@@ -114,8 +115,16 @@ def write_atomic(model: PolicyV2, actions: list[str], out: Path) -> None:
 
 
 # ---------------------------------------------------------------- notas por decisão
+def notas_valor(steps: list[dict], won: bool) -> list[float]:
+    """Nota = quanto a chance de vencer mudou até a próxima decisão; a última fecha com o resultado real."""
+    fi = VALOR.potencial(torch.tensor([features_v4(r) for r in steps]))
+    return (fi[1:] - fi[:-1]).tolist() + [(1.0 if won else -1.0) - fi[-1].item()]
+
+
 def step_rewards(steps: list[dict], won: bool) -> list[float]:
     """steps: decisões de UM bot numa luta, em ordem. Nota de cada decisão = o que mudou até a próxima."""
+    if VALOR is not None:
+        return notas_valor(steps, won)
     out = []
     for i, r in enumerate(steps):
         nxt = steps[i + 1] if i + 1 < len(steps) else None
@@ -536,9 +545,10 @@ def main() -> int:
     ap.add_argument("--outro", default="", help="times do outro braço do A/B, fora do espelho deste")
     ap.add_argument("--plano", type=Path, help="braço do plano tático: policy/planos.json")
     ap.add_argument("--fatos-codigo", action="store_true", help="braço dos fatos por código + momento decisivo")
+    ap.add_argument("--valor", type=Path, help="nota por mudança da chance de vencer (rede de tools/valor_v4.py)")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
-    global CHALLENGER_TEAMS, OUTRO, SUFIXO, CKPTS, PLANOS, FATOS_CODIGO
+    global CHALLENGER_TEAMS, OUTRO, SUFIXO, CKPTS, PLANOS, FATOS_CODIGO, VALOR
     lista = lambda x: {int(t) for t in x.split(",") if t.strip()}  # noqa: E731
     if a.times:
         CHALLENGER_TEAMS = lista(a.times)
@@ -548,6 +558,10 @@ def main() -> int:
     CKPTS.mkdir(parents=True, exist_ok=True)
     PLANOS = plano.carrega(a.plano) if a.plano else None
     FATOS_CODIGO = a.fatos_codigo
+    if a.valor:
+        sys.path.insert(0, str(ROOT / "ml" / "tools"))
+        from valor_v4 import carrega
+        VALOR = carrega(a.valor)
     if a.selftest:
         selftest()
         return 0
