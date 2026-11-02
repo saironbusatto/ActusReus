@@ -189,5 +189,16 @@
    "IsLockedDown reconhece CC por mecânica.",
    "Episódios com CC em até 4 s: de 18% para 24%."
   ]
+ },
+ {
+  "id": "V16",
+  "nome": "Curador cura antes de buff e totem",
+  "desde": "2026-11-02 18:04",
+  "mudancas": [
+   "Trava de emergência do curador (aliado abaixo de 45% ao alcance) passa a segurar totens de buff/dano, Call of the Elements, Water Shield, Inner Fire e Lifeblood; tremor, mana tide, stoneclaw, healing stream, earthbind, grounding e cleansing seguem livres.",
+   "Xamã curador na vida crítica: Riptide, Lesser Healing Wave e só depois Healing Wave.",
+   "Curador preso usa o trinket quando o aliado mais ferido está abaixo de 50% (antes olhava só o primeiro aliado do grupo).",
+   "Motivo: luta ao vivo do Reload, xamã gastou dois turnos com totem e Water Shield com ele a 12%."
+  ]
  }
 ]
