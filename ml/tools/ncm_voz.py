@@ -8,12 +8,14 @@ MlArena.log: linhas h1 (magia lançada e alvo) e p1 (alvo selecionado). A voz é
 """
 import json
 import math
+import os
 import queue
 import struct
 import subprocess
 import sys
 import threading
 import time
+import wave
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -24,7 +26,7 @@ from ncm_treinador import BASE, LOG, RELOAD, RELOAD_JSON, LeitorLog  # noqa: E40
 MAGIAS = BASE / "magias.json"
 VOZ = Path.home() / ".local/share/wow-voz"
 FRASES = VOZ / "frases"
-PERIODO_S, COBRA_S, DESISTE_S, ESTADO_VELHO_S, FOCO_FIRME_S = 0.25, 3.0, 7.0, 3.0, 1.5
+PERIODO_S, COBRA_S, DESISTE_S, ESTADO_VELHO_S, FOCO_FIRME_S = 0.1, 3.0, 7.0, 3.0, 1.5
 # Ação do plano -> como falar; True quando a ação tem alvo inimigo
 ACOES = {"kick": ("Kick!", True), "kidney shot": ("Kidney!", True), "cheap shot": ("Cheap!", True),
          "hemorrhage": ("Hemo!", True), "eviscerate": ("Eviscerate!", True), "blind": ("Blind!", True),
@@ -91,8 +93,8 @@ def fresco(s: dict, agora_ms: float) -> dict | None:
 class Treinador:
     """A cada passo: confere a ordem da vez, cobra se passou da hora e, sem ordem, tira a próxima do plano."""
 
-    def __init__(self, fala) -> None:
-        self.fala = fala
+    def __init__(self, fala, corta=None) -> None:
+        self.fala, self.corta = fala, corta  # corta: para a frase tocando quando chega call urgente
         self.ordem: tuple[str, int] | None = None
         self.desde = self.ultima_fala = 0.0
         self.usou: dict[str, float] = {}
@@ -181,7 +183,7 @@ class Treinador:
             ordem(TRINKET_FOI, TRINKET_FOI, g)
         self.janela = bool(f and not f["defensive"] and (
             cc_alvo is None or (s and s["cc"] & PRENDE and s["ccleft"] >= JANELA_MS)))
-        vai = [VAI] + ([CLASSES[cl[foco]]] if cl.get(foco) in CLASSES else [])
+        vai = [VAI]
         if self.janela:
             if self.possivel("shadow dance", 0, agora, set()):
                 ordem(VAI, "shadow dance", 0, vai)
@@ -252,7 +254,11 @@ class Treinador:
                 self.trinket_pendente.discard(ordem[1])
             if ordem[0] not in AVISO:
                 self.ordem, self.urgente, self.desde, self.ultima_fala = ordem, True, agora, agora
-            self.fala(prefixo + self.frase(*ordem, classes))
+            # na emenda e no burst o alvo é óbvio: sem o nome da classe a call chega antes
+            partes = [ordem[0]] if tipo in (CORRENTE, VAI) and ordem[0] in ACOES else self.frase(*ordem, classes)
+            if self.corta and ordem[0] not in AVISO:
+                self.corta()
+            self.fala(prefixo + partes)
             return
         if self.ordem and self.ordem[0] == "kick" and self.ordem[1] not in lancando and not self.cumpriu(casts, 0):
             self.ordem = None  # parou de lançar: o kick perdeu a hora
@@ -291,6 +297,7 @@ class Alto:
 
     def __init__(self) -> None:
         self.fila: queue.Queue = queue.Queue(maxsize=1)
+        self.tocando: subprocess.Popen | None = None
         threading.Thread(target=self._toca, daemon=True).start()
 
     def __call__(self, partes: list[str]) -> None:
@@ -300,12 +307,26 @@ class Alto:
             pass
         self.fila.put((time.time(), partes))
 
+    def corta(self) -> None:
+        """Call urgente: a frase que está tocando para na hora."""
+        p = self.tocando
+        if p and p.poll() is None:
+            p.terminate()
+            print("fala cortada por call urgente", flush=True)
+
     def _toca(self) -> None:
+        saida = Path(f"/run/user/{os.getuid()}/ncm-voz.wav")
         while True:
             pedida, partes = self.fila.get()
             inicio = time.time()
-            for p in partes:
-                subprocess.run(["pw-play", str(FRASES / f"{p}.wav")], check=False)
+            with wave.open(str(saida), "wb") as w:  # partes num som só: sem a pausa de abrir um player por parte
+                for i, p in enumerate(partes):
+                    with wave.open(str(FRASES / f"{p}.wav"), "rb") as r:
+                        if i == 0:
+                            w.setparams(r.getparams())
+                        w.writeframes(r.readframes(r.getnframes()))
+            self.tocando = subprocess.Popen(["pw-play", str(saida)])
+            self.tocando.wait()
             print(f"fala {pedida:.3f} espera={inicio - pedida:.2f}s som={time.time() - inicio:.2f}s {partes}",
                   flush=True)
 
@@ -370,7 +391,7 @@ def main() -> None:
         MAGIAS.write_text(json.dumps(magias))
     por_id = {i: a for a, ids in magias.items() for i in ids}
     alto = Alto()
-    leitor, treinador, selecionado, lancando = LeitorLog(LOG), Treinador(alto), 0, set()
+    leitor, treinador, selecionado, lancando = LeitorLog(LOG), Treinador(alto, alto.corta), 0, set()
     equipe = TIME_VAZIO
     print("voz no ar", flush=True)
     while True:
@@ -384,7 +405,7 @@ def main() -> None:
             classes = {int(k): v for k, v in e["classes"].items()}
             treinador.passo(time.monotonic(), e["plano"], e["foco"], classes, casts, selecionado, lancando, equipe)
         elif time.time() - e["t"] > RESET_S:
-            treinador, equipe = Treinador(alto), TIME_VAZIO  # luta acabou; a arena zera as recargas
+            treinador, equipe = Treinador(alto, alto.corta), TIME_VAZIO  # luta acabou; a arena zera as recargas
         else:
             treinador.ordem = None  # buraco curto no plano (lag): guarda as recargas, larga só a ordem
         time.sleep(PERIODO_S)
@@ -481,14 +502,14 @@ def _selftest_tatica() -> None:
     t.passo(0.0, [["shadow dance", 0]], 8, classes, [], 8, equipe=time_())
     assert t.ordem is None and not falas                                     # xamã livre: segura o Shadow Dance
     t.passo(1.0, [], 8, classes, [], 8, equipe=time_(g8=slot(8, hp=50)))
-    assert falas[-1] == [VAI, "paladino", "blind", "xamã"]                   # foco caindo: Blind no healer abre
+    assert falas[-1] == [VAI, "blind", "xamã"]                   # foco caindo: Blind no healer abre
     t.passo(1.5, [], 8, classes, [("blind", 9)], 8, equipe=time_(g8=slot(8, hp=50), g9=slot(9, cc=2, ccleft=8000,
                                                                                                 drfear=1)))
-    assert falas[-1] == [VAI, "paladino", "shadow dance"]                    # healer preso: burst no foco agora
+    assert falas[-1] == [VAI, "shadow dance"]                    # healer preso: burst no foco agora
     t.passo(2.0, [], 8, classes, [("shadow dance", 0)], 8, equipe=time_(g9=slot(9, cc=2, ccleft=7000, drfear=1)))
     assert falas[-1] == ["boa"]
     t.passo(9.0, [], 8, classes, [], 8, equipe=time_(g9=slot(9, cc=2, ccleft=1200, drfear=1)))
-    assert falas[-1] == [CORRENTE, "gouge", "xamã"]                          # Blind acabando: emenda pelo DR menor
+    assert falas[-1] == [CORRENTE, "gouge"]                          # Blind acabando: emenda pelo DR menor
     t.passo(9.5, [], 8, classes, [("gouge", 9)], 9, equipe=time_(g9=slot(9, cc=4, ccleft=3500, drfear=1, drincap=1)))
     t.passo(11.5, [], 8, classes, [("hemorrhage", 9)], 9, equipe=time_(g9=slot(9, cc=4, ccleft=2000, drfear=1, drincap=1)))
     assert falas[-1] == [QUEBRA]                                             # alvo no Gouge: larga para não quebrar
