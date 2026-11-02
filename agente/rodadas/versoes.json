@@ -178,5 +178,16 @@
    "DK e xamã sobem o interrupt para a prioridade de interrupt; curador xamã segue curando primeiro em emergência.",
    "Casts de curador cortados, com alguém pronto e ao alcance: de 20% para 34%."
   ]
+ },
+ {
+  "id": "V15",
+  "nome": "CC para salvar aliado focado",
+  "desde": "2026-11-02 06:33",
+  "mudancas": [
+   "Gatilho arena peel: aliado abaixo de 50% com 2+ inimigos em cima, quem não é curador usa CC em atacante que não seja o alvo de morte.",
+   "Lista de CC ampliada: polymorph, hex, repentance, scatter shot, hammer of justice, kidney shot, intimidating shout, howl of terror.",
+   "IsLockedDown reconhece CC por mecânica.",
+   "Episódios com CC em até 4 s: de 18% para 24%."
+  ]
  }
 ]

@@ -281,6 +281,8 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 
 **02/11 02:47 SP — V14, os interrupts:** o mesmo tipo de furo da V13. Com interrupt pronto, à vista e ao alcance, só 20% dos casts de curador eram cortados. O mago não tinha gatilho para o alvo atual (1/55) e o "on enemy healer" pula o alvo atual; o Arms não tinha interrupt (0/224); DK e xamã tinham prioridade 21-23. A primeira tentativa no Arms não funcionou: a ação era recusada fora da postura Berserker antes de o pré-requisito rodar, e a fábrica que definia essa postura nunca era registrada. Medido ao vivo depois: 57 trocas de postura para 54 Pummels, casts de curador cortados em 34%.
 
+**02/11 03:33 SP — V15, CC para salvar aliado:** ao morrer, 88% tinham CC pronto no time, e com aliado focado só 18% dos episódios tinham CC em 4 s. Em quase 1 hora, hex, hammer of justice, scatter shot, intimidating shout e repentance foram usados zero vezes. `cc on cc target` só disparava em burst do parceiro, com lista curta. A revisão pegou um defeito antes de ir ao ar: `IsLockedDown` não via todos os CCs, e o gatilho relançaria sem parar; agora checa a mecânica. Medido ao vivo: 24%, repetição em menos de 2 s em 16% dos usos, sem crash. Curadores ficam fora: curar vem primeiro.
+
 ## Regras do sprint
 
 - Uma mudança por versão; medir com ~150 lutas da desafiante antes de seguir (±8 pontos de margem).

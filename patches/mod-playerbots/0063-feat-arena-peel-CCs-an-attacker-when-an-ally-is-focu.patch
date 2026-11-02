@@ -1,0 +1,163 @@
+From 5f06d7eeaf9a0efc9a10b9ed96a507264442d46d Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Mon, 2 Nov 2026 04:04:04 -0300
+Subject: [PATCH] feat: arena peel CCs an attacker when an ally is focused
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/ArenaEngineering.h                | 86 ++++++++++++++++---
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  1 +
+ src/Ai/Base/TriggerContext.h                  |  2 +
+ 3 files changed, 78 insertions(+), 11 deletions(-)
+
+diff --git a/src/Ai/Base/ArenaEngineering.h b/src/Ai/Base/ArenaEngineering.h
+index 6fa2878a..8850caaa 100644
+--- a/src/Ai/Base/ArenaEngineering.h
++++ b/src/Ai/Base/ArenaEngineering.h
+@@ -131,11 +131,79 @@ namespace ai::arena
+ 
+     inline bool IsLockedDown(Unit* u)
+     {
++        constexpr uint32 CC_MECHANICS = (1 << MECHANIC_POLYMORPH) | (1 << MECHANIC_KNOCKOUT) | (1 << MECHANIC_SLEEP) |
++                                        (1 << MECHANIC_DISORIENTED) | (1 << MECHANIC_HORROR) | (1 << MECHANIC_SAPPED);
++
+         return u->HasUnitState(UNIT_STATE_STUNNED) || u->HasAuraType(SPELL_AURA_MOD_FEAR) ||
+-               u->HasAuraType(SPELL_AURA_MOD_CONFUSE) || u->HasAura(33786) /*Cyclone*/;
++               u->HasAuraType(SPELL_AURA_MOD_CONFUSE) || u->HasAura(33786) /*Cyclone*/ ||
++               u->HasAuraWithMechanic(CC_MECHANICS);
++    }
++
++    // CC spells in preference order: the first one this bot can cast on the target wins
++    inline char const* CcSpell(PlayerbotAI* botAI, Unit* target)
++    {
++        for (char const* spell : {"cyclone", "fear", "polymorph", "hex", "repentance", "death coil", "psychic scream",
++                                  "blind", "scatter shot", "hammer of justice", "kidney shot", "gouge",
++                                  "intimidating shout", "howl of terror"})
++            if (botAI->CanCastSpell(spell, target))
++                return spell;
++        return nullptr;
++    }
++
++    // An attacker on a focused ally, never the kill target: damage on it would break the CC at once
++    inline Unit* PeelTarget(PlayerbotAI* botAI)
++    {
++        constexpr float PEEL_HEALTH_PCT = 50.0f;
++        constexpr uint32 FOCUS_ATTACKERS = 2;
++
++        Player* bot = botAI->GetBot();
++        Group* group = bot->GetGroup();
++        if (!group)
++            return nullptr;
++
++        Unit* kill = botAI->GetAiObjectContext()->GetValue<Unit*>("current target")->Get();
++        GuidVector const attackers = botAI->GetAiObjectContext()->GetValue<GuidVector>("attackers")->Get();
++        for (auto const& slot : group->GetMemberSlots())
++        {
++            Player* ally = ObjectAccessor::FindPlayer(slot.guid);
++            if (!ally || !ally->IsInWorld() || ally->GetMap() != bot->GetMap() || !ally->IsAlive() ||
++                ally->GetHealthPct() >= PEEL_HEALTH_PCT)
++                continue;
++
++            uint32 onAlly = 0;
++            Unit* peel = nullptr;
++            for (ObjectGuid const guid : attackers)
++            {
++                Unit* u = botAI->GetUnit(guid);
++                if (!u || !u->IsAlive() || !u->IsPlayer() || u->GetTarget() != ally->GetGUID())
++                    continue;
++
++                ++onAlly;
++                if (u != kill && !IsLockedDown(u))
++                    peel = u;
++            }
++            if (onAlly >= FOCUS_ATTACKERS && peel)
++                return peel;
++        }
++        return nullptr;
+     }
+ }
+ 
++class ArenaPeelTrigger : public Trigger
++{
++public:
++    ArenaPeelTrigger(PlayerbotAI* botAI) : Trigger(botAI, "arena peel") {}
++
++    bool IsActive() override
++    {
++        if (!sPlayerbotAIConfig.ArenaPvpStrategies || !bot->InArena() || PlayerbotAI::IsHeal(bot))
++            return false;
++
++        Unit* peel = ai::arena::PeelTarget(botAI);
++        return peel && ai::arena::CcSpell(botAI, peel);
++    }
++};
++
+ class PartnerBurstingTrigger : public Trigger
+ {
+ public:
+@@ -150,10 +218,7 @@ public:
+         if (!cc || ai::arena::IsLockedDown(cc))
+             return false;
+ 
+-        for (char const* spell : {"cyclone", "fear", "death coil", "psychic scream", "blind", "gouge", "silence"})
+-            if (botAI->CanCastSpell(spell, cc))
+-                return true;
+-        return false;  // nothing ready: do not keep firing an action that cannot run
++        return ai::arena::CcSpell(botAI, cc) != nullptr;  // nothing ready: do not keep firing an action that cannot run
+     }
+ };
+ 
+@@ -164,15 +229,14 @@ public:
+ 
+     bool Execute(Event /*event*/) override
+     {
+-        Unit* cc = ai::arena::CcTarget(botAI);
++        Unit* cc = ai::arena::PeelTarget(botAI);
++        if (!cc)
++            cc = ai::arena::CcTarget(botAI);
+         if (!cc)
+             return false;
+ 
+-        // CC spells in preference order; the first one this bot can cast on the target wins
+-        for (char const* spell : {"cyclone", "fear", "death coil", "psychic scream", "blind", "gouge", "silence"})
+-            if (botAI->CanCastSpell(spell, cc))
+-                return botAI->CastSpell(spell, cc);
+-        return false;
++        char const* spell = ai::arena::CcSpell(botAI, cc);
++        return spell && botAI->CastSpell(spell, cc);
+     }
+ };
+ 
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 3396c14e..049725dd 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -126,4 +126,5 @@ void ArenaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     triggers.push_back(new TriggerNode("cobalt frag bomb", { NextAction("cobalt frag bomb", ACTION_INTERRUPT + 3) }));
+     triggers.push_back(new TriggerNode("hyperspeed accelerators", { NextAction("hyperspeed accelerators", ACTION_HIGH + 9) }));
+     triggers.push_back(new TriggerNode("partner bursting", { NextAction("cc on cc target", ACTION_INTERRUPT + 2) }));
++    triggers.push_back(new TriggerNode("arena peel", { NextAction("cc on cc target", ACTION_INTERRUPT + 4) }));
+ }
+diff --git a/src/Ai/Base/TriggerContext.h b/src/Ai/Base/TriggerContext.h
+index 07ba5f6a..c421d511 100644
+--- a/src/Ai/Base/TriggerContext.h
++++ b/src/Ai/Base/TriggerContext.h
+@@ -121,6 +121,7 @@ public:
+         creators["hyperspeed accelerators"] = &TriggerContext::hyperspeed_accelerators;
+         creators["cobalt frag bomb"] = &TriggerContext::cobalt_frag_bomb;
+         creators["partner bursting"] = &TriggerContext::partner_bursting;
++        creators["arena peel"] = &TriggerContext::arena_peel;
+         creators["enemy too close for shoot"] = &TriggerContext::enemy_too_close_for_shoot;
+         creators["enemy too close for auto shot"] = &TriggerContext::enemy_too_close_for_auto_shot;
+         creators["enemy too close for melee"] = &TriggerContext::enemy_too_close_for_melee;
+@@ -366,6 +367,7 @@ private:
+     static Trigger* hyperspeed_accelerators(PlayerbotAI* botAI) { return new HyperspeedTrigger(botAI); }
+     static Trigger* cobalt_frag_bomb(PlayerbotAI* botAI) { return new FragBombTrigger(botAI); }
+     static Trigger* partner_bursting(PlayerbotAI* botAI) { return new PartnerBurstingTrigger(botAI); }
++    static Trigger* arena_peel(PlayerbotAI* botAI) { return new ArenaPeelTrigger(botAI); }
+     static Trigger* enemy_too_close_for_auto_shot(PlayerbotAI* botAI)
+     {
+         return new EnemyTooCloseForAutoShotTrigger(botAI);
+-- 
+2.55.0
+
