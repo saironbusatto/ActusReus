@@ -39,10 +39,10 @@ CLASSES = {1: "guerreiro", 2: "paladino", 3: "caçador", 4: "ladino", 5: "sacerd
 FOCO, MUDA = "foco", "muda"
 # Calls do time, por regra e em ordem de prioridade: passam na frente do plano, cada uma no máximo a cada INTERVALO
 TRINKET, HEALER, PRESO, QUEBRA, CORRENTE, VISAO = "trinket", "healer", "preso", "quebra", "corrente", "visao"
-SEGURA, TRINKET_FOI, VAI = "segura", "trinket foi", "vai"
-ALERTA_S, INTERVALO = 8.0, {CORRENTE: 3.0, SEGURA: 12.0, VAI: 12.0, TRINKET_FOI: 0.0}
+SEGURA, TRINKET_FOI, VAI, PROXIMO = "segura", "trinket foi", "vai", "proximo"
+ALERTA_S, INTERVALO = 8.0, {CORRENTE: 3.0, SEGURA: 12.0, VAI: 12.0, TRINKET_FOI: 0.0, PROXIMO: 8.0}
 CONDICAO = {TRINKET, QUEBRA, VISAO}       # cumprida quando a situação some
-AVISO = {SEGURA, TRINKET_FOI, VAI}        # só informa: não vira ordem nem cobrança
+AVISO = {SEGURA, TRINKET_FOI, VAI, PROXIMO}  # só informa: não vira ordem nem cobrança
 CURADORES, HEALER_APERTADO, SEM_VISAO_HP, SE_DEFENDE_HP = {2, 5, 7, 11}, 50, 60, 40
 # ponytail: curador inimigo pela classe (ret e enh contam como curador); ler as curas no p1 se errar muito
 ORDEM_CURADOR = (5, 11, 7, 2)
@@ -104,10 +104,19 @@ class Treinador:
         self.ultimo_alerta: dict[str, float] = {}
         self.trinket_visto: dict[int, int] = {}
         self.trinket_pendente: set[int] = set()
+        self.preparado = self.a_preparar = None  # (alvo, CC) já avisado com "próximo é teu"
         self.bateu: dict[int, float] = {}  # quando o Reload bateu em cada alvo (0 = em área)
         self.classes: dict[int, int] = {}
         self.eu: dict = {}
         self.pos: dict[int, tuple] = {}
+
+    def proximo_cc(self, s: dict, alvo: int, agora: float, perto: bool) -> str | None:
+        """O CC do Reload que emenda no atual: DR mais baixo primeiro (Blind divide DR com Fear: depois de um Fear,
+        Gouge ou Kidney seguram mais)."""
+        for acao, dr, alcance in sorted(CCS, key=lambda c: s[c[1]]):
+            if s[dr] < DR_MAX and (not perto or self.perto(alvo, alcance)) and self.possivel(acao, alvo, agora, set()):
+                return acao
+        return None
 
     def perto(self, alvo: int, metros: float) -> bool:
         a, b = self.pos.get(RELOAD), self.pos.get(alvo)
@@ -166,10 +175,15 @@ class Treinador:
             ordem(QUEBRA, QUEBRA, bateu[0])
         s = u.get(cc_alvo)
         if s and s["cc"] & PRENDE and 0 < s["ccleft"] <= EMENDA_MS:
-            for acao, dr, alcance in sorted(CCS, key=lambda c: s[c[1]]):
-                if s[dr] < DR_MAX and self.perto(cc_alvo, alcance) and self.possivel(acao, cc_alvo, agora, set()):
-                    ordem(CORRENTE, acao, cc_alvo)
-                    break
+            acao = self.proximo_cc(s, cc_alvo, agora, perto=True)
+            if acao:  # avisado antes: no fim basta o nome da magia
+                ordem(CORRENTE, acao, cc_alvo, [] if self.preparado == (cc_alvo, acao) else None)
+        elif s and s["cc"] & PRENDE and s["ccleft"] >= JANELA_MS and agora - max(
+                self.usou.get(a, -1e9) for a, _, _ in CCS) > FOCO_FIRME_S:
+            acao = self.proximo_cc(s, cc_alvo, agora, perto=False)
+            if acao:  # o parceiro acabou de prender: já diz qual é a emenda do Reload
+                ordem(PROXIMO, PROXIMO, cc_alvo, [PROXIMO, acao])
+                self.a_preparar = (cc_alvo, acao)
         if meu_hp < SEM_VISAO_HP and h and not h["ccleft"] and not h["los"]:
             ordem(VISAO, VISAO, 0)
         if f and f["defensive"]:
@@ -204,6 +218,8 @@ class Treinador:
 
     def frase(self, acao: str, alvo: int, classes: dict[int, int]) -> list[str]:
         partes = [acao]
+        if acao == PROXIMO:
+            return []  # o prefixo já diz qual CC
         if acao in (VISAO, TRINKET, QUEBRA):
             return partes
         if acao in (FOCO, SEGURA, TRINKET_FOI, VAI) or ACOES[acao][1]:
@@ -253,6 +269,8 @@ class Treinador:
             if agora - self.ultimo_alerta.get(tipo, -1e9) < INTERVALO.get(tipo, ALERTA_S):
                 continue
             self.ultimo_alerta[tipo] = agora
+            if tipo == PROXIMO:
+                self.preparado = self.a_preparar
             if tipo == TRINKET_FOI:
                 self.trinket_pendente.discard(ordem[1])
             if ordem[0] not in AVISO:
@@ -321,6 +339,9 @@ class Alto:
         saida = Path(f"/run/user/{os.getuid()}/ncm-voz.wav")
         while True:
             pedida, partes = self.fila.get()
+            partes = [p for p in partes if (FRASES / f"{p}.wav").exists()]  # frase ainda sem áudio: pula
+            if not partes:
+                continue
             inicio = time.time()
             with wave.open(str(saida), "wb") as w:  # partes num som só: sem a pausa de abrir um player por parte
                 for i, p in enumerate(partes):
@@ -547,6 +568,11 @@ def _selftest_tatica() -> None:
     for i in range(20):
         morto.passo(float(i), [["evasion", 0]], 8, classes, [], 8, equipe={**time_(r1045=slot(RELOAD, hp=0)), "reload_hp": 0})
     assert len(falas) == antes                                               # morreu: silêncio
+    c = Treinador(falas.append)
+    c.passo(0.0, [], 8, classes, [], 8, equipe=time_(g9=slot(9, cc=2, ccleft=8000, drfear=1)))
+    assert falas[-1] == [PROXIMO, "gouge"] and c.ordem is None            # lock deu Fear: avisa a emenda antes
+    c.passo(6.8, [], 8, classes, [], 8, equipe=time_(g9=slot(9, cc=2, ccleft=1200, drfear=1)))
+    assert falas[-1] == ["gouge"]                                           # avisado: no fim só o nome
     foto = slot(9, cc=2 | 32, ccleft=2000, ms=10_000)
     assert fresco(foto, 11_000)["ccleft"] == 1000                            # o CC corre entre uma foto e outra
     assert fresco(foto, 12_500)["cc"] == 32 and fresco(foto, 14_000) is None  # acabou; foto velha não vale
