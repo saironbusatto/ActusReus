@@ -146,5 +146,16 @@
    "Corrigido sem reiniciar: arena-policy-v4.txt recebeu policy-v4.txt (280415 bytes) e ArenaMlPolicyFile aponta para ele. O treinador do braço A não foi reiniciado e segue com os pesos dele; só os times 54..86 mudaram.",
    "ligar-ao-vivo.sh devolvia o plano só ao braço B; agora mantém a frota toda."
   ]
+ },
+ {
+  "id": "V12",
+  "nome": "Treinador NCM ao vivo e fim das poções recusadas",
+  "desde": "2026-11-02 02:58",
+  "mudancas": [
+   "Treinador NCM dá o foco ao braço B (times 56,64,68,72,76,80,84,88) a cada 0,5 s; CC desligado (precisão 19%).",
+   "Bots param de tentar poção, óleo e pedra na arena: o servidor recusa e isso era 10,75% das ações, repetidas a cada 325 ms.",
+   "Log ganha p1 (posição, alvo e magia em lançamento de todos, 1 por segundo) e h1 (magias do humano).",
+   "Treinador de voz do Reload: fala a ordem, cobra após 3 s, confere pelo log e dá a próxima."
+  ]
  }
 ]

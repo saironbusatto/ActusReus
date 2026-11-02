@@ -1,0 +1,951 @@
+From c1929b50bc24cb7e4523f7f309e8960f16aaa7b4 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sun, 1 Nov 2026 23:53:05 -0300
+Subject: [PATCH 60/60] feat: live arena coach calls, position and human cast
+ logs, AB trio orders
+
+Playerbots.ArenaCoachTeams obey a focus call read from ArenaCoachFile. p1 lines log position, target and cast of everyone
+in an arena once per second; h1 lines log a human's casts. AB trios: home guard, focus target, clash and regroup.
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ conf/playerbots.conf.dist                   |  74 ++++++++++++++
+ src/Ai/Base/Actions/AbOrderAction.cpp       |  96 +++++++++++++++++-
+ src/Ai/Base/Actions/AbOrderAction.h         |  14 +++
+ src/Ai/Base/Actions/BattleGroundTactics.cpp |  34 ++++++-
+ src/Ai/Base/ArenaMlPolicy.h                 | 103 ++++++++++++++++++-
+ src/Ai/Base/ArenaObservation.h              |  52 ++++++++++
+ src/Ai/Base/Value/AbFocusTargetValue.cpp    | 107 ++++++++++++++++++++
+ src/Ai/Base/Value/AbFocusTargetValue.h      |  29 ++++++
+ src/Ai/Base/Value/CcTargetValue.cpp         |   4 +
+ src/Ai/Base/Value/DpsTargetValue.cpp        |   3 +
+ src/Ai/Base/Value/EnemyPlayerValue.cpp      |   3 +
+ src/Ai/Base/ValueContext.h                  |   3 +
+ src/Ai/Class/Shaman/ShamanTriggers.cpp      |   5 +
+ src/Ai/Class/Shaman/ShamanTriggers.h        |   4 +
+ src/PlayerbotAIConfig.cpp                   |  25 +++++
+ src/PlayerbotAIConfig.h                     |   7 ++
+ src/Script/Playerbots.cpp                   |  25 ++++-
+ 17 files changed, 582 insertions(+), 6 deletions(-)
+ create mode 100644 src/Ai/Base/Value/AbFocusTargetValue.cpp
+ create mode 100644 src/Ai/Base/Value/AbFocusTargetValue.h
+
+diff --git a/conf/playerbots.conf.dist b/conf/playerbots.conf.dist
+index ea2a8608..52152b14 100644
+--- a/conf/playerbots.conf.dist
++++ b/conf/playerbots.conf.dist
+@@ -516,6 +516,67 @@ Playerbots.BgGiveLeaderToPlayer = 0
+ 
+ Playerbots.AbDefenderCallouts = 0
+ 
++#
++#    Playerbots.AbFocusTargets
++#        In Arathi Basin, the damage dealers within 50 yd of a node all attack the same enemy there: the one with the
++#        least effective health, counting armor and nearby healers. Enemies immune or in a breakable CC are skipped.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.AbFocusTargets = 0
++
++#
++#    Playerbots.AbTrioFollowHuman
++#        In Arathi Basin, the bots of a raid subgroup with a living human stay at his side instead of going to their
++#        ordered node. Any number of humans, on any subgroup. They return to their order while he is dead.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.AbTrioFollowHuman = 0
++
++#
++#    Playerbots.AbTrioRegroup
++#        In Arathi Basin, a bot on its way to an ordered node waits for dead members of its raid subgroup, so a trio
++#        goes back together instead of in single file. Bots at the node keep fighting.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.AbTrioRegroup = 0
++
++#
++#    Playerbots.AbTrioHomeGuard
++#        In Arathi Basin, a trio ordered to its team's home node (Farm for Horde, Stables for Alliance) leaves one guard
++#        once the node is held; the others go to the nearest node not held and come back if home gets assaulted.
++#        Default: 0 - Disabled
++#                 1 - Enabled
++#
++
++Playerbots.AbTrioHomeGuard = 0
++
++#
++#    Playerbots.AbTriosHorde, Playerbots.AbTriosAlliance
++#        In Arathi Basin, each listed player goes straight to a fixed raid subgroup on entering, so "ab t1" is always
++#        the same trio. Groups are separated by ";" and names by ",", without spaces; the first group is subgroup 1.
++#        A full subgroup keeps the player where the server placed him.
++#        Default: "" - Disabled
++#
++
++Playerbots.AbTriosHorde = ""
++Playerbots.AbTriosAlliance = ""
++
++#
++#    Playerbots.AbTrioBasesHorde, Playerbots.AbTrioBasesAlliance
++#        Opening node per raid subgroup, comma-separated, as if the raid leader had ordered it. "ab" orders replace it.
++#        Nodes: 0 Stables, 1 Blacksmith, 2 Farm, 3 Lumber Mill, 4 Gold Mine. Anything else leaves the subgroup free.
++#        Default: "" - Disabled
++#
++
++Playerbots.AbTrioBasesHorde = ""
++Playerbots.AbTrioBasesAlliance = ""
++
+ #
+ #    Playerbots.SmartPetAbilities
+ #        Pets use the abilities a player triggers by hand: Felhunter Spell Lock on enemy casts (healer first),
+@@ -586,6 +647,19 @@ Playerbots.ArenaMlControl = 0.0
+ Playerbots.ArenaPlanTeams = ""
+ Playerbots.ArenaPlanFile = ""
+ 
++#
++#    Playerbots.ArenaCoachTeams
++#    Playerbots.ArenaCoachFile
++#        Live coach for the listed arena teams (comma-separated ids). An external process rewrites the file with one
++#        line per bot, "<bot guid> <focus enemy guid> <cc enemy guid>" (0 = no call). Focus overrides the target of a
++#        damage dealer and CC overrides every "cc target", while that enemy can be used. A file older than 3 s counts
++#        as empty, so a stopped coach hands the bots back to the rules. Teams are re-read every 10 s, calls every 250 ms.
++#        Default: "" - No coach
++#
++
++Playerbots.ArenaCoachTeams = ""
++Playerbots.ArenaCoachFile = ""
++
+ #
+ #    Playerbots.ArenaRoundFile
+ #        Synchronised arena rounds. When set, the first word of this file is the current round id: each bot
+diff --git a/src/Ai/Base/Actions/AbOrderAction.cpp b/src/Ai/Base/Actions/AbOrderAction.cpp
+index 69d80f88..34a3d5a6 100644
+--- a/src/Ai/Base/Actions/AbOrderAction.cpp
++++ b/src/Ai/Base/Actions/AbOrderAction.cpp
+@@ -7,6 +7,7 @@
+ #include "AbOrderAction.h"
+ 
+ #include <algorithm>
++#include <cfloat>
+ #include <ctime>
+ #include <sstream>
+ #include <unordered_map>
+@@ -66,11 +67,104 @@ bool AbOrderAction::Execute(Event event)
+         return false;
+ 
+     // Instance id in the high bits, so an order never leaks into the next battleground
+-    context->GetValue<uint32>("ab order")->Set(node < 0 ? 0 : (bg->GetInstanceID() << 3) | uint32(node + 1));
++    context->GetValue<uint32>("ab order")->Set((bg->GetInstanceID() << 3) | uint32(node + 1));
+     context->GetValue<PositionMap&>("position")->Get()["bg objective"].Reset();
+     return true;
+ }
+ 
++uint32 AbOrderAction::OpeningOrder(Player* bot, Battleground* bg)
++{
++    std::vector<uint32> const& bases = bot->GetBgTeamId() == TEAM_HORDE ? sPlayerbotAIConfig.AbTrioBasesHorde
++                                                                         : sPlayerbotAIConfig.AbTrioBasesAlliance;
++    Group* group = bot->GetGroup();
++    uint8 const subgroup = group ? group->GetMemberGroup(bot->GetGUID()) : MAX_RAID_SUBGROUPS;
++    bool const hasBase = subgroup < bases.size() && bases[subgroup] < BG_AB_DYNAMIC_NODES_COUNT;
++    return (bg->GetInstanceID() << 3) | (hasBase ? bases[subgroup] + 1 : 0);
++}
++
++bool AbOrderAction::WaitsForTrio(Player* bot, Battleground* bg, uint32 order)
++{
++    float constexpr nodeRange = 60.0f;
++
++    int const node = int(order & 7) - 1;
++    Group* group = bot->GetGroup();
++    if (!sPlayerbotAIConfig.AbTrioRegroup || node < 0 || (order >> 3) != bg->GetInstanceID() || !group)
++        return false;
++
++    GameObject* flag = bg->GetBGObject(node * BG_AB_OBJECTS_PER_NODE);
++    if (!flag || bot->IsWithinDist(flag, nodeRange))
++        return false;  // holding or taking the node comes first
++
++    // ponytail: holds wherever it stands, even mid-road; a dead member is back within one 30 s wave
++    uint8 const subgroup = group->GetMemberGroup(bot->GetGUID());
++    for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++    {
++        Player* member = ref->GetSource();
++        if (member && member != bot && !member->IsAlive() && PlayerbotsMgr::instance().GetPlayerbotAI(member) &&
++            group->GetMemberGroup(member->GetGUID()) == subgroup)
++            return true;
++    }
++
++    return false;
++}
++
++uint32 AbOrderAction::NodeToPlay(Player* bot, BattlegroundAB* ab, uint32 node)
++{
++    bool const horde = bot->GetBgTeamId() == TEAM_HORDE;
++    uint32 const home = horde ? BG_AB_NODE_FARM : BG_AB_NODE_STABLES;
++    uint8 const held = horde ? BG_AB_NODE_STATE_HORDE_OCCUPIED : BG_AB_NODE_STATE_ALLY_OCCUPIED;
++
++    Group* group = bot->GetGroup();
++    if (!sPlayerbotAIConfig.AbTrioHomeGuard || node != home || !group || ab->GetCapturePointInfo(node)._state != held)
++        return node;
++
++    // ponytail: also overrides an explicit "ab tN <home>" from the raid while home is held and quiet
++    bool isGuard = true;
++    uint8 const subgroup = group->GetMemberGroup(bot->GetGUID());
++    for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++    {
++        Player* member = ref->GetSource();
++        if (member && member != bot && member->IsAlive() && group->GetMemberGroup(member->GetGUID()) == subgroup &&
++            member->GetGUID() < bot->GetGUID())
++            isGuard = false;
++    }
++
++    if (isGuard)
++        return node;
++
++    uint32 target = node;
++    float closest = FLT_MAX;
++    for (uint32 other = 0; other < BG_AB_DYNAMIC_NODES_COUNT; ++other)
++    {
++        GameObject* flag = ab->GetBGObject(other * BG_AB_OBJECTS_PER_NODE);
++        if (!flag || ab->GetCapturePointInfo(other)._state == held || bot->GetDistance(flag) >= closest)
++            continue;
++
++        closest = bot->GetDistance(flag);
++        target = other;
++    }
++
++    return target;
++}
++
++Player* AbOrderAction::TrioHuman(Player* bot)
++{
++    Group* group = bot->GetGroup();
++    if (!sPlayerbotAIConfig.AbTrioFollowHuman || !group)
++        return nullptr;
++
++    uint8 const subgroup = group->GetMemberGroup(bot->GetGUID());
++    for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
++    {
++        Player* member = ref->GetSource();
++        if (member && member != bot && IsRealPlayer(member) && member->IsAlive() && member->IsInWorld() &&
++            member->GetMapId() == bot->GetMapId() && group->GetMemberGroup(member->GetGUID()) == subgroup)
++            return member;
++    }
++
++    return nullptr;
++}
++
+ namespace
+ {
+     // The node (BG_AB_NODE_*) this bot was ordered to, when the order belongs to this battleground; -1 otherwise
+diff --git a/src/Ai/Base/Actions/AbOrderAction.h b/src/Ai/Base/Actions/AbOrderAction.h
+index fd227d38..9f1eef13 100644
+--- a/src/Ai/Base/Actions/AbOrderAction.h
++++ b/src/Ai/Base/Actions/AbOrderAction.h
+@@ -9,6 +9,10 @@
+ 
+ #include "Action.h"
+ 
++class Battleground;
++class BattlegroundAB;
++class Player;
++
+ class PlayerbotAI;
+ 
+ // Arathi Basin order from the raid: "ab <t1..t8|all> <stables|blacksmith|farm|lumber|mine|free>" (Portuguese node
+@@ -24,6 +28,16 @@ public:
+     static int ParseNode(std::string const& word);
+     // Raid subgroup (0..7) for "t<N>"/"g<N>", -1 for everyone, -2 if unknown
+     static int ParseTarget(std::string const& word);
++    // The "ab order" value for the bot's trio from Playerbots.AbTrioBases*, a free order when it has no opening base
++    static uint32 OpeningOrder(Player* bot, Battleground* bg);
++    // A living human in the bot's raid subgroup when Playerbots.AbTrioFollowHuman is on: the trio plays at his side
++    static Player* TrioHuman(Player* bot);
++    // Playerbots.AbTrioRegroup: away from its ordered node, the bot holds until a dead trio member is back, so the trio
++    // doesn't return in single file
++    static bool WaitsForTrio(Player* bot, Battleground* bg, uint32 order);
++    // Playerbots.AbTrioHomeGuard: the node the bot actually plays. A trio ordered to its team's home node leaves one
++    // guard once it is held; the others go to the nearest node not held, and come back if home gets assaulted
++    static uint32 NodeToPlay(Player* bot, BattlegroundAB* ab, uint32 node);
+ };
+ 
+ // A group holding a node by order calls out in raid chat when enemies show up there, so the leader can send help.
+diff --git a/src/Ai/Base/Actions/BattleGroundTactics.cpp b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+index 65c6849f..ca9f32ad 100644
+--- a/src/Ai/Base/Actions/BattleGroundTactics.cpp
++++ b/src/Ai/Base/Actions/BattleGroundTactics.cpp
+@@ -8,6 +8,7 @@
+ 
+ #include <limits>
+ 
++#include "AbOrderAction.h"
+ #include "ArenaHelpers.h"
+ #include "ArenaTeam.h"
+ #include "ArenaTeamMgr.h"
+@@ -1662,6 +1663,17 @@ bool BGTactics::Execute(Event /*event*/)
+         if (bg->GetStatus() == STATUS_WAIT_JOIN)
+             return false;
+ 
++        if (bgType == BATTLEGROUND_AB && !bot->IsInCombat())
++        {
++            float constexpr trioFollowDistance = 12.0f;
++            Player* human = AbOrderAction::TrioHuman(bot);
++            if (human && !bot->IsWithinDist(human, trioFollowDistance))
++                return MoveTo(human, trioFollowDistance / 2.0f);  // MoveNear needs line of sight: fails across the map
++
++            if (!human && AbOrderAction::WaitsForTrio(bot, bg, context->GetValue<uint32>("ab order")->Get()))
++                return true;
++        }
++
+         if (bot->isMoving())
+             return false;
+ 
+@@ -2318,11 +2330,27 @@ bool BGTactics::selectObjective(bool reset)
+ 
+             BgObjective = nullptr;
+ 
++            if (Player* human = AbOrderAction::TrioHuman(bot))
++            {
++                float rx, ry, rz;
++                human->GetRandomPoint(human->GetPosition(), frand(4.0f, 10.0f), rx, ry, rz);
++                pos.Set(rx, ry, rz, human->GetMapId());
++                posMap["bg objective"] = pos;
++                return true;
++            }
++
+             // --- PRIORITY 0: the raid leader's order for this bot ("ab t2 farm") overrides everything below
+-            uint32 const order = context->GetValue<uint32>("ab order")->Get();
+-            if (order && (order >> 3) == bg->GetInstanceID())
++            uint32 order = context->GetValue<uint32>("ab order")->Get();
++            if ((order >> 3) != bg->GetInstanceID())
++            {
++                order = AbOrderAction::OpeningOrder(bot, bg);
++                context->GetValue<uint32>("ab order")->Set(order);
++            }
++
++            if (order & 7)
+             {
+-                if (GameObject* go = bg->GetBGObject(((order & 7) - 1) * BG_AB_OBJECTS_PER_NODE))
++                uint32 const node = AbOrderAction::NodeToPlay(bot, ab, (order & 7) - 1);
++                if (GameObject* go = bg->GetBGObject(node * BG_AB_OBJECTS_PER_NODE))
+                 {
+                     float rx, ry, rz;
+                     bot->GetRandomPoint(go->GetPosition(), frand(5.0f, 15.0f), rx, ry, rz);
+diff --git a/src/Ai/Base/ArenaMlPolicy.h b/src/Ai/Base/ArenaMlPolicy.h
+index 10aef549..ffebf2a4 100644
+--- a/src/Ai/Base/ArenaMlPolicy.h
++++ b/src/Ai/Base/ArenaMlPolicy.h
+@@ -9,6 +9,7 @@
+ 
+ #include <algorithm>
+ #include <atomic>
++#include <chrono>
+ #include <filesystem>
+ #include <fstream>
+ #include <map>
+@@ -16,6 +17,7 @@
+ #include <mutex>
+ #include <random>
+ #include <set>
++#include <unordered_map>
+ 
+ #include "ArenaMlNet.h"
+ #include "ArenaObservation.h"
+@@ -45,6 +47,9 @@ namespace ai::arena
+         // teams' sorted class ids, "4,5,8|4,7,9" -> 9 (RMP vs RLS: the Warlock). Written by ml/policy/plano.py.
+         std::set<uint32> plan;
+         std::map<std::string, uint8> kill;
++        // Live coach (Playerbots.ArenaCoachTeams / ArenaCoachFile), written by ml/tools/ncm_treinador.py
++        std::set<uint32> coach;
++        std::string coachFile;
+     };
+ 
+     class MlPolicies
+@@ -79,6 +84,8 @@ namespace ai::arena
+             s->challengerB = teams("Playerbots.ArenaMlChallengerBTeams");
+             s->control = std::clamp(sConfigMgr->GetOption<float>("Playerbots.ArenaMlControl", 0.0f), 0.0f, 1.0f);
+             s->plan = teams("Playerbots.ArenaPlanTeams");
++            s->coach = teams("Playerbots.ArenaCoachTeams");
++            s->coachFile = sConfigMgr->GetOption<std::string>("Playerbots.ArenaCoachFile", "");
+             // ponytail: re-read every 10 s (81 short lines); cache by mtime if the file ever grows
+             std::ifstream planFile(sConfigMgr->GetOption<std::string>("Playerbots.ArenaPlanFile", ""));
+             for (std::string line; std::getline(planFile, line);)
+@@ -156,15 +163,108 @@ namespace ai::arena
+         return nullptr;
+     }
+ 
++    struct CoachCall
++    {
++        uint32 focus = 0;  // player guid counters, 0 = no call
++        uint32 cc = 0;
++    };
++
++    // The coach's latest calls by bot guid. At most every 250 ms one map thread re-reads the file; a file older than
++    // 3 s counts as empty, so a stopped coach hands the bots back to the rules.
++    class CoachCalls
++    {
++    public:
++        using CallMap = std::unordered_map<uint32, CoachCall>;
++
++        static CoachCalls& Instance()
++        {
++            static CoachCalls instance;
++            return instance;
++        }
++
++        std::shared_ptr<CallMap const> Get(std::string const& path)
++        {
++            uint64 const now = GameTime::GetGameTimeMS().count();
++            uint64 last = lastCheck.load(std::memory_order_relaxed);
++            if (now - last >= 250 && lastCheck.compare_exchange_strong(last, now))
++                std::atomic_store(&calls, Read(path));
++            return std::atomic_load(&calls);
++        }
++
++    private:
++        // ponytail: a blocking read on a map thread, one short line per bot; opt-in and only with a coach running
++        static std::shared_ptr<CallMap const> Read(std::string const& path)
++        {
++            auto map = std::make_shared<CallMap>();
++            std::error_code ec;
++            auto const mtime = std::filesystem::last_write_time(path, ec);
++            if (ec || std::filesystem::file_time_type::clock::now() - mtime > std::chrono::seconds(3))
++                return map;
++
++            std::ifstream file(path);
++            uint32 guid = 0;
++            CoachCall call;
++            while (file >> guid >> call.focus >> call.cc)
++                (*map)[guid] = call;
++            return map;
++        }
++
++        std::atomic<uint64> lastCheck{0};
++        std::shared_ptr<CallMap const> calls = std::make_shared<CallMap>();
++    };
++
++    // The coach's call for a bot of a Playerbots.ArenaCoachTeams team
++    inline CoachCall CoachCallFor(Player* bot)
++    {
++        if (!bot->InArena())
++            return {};
++        MlPolicies& p = MlPolicies::Instance();
++        p.Refresh();
++        auto const s = p.Settings();
++        bool coached = false;
++        for (uint8 slot = 0; slot < 3; ++slot)  // 2v2, 3v3, 5v5 team slots
++            coached = coached || s->coach.count(bot->GetArenaTeamId(slot));
++        if (!coached || s->coachFile.empty())
++            return {};
++
++        auto const calls = CoachCalls::Instance().Get(s->coachFile);
++        auto const it = calls->find(bot->GetGUID().GetCounter());
++        return it == calls->end() ? CoachCall{} : it->second;
++    }
++
++    // An enemy a call can use right now: alive, seen, in line of sight within 40 yd and not immune
++    inline Player* CoachEnemy(Player* bot, uint32 guid)
++    {
++        if (!guid)
++            return nullptr;
++        Player* enemy = ObjectAccessor::FindPlayer(ObjectGuid::Create<HighGuid::Player>(guid));
++        return enemy && enemy->IsInWorld() && enemy->GetMap() == bot->GetMap() && enemy->IsAlive() &&
++                       bot->IsHostileTo(enemy) && bot->CanSeeOrDetect(enemy) && bot->IsWithinDist(enemy, 40.0f) && bot->IsWithinLOSInMap(enemy) &&
++                       !enemy->HasAuraType(SPELL_AURA_SCHOOL_IMMUNITY)
++                   ? enemy
++                   : nullptr;
++    }
++
++    // Who the coach wants this bot to crowd-control, for every "cc target" of the class; nullptr leaves it to the rules
++    inline Unit* CoachCcTarget(PlayerbotAI* botAI)
++    {
++        Player* bot = botAI->GetBot();
++        return CoachEnemy(bot, CoachCallFor(bot).cc);
++    }
++
+     // The enemy the tactical plan wants dead (its kill-target class in this matchup), for a damage dealer of a
+     // Playerbots.ArenaPlanTeams team, while it can be hit right now: alive, seen, in line of sight within 40 yd, not
+-    // immune and not in a teammate's breakable CC. nullptr leaves targeting to the rules.
++    // immune and not in a teammate's breakable CC. nullptr leaves targeting to the rules. The live coach's focus call
++    // comes first.
+     inline Unit* PlanKillTarget(PlayerbotAI* botAI)
+     {
+         Player* bot = botAI->GetBot();
+         Battleground* bg = bot->GetBattleground();
+         if (!bg || !bot->InArena() || PlayerbotAI::IsHeal(bot))
+             return nullptr;
++        if (Player* focus = CoachEnemy(bot, CoachCallFor(bot).focus))
++            if (!focus->HasBreakableByDamageCrowdControlAura())
++                return focus;
+         MlPolicies& p = MlPolicies::Instance();
+         p.Refresh();
+         auto const s = p.Settings();
+@@ -279,6 +379,7 @@ namespace ai::arena
+         bool const byNet = !pick.action.empty() && pick.action == action->getName();
+         LogObservation(botAI, CollectObservationV2(botAI), action, relevance, byNet ? pick.prob : 1.0f,
+                        byNet ? 1 : 0);
++        LogArenaPositions(botAI->GetBot());
+     }
+ }
+ 
+diff --git a/src/Ai/Base/ArenaObservation.h b/src/Ai/Base/ArenaObservation.h
+index a2646441..62fd345b 100644
+--- a/src/Ai/Base/ArenaObservation.h
++++ b/src/Ai/Base/ArenaObservation.h
+@@ -13,9 +13,13 @@
+ #include "GameTime.h"
+ #include "Log.h"
+ #include "Player.h"
++#include "Spell.h"
+ #include "SpellAuraEffects.h"
+ #include "SpellAuras.h"
+ 
++#include <mutex>
++#include <unordered_map>
++
+ // Arena state as the bot sees it: logged per executed action ("playerbots.ml", training data) and fed to the
+ // learned policy (ArenaMlPolicy.h). Field order must match ml/policy/features.py.
+ namespace ai::arena
+@@ -191,6 +195,54 @@ namespace ai::arena
+         LOG_INFO("playerbots.ml", "{}", line);
+     }
+ 
++    // At most once per arena and second, whichever bot acts first
++    inline bool PositionLogDue(uint32 instance, uint32 second)
++    {
++        static std::mutex lock;
++        static std::unordered_map<uint32, uint32> last;
++        std::lock_guard<std::mutex> guard(lock);
++        if (last.size() > 1000)  // finished arenas are never erased one by one
++            last.clear();
++        uint32& seen = last[instance];
++        if (seen == second)
++            return false;
++        seen = second;
++        return true;
++    }
++
++    // p1,ms,instance,map, then per player in the arena (humans too): guid,x,y,z,orientation,target,casting spell.
++    // What the v4 lines cannot show: geometry, who each ally is hitting and what is being cast.
++    inline void LogArenaPositions(Player* bot)
++    {
++        Battleground* bg = bot->GetBattleground();
++        uint32 const ms = GameTime::GetGameTimeMS().count();
++        if (!bg || !PositionLogDue(bot->GetInstanceId(), ms / 1000))
++            return;
++
++        std::string line = fmt::format("p1,{},{},{}", ms, bot->GetInstanceId(), bot->GetMapId());
++        for (auto const& itr : bg->GetPlayers())
++        {
++            Player* p = itr.second;
++            if (!p || !p->IsInWorld() || p->GetMap() != bot->GetMap())
++                continue;
++            Spell const* spell = p->GetCurrentSpell(CURRENT_GENERIC_SPELL);
++            if (!spell)
++                spell = p->GetCurrentSpell(CURRENT_CHANNELED_SPELL);
++            line += fmt::format(",{},{:.1f},{:.1f},{:.1f},{:.2f},{},{}", p->GetGUID().GetCounter(), p->GetPositionX(),
++                                p->GetPositionY(), p->GetPositionZ(), p->GetOrientation(),
++                                p->GetTarget().GetCounter(), spell ? spell->m_spellInfo->Id : 0);
++        }
++        LOG_INFO("playerbots.ml", "{}", line);
++    }
++
++    // h1,ms,instance,guid,spell,target: a human's cast, the only demonstrations not played by the rules
++    inline void LogHumanCast(Player* player, Spell const* spell)
++    {
++        Unit const* target = spell->m_targets.GetUnitTarget();
++        LOG_INFO("playerbots.ml", "h1,{},{},{},{},{}", GameTime::GetGameTimeMS().count(), player->GetInstanceId(),
++                 player->GetGUID().GetCounter(), spell->m_spellInfo->Id, target ? target->GetGUID().GetCounter() : 0);
++    }
++
+     // Same order and scaling as ml/policy/features.py features_v2 (6 slots x 25 + 1 = 151 values)
+     inline std::vector<float> FeaturesV2(ArenaObsV2 const& o)
+     {
+diff --git a/src/Ai/Base/Value/AbFocusTargetValue.cpp b/src/Ai/Base/Value/AbFocusTargetValue.cpp
+new file mode 100644
+index 00000000..d80c99cf
+--- /dev/null
++++ b/src/Ai/Base/Value/AbFocusTargetValue.cpp
+@@ -0,0 +1,107 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#include "AbFocusTargetValue.h"
++
++#include <limits>
++#include <vector>
++
++#include "Battleground.h"
++#include "BattlegroundAB.h"
++#include "PlayerbotAIConfig.h"
++#include "Playerbots.h"
++
++namespace
++{
++    float constexpr FOCUS_NODE_RADIUS = 50.0f;  // same range as the defender callouts
++    float constexpr FOCUS_ATTACK_RANGE = 40.0f;
++    float constexpr ARMOR_PER_EXTRA_HEALTH = 10000.0f;  // roughly cloth x1.3, plate x3
++    float constexpr HEALED_FACTOR = 1.5f;
++    float constexpr CLASH_RANGE = 30.0f;  // Bloodlust reaches the raid within 40 yd; keep the fight inside it
++    uint32 constexpr CLASH_MIN_ALLIES = 4;
++    uint32 constexpr CLASH_MIN_ENEMIES = 3;
++
++    GameObject* NearestFlag(Battleground* bg, Player* bot)
++    {
++        for (uint32 node = 0; node < BG_AB_DYNAMIC_NODES_COUNT; ++node)
++            if (GameObject* flag = bg->GetBGObject(node * BG_AB_OBJECTS_PER_NODE))
++                if (bot->IsWithinDist(flag, FOCUS_NODE_RADIUS))
++                    return flag;
++
++        return nullptr;
++    }
++
++    float EffectiveHealth(Player* enemy, std::vector<Player*> const& healers)
++    {
++        float health = enemy->GetHealth() * (1.0f + enemy->GetArmor() / ARMOR_PER_EXTRA_HEALTH);
++        for (Player* healer : healers)
++            if (healer != enemy && healer->IsWithinDist(enemy, FOCUS_ATTACK_RANGE))
++                return health * HEALED_FACTOR;
++
++        return health;
++    }
++}
++
++bool AbClashReady(Player* bot)
++{
++    Battleground* bg = bot->GetBattleground();
++    if (!sPlayerbotAIConfig.AbFocusTargets || !bg || bg->GetBgTypeID() != BATTLEGROUND_AB)
++        return true;
++
++    uint32 allies = 0;
++    uint32 enemies = 0;
++    for (auto const& [guid, player] : bg->GetPlayers())
++        if (player && player != bot && player->IsAlive() && bot->IsWithinDist(player, CLASH_RANGE))
++            ++(player->GetBgTeamId() == bot->GetBgTeamId() ? allies : enemies);
++
++    return allies >= CLASH_MIN_ALLIES && enemies >= CLASH_MIN_ENEMIES;
++}
++
++Unit* AbFocusTargetValue::Calculate()
++{
++    if (!sPlayerbotAIConfig.AbFocusTargets || PlayerbotAI::IsHeal(bot))
++        return nullptr;
++
++    Battleground* bg = bot->GetBattleground();
++    if (!bg || bg->GetBgTypeID() != BATTLEGROUND_AB || bg->GetStatus() != STATUS_IN_PROGRESS)
++        return nullptr;
++
++    GameObject* flag = NearestFlag(bg, bot);
++    if (!flag)
++        return nullptr;  // on the road: the rules keep targeting
++
++    std::vector<Player*> enemies;
++    std::vector<Player*> healers;
++    for (auto const& [guid, player] : bg->GetPlayers())  // at most 30 players in Arathi Basin
++    {
++        if (!player || !player->IsAlive() || player->GetBgTeamId() == bot->GetBgTeamId() ||
++            !player->IsWithinDist(flag, FOCUS_NODE_RADIUS))
++            continue;
++
++        enemies.push_back(player);
++        if (PlayerbotAI::IsHeal(player) && !player->HasBreakableByDamageCrowdControlAura())
++            healers.push_back(player);
++    }
++
++    Player* best = nullptr;
++    float bestHealth = std::numeric_limits<float>::max();
++    for (Player* enemy : enemies)
++    {
++        if (enemy->HasAuraType(SPELL_AURA_SCHOOL_IMMUNITY) || enemy->HasBreakableByDamageCrowdControlAura() ||
++            !bot->CanSeeOrDetect(enemy) || !bot->IsWithinDist(enemy, FOCUS_ATTACK_RANGE) ||
++            !bot->IsWithinLOSInMap(enemy))
++            continue;
++
++        float const health = EffectiveHealth(enemy, healers);
++        if (health < bestHealth || (best && health == bestHealth && enemy->GetGUID() < best->GetGUID()))
++        {
++            best = enemy;
++            bestHealth = health;
++        }
++    }
++
++    return best;
++}
+diff --git a/src/Ai/Base/Value/AbFocusTargetValue.h b/src/Ai/Base/Value/AbFocusTargetValue.h
+new file mode 100644
+index 00000000..58d2f9c5
+--- /dev/null
++++ b/src/Ai/Base/Value/AbFocusTargetValue.h
+@@ -0,0 +1,29 @@
++/*
++ * This file is part of the mod-playerbots module for AzerothCore. See AUTHORS file for Copyright
++ * information; released under GNU GPL v2 license, redistribute/modify under version 2 of the License,
++ * or (at your option) any later version.
++ */
++
++#ifndef PLAYERBOTS_ABFOCUSTARGETVALUE_H
++#define PLAYERBOTS_ABFOCUSTARGETVALUE_H
++
++#include "Value.h"
++
++class Player;
++class PlayerbotAI;
++class Unit;
++
++// Arathi Basin with focus targets: raid cooldowns wait for a real clash; true everywhere else
++bool AbClashReady(Player* bot);
++
++// Arathi Basin: every damage dealer fighting at a node computes the same kill target from the same data, the enemy
++// there with the least effective health, so two trios burn one player instead of the nearest one each.
++class AbFocusTargetValue : public UnitCalculatedValue
++{
++public:
++    AbFocusTargetValue(PlayerbotAI* botAI) : UnitCalculatedValue(botAI, "ab focus target", 1) {}
++
++    Unit* Calculate() override;
++};
++
++#endif
+diff --git a/src/Ai/Base/Value/CcTargetValue.cpp b/src/Ai/Base/Value/CcTargetValue.cpp
+index d61356b9..b5c3c054 100644
+--- a/src/Ai/Base/Value/CcTargetValue.cpp
++++ b/src/Ai/Base/Value/CcTargetValue.cpp
+@@ -7,6 +7,7 @@
+ #include "CcTargetValue.h"
+ #include "Action.h"
+ #include "AiObjectContext.h"
++#include "ArenaMlPolicy.h"
+ #include "Group.h"
+ #include "PlayerbotAI.h"
+ #include "ServerFacade.h"
+@@ -91,6 +92,9 @@ private:
+ 
+ Unit* CcTargetValue::Calculate()
+ {
++    if (Unit* coach = ai::arena::CoachCcTarget(botAI))
++        return coach;
++
+     FindTargetForCcStrategy strategy(botAI, qualifier);
+     return FindTarget(&strategy);
+ }
+diff --git a/src/Ai/Base/Value/DpsTargetValue.cpp b/src/Ai/Base/Value/DpsTargetValue.cpp
+index 89bc8e3a..2e164443 100644
+--- a/src/Ai/Base/Value/DpsTargetValue.cpp
++++ b/src/Ai/Base/Value/DpsTargetValue.cpp
+@@ -288,6 +288,9 @@ Unit* DpsTargetValue::Calculate()
+     if (Unit* plan = ai::arena::PlanKillTarget(botAI))
+         return plan;
+ 
++    if (Unit* focus = AI_VALUE(Unit*, "ab focus target"))
++        return focus;
++
+     float dps = AI_VALUE(float, "estimated group dps");
+ 
+     if (botAI->GetNearGroupMemberCount() > 3)
+diff --git a/src/Ai/Base/Value/EnemyPlayerValue.cpp b/src/Ai/Base/Value/EnemyPlayerValue.cpp
+index c14583a8..d7167770 100644
+--- a/src/Ai/Base/Value/EnemyPlayerValue.cpp
++++ b/src/Ai/Base/Value/EnemyPlayerValue.cpp
+@@ -43,6 +43,9 @@ Unit* EnemyPlayerValue::Calculate()
+     if (Unit* plan = ai::arena::PlanKillTarget(botAI))
+         return plan == bot->GetVictim() ? nullptr : plan;
+ 
++    if (Unit* focus = AI_VALUE(Unit*, "ab focus target"))
++        return focus == bot->GetVictim() ? nullptr : focus;
++
+     bool controllingCannon = false;
+     bool controllingVehicle = false;
+     bool passenger = false;
+diff --git a/src/Ai/Base/ValueContext.h b/src/Ai/Base/ValueContext.h
+index 6c05f13d..4d08d3bb 100644
+--- a/src/Ai/Base/ValueContext.h
++++ b/src/Ai/Base/ValueContext.h
+@@ -27,6 +27,7 @@
+ #include "DpsTargetValue.h"
+ #include "DuelTargetValue.h"
+ #include "EnemyHealerTargetValue.h"
++#include "AbFocusTargetValue.h"
+ #include "EnemyPlayerValue.h"
+ #include "EstimatedLifetimeValue.h"
+ #include "FishValues.h"
+@@ -144,6 +145,7 @@ public:
+         creators["dps aoe target"] = &ValueContext::dps_aoe_target;
+         creators["least hp target"] = &ValueContext::least_hp_target;
+         creators["enemy player target"] = &ValueContext::enemy_player_target;
++        creators["ab focus target"] = &ValueContext::ab_focus_target;
+         creators["cc target"] = &ValueContext::cc_target;
+         creators["current cc target"] = &ValueContext::current_cc_target;
+         creators["pet target"] = &ValueContext::pet_target;
+@@ -468,6 +470,7 @@ private:
+     static UntypedValue* dps_aoe_target(PlayerbotAI* botAI) { return new DpsAoeTargetValue(botAI); }
+     static UntypedValue* least_hp_target(PlayerbotAI* botAI) { return new LeastHpTargetValue(botAI); }
+     static UntypedValue* enemy_player_target(PlayerbotAI* botAI) { return new EnemyPlayerValue(botAI); }
++    static UntypedValue* ab_focus_target(PlayerbotAI* botAI) { return new AbFocusTargetValue(botAI); }
+     static UntypedValue* cc_target(PlayerbotAI* botAI) { return new CcTargetValue(botAI); }
+     static UntypedValue* current_cc_target(PlayerbotAI* botAI) { return new CurrentCcTargetValue(botAI); }
+     static UntypedValue* pet_target(PlayerbotAI* botAI) { return new PetTargetValue(botAI); }
+diff --git a/src/Ai/Class/Shaman/ShamanTriggers.cpp b/src/Ai/Class/Shaman/ShamanTriggers.cpp
+index 91c51a52..9d1f857c 100644
+--- a/src/Ai/Class/Shaman/ShamanTriggers.cpp
++++ b/src/Ai/Class/Shaman/ShamanTriggers.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "ShamanTriggers.h"
++#include "AbFocusTargetValue.h"
+ #include "Creature.h"
+ #include "InstanceScript.h"
+ #include "ItemTemplate.h"
+@@ -98,6 +99,10 @@ bool ElementalMasteryTrigger::IsActive()
+     return bot->HasSpellCooldown(421);
+ }
+ 
++bool HeroismTrigger::IsActive() { return BoostTrigger::IsActive() && AbClashReady(bot); }
++
++bool BloodlustTrigger::IsActive() { return BoostTrigger::IsActive() && AbClashReady(bot); }
++
+ // Checks if Sprit Wolves are out/if Spirit Walk buff is not on the bot/if the cooldown for Spirit Walk is ready.
+ // There is custom code for the Spirit Walk cooldown (32 seconds), since no working
+ // code exists in the AC/Playerbots repo for checking if a guardian's spell is on cooldown.
+diff --git a/src/Ai/Class/Shaman/ShamanTriggers.h b/src/Ai/Class/Shaman/ShamanTriggers.h
+index 1871bf47..356078c5 100644
+--- a/src/Ai/Class/Shaman/ShamanTriggers.h
++++ b/src/Ai/Class/Shaman/ShamanTriggers.h
+@@ -105,12 +105,16 @@ class HeroismTrigger : public BoostTrigger
+ {
+ public:
+     HeroismTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "heroism") {}
++
++    bool IsActive() override;
+ };
+ 
+ class BloodlustTrigger : public BoostTrigger
+ {
+ public:
+     BloodlustTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "bloodlust") {}
++
++    bool IsActive() override;
+ };
+ 
+ class ElementalMasteryTrigger : public BuffTrigger
+diff --git a/src/PlayerbotAIConfig.cpp b/src/PlayerbotAIConfig.cpp
+index aa898dcb..5a8923d4 100644
+--- a/src/PlayerbotAIConfig.cpp
++++ b/src/PlayerbotAIConfig.cpp
+@@ -62,6 +62,18 @@ void LoadListString(std::string const value, T& list)
+     }
+ }
+ 
++static void LoadAbTrios(std::string const& value, std::unordered_map<std::string, uint8>& subgroups)
++{
++    uint8 subgroup = 0;
++    for (std::string const& trio : split(value, ';'))
++    {
++        for (std::string const& name : split(trio, ','))
++            subgroups[name] = subgroup;
++
++        ++subgroup;
++    }
++}
++
+ // Parses a comma-separated, whitespace-tolerant bot name list (as used by both
+ // Playerbots.LevelBrackets.ExcludeNames and Playerbots.ResetBotLevel.ExcludeNames) into out.
+ static void ParseLevelMgrExcludeNames(std::string const& csv, std::vector<std::string>& out)
+@@ -135,6 +147,19 @@ bool PlayerbotAIConfig::Initialize()
+     ArenaPvpStrategies = sConfigMgr->GetOption<bool>("Playerbots.ArenaPvpStrategies", false);
+     BgGiveLeaderToPlayer = sConfigMgr->GetOption<bool>("Playerbots.BgGiveLeaderToPlayer", false);
+     AbDefenderCallouts = sConfigMgr->GetOption<bool>("Playerbots.AbDefenderCallouts", false);
++    AbFocusTargets = sConfigMgr->GetOption<bool>("Playerbots.AbFocusTargets", false);
++    AbTrioFollowHuman = sConfigMgr->GetOption<bool>("Playerbots.AbTrioFollowHuman", false);
++    AbTrioRegroup = sConfigMgr->GetOption<bool>("Playerbots.AbTrioRegroup", false);
++    AbTrioHomeGuard = sConfigMgr->GetOption<bool>("Playerbots.AbTrioHomeGuard", false);
++    AbTrioSubgroups.clear();
++    LoadAbTrios(sConfigMgr->GetOption<std::string>("Playerbots.AbTriosHorde", ""), AbTrioSubgroups);
++    LoadAbTrios(sConfigMgr->GetOption<std::string>("Playerbots.AbTriosAlliance", ""), AbTrioSubgroups);
++    AbTrioBasesHorde.clear();
++    AbTrioBasesAlliance.clear();
++    LoadList<std::vector<uint32>>(sConfigMgr->GetOption<std::string>("Playerbots.AbTrioBasesHorde", ""),
++                                  AbTrioBasesHorde);
++    LoadList<std::vector<uint32>>(sConfigMgr->GetOption<std::string>("Playerbots.AbTrioBasesAlliance", ""),
++                                  AbTrioBasesAlliance);
+     SmartPetAbilities = sConfigMgr->GetOption<bool>("Playerbots.SmartPetAbilities", false);
+     ArenaMlLog = sConfigMgr->GetOption<bool>("Playerbots.ArenaMlLog", false);
+     SaveManaThreshold = sConfigMgr->GetOption<int32>("Playerbots.SaveManaThreshold", 60);
+diff --git a/src/PlayerbotAIConfig.h b/src/PlayerbotAIConfig.h
+index 66c2985e..845a8d9d 100644
+--- a/src/PlayerbotAIConfig.h
++++ b/src/PlayerbotAIConfig.h
+@@ -120,6 +120,13 @@ public:
+     bool ArenaMlLog;
+     bool BgGiveLeaderToPlayer;
+     bool AbDefenderCallouts;
++    bool AbFocusTargets;
++    bool AbTrioFollowHuman;
++    bool AbTrioRegroup;
++    bool AbTrioHomeGuard;
++    std::unordered_map<std::string, uint8> AbTrioSubgroups;
++    std::vector<uint32> AbTrioBasesHorde;
++    std::vector<uint32> AbTrioBasesAlliance;
+     bool SmartPetAbilities;
+     uint32 SaveManaThreshold;
+     AutoPartyBuffMode AutoGreaterBlessings;
+diff --git a/src/Script/Playerbots.cpp b/src/Script/Playerbots.cpp
+index d099421a..6dd43efb 100644
+--- a/src/Script/Playerbots.cpp
++++ b/src/Script/Playerbots.cpp
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "Playerbots.h"
++#include "ArenaObservation.h"
+ #include "BattleGroundTactics.h"
+ #include "BattlefieldScript.h"
+ #include "Channel.h"
+@@ -139,9 +140,17 @@ public:
+         PLAYERHOOK_CAN_PLAYER_USE_GUILD_CHAT,
+         PLAYERHOOK_CAN_PLAYER_USE_CHANNEL_CHAT,
+         PLAYERHOOK_ON_GIVE_EXP,
+-        PLAYERHOOK_ON_BEFORE_TELEPORT
++        PLAYERHOOK_ON_BEFORE_TELEPORT,
++        PLAYERHOOK_ON_SPELL_CAST
+     }) {}
+ 
++    void OnPlayerSpellCast(Player* player, Spell* spell, bool /*skipCheck*/) override
++    {
++        if (sPlayerbotAIConfig.ArenaMlLog && player->InArena() && !spell->IsTriggered() &&
++            !PlayerbotsMgr::instance().GetPlayerbotAI(player))
++            ai::arena::LogHumanCast(player, spell);
++    }
++
+     void OnPlayerLogin(Player* player) override
+     {
+         if (!player->GetSession()->IsHeadless())
+@@ -594,6 +603,20 @@ public:
+     }
+ 
+     void OnBattlegroundEnd(Battleground* bg, TeamId /*winnerTeam*/) override { bgStrategies.erase(bg->GetInstanceID()); }
++
++    void OnBattlegroundAddPlayer(Battleground* bg, Player* player) override
++    {
++        if (bg->GetBgTypeID() != BATTLEGROUND_AB)
++            return;
++
++        auto const trio = sPlayerbotAIConfig.AbTrioSubgroups.find(player->GetName());
++        if (trio == sPlayerbotAIConfig.AbTrioSubgroups.end() || trio->second >= MAX_RAID_SUBGROUPS)
++            return;
++
++        Group* raid = bg->GetBgRaid(player->GetBgTeamId());
++        if (raid && raid->GetMemberGroup(player->GetGUID()) != trio->second && raid->HasFreeSlotSubGroup(trio->second))
++            raid->ChangeMembersGroup(player->GetGUID(), trio->second);
++    }
+ };
+ 
+ // Workaround for missing InitEnabledHooksIfNeeded for new BattlefieldScript in ScriptMgr
+-- 
+2.55.0
+

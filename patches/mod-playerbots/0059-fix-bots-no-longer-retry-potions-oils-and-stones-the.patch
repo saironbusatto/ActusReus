@@ -1,0 +1,84 @@
+From 4a3b089622572d0c76c3bc9204e6f7f7bd0d8a45 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Sun, 1 Nov 2026 23:53:05 -0300
+Subject: [PATCH 59/60] fix: bots no longer retry potions, oils and stones the
+ server refuses in an arena
+
+HandleUseItemOpcode drops the packet, so no cooldown ever started and the action counted as done: 10.75% of the
+arena action lines were healing potion, retried every 325 ms while the bot died. Oils and stones also removed stealth first.
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/Actions/ImbueAction.cpp   |  6 ++++--
+ src/Ai/Base/Actions/UseItemAction.cpp | 30 +++++++++++++++++++++++++--
+ 2 files changed, 32 insertions(+), 4 deletions(-)
+
+diff --git a/src/Ai/Base/Actions/ImbueAction.cpp b/src/Ai/Base/Actions/ImbueAction.cpp
+index 98866471..b3fa400f 100644
+--- a/src/Ai/Base/Actions/ImbueAction.cpp
++++ b/src/Ai/Base/Actions/ImbueAction.cpp
+@@ -105,7 +105,8 @@ ImbueWithStoneAction::ImbueWithStoneAction(PlayerbotAI* botAI) : Action(botAI, "
+ 
+ bool ImbueWithStoneAction::Execute(Event /*event*/)
+ {
+-    if (bot->IsInCombat())
++    // The server refuses these in an arena, and stealth would already be gone
++    if (bot->IsInCombat() || bot->InArena())
+         return false;
+ 
+     // remove stealth
+@@ -150,7 +151,8 @@ ImbueWithOilAction::ImbueWithOilAction(PlayerbotAI* botAI) : Action(botAI, "appl
+ 
+ bool ImbueWithOilAction::Execute(Event /*event*/)
+ {
+-    if (bot->IsInCombat())
++    // The server refuses these in an arena, and stealth would already be gone
++    if (bot->IsInCombat() || bot->InArena())
+         return false;
+ 
+     // remove stealth
+diff --git a/src/Ai/Base/Actions/UseItemAction.cpp b/src/Ai/Base/Actions/UseItemAction.cpp
+index fb3a6228..e9a6a354 100644
+--- a/src/Ai/Base/Actions/UseItemAction.cpp
++++ b/src/Ai/Base/Actions/UseItemAction.cpp
+@@ -538,9 +538,35 @@ bool UseItemAction::isPossible() { return getName() == "use" || AI_VALUE2(uint32
+ 
+ bool UseSpellItemAction::isUseful() { return AI_VALUE2(bool, "spell cast useful", getName()); }
+ 
+-bool UseHealingPotion::isUseful() { return AI_VALUE2(bool, "combat", "self target"); }
++// Using a potion "succeeds" on the packet alone, so on cooldown or in an arena (WorldSession::HandleUseItemOpcode
++// refuses it there) the bot would retry it every tick while dying
++static bool PotionReady(Player* bot, std::vector<Item*> const& items)
++{
++    if (items.empty() || bot->GetLastPotionId())
++        return false;
++
++    ItemTemplate const* proto = items.front()->GetTemplate();
++    if (bot->InArena() && !proto->HasFlag(ITEM_FLAG_IGNORE_DEFAULT_ARENA_RESTRICTIONS))
++        return false;
++
++    for (auto const& spell : proto->Spells)
++        if (spell.SpellId && bot->HasSpellItemCooldown(spell.SpellId, proto->ItemId))
++            return false;
++
++    return true;
++}
+ 
+-bool UseManaPotion::isUseful() { return AI_VALUE2(bool, "combat", "self target"); }
++bool UseHealingPotion::isUseful()
++{
++    return AI_VALUE2(bool, "combat", "self target") &&
++           PotionReady(bot, AI_VALUE2(std::vector<Item*>, "inventory items", getName()));
++}
++
++bool UseManaPotion::isUseful()
++{
++    return AI_VALUE2(bool, "combat", "self target") &&
++           PotionReady(bot, AI_VALUE2(std::vector<Item*>, "inventory items", getName()));
++}
+ 
+ bool UseHearthStone::Execute(Event event)
+ {
+-- 
+2.55.0
+

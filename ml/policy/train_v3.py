@@ -49,7 +49,7 @@ def load_labeled_data(log_path: Path, since: dt.datetime | None = None) -> list[
     t_parse = time.time()
     with log_path.open(errors="replace") as f:
         for line in f:
-            if not line.startswith("2026-10-"):
+            if not line.startswith("2026-"):
                 continue
             parts = line.rstrip("\n").split(" ", 2)
             if len(parts) < 3 or not parts[2].startswith(("v2,", "v3,", "v4,")):

@@ -275,6 +275,8 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 
 ---
 
+**01/11 23:58 SP — auditoria dos pontos cegos e V12:** com 1 morto, o lado na frente vence 94%, e a luta se decide no primeiro abate. Morrem primeiro ladino (17,9%), guerreiro (14,6%) e druida (11,4%); as demais classes, 4-6%. Só 3% das previsões seguras viram. Ao morrer, 56% tinham trinket pronto e 35% defensivo. Bug real: poção, óleo e pedra são recusados na arena e eram repetidos sem parar. A foto do NCM não via alvo dos aliados, histórico, relógio, posição nem magia em lançamento; a recompensa não vê interrupção, sobrevivência nem linha de visão; a rede só reordena a fila em 25% dos ticks. Corrigido: bug das poções, linhas `p1`/`h1`, foto v2 (`ncm_dados2.py`), peso por mudança da chance de vitória (`ncm_valor.py`) e voz do Reload (`ncm_voz.py`). Lição: contar morte só pela linha do bot morto gerou um falso "xamã 51%"; medir pelos olhos de todos.
+
 ## Regras do sprint
 
 - Uma mudança por versão; medir com ~150 lutas da desafiante antes de seguir (±8 pontos de margem).
@@ -290,4 +292,6 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 - Teste cego 4: 20 lutas de 20 confrontos, todas depois das 02:06 de 01/11 (gear igual), fora de treino e validação. Gabarito de subagentes Opus sem o vencedor em `cego4-opus/`, 135 erros, sha256 `8007e14a…`. Régua: `compara.py --cego4`. Gemini nele: JSON 20/20, momento 16/20, graves 5/10, achou 34/125, 2,5 sem par por luta, 81% em quem perdeu; referência 72%.
 - Critério da V7 (todos juntos): JSON 20/20; graves 10/10; momento ≥16/20; achou ≥34/125; em quem perdeu ≤81%; crítica errada ≤0,5/luta e ≤ Gemini pelo juiz cego; ≤60 s/luta. O viés em quem perdeu entrou como critério porque é o defeito que a V7 tenta corrigir.
 - Braços: comparações só com lutas depois das 02:06 de 01/11 (05:06 UTC). Antes disso o gear era desigual: A tinha 14 bots sem trinket, regras 13, B 8 e campeã 7. Nesse trecho limpo, A 54/91 = 59% x B. O portão automático do A foi zerado para 13:19 UTC, início da V4 real.
+
+**01/11 12:15 SP — V7 do especialista reprovada no teste cego 4 (só rótulos do Opus, 166 exemplos, 63 passos):** JSON 19/20 (meta 20), momento 15/19 (meta 16/20), achou 28/119 (meta 34), graves 10/10, 56% em quem perdeu (meta ≤81%; referência 72%), 48 s/luta, 5,2 sem par por luta (Gemini 2,5). Viés corrigido e até passou do ponto; faltam exemplos para achar erros e parar de inventar. Juiz cego dispensado. Projeto pausado a pedido do usuário; próximo passo quando retomar: 300 rótulos do Opus com gear igual.
 
