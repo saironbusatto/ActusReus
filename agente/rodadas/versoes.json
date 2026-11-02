@@ -167,5 +167,16 @@
    "Treinador NCM passa à foto v2 às 04:34 (foco 69,3%, trocas 49,7%); CC segue desligado.",
    "Desde a V12 o braço A é pontuado pela mudança da chance de vencer (valor_v4)."
   ]
+ },
+ {
+  "id": "V14",
+  "nome": "Interrupts de mago, Arms, DK e xamã",
+  "desde": "2026-11-02 05:47",
+  "mudancas": [
+   "Mago ganha counterspell no alvo atual; antes só cortava quem não era seu alvo.",
+   "Guerreiro Arms troca de postura e usa Pummel na arena.",
+   "DK e xamã sobem o interrupt para a prioridade de interrupt; curador xamã segue curando primeiro em emergência.",
+   "Casts de curador cortados, com alguém pronto e ao alcance: de 20% para 34%."
+  ]
  }
 ]

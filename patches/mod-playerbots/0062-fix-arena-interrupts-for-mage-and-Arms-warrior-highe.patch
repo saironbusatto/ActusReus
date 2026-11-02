@@ -1,0 +1,144 @@
+From c97e6332de08af7b18f6975136e12038d3480791 Mon Sep 17 00:00:00 2001
+From: saironcb <saironbusatto@gmail.com>
+Date: Mon, 2 Nov 2026 03:18:36 -0300
+Subject: [PATCH] fix: arena interrupts for mage and Arms warrior, higher
+ priority for DK and shaman
+
+Claude-Session: https://claude.ai/code/session_01H3noneHhUz8RFkv88ToEQ9
+---
+ src/Ai/Base/Strategy/BattlegroundStrategy.cpp |  4 ++--
+ .../Class/Dk/Strategy/GenericDKStrategy.cpp   |  4 ++--
+ .../Mage/Strategy/GenericMageStrategy.cpp     |  3 ++-
+ .../Shaman/Strategy/GenericShamanStrategy.cpp |  4 ++--
+ .../Warrior/Strategy/ArmsWarriorStrategy.cpp  | 13 +++++++++++++
+ src/Ai/Class/Warrior/WarriorActions.h         | 19 ++++++++++++++++++-
+ 6 files changed, 39 insertions(+), 8 deletions(-)
+
+diff --git a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+index 013e45fd..3396c14e 100644
+--- a/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
++++ b/src/Ai/Base/Strategy/BattlegroundStrategy.cpp
+@@ -18,8 +18,8 @@ float ArenaHealerEmergencyMultiplier::GetValue(Action* action)
+ 
+     std::string const name = action->getName();
+     bool const yieldsToHeal = name == "dps assist" || name == "set facing" || name == "drop target" ||
+-                              name == "attack enemy player" || name == "purge" ||
+-                              dynamic_cast<CurePartyMemberAction*>(action) || dynamic_cast<CastCureSpellAction*>(action);
++                              name == "attack enemy player" || name == "purge" || name == "wind shear" ||
++                              name == "wind shear on enemy healer" || dynamic_cast<CurePartyMemberAction*>(action) || dynamic_cast<CastCureSpellAction*>(action);
+     if (!yieldsToHeal || !PlayerbotAI::IsHeal(bot) || bot->GetPowerPct(POWER_MANA) < MIN_MANA_PCT)
+         return 1.0f;
+ 
+diff --git a/src/Ai/Class/Dk/Strategy/GenericDKStrategy.cpp b/src/Ai/Class/Dk/Strategy/GenericDKStrategy.cpp
+index 9d545d79..5d4a89fb 100644
+--- a/src/Ai/Class/Dk/Strategy/GenericDKStrategy.cpp
++++ b/src/Ai/Class/Dk/Strategy/GenericDKStrategy.cpp
+@@ -54,10 +54,10 @@ void GenericDKStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+     MeleeCombatStrategy::InitTriggers(triggers);
+ 
+     triggers.push_back(
+-        new TriggerNode("mind freeze", { NextAction("mind freeze", ACTION_HIGH + 1) }));
++        new TriggerNode("mind freeze", { NextAction("mind freeze", ACTION_INTERRUPT + 2) }));
+     triggers.push_back(
+         new TriggerNode("mind freeze on enemy healer",
+-                        { NextAction("mind freeze on enemy healer", ACTION_HIGH + 1) }));
++                        { NextAction("mind freeze on enemy healer", ACTION_INTERRUPT + 1) }));
+     triggers.push_back(new TriggerNode(
+         "horn of winter", { NextAction("horn of winter", ACTION_NORMAL + 1) }));
+     triggers.push_back(new TriggerNode("critical health",
+diff --git a/src/Ai/Class/Mage/Strategy/GenericMageStrategy.cpp b/src/Ai/Class/Mage/Strategy/GenericMageStrategy.cpp
+index c08fa964..c75aa16e 100644
+--- a/src/Ai/Class/Mage/Strategy/GenericMageStrategy.cpp
++++ b/src/Ai/Class/Mage/Strategy/GenericMageStrategy.cpp
+@@ -123,7 +123,8 @@ void GenericMageStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ 
+     // Counterspell / Spellsteal Triggers
+     triggers.push_back(new TriggerNode("spellsteal", { NextAction("spellsteal", 40.0f) }));
+-    triggers.push_back(new TriggerNode("counterspell on enemy healer", { NextAction("counterspell on enemy healer", 40.0f) }));
++    triggers.push_back(new TriggerNode("counterspell", { NextAction("counterspell", ACTION_INTERRUPT + 2) }));
++    triggers.push_back(new TriggerNode("counterspell on enemy healer", { NextAction("counterspell on enemy healer", ACTION_INTERRUPT + 1) }));
+ }
+ 
+ void MageCureStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+diff --git a/src/Ai/Class/Shaman/Strategy/GenericShamanStrategy.cpp b/src/Ai/Class/Shaman/Strategy/GenericShamanStrategy.cpp
+index 99c8b427..e0a01d29 100644
+--- a/src/Ai/Class/Shaman/Strategy/GenericShamanStrategy.cpp
++++ b/src/Ai/Class/Shaman/Strategy/GenericShamanStrategy.cpp
+@@ -115,8 +115,8 @@ void GenericShamanStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     CombatStrategy::InitTriggers(triggers);
+ 
+-    triggers.push_back(new TriggerNode("wind shear", { NextAction("wind shear", 23.0f), }));
+-    triggers.push_back(new TriggerNode("wind shear on enemy healer", { NextAction("wind shear on enemy healer", 23.0f), }));
++    triggers.push_back(new TriggerNode("wind shear", { NextAction("wind shear", ACTION_INTERRUPT + 2), }));
++    triggers.push_back(new TriggerNode("wind shear on enemy healer", { NextAction("wind shear on enemy healer", ACTION_INTERRUPT + 1), }));
+     triggers.push_back(new TriggerNode("purge", { NextAction("purge", ACTION_DISPEL), }));
+     triggers.push_back(new TriggerNode("new pet", { NextAction("set pet stance", 65.0f), }));
+ }
+diff --git a/src/Ai/Class/Warrior/Strategy/ArmsWarriorStrategy.cpp b/src/Ai/Class/Warrior/Strategy/ArmsWarriorStrategy.cpp
+index 70b87117..a262319a 100644
+--- a/src/Ai/Class/Warrior/Strategy/ArmsWarriorStrategy.cpp
++++ b/src/Ai/Class/Warrior/Strategy/ArmsWarriorStrategy.cpp
+@@ -16,9 +16,20 @@ public:
+         creators["piercing howl"] = &piercing_howl;
+         creators["mocking blow"] = &mocking_blow;
+         creators["heroic strike"] = &heroic_strike;
++        creators["pummel"] = &pummel;
+     }
+ 
+ private:
++    static ActionNode* pummel(PlayerbotAI* /*botAI*/)
++    {
++        return new ActionNode(
++            "pummel",
++            /*P*/ { NextAction("berserker stance") },
++            /*A*/ {},
++            /*C*/ {}
++        );
++    }
++
+     static ActionNode* charge(PlayerbotAI* /*botAI*/)
+     {
+         return new ActionNode(
+@@ -88,6 +99,8 @@ void ArmsWarriorStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
+ {
+     GenericWarriorStrategy::InitTriggers(triggers);
+ 
++    triggers.push_back(new TriggerNode("pummel", { NextAction("pummel", ACTION_INTERRUPT + 2) }));
++
+     triggers.push_back(
+         new TriggerNode(
+             "enemy out of melee",
+diff --git a/src/Ai/Class/Warrior/WarriorActions.h b/src/Ai/Class/Warrior/WarriorActions.h
+index c3a612e3..329867dc 100644
+--- a/src/Ai/Class/Warrior/WarriorActions.h
++++ b/src/Ai/Class/Warrior/WarriorActions.h
+@@ -89,7 +89,24 @@ public:
+     bool isUseful() override;
+ };
+ MELEE_ACTION(CastWhirlwindAction, "whirlwind");
+-MELEE_ACTION(CastPummelAction, "pummel");
++class CastPummelAction : public CastMeleeSpellAction
++{
++public:
++    CastPummelAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "pummel") {}
++
++    // The spell check refuses Pummel outside Berserker Stance, and the engine only runs the stance prerequisite of a
++    // possible action, so an Arms warrior in an arena needs this to stance dance into the interrupt.
++    bool isPossible() override
++    {
++        constexpr uint32 SPELL_PUMMEL = 6552;
++        constexpr uint32 SPELL_BERSERKER_STANCE = 2458;
++        constexpr uint32 PUMMEL_RAGE = 100;
++
++        return CastMeleeSpellAction::isPossible() ||
++               (bot->InArena() && !bot->HasAura(SPELL_BERSERKER_STANCE) && !bot->HasSpellCooldown(SPELL_PUMMEL) &&
++                bot->GetPower(POWER_RAGE) >= PUMMEL_RAGE);
++    }
++};
+ ENEMY_HEALER_ACTION(CastPummelOnEnemyHealerAction, "pummel");
+ // fury 2.4.3
+ MELEE_ACTION(CastVictoryRushAction, "victory rush");
+-- 
+2.55.0
+

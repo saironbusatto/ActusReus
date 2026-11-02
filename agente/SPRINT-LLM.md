@@ -279,6 +279,8 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 
 **02/11 01:14 SP — V13, o curador que não curava:** com posição no log, os 91 primeiros abates após a V12 mostram os 3 inimigos no alvo em 52% e o curador perto (mais de 30 m só em 13%); linha de visão não separa quem morre de quem sobrevive (18% x 16%), e usar defensivo também não (15% x 14%, sem regra nova). O que apareceu: com aliado abaixo de 35%, o curador ficava parado em 54% dos segundos, e 26% do tempo podia curar. Causa: a fila executa por prioridade crua, a cura crítica vale 25, `dps assist` 50, `set facing` 37. Multiplicador acima de 1 não reordena a fila, só o 0 pula a ação. Depois da correção (21 lutas): 14% podendo curar, lançando de 31% para 40%, duração média de 173 s para 214 s. Treinador NCM v2 no ar às 01:34: foco 69,3%, trocas 49,7%, CC segue desligado (cerca de 18%).
 
+**02/11 02:47 SP — V14, os interrupts:** o mesmo tipo de furo da V13. Com interrupt pronto, à vista e ao alcance, só 20% dos casts de curador eram cortados. O mago não tinha gatilho para o alvo atual (1/55) e o "on enemy healer" pula o alvo atual; o Arms não tinha interrupt (0/224); DK e xamã tinham prioridade 21-23. A primeira tentativa no Arms não funcionou: a ação era recusada fora da postura Berserker antes de o pré-requisito rodar, e a fábrica que definia essa postura nunca era registrada. Medido ao vivo depois: 57 trocas de postura para 54 Pummels, casts de curador cortados em 34%.
+
 ## Regras do sprint
 
 - Uma mudança por versão; medir com ~150 lutas da desafiante antes de seguir (±8 pontos de margem).
