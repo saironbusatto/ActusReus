@@ -79,7 +79,23 @@ com menos de 1 dia de dados e treino) e o **RL com sinal verificável** (plano e
 58%, +8 pontos, em ~2,5 dias). Os técnicos LLM (Gemini e Qwen) deram as maiores contas e o menor ganho medido em
 vitória; o valor deles está na leitura (achar e explicar erros), não na nota que treina a rede.
 
-## 4. O que medir daqui em diante
+## 4. Explicações dos LLM viram rótulo do NCM (03/11)
+
+Das 7.247 lutas do NCM v2, 7.044 têm análise do Gemini: 28.897 erros com horário e 5.239 momentos decisivos.
+Parte 1, detector de momento (`ml/tools/ncm_momento.py`, `~/.local/share/ncm/v2/momento.pkl`): da foto de 89
+números, a chance de o momento decisivo cair nos próximos 5 s. Treino com os momentos do Gemini (1,27 M fotos de
+5.159 lutas, 4% na janela), as 80 lutas dos testes cegos fora do treino.
+
+| Medida | Resultado |
+|---|---|
+| Lutas não vistas | AUC 0,83; precisão média 0,144 contra 0,040 do acaso (3,6×) |
+| Testes cegos (80 lutas, ±5 s do gabarito Opus sem vencedor) | **detector 47/80**, Gemini 61/80, palpite "57% da duração" 32/80 |
+
+O detector fica abaixo do Gemini, mas o Gemini lê a luta inteira depois que ela acaba; o detector só vê os últimos
+segundos e responde em milissegundos, durante a luta. Contra o único concorrente ao vivo (o palpite fixo), +15 lutas.
+Próximos: filtrar os rótulos pela mudança da chance de vencer (parte 3) e somar os rótulos Opus sem vencedor.
+
+## 5. O que medir daqui em diante
 
 - Cada versão nova: rodar `ml/tools/evolucao.py` e colar a tabela aqui; acrescentar a linha na seção 3.
 - NCM × Gemini × Qwen na mesma régua: quando houver técnico novo, o teste cego atual (`compara.py --cego4`) e, para
