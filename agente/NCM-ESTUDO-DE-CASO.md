@@ -89,11 +89,27 @@ números, a chance de o momento decisivo cair nos próximos 5 s. Treino com os m
 | Medida | Resultado |
 |---|---|
 | Lutas não vistas | AUC 0,83; precisão média 0,144 contra 0,040 do acaso (3,6×) |
-| Testes cegos (80 lutas, ±5 s do gabarito Opus sem vencedor) | **detector 47/80**, Gemini 61/80, palpite "57% da duração" 32/80 |
+| 1ª prova, 80 lutas, ±5 s do gabarito Opus sem vencedor, olhando o pico da luta inteira | detector 47/80, Gemini 61/80, palpite "57% da duração" 32/80 |
 
-O detector fica abaixo do Gemini, mas o Gemini lê a luta inteira depois que ela acaba; o detector só vê os últimos
-segundos e responde em milissegundos, durante a luta. Contra o único concorrente ao vivo (o palpite fixo), +15 lutas.
-Próximos: filtrar os rótulos pela mudança da chance de vencer (parte 3) e somar os rótulos Opus sem vencedor.
+**Correção:** a 1ª leitura dizia que o detector ganhava do palpite "ao vivo". Não ganha: o pico só é conhecido depois
+que a luta acaba. Ao vivo só existe o primeiro instante em que a chance passa de um limite.
+
+Depois somei o ouro: 100 lutas novas do Opus sem vencedor (`opus-v7`) e um teste cego novo (`cego5-opus`, 20 lutas,
+congelado antes do treino). Treino com peso 20 no Opus, sempre sem as lutas da prova. A margem é de ±4-5 lutas em 80.
+
+| Prova | Detector, só Gemini | Detector, Gemini + Opus | Gemini lendo depois | Palpite fixo |
+|---|---|---|---|---|
+| 80 antigas, pico da luta | 45/80 | 44/80 | 61/80 | 32/80 |
+| Cego 5, pico da luta | 15/20 | 15/20 | 18/20 | |
+| 100 lutas, **regra ao vivo** (melhor limite, 0,8; avisa em 68) | | **33/100** | | **40/100** |
+
+1. Os 100 rótulos novos do Opus (~1,8 M tokens) **não subiram este detector**: a diferença cabe na margem.
+2. Com a regra ao vivo, o detector **perde do palpite fixo**. Ele não entra na voz assim. O melhor limite foi escolhido
+   na própria prova, então 33 é até otimista.
+3. Hipótese seguinte, que roda na CPU, sem cota: o gargalo é a entrada (só os últimos segundos, sem o tempo de luta e
+   sem o que mudou), não os rótulos.
+
+O ouro continua sendo a régua limpa. O ganho dele no treino de outros modelos ainda não foi medido.
 
 ## 5. O que medir daqui em diante
 
