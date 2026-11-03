@@ -12,11 +12,12 @@ Plano completo: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Manual de arena: [.claude/sk
 
   | Grupo | Times | O que é |
   |---|---|---|
-  | **Campeã/estática** | 54, 58, …, 86 | rede neural congelada (`arena-policy-v3.txt`) — a régua |
-  | **Desafiante/treino** | 55, 59, …, 87 | a rede que o treinador ajusta ao vivo (`arena-policy-live.txt`) |
+  | **Campeã/estática** | 54, 58, …, 86 | rede neural congelada (`arena-policy-v4.txt`) — a régua |
+  | **Desafiante/treino** | 55, 59, …, 87 e 56, 64, …, 88 | a rede que o treinador ajusta ao vivo (`arena-policy-live.txt`) |
   | **Bots/sem-rede** | os demais | só as regras do playerbots — o grupo de controle |
 
-  A cópia III de cada composição fica na reserva; o time 60 (RLS III) é o do usuário e fica fora das contas.
+  A cópia III de cada composição joga como desafiante desde a V17 (era o braço B do A/B); o time 60 (RLS III) é o do
+  usuário e fica fora das contas.
 - **A rede decide 25% das ações de combate** (`Playerbots.ArenaMlControl = 0.25`); o resto continua com as regras.
 - **Rodadas sincronizadas** (`ml/policy/rodada_sync.py`): cada trio joga uma luta, o técnico de IA analisa, o
   treinador aplica as notas e todos voltam à fila juntos.
@@ -81,7 +82,8 @@ Cada mudança que altera o jogo ou o treino vira uma versão em [`agente/rodadas
 | V13 | 02/11 01:14 | Curador de arena para de perder a vez: com aliado abaixo de 45%, ao alcance e à vista, `dps assist`, `set facing`, `purge` e cura de status cedem lugar à cura (a cura crítica valia 25 contra 50 do `dps assist`). Curador que podia curar e não curou caiu de 26% para 14% do tempo. Às 01:34 o treinador NCM passou para o modelo v2: acerto nas trocas de alvo de 41,5% para 49,7%. Desde a V12 o braço A é pontuado pela mudança da chance de vencer. |
 | V14 | 02/11 02:47 | Interrupts que nunca disparavam: o mago só cortava quem não era seu alvo, o guerreiro Arms não tinha interrupt (agora troca de postura e usa Pummel) e DK e xamã tinham prioridade abaixo de ações comuns. Casts de curador cortados, com alguém pronto e ao alcance, subiram de 20% para 34%; o guerreiro foi de 0/224 para 29/99. |
 | V15 | 02/11 03:33 | CC para salvar aliado: com aliado abaixo de 50% e 2+ inimigos nele, quem não é curador usa CC em um atacante que não seja o alvo de morte. A lista de CC ganhou polymorph, hex, repentance, scatter shot, hammer of justice, kidney shot e intimidating shout. Episódios com CC em até 4 s subiram de 18% para 24%; caçador foi de 0/18 para 8/19. |
-| V16 | 02/11 15:04 | Curador de arena cura antes de buff e totem: com aliado abaixo de 45% ao alcance, totens de buff/dano, Call of the Elements, Water Shield, Inner Fire e Lifeblood esperam (tremor, mana tide, stoneclaw, healing stream, earthbind, grounding e cleansing seguem livres); xamã curador usa Lesser Healing Wave antes de Healing Wave na vida crítica; curador preso usa o trinket quando o aliado mais ferido está abaixo de 50%. Visto ao vivo: o xamã gastou dois turnos com totem e Water Shield com o jogador a 12%. |
+| V16 | 02/11 15:04 | Curador de arena cura antes de buff e totem: com aliado abaixo de 45% ao alcance, totens de buff/dano, Call of the Elements, Water Shield, Inner Fire e Lifeblood esperam (tremor, mana tide, stoneclaw, healing stream, earthbind, grounding e cleansing seguem livres); xamã curador usa Lesser Healing Wave antes de Healing Wave na vida crítica; curador preso usa o trinket quando o aliado mais ferido está abaixo de 50%. Visto ao vivo: o xamã gastou dois turnos com totem e Water Shield com o jogador a 12%. **Resultado:** com aliado abaixo de 45% ao alcance, totem/buff caiu de 4,8% (44/910) para 0,4% (1/281) das ações do curador. |
+| V17 | 02/11 21:35 | Fim do A/B: braço A 52/89 = 58% x campeã, braço B 56/118 = 47%. A cópia III (56, 64…88) entra na desafiante, que passa a 17 trios; sai o `ia-ao-vivo-b` (−3 GB de RAM) e o treinador NCM dos bots (`ArenaCoachTeams` vazio; segue na voz do jogador). Lutas da cópia III antes da junção foram da rede B e ficam fora do espelho (`live.py --novos`). |
 | — | 29/10 18:10 | Especialista V5 (Qwen3-4B, + 100 lutas rotuladas pelo Opus sem o vencedor) reprovado no teste cego 2: momento 15/20 (meta 16), achou 31/115 erros (meta 35; Gemini 35). Fica o Gemini. A/B: braço A 52%, braço B 50% contra campeã+regras (46% antes) — os dois passam de +3, as duas mudanças vão para os dois braços (V10). Servidor pausado |
 | — | 01/11 10:50 | Especialista V6 reprovada no teste cego 3 (graves 13/13 e momento 14/20, mas achou 32/109, meta 43). V7 só com rótulos do Opus; critério e teste cego 4 congelados antes do treino |
 
@@ -128,7 +130,9 @@ cota ("Individual quota reached"). Deixe aberta só a sessão da conta que deve 
 `grep -h email= ~/.gemini/antigravity-cli/log/cli-*.log | tail`.
 
 **Promoção:** a janela de comparação fica no checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); para
-recomeçar a contagem, pare o `ia-ao-vivo`, troque o `desde` e suba de novo (o buffer em memória se perde).
+recomeçar a contagem, pare o `ia-ao-vivo`, troque o `desde` e suba de novo (o buffer em memória se perde). Time
+que entra na desafiante depois do `desde` vai em `--novos` com `--novos-desde` (UTC), senão as lutas antigas dele
+contam como da desafiante (`JUNCAO` em `agente/ligar-ao-vivo.sh`).
 
 **Disco:** o `Playerbots.log` cresce ~0,5 GB/h e o treino não o usa (usa o `MlArena.log`).
 `agente/apara-log.sh` mantém o log abaixo de 5 GB (guarda o último 1 GB em `Playerbots.log.1`); suba de hora em hora

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Liga a IA de arena ao vivo: campeã (v3) nos times 54,58,...,86, desafiante (treinada ao vivo) nos 55,59,...,87,
+# Liga a IA de arena ao vivo: campeã (v4) nos times 54,58,...,86, desafiante (treinada ao vivo) nos 55,59,...,87,
 # a rede decidindo em ArenaMlControl dos ticks; reinicia o worldserver com a imagem nova e sobe o treinador
 # ml/policy/live.py como serviço do usuário (systemd --user, unidade ia-ao-vivo).
 #   agente/ligar-ao-vivo.sh            -> config + restart + treinador
@@ -10,33 +10,25 @@
 # V10: os dois braços passaram de +3 → os dois treinam com plano + fatos por código + momento; o braço B testa a
 # fase B: no C++, o alvo de kill do plano vira o alvo dos DPS (Playerbots.ArenaPlanTeams/ArenaPlanFile).
 # V12: braço A com nota por mudança da chance de vencer (--valor, tools/valor_v4.py); braço B com o treinador NCM.
+# V17: fim do A/B (A 58% x campeã, B 47%): a cópia III entra na desafiante A, sem braço B e sem treinador NCM nos bots;
+# as lutas da cópia III antes de JUNCAO foram da rede B e ficam fora do espelho (--novos).
 set -euo pipefail
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 CONF=$ROOT/azerothcore-wotlk/env/dist/etc/modules/playerbots.conf
 ETC=$ROOT/azerothcore-wotlk/env/dist/etc
-TIMES_A=55,59,63,67,71,75,79,83,87
-TIMES_B=56,64,68,72,76,80,84,88  # a cópia III sem o 60 (o usuário)
+TIMES_III=56,64,68,72,76,80,84,88  # a cópia III sem o 60 (o usuário), ex-braço B
+TIMES_A=55,59,63,67,71,75,79,83,87,$TIMES_III
+JUNCAO="2026-11-03 00:35:00"  # UTC: restart da V17 (21:35 SP)
 
 subir_treinador() {
+    systemctl --user stop ia-ao-vivo-b 2>/dev/null || true
     systemctl --user stop ia-ao-vivo 2>/dev/null || true
     systemctl --user reset-failed ia-ao-vivo 2>/dev/null || true
     systemd-run --user --unit=ia-ao-vivo --working-directory="$ROOT/ml" --property=Restart=on-failure \
-        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --fatos-codigo --outro "$TIMES_B" \
+        "$HOME/.local/bin/uv" run python -I policy/live.py --plano policy/planos.json --fatos-codigo \
+        --times "$TIMES_A" --novos "$TIMES_III" --novos-desde "$JUNCAO" \
         --valor "$HOME/.local/share/ncm/v2/valor_v4.pt"
-    echo "treinador A no ar: journalctl --user -u ia-ao-vivo -f"
-    subir_braco_b
-}
-
-subir_braco_b() {  # começa da desafiante atual (pesos, checkpoint e posição no log)
-    [ -f "$ETC/arena-policy-live-b.txt" ] || cp "$ETC/arena-policy-live.txt" "$ETC/arena-policy-live-b.txt"
-    [ -f "$ROOT/ml/runs/live-desafiante-b.pt" ] || cp "$ROOT/ml/runs/live-desafiante.pt" "$ROOT/ml/runs/live-desafiante-b.pt"
-    [ -f "$ROOT/ml/runs/live-b.offset" ] || cp "$ROOT/ml/runs/live.offset" "$ROOT/ml/runs/live-b.offset"
-    systemctl --user stop ia-ao-vivo-b 2>/dev/null || true
-    systemctl --user reset-failed ia-ao-vivo-b 2>/dev/null || true
-    systemd-run --user --unit=ia-ao-vivo-b --working-directory="$ROOT/ml" --property=Restart=on-failure \
-        "$HOME/.local/bin/uv" run python -I policy/live.py --braco b --times "$TIMES_B" --outro "$TIMES_A" \
-        --desafiante "$ETC/arena-policy-live-b.txt" --fatos-codigo --plano policy/planos.json
-    echo "treinador B no ar: journalctl --user -u ia-ao-vivo-b -f"
+    echo "treinador no ar: journalctl --user -u ia-ao-vivo -f"
 }
 
 if [ "${1:-}" = "treinador" ]; then subir_treinador; exit 0; fi
@@ -54,13 +46,12 @@ set_opt ArenaMlPolicyFile '"/azerothcore/env/dist/etc/arena-policy-v4.txt"'
 set_opt ArenaMlTeams '"54,58,62,66,70,74,78,82,86"'
 set_opt ArenaMlChallengerFile '"/azerothcore/env/dist/etc/arena-policy-live.txt"'
 set_opt ArenaMlChallengerTeams "\"$TIMES_A\""
-[ -f "$ETC/arena-policy-live-b.txt" ] || cp "$ETC/arena-policy-live.txt" "$ETC/arena-policy-live-b.txt"
-set_opt ArenaMlChallengerBFile '"/azerothcore/env/dist/etc/arena-policy-live-b.txt"'
-set_opt ArenaMlChallengerBTeams "\"$TIMES_B\""
+set_opt ArenaMlChallengerBTeams '""'
+set_opt ArenaCoachTeams '""'
 set_opt ArenaMlControl 0.25
 (cd "$ROOT/ml/policy" && python3 plano.py --exporta "$ETC/arena-plan.txt")
 set_opt ArenaPlanFile '"/azerothcore/env/dist/etc/arena-plan.txt"'
-set_opt ArenaPlanTeams "\"54,58,62,66,70,74,78,82,86,$TIMES_A,$TIMES_B\""
+set_opt ArenaPlanTeams "\"54,58,62,66,70,74,78,82,86,$TIMES_A\""
 grep -E "^Playerbots.ArenaMl" "$CONF"
 
 python3 -c "import sys; sys.path.insert(0, '$ROOT/ml/tools'); import wsconsole; wsconsole.run(['.saveall'])"

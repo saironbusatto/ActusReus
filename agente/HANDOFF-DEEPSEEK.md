@@ -37,10 +37,13 @@ recompensa. Grupos por `(time-54)%4`:
 
 | Resto | Grupo | Times | Pesos | Treinador |
 |---|---|---|---|---|
-| 0 | Campeã (fixa) | 54, 58…86 | `arena-policy-v3.txt` | nenhum |
-| 1 | Braço A | 55, 59…87 | `arena-policy-live.txt` | `ia-ao-vivo` |
-| 2 | Braço B (cópia III) | 56, 64, 68…88 | `arena-policy-live-b.txt` | `ia-ao-vivo-b` |
+| 0 | Campeã (fixa) | 54, 58…86 | `arena-policy-v4.txt` (desde a V11C) | nenhum |
+| 1 | Desafiante | 55, 59…87 | `arena-policy-live.txt` | `ia-ao-vivo` |
+| 2 | Desafiante (cópia III, ex-braço B) | 56, 64, 68…88 | `arena-policy-live.txt` (desde a V17) | `ia-ao-vivo` |
 | 3 | Só regras | 57, 61… | sem rede | nenhum |
+
+Até a V16 a cópia III era o braço B do A/B (`arena-policy-live-b.txt`, `ia-ao-vivo-b`). Na V17 o braço A venceu
+(58% x 47% contra a campeã) e ela passou para a desafiante.
 
 O **time 60 é o usuário** (Reload, humano): fica fora de tudo.
 
@@ -178,7 +181,7 @@ Nunca deixe o servidor sem vigia enquanto estiver no ar. A cada minuto cheque:
 - `journalctl --user -u rodada-sync` sem `quota reached`;
 - `MemAvailable` acima de 600 MB. Em 29/10 o sistema matou o braço A por memória com o servidor e um treino juntos.
 
-**Cota do agy:** com "Individual quota reached", pare `ia-ao-vivo`, `ia-ao-vivo-b`, `rodada-sync` e
+**Cota do agy:** com "Individual quota reached", pare `ia-ao-vivo`, `rodada-sync` e
 `docker compose stop ac-worldserver ac-authserver`, sem perguntar, e só religue quando houver motor com cota. Treino sem
 as notas contamina a versão medida. Confira antes qual conta o agy está usando.
 
@@ -208,7 +211,7 @@ as notas contamina a versão medida. Confira antes qual conta o agy está usando
 |---|---|
 | Decisões e histórico da frente LLM | `agente/SPRINT-LLM.md` (seção "Decisões de 29/10" e "29/10 noite") |
 | Religar tudo | `agente/ligar-ao-vivo.sh` |
-| Treinador ao vivo | `ml/policy/live.py` (`--plano`, `--fatos-codigo`, `--braco b`) |
+| Treinador ao vivo | `ml/policy/live.py` (`--plano`, `--fatos-codigo`, `--valor`, `--novos`; `--braco b` só no A/B) |
 | Rodadas e técnico | `ml/policy/rodada_sync.py` |
 | Plano tático | `ml/policy/plano.py`, `planos.json` (81 planos, `FOCO = False`), `agente/planos-pesquisa.md` |
 | Alvo do plano no C++ | `azerothcore-wotlk/modules/mod-playerbots/src/Ai/Base/ArenaMlPolicy.h` (`PlanKillTarget`) |

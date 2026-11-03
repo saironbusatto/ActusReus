@@ -198,7 +198,19 @@
    "Trava de emergência do curador (aliado abaixo de 45% ao alcance) passa a segurar totens de buff/dano, Call of the Elements, Water Shield, Inner Fire e Lifeblood; tremor, mana tide, stoneclaw, healing stream, earthbind, grounding e cleansing seguem livres.",
    "Xamã curador na vida crítica: Riptide, Lesser Healing Wave e só depois Healing Wave.",
    "Curador preso usa o trinket quando o aliado mais ferido está abaixo de 50% (antes olhava só o primeiro aliado do grupo).",
-   "Motivo: luta ao vivo do Reload, xamã gastou dois turnos com totem e Water Shield com ele a 12%."
+   "Motivo: luta ao vivo do Reload, xamã gastou dois turnos com totem e Water Shield com ele a 12%.",
+   "Resultado (02/11 15:20–15:40 SP): com aliado abaixo de 45% ao alcance, totem/buff caiu de 4,8% (44/910) para 0,4% (1/281) das ações do curador; cura de 45,4% para 48,0%."
+  ]
+ },
+ {
+  "id": "V17",
+  "nome": "Fim do A/B: cópia III na desafiante",
+  "desde": "2026-11-03 00:35",
+  "mudancas": [
+   "A/B encerrado com o usuário: braço A (nota por mudança da chance de vencer, --valor) 52/89 = 58% x campeã; braço B (treinador NCM no foco) 56/118 = 47%. Diferença com ~94% de confiança.",
+   "A cópia III (56,64,68,72,76,80,84,88) entra em Playerbots.ArenaMlChallengerTeams e joga com a desafiante: 17 trios em vez de 9. ArenaMlChallengerBTeams vazio, unidade ia-ao-vivo-b desligada (−3 GB de RAM).",
+   "Treinador NCM fora dos bots (ArenaCoachTeams vazio): metade dos times com ele sujaria a medida. Segue servindo a voz do jogador.",
+   "As lutas da cópia III antes da junção foram da rede B: live.py --novos/--novos-desde as tira do espelho (sem isso a desafiante herdaria 81 lutas de uma vez)."
   ]
  }
 ]

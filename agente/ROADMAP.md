@@ -108,7 +108,7 @@ Detalhe técnico: `agente/FASE2-RL.md` · diário: `agente/DIARIO.md` · relató
 | C++ do playerbots | branch `ml-arena` em `azerothcore-wotlk/modules/mod-playerbots` (patches em `patches/mod-playerbots`) |
 | Treino v3 | `ml/policy/train_v3.py` (main); treino v2 na branch `ml-policy-v2` |
 | Treino v2 (histórico) | branch `ml-policy-v2` do repo ActusReus (worktree `.claude/worktrees/raiz-policy-v2`) |
-| Pesos no ar | `azerothcore-wotlk/env/dist/etc/arena-policy-v3.txt` (v2b e v2 na mesma pasta para voltar) |
+| Pesos no ar | campeã `arena-policy-v4.txt`, desafiante `arena-policy-live.txt` em `azerothcore-wotlk/env/dist/etc/` (v3, v2b e v2 na mesma pasta para voltar) |
 | Placar / espelho | `ml/tools/relatorio_v3.py` (por composição), `ml/tools/placar_trios.py`, `ml/policy/espelho.py --tipo 3` |
 | Times e gear | `agente/trios-times.sql`, `agente/trios-normaliza.sql`, `agente/trios-expansao-108.sql`, `agente/trios-108-fixgear.sql` |
 | Clonagem | `ml/tools/clone_bots.py --src Original:nome1,nome2 [--max-level 80]` |

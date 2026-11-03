@@ -49,6 +49,9 @@ IGNORE_TEAMS = {60}  # o usuário joga no RLS III
 # promover nem liberar rodada; cada braço tira os times do outro do seu espelho (OUTRO). Os extras de cada braço:
 # PLANOS (plano tático, policy/plano.py) e FATOS_CODIGO (fatos do verificador com o horário exato + momento decisivo)
 OUTRO: set[int] = set()
+# V17: os times do braço B entraram na desafiante; as lutas deles antes da junção (rede B) ficam fora do espelho
+NOVOS: set[int] = set()
+NOVOS_DESDE = dt.datetime.min
 SUFIXO = ""
 PLANOS: dict | None = None
 PLANO_PESO = 0.3  # ~10 notas de plano por luta contra ~6 do técnico: o plano entra com 30% do peso de uma nota
@@ -456,6 +459,8 @@ def mirror_count(fights: dict[str, dict]) -> dict[str, tuple[int, int]]:
         t = list(f["teams"])
         if len(t) != 2 or f["teams"][t[0]] != f["teams"][t[1]] or IGNORE_TEAMS & set(t):
             continue
+        if NOVOS & set(t) and f.get("t", dt.datetime.max) < NOVOS_DESDE:
+            continue
         kind = MIRROR_KIND.get(frozenset((side(t[0]), side(t[1]))))
         if not kind:
             continue
@@ -467,14 +472,15 @@ def mirror_count(fights: dict[str, dict]) -> dict[str, tuple[int, int]]:
 
 
 def mirror(since: dt.datetime) -> dict[str, tuple[int, int]]:
-    rows = sql(f"""SELECT f.fight_id, f.winner, m.team, t.name FROM acore_characters.log_arena_fights f
+    rows = sql(f"""SELECT f.fight_id, f.winner, m.team, t.name, f.time FROM acore_characters.log_arena_fights f
                    JOIN acore_characters.log_arena_memberstats m USING(fight_id)
                    JOIN acore_characters.arena_team t ON t.arenaTeamId = m.team
                    WHERE f.type = 3 AND f.duration >= 20 AND f.time >= '{since:%Y-%m-%d %H:%M:%S}'
                    GROUP BY f.fight_id, m.team""")
     fights: dict[str, dict] = {}
-    for fid, winner, team, name in rows:
-        fights.setdefault(fid, {"w": int(winner), "teams": {}})["teams"][int(team)] = name.rsplit(" ", 1)[0]
+    for fid, winner, team, name, quando in rows:
+        luta = fights.setdefault(fid, {"w": int(winner), "teams": {}, "t": dt.datetime.fromisoformat(str(quando))})
+        luta["teams"][int(team)] = name.rsplit(" ", 1)[0]
     return mirror_count(fights)
 
 
@@ -543,16 +549,23 @@ def main() -> int:
     ap.add_argument("--braco", default="", help="A/B: 'b' = segundo desafiante (arquivos -b, sem promover)")
     ap.add_argument("--times", default="", help="times deste desafiante (padrão: CHALLENGER_TEAMS)")
     ap.add_argument("--outro", default="", help="times do outro braço do A/B, fora do espelho deste")
+    ap.add_argument("--novos", default="", help="times novos da desafiante: espelho só desde --novos-desde")
+    ap.add_argument("--novos-desde", default="", help="UTC, 'AAAA-MM-DD HH:MM:SS'")
     ap.add_argument("--plano", type=Path, help="braço do plano tático: policy/planos.json")
     ap.add_argument("--fatos-codigo", action="store_true", help="braço dos fatos por código + momento decisivo")
     ap.add_argument("--valor", type=Path, help="nota por mudança da chance de vencer (rede de tools/valor_v4.py)")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
-    global CHALLENGER_TEAMS, OUTRO, SUFIXO, CKPTS, PLANOS, FATOS_CODIGO, VALOR
+    global CHALLENGER_TEAMS, OUTRO, NOVOS, NOVOS_DESDE, SUFIXO, CKPTS, PLANOS, FATOS_CODIGO, VALOR
     lista = lambda x: {int(t) for t in x.split(",") if t.strip()}  # noqa: E731
     if a.times:
         CHALLENGER_TEAMS = lista(a.times)
     OUTRO = lista(a.outro)
+    NOVOS = lista(a.novos)
+    if NOVOS and not a.novos_desde:
+        ap.error("--novos precisa de --novos-desde")
+    if a.novos_desde:
+        NOVOS_DESDE = dt.datetime.fromisoformat(a.novos_desde)
     SUFIXO = f"-{a.braco}" if a.braco else ""
     CKPTS = RUNS / f"checkpoints{SUFIXO}"
     CKPTS.mkdir(parents=True, exist_ok=True)
@@ -709,6 +722,14 @@ def selftest() -> None:
          "5": {"w": 57, "teams": {54: "RMP", 57: "RMP"}}}
     m = mirror_count(f)
     assert m == {"desafiante": (1, 1), "campea": (0, 1), "desafiante_x_campea": (0, 1)}, m
+    #    um time novo da desafiante só conta depois da junção (antes, a luta era de outra rede)
+    global NOVOS, NOVOS_DESDE
+    NOVOS, NOVOS_DESDE = {61}, dt.datetime(2026, 1, 2)
+    f["1"]["t"] = dt.datetime(2026, 1, 1)
+    f["6"] = {"w": 61, "teams": {61: "RLS", 55: "RLS"}, "t": dt.datetime(2026, 1, 3)}
+    m = mirror_count(f)
+    assert m["desafiante"] == (0, 1), m
+    NOVOS, NOVOS_DESDE = set(), dt.datetime.min
 
     # 3) o treino aprende pelo que a decisão muda: "kick" corta o cast do inimigo (e a luta é vencida), "fear" deixa
     #    ele castando (e a luta é perdida); o crítico aprende o valor do estado seguinte e credita a decisão

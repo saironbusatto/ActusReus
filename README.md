@@ -12,11 +12,12 @@ Full plan: [BRIEF-IA-PVP.md](BRIEF-IA-PVP.md). Arena manual: [.claude/skills/wot
 
   | Group | Teams | What it is |
   |---|---|---|
-  | **Champion/static** | 54, 58, …, 86 | frozen neural network (`arena-policy-v3.txt`) — the yardstick |
-  | **Challenger/training** | 55, 59, …, 87 | the network the trainer adjusts live (`arena-policy-live.txt`) |
+  | **Champion/static** | 54, 58, …, 86 | frozen neural network (`arena-policy-v4.txt`) — the yardstick |
+  | **Challenger/training** | 55, 59, …, 87 and 56, 64, …, 88 | the network the trainer adjusts live (`arena-policy-live.txt`) |
   | **Bots/no-network** | the rest | only the playerbots rules — the control group |
 
-  Copy III of each composition stays in reserve; team 60 (RLS III) is the user's and stays out of the scoring.
+  Copy III of each composition plays as challenger since V17 (it was the A/B's arm B); team 60 (RLS III) is the
+  user's and stays out of the scoring.
 - **The network decides 25% of combat actions** (`Playerbots.ArenaMlControl = 0.25`); the rest stays with the rules.
 - **Synchronized rounds** (`ml/policy/rodada_sync.py`): each trio plays one match, the AI coach analyzes it, the
   trainer applies the notes and everyone returns to the queue together.
@@ -81,7 +82,8 @@ Every change that alters the game or the training becomes a version in [`agente/
 | V13 | 11/02 01:14 | Arena healers stop losing their turn: with an ally below 45%, in range and in sight, `dps assist`, `set facing`, `purge` and status cures yield to heals (a critical heal was worth 25 against 50 for `dps assist`). Time a healer could heal and did not fell from 26% to 14%. At 01:34 the NCM coach moved to model v2: target switch accuracy from 41.5% to 49.7%. Since V12, arm A is scored by the change in win chance. |
 | V14 | 11/02 02:47 | Interrupts that never fired: mages only cut whoever was not their target, Arms warriors had no interrupt (now they stance dance into Pummel), and DK and shaman ranked below ordinary actions. Healer casts cut, with someone ready and in range, rose from 20% to 34%; warriors went from 0/224 to 29/99. |
 | V15 | 11/02 03:33 | CC to save an ally: with an ally below 50% and 2+ enemies on them, non-healers CC an attacker that is not the kill target. The CC list gained polymorph, hex, repentance, scatter shot, hammer of justice, kidney shot and intimidating shout. Episodes with a CC within 4 s rose from 18% to 24%; hunters went from 0/18 to 8/19. |
-| V16 | 11/02 15:04 | Arena healer heals before buffs and totems: with an ally below 45% in range, buff/damage totems, Call of the Elements, Water Shield, Inner Fire and Lifeblood wait (tremor, mana tide, stoneclaw, healing stream, earthbind, grounding and cleansing stay free); resto shaman casts Lesser Healing Wave before Healing Wave at critical health; a CC'd healer trinkets when the most hurt ally is below 50%. Seen live: the shaman spent two GCDs on totems and Water Shield with the player at 12%. |
+| V16 | 11/02 15:04 | Arena healer heals before buffs and totems: with an ally below 45% in range, buff/damage totems, Call of the Elements, Water Shield, Inner Fire and Lifeblood wait (tremor, mana tide, stoneclaw, healing stream, earthbind, grounding and cleansing stay free); resto shaman casts Lesser Healing Wave before Healing Wave at critical health; a CC'd healer trinkets when the most hurt ally is below 50%. Seen live: the shaman spent two GCDs on totems and Water Shield with the player at 12%. **Result:** with an ally below 45% in range, totem/buff fell from 4.8% (44/910) to 0.4% (1/281) of healer actions. |
+| V17 | 11/02 21:35 | End of the A/B: arm A 52/89 = 58% vs champion, arm B 56/118 = 47%. Copy III (56, 64…88) joins the challenger, now 17 trios; `ia-ao-vivo-b` goes away (−3 GB RAM) and so does the NCM coach on bots (`ArenaCoachTeams` empty; it stays in the player's voice). Copy III fights before the merge were arm B's network and stay out of the mirror (`live.py --novos`). |
 | — | 10/29 18:10 | Specialist V5 (Qwen3-4B, + 100 fights labelled by Opus without the winner) failed blind test 2: decisive moment 15/20 (goal 16), found 31/115 errors (goal 35; Gemini 35). Gemini stays. A/B: arm A 52%, arm B 50% vs champion+rules (46% before) — both pass +3, so both changes go to both arms next (V10). Server paused |
 | — | 11/01 10:50 | Specialist V6 failed blind test 3 (serious 13/13 and moment 14/20, but found 32/109, target 43). V7 uses only Opus labels; criterion and blind test 4 frozen before training |
 
@@ -128,7 +130,9 @@ quota ("Individual quota reached"). Leave open only the session of the account t
 `grep -h email= ~/.gemini/antigravity-cli/log/cli-*.log | tail`.
 
 **Promotion:** the comparison window lives in the checkpoint (`ml/runs/live-desafiante.pt`, `state.desde`, UTC); to
-restart the count, stop `ia-ao-vivo`, change `desde` and start it again (the in-memory buffer is lost).
+restart the count, stop `ia-ao-vivo`, change `desde` and start it again (the in-memory buffer is lost). A team
+that joins the challenger after `desde` goes in `--novos` with `--novos-desde` (UTC), or its old fights count as the
+challenger's (`JUNCAO` in `agente/ligar-ao-vivo.sh`).
 
 **Disk:** `Playerbots.log` grows ~0.5 GB/h and the training does not use it (it uses `MlArena.log`).
 `agente/apara-log.sh` keeps the log under 5 GB (it keeps the last 1 GB in `Playerbots.log.1`); start it hourly
