@@ -47,7 +47,7 @@ set_opt ArenaMlTeams '"54,58,62,66,70,74,78,82,86"'
 set_opt ArenaMlChallengerFile '"/azerothcore/env/dist/etc/arena-policy-live.txt"'
 set_opt ArenaMlChallengerTeams "\"$TIMES_A\""
 set_opt ArenaMlChallengerBTeams '""'
-set_opt ArenaCoachTeams '""'
+set_opt ArenaCoachTeams '"60"'  # V17: o NCM só manda nos parceiros do usuário (o mesmo foco da voz)
 set_opt ArenaMlControl 0.25
 (cd "$ROOT/ml/policy" && python3 plano.py --exporta "$ETC/arena-plan.txt")
 set_opt ArenaPlanFile '"/azerothcore/env/dist/etc/arena-plan.txt"'

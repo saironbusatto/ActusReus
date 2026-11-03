@@ -311,7 +311,7 @@ aparece mais nas derrotas, ou quando as notas dele fazem a desafiante ganhar mai
 caiu de 4,8% (44/910) para 0,4% (1/281) das ações do curador (cura 45,4% → 48,0%). No A/B, o braço A (nota por mudança
 da chance de vencer) fez 52/89 = 58% contra a campeã e o braço B (treinador NCM no foco) 56/118 = 47%, ~94% de
 confiança. Decidido com o usuário: a cópia III (56, 64…88) entra na desafiante (17 trios), `ia-ao-vivo-b` desligado
-(−3 GB de RAM, que deixava o PC no swap) e o treinador NCM sai dos bots (`ArenaCoachTeams` vazio; segue na voz). As
+(−3 GB de RAM, que deixava o PC no swap) e o treinador NCM sai dos bots do treino (`ArenaCoachTeams = "60"`: só os parceiros do usuário seguem o foco, o mesmo da voz). As
 lutas da cópia III antes de 00:35 UTC foram da rede B e ficam fora do espelho (`live.py --novos`); sem o filtro a
 desafiante herdaria 81 lutas de uma vez. Campeã e Bots seguem de régua: todos os trios na desafiante deixariam o
 espelho sem comparação.

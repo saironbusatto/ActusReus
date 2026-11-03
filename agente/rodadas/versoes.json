@@ -209,7 +209,7 @@
   "mudancas": [
    "A/B encerrado com o usuário: braço A (nota por mudança da chance de vencer, --valor) 52/89 = 58% x campeã; braço B (treinador NCM no foco) 56/118 = 47%. Diferença com ~94% de confiança.",
    "A cópia III (56,64,68,72,76,80,84,88) entra em Playerbots.ArenaMlChallengerTeams e joga com a desafiante: 17 trios em vez de 9. ArenaMlChallengerBTeams vazio, unidade ia-ao-vivo-b desligada (−3 GB de RAM).",
-   "Treinador NCM fora dos bots (ArenaCoachTeams vazio): metade dos times com ele sujaria a medida. Segue servindo a voz do jogador.",
+   "Treinador NCM fora dos bots do treino: metade dos times com ele sujaria a medida. ArenaCoachTeams = \"60\": só os parceiros do usuário seguem o foco do NCM, o mesmo que a voz passa (pedido do usuário, 21:50 SP).",
    "As lutas da cópia III antes da junção foram da rede B: live.py --novos/--novos-desde as tira do espelho (sem isso a desafiante herdaria 81 lutas de uma vez)."
   ]
  }
