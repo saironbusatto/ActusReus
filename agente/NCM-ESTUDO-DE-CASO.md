@@ -120,6 +120,16 @@ Ao vivo, nenhuma entrada passa do palpite fixo; dar a história à foto não mud
 52-56, então a foto tem sinal, mas só dá para usá-lo comparando a luta inteira. **Parte 1 encerrada: o detector não vai
 para a voz.** Ao vivo faltaria saber se o melhor instante ainda está por vir.
 
+**Parte 3, queda da chance de vencer** (`--queda [semente]`): modelo de chance sem as 100 lutas da prova (AUC 0,90) e
+aviso quando a chance de um lado cai 5-50% em 5 ou 10 s. Janela e limite escolhidos numa metade e medidos na outra, em
+5 sementes: **30 a 34 de 100** (média 32), contra 38 do palpite fixo. Ficou abaixo do critério combinado (passar de
+40/100) e **não vai para a voz**. A maior queda de cada luta acerta só 22-25/100 e vem, na mediana, 7-8 s depois do
+instante mais próximo do gabarito; em 80% das lutas vem depois. A chance de vencer enxerga a consequência; o gabarito
+marca a causa, e por definição exclui a morte.
+
+Sem semente fixa, o mesmo teste variou de 28 a 38 entre execuções, porque o treino sorteia a validação interna. As
+tabelas acima são de uma execução cada, então diferenças de poucas lutas entre elas não contam.
+
 O ouro continua sendo a régua limpa. O ganho dele no treino de outros modelos ainda não foi medido.
 
 ## 5. O que medir daqui em diante
