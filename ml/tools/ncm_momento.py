@@ -93,12 +93,12 @@ def acerta(t: float | None, aceitos: list[float]) -> bool:
     return t is not None and any(abs(t - a) <= TOL_S for a in aceitos)
 
 
-def ajusta(fotos: np.ndarray, y: np.ndarray, peso: np.ndarray, linhas: np.ndarray, rng):
+def ajusta(fotos: np.ndarray, y: np.ndarray, peso: np.ndarray, linhas: np.ndarray, rng, ver=None):
     from sklearn.ensemble import HistGradientBoostingClassifier as Hgb
 
     idx = linhas if len(linhas) <= N_AJUSTE else rng.choice(linhas, N_AJUSTE, replace=False)
     w = peso[idx] * np.where(y[idx] == 1, (y[idx] == 0).sum() / max(1, (y[idx] == 1).sum()), 1.0)  # classes iguais
-    return Hgb(max_iter=300, learning_rate=0.08, max_leaf_nodes=31).fit(fotos[idx], y[idx], sample_weight=w)
+    return Hgb(max_iter=300, learning_rate=0.08, max_leaf_nodes=31).fit(fotos[idx] if ver is None else ver(idx), y[idx], sample_weight=w)
 
 
 def prova(fotos, lutas, t, y, peso, ref, rng) -> int:
@@ -118,8 +118,20 @@ def primeiro(p: np.ndarray, t: np.ndarray, limite: float) -> float | None:
     return float(np.sort(t)[i[0]]) if len(i) else None
 
 
+def atras(t: np.ndarray, lutas: np.ndarray, s: float) -> np.ndarray:
+    """Para cada foto, o índice da foto da mesma luta de `s` segundos antes; a própria foto se ainda não houver."""
+    out = np.arange(len(t))
+    ordem = np.lexsort((t, lutas))
+    _, ini = np.unique(lutas[ordem], return_index=True)
+    for a, b in zip(ini, [*ini[1:], len(ordem)]):
+        i = ordem[a:b]
+        k = np.searchsorted(t[i], t[i] - s, side="right") - 1
+        out[i[k >= 0]] = i[k[k >= 0]]
+    return out
+
+
 def ao_vivo() -> None:
-    """Prova da regra ao vivo em todas as lutas com gabarito (100), com modelo treinado sem nenhuma delas."""
+    """Regra ao vivo nas 100 lutas com gabarito, fora do treino: entrada só foto, só tempo, e foto + tempo + mudança."""
     z = np.load(DADOS / "planos.npz")
     fotos, lutas, ms = z["fotos"], z["lutas"].astype(np.int64), z["ms"]
     lt = analises()
@@ -129,15 +141,26 @@ def ao_vivo() -> None:
     meu = {f: m for f, m in opus().items() if f not in ref}
     y = rotulos(t, lutas, gem | meu)
     peso = np.where(np.isin(lutas, list(meu)), PESO_OPUS, 1.0)
-    modelo = ajusta(fotos, y, peso, np.flatnonzero((y >= 0) & ~np.isin(lutas, list(ref))), np.random.default_rng(0))
-    probs = {f: (modelo.predict_proba(fotos[i])[:, 1], t[i]) for f in ref if (i := (lutas == f) & ~np.isnan(t)).any()}
-    n = len(probs)
+    linhas = np.flatnonzero((y >= 0) & ~np.isin(lutas, list(ref)))
+    a5, a15 = atras(t, lutas, 5.0), atras(t, lutas, 15.0)
+    relogio = lambda i: t[i, None].astype(np.float32)  # noqa: E731
+
+    def tudo(i: np.ndarray) -> np.ndarray:
+        f = fotos[i].astype(np.int16)
+        return np.hstack([f, relogio(i), f - fotos[a5[i]], f - fotos[a15[i]]], dtype=np.float32)
+
     fixo = float(np.median(list((gem | meu).values())))
-    print(f"{n} lutas; palpite fixo aos {fixo:.0f} s: {sum(acerta(fixo, ref[f]) for f in probs)}/{n}", flush=True)
-    for limite in (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9):
-        tiros = {f: primeiro(*probs[f], limite) for f in probs}
-        print(f"  limite {limite:.1f}: avisou em {sum(v is not None for v in tiros.values())}/{n}, "
-              f"certos {sum(acerta(v, ref[f]) for f, v in tiros.items())}/{n}", flush=True)
+    print(f"palpite fixo aos {fixo:.0f} s: {sum(acerta(fixo, a) for a in ref.values())}/{len(ref)}", flush=True)
+    for nome, ver in (("só foto", lambda i: fotos[i]), ("só tempo", relogio), ("foto + tempo + mudança", tudo)):
+        modelo = ajusta(fotos, y, peso, linhas, np.random.default_rng(0), ver)
+        probs = {f: (modelo.predict_proba(ver(i))[:, 1], t[i]) for f in ref
+                 if len(i := np.flatnonzero((lutas == f) & ~np.isnan(t)))}
+        picos = sum(acerta(pico(*probs[f]), ref[f]) for f in probs)
+        print(f"{nome}: {len(probs)} lutas; pico da luta (só depois) {picos}", flush=True)
+        for limite in (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9):
+            tiros = {f: primeiro(*probs[f], limite) for f in probs}
+            print(f"  limite {limite:.1f}: avisou em {sum(v is not None for v in tiros.values())}, "
+                  f"certos {sum(acerta(v, ref[f]) for f, v in tiros.items())}", flush=True)
 
 
 def main() -> None:
@@ -179,6 +202,7 @@ def _selftest() -> None:
     assert y.tolist() == [1, 1, 1, -1], y
     assert rotulos(np.array([10.0]), np.array([7]), {7: 16.0}).tolist() == [0]
     assert pico(np.array([0.1, 0.9, 0.9]), np.array([5.0, 6.0, 7.0])) == 6.0
+    assert atras(np.array([0.0, 6.0, 20.0, 1.0]), np.array([7, 7, 7, 8]), 5.0).tolist() == [0, 0, 1, 3]
     assert primeiro(np.array([0.9, 0.1, 0.8]), np.array([9.0, 1.0, 5.0]), 0.5) == 5.0
     assert primeiro(np.array([0.1]), np.array([1.0]), 0.5) is None
     assert acerta(50.0, [44.0, 55.0]) and not acerta(50.0, [40.0]) and not acerta(None, [1.0])

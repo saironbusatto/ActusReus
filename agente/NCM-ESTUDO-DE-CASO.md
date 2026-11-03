@@ -106,8 +106,19 @@ congelado antes do treino). Treino com peso 20 no Opus, sempre sem as lutas da p
 1. Os 100 rótulos novos do Opus (~1,8 M tokens) **não subiram este detector**: a diferença cabe na margem.
 2. Com a regra ao vivo, o detector **perde do palpite fixo**. Ele não entra na voz assim. O melhor limite foi escolhido
    na própria prova, então 33 é até otimista.
-3. Hipótese seguinte, que roda na CPU, sem cota: o gargalo é a entrada (só os últimos segundos, sem o tempo de luta e
-   sem o que mudou), não os rótulos.
+3. A hipótese de que o gargalo era a entrada também caiu (`--ao-vivo`, 100 lutas, regra ao vivo no melhor limite de
+   cada uma; pico só como comparação):
+
+| Entrada | Ao vivo | Pico, só depois da luta |
+|---|---|---|
+| Só a foto | 32 | 52 |
+| Só o tempo de luta | 34 | 37 |
+| Foto + tempo + mudança em 5 e 15 s | 32 | 56 |
+| Palpite fixo aos 59 s | **40** | |
+
+Ao vivo, nenhuma entrada passa do palpite fixo; dar a história à foto não muda o resultado. O pico sobe de 37 para
+52-56, então a foto tem sinal, mas só dá para usá-lo comparando a luta inteira. **Parte 1 encerrada: o detector não vai
+para a voz.** Ao vivo faltaria saber se o melhor instante ainda está por vir.
 
 O ouro continua sendo a régua limpa. O ganho dele no treino de outros modelos ainda não foi medido.
 
